@@ -1,0 +1,43 @@
+object 2 class gridpositions counts 4 4 
+ origin             0             0 
+ delta              1             0 
+ delta              0             1 
+attribute "dep" string "positions"
+#
+object 3 class gridconnections counts 4 4
+attribute "element type" string "quads"
+attribute "ref" string "positions"
+#
+object 4 class regulararray count 16
+origin 1  delta 1  
+attribute "dep" string "positions"
+#
+object 1 class field
+component "positions" value 2
+component "connections" value 3
+component "data" value 4
+#
+object 6 class gridpositions counts 4 4 
+ origin             3             3 
+ delta              1             0 
+ delta              0             1 
+attribute "dep" string "positions"
+#
+object 7 class gridconnections counts 4 4
+attribute "element type" string "quads"
+attribute "ref" string "positions"
+#
+object 8 class regulararray count 16
+origin 33  delta 1  
+attribute "dep" string "positions"
+#
+object 5 class field
+component "positions" value 6
+component "connections" value 7
+component "data" value 8
+#
+object "default" class group
+member 0 value 1
+member 1 value 5
+#
+end

@@ -1,0 +1,26 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// create a camera 
+camera = AutoCamera(electrondensity,resolution=300,aspect=1,width=2.5);
+
+
+// This macro creates an isosurface at the given isovalue, creates a caption
+// for the image, and writes an image to a file.  The System module is used
+// to compress the image before going on to write the next one.
+macro makeiso(isoval)
+{
+    isosurface = Isosurface(electrondensity, isoval);
+    caption = Format("isoval = %g",isoval);
+    caption = Caption(caption);
+    imagename = Format("iso%4.2f.rgb",isoval);
+    collected = Collect(caption,isosurface);
+    image = Render(collected,camera);
+    Display(image);
+    WriteImage(image,imagename,frame=0);
+    command = Format("compress %s",imagename);
+    System(command);
+}
+
+makeiso(0.1);
+makeiso(0.3);

@@ -1,0 +1,1030 @@
+//
+// time: Wed Apr 16 13:47:07 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program shows you some ways you can create connections (interpolation elements) for a set of scattered points. Choose "Open All Control Panels" from the Windows menu to open the control panel. There is a selector interactor which controls what you see: the original scattered points, the points connected (with triangles) using the Connect module, or the points regridded using the AutoGrid module. 
+// comment: 
+// comment: When the Connect module is used, the positions are exactly the same as the original positions. This in contrast to the behavior when the AutoGrid module is used. When AutoGrid is used, a grid is automatically created for you. The scattered points are mapped to that grid. You can choose both the density of the grid and the radius from a grid point within which to search for data points. If no data points are found in that radius, the grid point is marked as invalid (and will be rendered as black).
+// comment: 
+// comment: The original scattered points are shown as small magenta disks when the connected data sets are shown.
+// comment: 
+// comment: The AutoGrid module can also be used to create three-dimensional output connections for three-dimensional input points. This is in contrast to the Connect module, which always creates triangle connections, whether the input points are two-dimensional or three-dimensional.
+// comment: 
+// comment: (Note that the Regrid module, instead of AutoGrid, allows you more control over the precise grid used)
+// comment: 
+// comment: See also Connect.net, Regrid.net and AutoGrid.net.
+// page assignment: connect	order=5, windowed=0, showing=0
+// page assignment: disks	order=4, windowed=0, showing=0
+// page assignment: image	order=7, windowed=0, showing=1
+// page assignment: import	order=2, windowed=0, showing=0
+// page assignment: regrid	order=6, windowed=0, showing=0
+// page assignment: scattered	order=3, windowed=0, showing=0
+// workspace: width = 623, height = 603
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 193, y = 121, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "CO2.general"
+    // input[3]: defaulting = 1, visible = 1, type = 32, value = "general"
+    // page group: import
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Include[1]: x = 157, y = 202, inputs = 6, label = Include
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = 0.0
+    // page group: import
+    //
+main_Include_1_out_1 = 
+    Include(
+    main_Import_1_out_1,
+    main_Include_1_in_2,
+    main_Include_1_in_3,
+    main_Include_1_in_4,
+    main_Include_1_in_5,
+    main_Include_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[1]: x = 217, y = 314, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 17
+    // page group: import
+    //
+main_Select_1_out_1 = 
+    Select(
+    main_Include_1_out_1,
+    main_Select_1_in_2,
+    main_Select_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[34]: x = 202, y = 444, inputs = 1, label = imported
+    // page group: import
+    //
+imported = main_Select_1_out_1;
+    // 
+    // node Receiver[52]: x = 243, y = 88, inputs = 1, label = imported
+    // page group: connect
+    //
+main_Receiver_52_out_1[cache: 0] = imported;
+    // 
+    // node Connect[1]: x = 184, y = 170, inputs = 3, label = Connect
+    // page group: connect
+    //
+main_Connect_1_out_1 = 
+    Connect(
+    main_Receiver_52_out_1,
+    main_Connect_1_in_2,
+    main_Connect_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[4]: x = 162, y = 267, inputs = 10, label = AutoColor
+    // page group: connect
+    //
+main_AutoColor_4_out_1,
+main_AutoColor_4_out_2 = 
+    AutoColor(
+    main_Connect_1_out_1,
+    main_AutoColor_4_in_2,
+    main_AutoColor_4_in_3,
+    main_AutoColor_4_in_4,
+    main_AutoColor_4_in_5,
+    main_AutoColor_4_in_6,
+    main_AutoColor_4_in_7,
+    main_AutoColor_4_in_8,
+    main_AutoColor_4_in_9,
+    main_AutoColor_4_in_10
+    ) [instance: 4, cache: 1];
+    // 
+    // node Receiver[50]: x = 183, y = 131, inputs = 1, label = imported
+    // page group: scattered
+    //
+main_Receiver_50_out_1[cache: 0] = imported;
+    // 
+    // node AutoGlyph[1]: x = 151, y = 229, inputs = 7, label = AutoGlyph
+    // page group: scattered
+    //
+main_AutoGlyph_1_out_1 = 
+    AutoGlyph(
+    main_Receiver_50_out_1,
+    main_AutoGlyph_1_in_2,
+    main_AutoGlyph_1_in_3,
+    main_AutoGlyph_1_in_4,
+    main_AutoGlyph_1_in_5,
+    main_AutoGlyph_1_in_6,
+    main_AutoGlyph_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[5]: x = 189, y = 330, inputs = 10, label = AutoColor
+    // page group: scattered
+    //
+main_AutoColor_5_out_1,
+main_AutoColor_5_out_2 = 
+    AutoColor(
+    main_AutoGlyph_1_out_1,
+    main_AutoColor_5_in_2,
+    main_AutoColor_5_in_3,
+    main_AutoColor_5_in_4,
+    main_AutoColor_5_in_5,
+    main_AutoColor_5_in_6,
+    main_AutoColor_5_in_7,
+    main_AutoColor_5_in_8,
+    main_AutoColor_5_in_9,
+    main_AutoColor_5_in_10
+    ) [instance: 5, cache: 1];
+    // 
+    // node Receiver[53]: x = 163, y = 108, inputs = 1, label = imported
+    // page group: regrid
+    //
+main_Receiver_53_out_1[cache: 0] = imported;
+    // 
+    // node Scalar[2]: x = 250, y = 100, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_2"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 2.0 
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 0.5
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 5.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 5
+    // output[1]: visible = 1, type = 5, value = 2.0 
+    // page group: regrid
+    //
+    // 
+    // node Scalar[3]: x = 320, y = 101, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_3"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 50.0 
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 5.0
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 100.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 5
+    // output[1]: visible = 1, type = 5, value = 50.0 
+    // page group: regrid
+    //
+    // 
+    // node AutoGrid[1]: x = 216, y = 195, inputs = 6, label = AutoGrid
+    // page group: regrid
+    //
+main_AutoGrid_1_out_1 = 
+    AutoGrid(
+    main_Receiver_53_out_1,
+    main_Scalar_2_out_1,
+    main_AutoGrid_1_in_3,
+    main_Scalar_3_out_1,
+    main_AutoGrid_1_in_5,
+    main_AutoGrid_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[7]: x = 121, y = 290, inputs = 10, label = AutoColor
+    // page group: regrid
+    //
+main_AutoColor_7_out_1,
+main_AutoColor_7_out_2 = 
+    AutoColor(
+    main_AutoGrid_1_out_1,
+    main_AutoColor_7_in_2,
+    main_AutoColor_7_in_3,
+    main_AutoColor_7_in_4,
+    main_AutoColor_7_in_5,
+    main_AutoColor_7_in_6,
+    main_AutoColor_7_in_7,
+    main_AutoColor_7_in_8,
+    main_AutoColor_7_in_9,
+    main_AutoColor_7_in_10
+    ) [instance: 7, cache: 1];
+    // 
+    // node Receiver[51]: x = 191, y = 111, inputs = 1, label = imported
+    // page group: disks
+    //
+main_Receiver_51_out_1[cache: 0] = imported;
+    // 
+    // node AutoGlyph[6]: x = 145, y = 211, inputs = 7, label = AutoGlyph
+    // input[4]: defaulting = 0, visible = 1, type = 5, value = .2
+    // input[5]: defaulting = 0, visible = 1, type = 5, value = 1.00000
+    // page group: disks
+    //
+main_AutoGlyph_6_out_1 = 
+    AutoGlyph(
+    main_Receiver_51_out_1,
+    main_AutoGlyph_6_in_2,
+    main_AutoGlyph_6_in_3,
+    main_AutoGlyph_6_in_4,
+    main_AutoGlyph_6_in_5,
+    main_AutoGlyph_6_in_6,
+    main_AutoGlyph_6_in_7
+    ) [instance: 6, cache: 1];
+    // 
+    // node Selector[2]: x = 10, y = 116, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_2"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "using AutoGrid module" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 3 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "original scattered points" "using Connect module" "using AutoGrid module" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 3 }
+    // input[6]: defaulting = 1, visible = 0, type = 3, value = 0
+    // output[1]: visible = 1, type = 29, value = 3 
+    // output[2]: visible = 1, type = 32, value = "using AutoGrid module" 
+    // page group: image
+    //
+    // 
+    // node Caption[2]: x = 527, y = 331, inputs = 9, label = Caption
+    // input[6]: defaulting = 0, visible = 1, type = 1, value = 20
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "roman_tser"
+    // page group: image
+    //
+main_Caption_2_out_1 = 
+    Caption(
+    main_Selector_2_out_2,
+    main_Caption_2_in_2,
+    main_Caption_2_in_3,
+    main_Caption_2_in_4,
+    main_Caption_2_in_5,
+    main_Caption_2_in_6,
+    main_Caption_2_in_7,
+    main_Caption_2_in_8,
+    main_Caption_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Color[6]: x = 162, y = 291, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "magenta"
+    // page group: disks
+    //
+main_Color_6_out_1 = 
+    Color(
+    main_AutoGlyph_6_out_1,
+    main_Color_6_in_2,
+    main_Color_6_in_3,
+    main_Color_6_in_4,
+    main_Color_6_in_5
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[1]: x = 158, y = 371, inputs = 1, label = magenta_disks
+    // page group: disks
+    //
+magenta_disks = main_Color_6_out_1;
+    // 
+    // node Receiver[1]: x = 29, y = 90, inputs = 1, label = magenta_disks
+    // page group: connect
+    //
+main_Receiver_1_out_1[cache: 0] = magenta_disks;
+    // 
+    // node ShowConnections[2]: x = 247, y = 262, inputs = 1, label = ShowConnections
+    // page group: connect
+    //
+main_ShowConnections_2_out_1 = 
+    ShowConnections(
+    main_Connect_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Color[2]: x = 275, y = 349, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "black"
+    // page group: connect
+    //
+main_Color_2_out_1 = 
+    Color(
+    main_ShowConnections_2_out_1,
+    main_Color_2_in_2,
+    main_Color_2_in_3,
+    main_Color_2_in_4,
+    main_Color_2_in_5
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[3]: x = 133, y = 452, inputs = 3, label = Collect
+    // page group: connect
+    //
+main_Collect_3_out_1 = 
+    Collect(
+    main_Receiver_1_out_1,
+    main_AutoColor_4_out_1,
+    main_Color_2_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[35]: x = 144, y = 428, inputs = 1, label = scattered
+    // page group: scattered
+    //
+scattered = main_AutoColor_5_out_1;
+    // 
+    // node Receiver[54]: x = 112, y = 117, inputs = 1, label = scattered
+    // page group: image
+    //
+main_Receiver_54_out_1[cache: 0] = scattered;
+    // 
+    // node Transmitter[2]: x = 119, y = 556, inputs = 1, label = UsingConnect
+    // page group: connect
+    //
+UsingConnect = main_Collect_3_out_1;
+    // 
+    // node Receiver[3]: x = 194, y = 120, inputs = 1, label = UsingConnect
+    // page group: image
+    //
+main_Receiver_3_out_1[cache: 0] = UsingConnect;
+    // 
+    // node Receiver[2]: x = 7, y = 116, inputs = 1, label = magenta_disks
+    // page group: regrid
+    //
+main_Receiver_2_out_1[cache: 0] = magenta_disks;
+    // 
+    // node ShowConnections[4]: x = 214, y = 285, inputs = 1, label = ShowConnections
+    // page group: regrid
+    //
+main_ShowConnections_4_out_1 = 
+    ShowConnections(
+    main_AutoGrid_1_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Color[7]: x = 275, y = 378, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "black"
+    // page group: regrid
+    //
+main_Color_7_out_1 = 
+    Color(
+    main_ShowConnections_4_out_1,
+    main_Color_7_in_2,
+    main_Color_7_in_3,
+    main_Color_7_in_4,
+    main_Color_7_in_5
+    ) [instance: 7, cache: 1];
+    // 
+    // node Collect[6]: x = 93, y = 487, inputs = 3, label = Collect
+    // page group: regrid
+    //
+main_Collect_6_out_1 = 
+    Collect(
+    main_Receiver_2_out_1,
+    main_AutoColor_7_out_1,
+    main_Color_7_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[3]: x = 77, y = 564, inputs = 1, label = UsingAutoGrid
+    // page group: regrid
+    //
+UsingAutoGrid = main_Collect_6_out_1;
+    // 
+    // node Receiver[4]: x = 307, y = 124, inputs = 1, label = UsingAutoGrid
+    // page group: image
+    //
+main_Receiver_4_out_1[cache: 0] = UsingAutoGrid;
+    // 
+    // node Switch[2]: x = 119, y = 350, inputs = 4, label = Switch
+    // page group: image
+    //
+main_Switch_2_out_1 = 
+    Switch(
+    main_Selector_2_out_1,
+    main_Receiver_54_out_1,
+    main_Receiver_3_out_1,
+    main_Receiver_4_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[5]: x = 253, y = 448, inputs = 2, label = Collect
+    // page group: image
+    //
+main_Collect_5_out_1 = 
+    Collect(
+    main_Switch_2_out_1,
+    main_Caption_2_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Image[3]: x = 263, y = 541, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_3"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [-6.875 -13.925 0]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [-6.875 -13.925 925.479]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 345.87
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 348
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 1.234
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 21.1685
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[29]: defaulting = 0, visible = 0, type = 3, value = 0
+    // page group: image
+    // depth: value = 24
+    // window: position = (0.5266,0.0947), size = 0.2828x0.4873
+    // internal caching: 1
+    // interaction mode = NONE
+    //
+main_Image_3_out_1,
+main_Image_3_out_2,
+main_Image_3_out_3 = 
+    Image(
+    main_Image_3_in_1,
+    main_Collect_5_out_1,
+    main_Image_3_in_3,
+    main_Image_3_in_4,
+    main_Image_3_in_5,
+    main_Image_3_in_6,
+    main_Image_3_in_7,
+    main_Image_3_in_8,
+    main_Image_3_in_9,
+    main_Image_3_in_10,
+    main_Image_3_in_11,
+    main_Image_3_in_12,
+    main_Image_3_in_13,
+    main_Image_3_in_14,
+    main_Image_3_in_15,
+    main_Image_3_in_16,
+    main_Image_3_in_17,
+    main_Image_3_in_18,
+    main_Image_3_in_19,
+    main_Image_3_in_20,
+    main_Image_3_in_21,
+    main_Image_3_in_22,
+    main_Image_3_in_23,
+    main_Image_3_in_24,
+    main_Image_3_in_25,
+    main_Image_3_in_26,
+    main_Image_3_in_27,
+    main_Image_3_in_28,
+    main_Image_3_in_29,
+    main_Image_3_in_30,
+    main_Image_3_in_31,
+    main_Image_3_in_32,
+    main_Image_3_in_33,
+    main_Image_3_in_34,
+    main_Image_3_in_35,
+    main_Image_3_in_36,
+    main_Image_3_in_37,
+    main_Image_3_in_38,
+    main_Image_3_in_39,
+    main_Image_3_in_40,
+    main_Image_3_in_41,
+    main_Image_3_in_42,
+    main_Image_3_in_43,
+    main_Image_3_in_44,
+    main_Image_3_in_45,
+    main_Image_3_in_46,
+    main_Image_3_in_47,
+    main_Image_3_in_48
+    ) [instance: 3, cache: 1];
+    //
+    // decorator Annotate	pos=(81,32) size=269x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 37
+    // annotation user: This page imports the scattered data.
+    // annotation user_end: <NULL>
+    // page group: import
+    //
+    // decorator Annotate	pos=(90,29) size=494x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 71
+    // annotation user: This page creates a visualization of the scattered points using glyphs.
+    // annotation user_end: <NULL>
+    // page group: scattered
+    //
+    // decorator Annotate	pos=(72,43) size=479x60 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 181
+    // annotation user: This page creates a visualization of the scattered points as magenta
+    // annotation user: colored disks, for use with the "connected" realizations to show the
+    // annotation user: original locations of the scattered points.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: disks
+    //
+    // decorator Annotate	pos=(51,21) size=505x60 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 212
+    // annotation user: This page connects the scattered points using the Connect module. It
+    // annotation user: then autocolors the result, and collects it with a visualization of the
+    // annotation user: new connections, plus disks representing the original scattered points.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: connect
+    //
+    // decorator Annotate	pos=(26,22) size=503x60 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 209
+    // annotation user: This page uses the AutoGrid module to connect the scattered points.
+    // annotation user: The result is autocolored, then collected with a visualization of the new 
+    // annotation user: connections, and disks representing the original scattered points.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: regrid
+    //
+    // decorator Annotate	pos=(103,36) size=461x60 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 150
+    // annotation user: This page allows the user to select which visualization to see: the
+    // annotation user: original scattered points, the result using Connect, or the result
+    // annotation user: using AutoGrid.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: image
+// network: end of macro body
+CacheScene("Image_3", main_Image_3_out_1, main_Image_3_out_2);
+}
+main_Import_1_in_1 = "CO2.general";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Include_1_in_2 = 0.0;
+main_Include_1_in_3 = NULL;
+main_Include_1_in_4 = NULL;
+main_Include_1_in_5 = NULL;
+main_Include_1_in_6 = NULL;
+main_Include_1_out_1 = NULL;
+main_Select_1_in_2 = 17;
+main_Select_1_in_3 = NULL;
+main_Select_1_out_1 = NULL;
+main_Transmitter_34_out_1 = NULL;
+main_Receiver_52_out_1 = NULL;
+main_Connect_1_in_2 = NULL;
+main_Connect_1_in_3 = NULL;
+main_Connect_1_out_1 = NULL;
+main_AutoColor_4_in_2 = NULL;
+main_AutoColor_4_in_3 = NULL;
+main_AutoColor_4_in_4 = NULL;
+main_AutoColor_4_in_5 = NULL;
+main_AutoColor_4_in_6 = NULL;
+main_AutoColor_4_in_7 = NULL;
+main_AutoColor_4_in_8 = NULL;
+main_AutoColor_4_in_9 = NULL;
+main_AutoColor_4_in_10 = NULL;
+main_AutoColor_4_out_1 = NULL;
+main_Receiver_50_out_1 = NULL;
+main_AutoGlyph_1_in_2 = NULL;
+main_AutoGlyph_1_in_3 = NULL;
+main_AutoGlyph_1_in_4 = NULL;
+main_AutoGlyph_1_in_5 = NULL;
+main_AutoGlyph_1_in_6 = NULL;
+main_AutoGlyph_1_in_7 = NULL;
+main_AutoGlyph_1_out_1 = NULL;
+main_AutoColor_5_in_2 = NULL;
+main_AutoColor_5_in_3 = NULL;
+main_AutoColor_5_in_4 = NULL;
+main_AutoColor_5_in_5 = NULL;
+main_AutoColor_5_in_6 = NULL;
+main_AutoColor_5_in_7 = NULL;
+main_AutoColor_5_in_8 = NULL;
+main_AutoColor_5_in_9 = NULL;
+main_AutoColor_5_in_10 = NULL;
+main_AutoColor_5_out_1 = NULL;
+main_Receiver_53_out_1 = NULL;
+main_Scalar_2_in_1 = "Scalar_2";
+main_Scalar_2_in_2 = NULL;
+main_Scalar_2_in_3 = 2.0 ;
+main_Scalar_2_in_4 = NULL;
+main_Scalar_2_in_5 = NULL;
+main_Scalar_2_in_6 = NULL;
+main_Scalar_2_in_7 = NULL;
+main_Scalar_2_in_8 = NULL;
+main_Scalar_2_in_9 = NULL;
+main_Scalar_2_in_10 = NULL;
+main_Scalar_2_in_11 = NULL;
+main_Scalar_2_out_1 = 2.0 ;
+main_Scalar_3_in_1 = "Scalar_3";
+main_Scalar_3_in_2 = NULL;
+main_Scalar_3_in_3 = 50.0 ;
+main_Scalar_3_in_4 = NULL;
+main_Scalar_3_in_5 = NULL;
+main_Scalar_3_in_6 = NULL;
+main_Scalar_3_in_7 = NULL;
+main_Scalar_3_in_8 = NULL;
+main_Scalar_3_in_9 = NULL;
+main_Scalar_3_in_10 = NULL;
+main_Scalar_3_in_11 = NULL;
+main_Scalar_3_out_1 = 50.0 ;
+main_AutoGrid_1_in_3 = NULL;
+main_AutoGrid_1_in_5 = NULL;
+main_AutoGrid_1_in_6 = NULL;
+main_AutoGrid_1_out_1 = NULL;
+main_AutoColor_7_in_2 = NULL;
+main_AutoColor_7_in_3 = NULL;
+main_AutoColor_7_in_4 = NULL;
+main_AutoColor_7_in_5 = NULL;
+main_AutoColor_7_in_6 = NULL;
+main_AutoColor_7_in_7 = NULL;
+main_AutoColor_7_in_8 = NULL;
+main_AutoColor_7_in_9 = NULL;
+main_AutoColor_7_in_10 = NULL;
+main_AutoColor_7_out_1 = NULL;
+main_Receiver_51_out_1 = NULL;
+main_AutoGlyph_6_in_2 = NULL;
+main_AutoGlyph_6_in_3 = NULL;
+main_AutoGlyph_6_in_4 = .2;
+main_AutoGlyph_6_in_5 = 1.00000;
+main_AutoGlyph_6_in_6 = NULL;
+main_AutoGlyph_6_in_7 = NULL;
+main_AutoGlyph_6_out_1 = NULL;
+main_Selector_2_in_1 = "Selector_2";
+main_Selector_2_in_2 = "using AutoGrid module" ;
+main_Selector_2_in_3 = 3 ;
+main_Selector_2_in_4 = NULL;
+main_Selector_2_in_5 = NULL;
+main_Selector_2_in_6 = NULL;
+main_Selector_2_in_7 = NULL;
+main_Selector_2_out_1 = 3 ;
+main_Selector_2_out_2 = "using AutoGrid module" ;
+main_Caption_2_in_2 = NULL;
+main_Caption_2_in_3 = NULL;
+main_Caption_2_in_4 = NULL;
+main_Caption_2_in_5 = NULL;
+main_Caption_2_in_6 = 20;
+main_Caption_2_in_7 = "roman_tser";
+main_Caption_2_in_8 = NULL;
+main_Caption_2_in_9 = NULL;
+main_Caption_2_out_1 = NULL;
+main_Color_6_in_2 = "magenta";
+main_Color_6_in_3 = NULL;
+main_Color_6_in_4 = NULL;
+main_Color_6_in_5 = NULL;
+main_Color_6_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_ShowConnections_2_out_1 = NULL;
+main_Color_2_in_2 = "black";
+main_Color_2_in_3 = NULL;
+main_Color_2_in_4 = NULL;
+main_Color_2_in_5 = NULL;
+main_Color_2_out_1 = NULL;
+main_Collect_3_out_1 = NULL;
+main_Transmitter_35_out_1 = NULL;
+main_Receiver_54_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_ShowConnections_4_out_1 = NULL;
+main_Color_7_in_2 = "black";
+main_Color_7_in_3 = NULL;
+main_Color_7_in_4 = NULL;
+main_Color_7_in_5 = NULL;
+main_Color_7_out_1 = NULL;
+main_Collect_6_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_Switch_2_out_1 = NULL;
+main_Collect_5_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_3_in_1 = "Image_3";
+main_Image_3_in_3 = "X24,,";
+main_Image_3_in_4 = 1;
+main_Image_3_in_5 = [-6.875 -13.925 0];
+main_Image_3_in_6 = [-6.875 -13.925 925.479];
+main_Image_3_in_7 = 345.87;
+main_Image_3_in_8 = 348;
+main_Image_3_in_9 = 1.234;
+main_Image_3_in_10 = [0 1 0];
+main_Image_3_in_11 = NULL;
+main_Image_3_in_12 = 0;
+main_Image_3_in_13 = NULL;
+main_Image_3_in_14 = 1;
+main_Image_3_in_15 = NULL;
+main_Image_3_in_16 = NULL;
+main_Image_3_in_17 = NULL;
+main_Image_3_in_18 = NULL;
+main_Image_3_in_19 = 0;
+main_Image_3_in_20 = NULL;
+main_Image_3_in_21 = NULL;
+main_Image_3_in_22 = NULL;
+main_Image_3_in_23 = NULL;
+main_Image_3_in_25 = NULL;
+main_Image_3_in_26 = NULL;
+main_Image_3_in_27 = NULL;
+main_Image_3_in_28 = NULL;
+main_Image_3_in_29 = 0;
+main_Image_3_in_30 = NULL;
+main_Image_3_in_31 = NULL;
+main_Image_3_in_32 = NULL;
+main_Image_3_in_33 = NULL;
+main_Image_3_in_34 = NULL;
+main_Image_3_in_35 = NULL;
+main_Image_3_in_36 = NULL;
+main_Image_3_in_37 = NULL;
+main_Image_3_in_38 = NULL;
+main_Image_3_in_39 = NULL;
+main_Image_3_in_40 = NULL;
+main_Image_3_in_41 = NULL;
+main_Image_3_in_42 = NULL;
+main_Image_3_in_43 = NULL;
+main_Image_3_in_44 = NULL;
+main_Image_3_in_45 = NULL;
+main_Image_3_in_46 = NULL;
+main_Image_3_in_47 = NULL;
+main_Image_3_in_48 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

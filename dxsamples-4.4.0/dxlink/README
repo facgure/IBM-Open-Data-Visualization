@@ -1,0 +1,57 @@
+The files in this directory show some examples of how to
+use dxlink to communicate with Data Explorer. Copy the
+files in this directory to your own directory, rename the
+appropriate makefile (Makefile_ibm6000, etc.) to Makefile,
+then type either
+
+make 
+       to make all the demos
+or
+       make sealevel
+or
+       make maptoplane
+or
+       make xapp 
+or
+       make xapp_supervise 
+or
+       make demoapp 
+
+to make an executable. To run, simply type 
+       sealevel
+or
+       maptoplane
+or
+       xapp 
+or
+       xapp_supervise 
+or
+       demoapp netlist 
+
+The sealevel example sends a series of isosurface values to
+a visual program.
+
+The maptoplane example not only sends a series of maptoplane
+positions, but it also receives information (the maximum value
+on the maptoplane) back from Data Explorer.
+
+The xapp example creates a standalone motif application which
+presents a set of radio buttons. Depending on which radio
+button is pushed, a different set of Data Explorer script
+language commands are sent to the executive. Output is listened
+for and handled using DXOutputValue and DXLSetValueHandler.
+The output (the max value of the field) is presented in the
+motif window.
+
+The xapp_supervise example creates a standalone motif application which
+presents a set of radio buttons. Depending on which radio
+button is pushed, a different filename is sent to a previously
+defined macro. An image is created and displayed within the user-
+created gui. Interaction within the image is possible using
+the SuperviseWindow and SuperviseState modules.
+
+The demoapp example creates a graphical user interface containing
+a number of thumbnail images (specified in the netlist file). When
+the user presses a button corresponding to the thumbnail, a visual
+program is loaded so that the user can see the particular visualization.
+

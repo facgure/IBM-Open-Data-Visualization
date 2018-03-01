@@ -1,0 +1,42 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+   // Create a camera for the data
+camera = AutoCamera(isosurface);
+
+   // Create a macro. The macro takes as input a light, and collects the
+   // light with the isosurface.  The collection is displayed using the
+   // camera
+macro makepicture(light)
+{
+  collected = Collect(isosurface, distantlight);
+  Display(collected,camera);
+}
+
+
+    // Create a light in the direction [1 1 1]
+lightdirection = [1 1 1];
+    // Give it the color white
+lightcolor = [1 1 1];
+    // Make the light
+distantlight = Light(lightdirection, lightcolor);
+    // Call the macro
+makepicture(distantlight);
+
+    // Change the color to green
+lightcolor = [0 1 0];
+distantlight = Light(lightdirection, lightcolor);
+makepicture(distantlight);
+
+    // Change the direction to straight out in the z direction
+lightdirection = [0 0 1];
+    // The color is red 
+lightcolor = [1 0 0];
+distantlight = Light(lightdirection, lightcolor);
+makepicture(distantlight);
+
+

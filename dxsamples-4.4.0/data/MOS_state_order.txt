@@ -1,0 +1,53 @@
+# Abbrev_order  FullName_order  Abbrev  FullName
+ 0  1 AK Alaska
+ 1  0 AL Alabama
+ 2  3 AR Arkansas
+ 3  2 AZ Arizona
+ 4  4 CA California
+ 5  5 CO Colorado
+ 6  6 CT Connecticut
+ 7  8 DC District of Columbia
+ 8  7 DE Delaware
+ 9  9 FL Florida
+10 10 GA Georgia
+11 11 HI Hawaii
+12 15 IA Iowa
+13 12 ID Idaho
+14 13 IL Illinois
+15 14 IN Indiana
+16 16 KS Kansas
+17 17 KY Kentucky
+18 18 LA Louisiana
+19 21 MA Massachusetts
+20 20 MD Maryland
+21 19 ME Maine
+22 22 MI Michigan
+23 23 MN Minnesota
+24 25 MO Missouri
+25 24 MS Mississippi
+26 26 MT Montana
+27 33 NC North Carolina
+28 34 ND North Dakota
+29 27 NE Nebraska
+30 29 NH New Hampshire
+31 30 NJ New Jersey
+32 31 NM New Mexico
+33 28 NV Nevada
+34 32 NY New York
+35 35 OH Ohio
+36 36 OK Oklahoma
+37 37 OR Oregon
+38 38 PA Pennsylvania
+39 39 PR Puerto Rico
+40 40 RI Rhode Island
+41 41 SC South Carolina
+42 42 SD South Dakota
+43 43 TN Tennessee
+44 44 TX Texas
+45 45 UT Utah
+46 47 VA Virginia
+47 46 VT Vermont
+48 48 WA Washington
+49 50 WI Wisconsin
+50 49 WV West Virginia
+51 51 WY Wyoming

@@ -1,0 +1,5 @@
+MODULE HelloErrorChecking 
+CATEGORY Greetings 
+DESCRIPTION Prefixes "hello" to the input string 
+INPUT value;  string;  "world"; input string
+OUTPUT greeting;  string; prefixed string 

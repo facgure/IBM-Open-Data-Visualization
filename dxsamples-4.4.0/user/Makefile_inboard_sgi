@@ -1,0 +1,16 @@
+FILES = user.o add.o makex.o hello.o
+
+BASE = /usr/lpp/dx
+
+CFLAGS = -O -Dsgi -I$(BASE)/include
+LIBS =   -L$(BASE)/lib_sgi -lDX -lsun -lgl_s -ly -ll -lX11 -lm -lmpc
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user.c:		user_inboard.mdf
+		mdf2c user_inboard.mdf > user.c
+

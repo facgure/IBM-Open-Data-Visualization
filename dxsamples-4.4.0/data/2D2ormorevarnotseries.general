@@ -1,0 +1,13 @@
+file = 2D2ormorevarnotseries.data
+grid = 301 x 121
+format = msb binary
+interleaving = record-vector
+majority = column
+header = marker "end\n"
+field = elevation, gradient, elevation_squared
+structure = scalar, 2-vector, scalar
+type = float, float, float
+dependency = positions, positions, positions
+positions = regular, regular, 262.5,  .0833333, 34.1667, -.0833333
+
+end

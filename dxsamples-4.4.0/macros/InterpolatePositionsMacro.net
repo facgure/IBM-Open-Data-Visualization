@@ -1,0 +1,88 @@
+//
+// time: Wed Feb 12 11:23:28 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE InterpolatePositions
+// CATEGORY Macros
+// DESCRIPTION Interpolates within a list of numbers
+// INPUT value_list; value list or string list; (none); input data
+// INPUT desired_value; field or value or value list; 0; interp value
+// INPUT num_items; integer; (none); number of items in the list
+// OUTPUT out; field or value or value list; interp out data
+// End MDF
+//
+// comment: From a list, group or series of fields, arrays, etc. linearly interpolate the input data to an intermediate value.
+// workspace: width = 390, height = 535
+// layout: snap = 0, width = 50, height = 50, align = CC
+//
+macro InterpolatePositions(
+ value_list
+,desired_value = 0
+,num_items
+) -> (
+ out
+) {
+    // 
+    // node Input[3]: x = 332, y = 39, inputs = 0, label = Input
+    // parameter: position = 3, name = 'num_items', value = ' ', descriptive = 0, description = 'number of items in the list', required = 1, visible = 1
+    //
+InterpolatePositions_Input_3_out_1 = num_items;
+    // 
+    // node Enumerate[1]: x = 270, y = 153, inputs = 5, label = Enumerate
+    // input[1]: defaulting = 0, visible = 1, type = 29, value = 0
+    // input[4]: defaulting = 0, visible = 1, type = 29, value = 1
+    //
+InterpolatePositions_Enumerate_1_out_1 = 
+    Enumerate(
+    0,
+    NULL,
+    InterpolatePositions_Input_3_out_1,
+    1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[1]: x = 178, y = 34, inputs = 0, label = Input
+    // parameter: position = 1, name = 'value_list', value = ' ', descriptive = 0, description = 'input data', required = 1, visible = 1
+    //
+InterpolatePositions_Input_1_out_1 = value_list;
+    // 
+    // node Construct[8]: x = 268, y = 290, inputs = 4, label = Construct
+    //
+InterpolatePositions_Construct_8_out_1 = 
+    Construct(
+    InterpolatePositions_Enumerate_1_out_1,
+    NULL,
+    NULL,
+    InterpolatePositions_Input_1_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Input[2]: x = 242, y = 37, inputs = 0, label = Input
+    // parameter: position = 2, name = 'desired_value', value = '0', descriptive = 0, description = 'interp value', required = 0, visible = 1
+    //
+InterpolatePositions_Input_2_out_1 = desired_value;
+    // 
+    // node Map[1]: x = 222, y = 369, inputs = 4, label = Map
+    //
+InterpolatePositions_Map_1_out_1 = 
+    Map(
+    InterpolatePositions_Input_2_out_1,
+    InterpolatePositions_Construct_8_out_1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 210, y = 473, inputs = 1, label = Output
+    // parameter: position = 1, name = 'out', value = ' ', descriptive = 0, description = 'interp out data', required = 0, visible = 1
+    //
+out = InterpolatePositions_Map_1_out_1;
+// network: end of macro body
+}
+InterpolatePositions_Input_3_out_1 = NULL;
+InterpolatePositions_Enumerate_1_out_1 = NULL;
+InterpolatePositions_Input_1_out_1 = NULL;
+InterpolatePositions_Construct_8_out_1 = NULL;
+InterpolatePositions_Input_2_out_1 = NULL;
+InterpolatePositions_Map_1_out_1 = NULL;

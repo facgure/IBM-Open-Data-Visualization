@@ -1,0 +1,4 @@
+#! /bin/csh
+
+setenv DX_USER_INTERACTOR_FILE ./interactors/interactors
+dx -edit -macros ./nets -program ./nets/peruDX 

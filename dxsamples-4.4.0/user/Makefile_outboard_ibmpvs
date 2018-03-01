@@ -1,0 +1,15 @@
+FILES = outboard.o hello.o 
+
+BASE = /usr/lpp/dx
+
+CC = pgcc
+
+CFLAGS   = -O -Dibmpvs -I. -I$(BASE)/include
+LITELIBS = -L$(BASE)/lib_ibmpvs -lDXlite -lm -ly -ll -liop -lm -lmpc
+
+
+hello:	hello.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES) $(LITELIBS) -o hello
+	rm outboard.o
+

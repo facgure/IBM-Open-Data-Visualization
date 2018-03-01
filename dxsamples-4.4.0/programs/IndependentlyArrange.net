@@ -1,0 +1,420 @@
+//
+// time: Wed Apr  9 15:36:50 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+//
+// macro reference (direct): ArrangeMember ArrangeMemberMacro.net
+include "ArrangeMemberMacro.net"
+//
+// MODULE main
+//
+// comment: This visual program uses the ArrangeMember macro (found in samples/macros) to place independently interactive windows within a single larger window. To experiment, open the control panel. Each window can be independently set to either software
+// comment: or hardware rendering (if available) and the interaction modes can be independently set.
+// workspace: width = 980, height = 610
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Construct[1]: x = 50, y = 15, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[-1 -1  -1]}
+    // input[2]: defaulting = 0, visible = 1, type = 16777224, value = {[2 2 2]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [2 2 2]
+    // input[4]: defaulting = 0, visible = 1, type = 16777245, value = {1 .. 8}
+    //
+main_Construct_1_out_1 = 
+    Construct(
+    main_Construct_1_in_1,
+    main_Construct_1_in_2,
+    main_Construct_1_in_3,
+    main_Construct_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowBoundary[1]: x = 41, y = 105, inputs = 2, label = ShowBoundary
+    //
+main_ShowBoundary_1_out_1 = 
+    ShowBoundary(
+    main_Construct_1_out_1,
+    main_ShowBoundary_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 67, y = 185, inputs = 10, label = AutoColor
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_ShowBoundary_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[3]: x = 196, y = 286, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_3"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "software" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "hardware" "software" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "software" 
+    //
+    // 
+    // node Selector[1]: x = 100, y = 280, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Rotate" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "Zoom" "Pan" "Rotate" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 2 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "Rotate" 
+    //
+    // 
+    // node SuperviseWindow[1]: x = 202, y = 59, inputs = 10, label = SuperviseWindow
+    //
+main_SuperviseWindow_1_out_1,
+main_SuperviseWindow_1_out_2,
+main_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    main_SuperviseWindow_1_in_1,
+    main_SuperviseWindow_1_in_2,
+    main_SuperviseWindow_1_in_3,
+    main_SuperviseWindow_1_in_4,
+    main_SuperviseWindow_1_in_5,
+    main_SuperviseWindow_1_in_6,
+    main_SuperviseWindow_1_in_7,
+    main_SuperviseWindow_1_in_8,
+    main_SuperviseWindow_1_in_9,
+    main_SuperviseWindow_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node ArrangeMember[1]: x = 48, y = 375, inputs = 14, label = ArrangeMember
+    // input[2]: visible = 1
+    // input[7]: visible = 1
+    // input[11]: defaulting = 0, visible = 1, type = 32, value = "image"
+    // input[12]: defaulting = 0, visible = 1, type = 16777245, value = {4}
+    // input[13]: defaulting = 0, visible = 1, type = 16777245, value = {2}
+    // input[14]: defaulting = 0, visible = 1, type = 16777245, value = {0}
+    //
+main_ArrangeMember_1_out_1,
+main_ArrangeMember_1_out_2,
+main_ArrangeMember_1_out_3 = 
+    ArrangeMember(
+    main_AutoColor_1_out_1,
+    main_Selector_3_out_2,
+    main_ArrangeMember_1_in_3,
+    main_ArrangeMember_1_in_4,
+    main_ArrangeMember_1_in_5,
+    main_ArrangeMember_1_in_6,
+    main_Selector_1_out_1,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_1,
+    main_ArrangeMember_1_in_10,
+    main_ArrangeMember_1_in_11,
+    main_ArrangeMember_1_in_12,
+    main_ArrangeMember_1_in_13,
+    main_ArrangeMember_1_in_14
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[5]: x = 37, y = 466, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_5"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "software" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "hardware" "software" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "software" 
+    //
+    // 
+    // node Selector[2]: x = 159, y = 474, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_2"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Rotate" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "Zoom" "Pan" "Rotate" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 2 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "Rotate" 
+    //
+    // 
+    // node ArrangeMember[2]: x = 20, y = 548, inputs = 14, label = ArrangeMember
+    // input[2]: visible = 1
+    // input[7]: visible = 1
+    // input[11]: defaulting = 0, visible = 1, type = 32, value = "image"
+    // input[12]: defaulting = 0, visible = 1, type = 16777245, value = {4}
+    // input[13]: defaulting = 0, visible = 1, type = 16777245, value = {2}
+    // input[14]: defaulting = 0, visible = 1, type = 16777245, value = {1}
+    //
+main_ArrangeMember_2_out_1,
+main_ArrangeMember_2_out_2,
+main_ArrangeMember_2_out_3 = 
+    ArrangeMember(
+    main_AutoColor_1_out_1,
+    main_Selector_5_out_2,
+    main_ArrangeMember_2_in_3,
+    main_ArrangeMember_2_in_4,
+    main_ArrangeMember_2_in_5,
+    main_ArrangeMember_2_in_6,
+    main_Selector_2_out_1,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_1,
+    main_ArrangeMember_2_in_10,
+    main_ArrangeMember_2_in_11,
+    main_ArrangeMember_2_in_12,
+    main_ArrangeMember_2_in_13,
+    main_ArrangeMember_2_in_14
+    ) [instance: 2, cache: 1];
+    // 
+    // node Selector[6]: x = 370, y = 251, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_6"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "software" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "hardware" "software" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "software" 
+    //
+    // 
+    // node Selector[7]: x = 495, y = 264, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_7"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Pan" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 1 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "Zoom" "Pan" "Rotate" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 2 1 0 }
+    // output[1]: visible = 1, type = 29, value = 1 
+    // output[2]: visible = 1, type = 32, value = "Pan" 
+    //
+    // 
+    // node ArrangeMember[3]: x = 343, y = 375, inputs = 14, label = ArrangeMember
+    // input[2]: visible = 1
+    // input[7]: visible = 1
+    // input[11]: defaulting = 0, visible = 1, type = 32, value = "image"
+    // input[12]: defaulting = 0, visible = 1, type = 16777245, value = {4}
+    // input[13]: defaulting = 0, visible = 1, type = 16777245, value = {2}
+    // input[14]: defaulting = 0, visible = 1, type = 16777245, value = {2}
+    //
+main_ArrangeMember_3_out_1,
+main_ArrangeMember_3_out_2,
+main_ArrangeMember_3_out_3 = 
+    ArrangeMember(
+    main_AutoColor_1_out_1,
+    main_Selector_6_out_2,
+    main_ArrangeMember_3_in_3,
+    main_ArrangeMember_3_in_4,
+    main_ArrangeMember_3_in_5,
+    main_ArrangeMember_3_in_6,
+    main_Selector_7_out_1,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_1,
+    main_ArrangeMember_3_in_10,
+    main_ArrangeMember_3_in_11,
+    main_ArrangeMember_3_in_12,
+    main_ArrangeMember_3_in_13,
+    main_ArrangeMember_3_in_14
+    ) [instance: 3, cache: 1];
+    // 
+    // node Selector[8]: x = 362, y = 457, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_8"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "software" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "hardware" "software" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "software" 
+    //
+    // 
+    // node Selector[9]: x = 443, y = 455, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_9"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Zoom" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 2 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "Zoom" "Pan" "Rotate" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 2 1 0 }
+    // output[1]: visible = 1, type = 29, value = 2 
+    // output[2]: visible = 1, type = 32, value = "Zoom" 
+    //
+    // 
+    // node ArrangeMember[4]: x = 312, y = 542, inputs = 14, label = ArrangeMember
+    // input[2]: visible = 1
+    // input[7]: visible = 1
+    // input[11]: defaulting = 0, visible = 1, type = 32, value = "image"
+    // input[12]: defaulting = 0, visible = 1, type = 16777245, value = {4}
+    // input[13]: defaulting = 0, visible = 1, type = 16777245, value = {2}
+    // input[14]: defaulting = 0, visible = 1, type = 16777245, value = {3}
+    //
+main_ArrangeMember_4_out_1,
+main_ArrangeMember_4_out_2,
+main_ArrangeMember_4_out_3 = 
+    ArrangeMember(
+    main_AutoColor_1_out_1,
+    main_Selector_8_out_2,
+    main_ArrangeMember_4_in_3,
+    main_ArrangeMember_4_in_4,
+    main_ArrangeMember_4_in_5,
+    main_ArrangeMember_4_in_6,
+    main_Selector_9_out_1,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_1,
+    main_ArrangeMember_4_in_10,
+    main_ArrangeMember_4_in_11,
+    main_ArrangeMember_4_in_12,
+    main_ArrangeMember_4_in_13,
+    main_ArrangeMember_4_in_14
+    ) [instance: 4, cache: 1];
+    //
+    // decorator Annotate	pos=(354,140) size=271x44 style(Label), value = <NULL>
+    // annotation user_begin: 42
+    // annotation user: SuperviseWindow creates the parent 
+    // annotation user: window
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(574,466) size=406x124 style(Label), value = <NULL>
+    // annotation user_begin: 314
+    // annotation user: Each ArrangeMember macro places a window within
+    // annotation user: the parent window created by SuperviseWindow.
+    // annotation user: The Selector interactors for each one choose the
+    // annotation user: rendering mode (hardware or software) and the 
+    // annotation user: interaction mode (pan, zoom, rotate) for that subwindow.
+    // annotation user: The placement of the window in the parent window is also
+    // annotation user: specified.
+    // annotation user_end: <NULL>
+// network: end of macro body
+}
+main_Construct_1_in_1 = {[-1 -1  -1]};
+main_Construct_1_in_2 = {[2 2 2]};
+main_Construct_1_in_3 = [2 2 2];
+main_Construct_1_in_4 = {1 .. 8};
+main_Construct_1_out_1 = NULL;
+main_ShowBoundary_1_in_2 = NULL;
+main_ShowBoundary_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_Selector_3_in_1 = "Selector_3";
+main_Selector_3_in_2 = "software" ;
+main_Selector_3_in_3 = 0 ;
+main_Selector_3_in_4 = NULL;
+main_Selector_3_in_5 = NULL;
+main_Selector_3_in_6 = NULL;
+main_Selector_3_in_7 = NULL;
+main_Selector_3_out_2 = "software" ;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "Rotate" ;
+main_Selector_1_in_3 = 0 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_1 = 0 ;
+main_SuperviseWindow_1_in_1 = NULL;
+main_SuperviseWindow_1_in_2 = NULL;
+main_SuperviseWindow_1_in_3 = NULL;
+main_SuperviseWindow_1_in_4 = NULL;
+main_SuperviseWindow_1_in_5 = NULL;
+main_SuperviseWindow_1_in_6 = NULL;
+main_SuperviseWindow_1_in_7 = NULL;
+main_SuperviseWindow_1_in_8 = NULL;
+main_SuperviseWindow_1_in_9 = NULL;
+main_SuperviseWindow_1_in_10 = NULL;
+main_SuperviseWindow_1_out_1 = NULL;
+main_SuperviseWindow_1_out_2 = NULL;
+main_ArrangeMember_1_in_3 = NULL;
+main_ArrangeMember_1_in_4 = NULL;
+main_ArrangeMember_1_in_5 = NULL;
+main_ArrangeMember_1_in_6 = NULL;
+main_ArrangeMember_1_in_10 = NULL;
+main_ArrangeMember_1_in_11 = "image";
+main_ArrangeMember_1_in_12 = {4};
+main_ArrangeMember_1_in_13 = {2};
+main_ArrangeMember_1_in_14 = {0};
+main_Selector_5_in_1 = "Selector_5";
+main_Selector_5_in_2 = "software" ;
+main_Selector_5_in_3 = 0 ;
+main_Selector_5_in_4 = NULL;
+main_Selector_5_in_5 = NULL;
+main_Selector_5_in_6 = NULL;
+main_Selector_5_in_7 = NULL;
+main_Selector_5_out_2 = "software" ;
+main_Selector_2_in_1 = "Selector_2";
+main_Selector_2_in_2 = "Rotate" ;
+main_Selector_2_in_3 = 0 ;
+main_Selector_2_in_4 = NULL;
+main_Selector_2_in_5 = NULL;
+main_Selector_2_in_6 = NULL;
+main_Selector_2_in_7 = NULL;
+main_Selector_2_out_1 = 0 ;
+main_ArrangeMember_2_in_3 = NULL;
+main_ArrangeMember_2_in_4 = NULL;
+main_ArrangeMember_2_in_5 = NULL;
+main_ArrangeMember_2_in_6 = NULL;
+main_ArrangeMember_2_in_10 = NULL;
+main_ArrangeMember_2_in_11 = "image";
+main_ArrangeMember_2_in_12 = {4};
+main_ArrangeMember_2_in_13 = {2};
+main_ArrangeMember_2_in_14 = {1};
+main_Selector_6_in_1 = "Selector_6";
+main_Selector_6_in_2 = "software" ;
+main_Selector_6_in_3 = 0 ;
+main_Selector_6_in_4 = NULL;
+main_Selector_6_in_5 = NULL;
+main_Selector_6_in_6 = NULL;
+main_Selector_6_in_7 = NULL;
+main_Selector_6_out_2 = "software" ;
+main_Selector_7_in_1 = "Selector_7";
+main_Selector_7_in_2 = "Pan" ;
+main_Selector_7_in_3 = 1 ;
+main_Selector_7_in_4 = NULL;
+main_Selector_7_in_5 = NULL;
+main_Selector_7_in_6 = NULL;
+main_Selector_7_in_7 = NULL;
+main_Selector_7_out_1 = 1 ;
+main_ArrangeMember_3_in_3 = NULL;
+main_ArrangeMember_3_in_4 = NULL;
+main_ArrangeMember_3_in_5 = NULL;
+main_ArrangeMember_3_in_6 = NULL;
+main_ArrangeMember_3_in_10 = NULL;
+main_ArrangeMember_3_in_11 = "image";
+main_ArrangeMember_3_in_12 = {4};
+main_ArrangeMember_3_in_13 = {2};
+main_ArrangeMember_3_in_14 = {2};
+main_Selector_8_in_1 = "Selector_8";
+main_Selector_8_in_2 = "software" ;
+main_Selector_8_in_3 = 0 ;
+main_Selector_8_in_4 = NULL;
+main_Selector_8_in_5 = NULL;
+main_Selector_8_in_6 = NULL;
+main_Selector_8_in_7 = NULL;
+main_Selector_8_out_2 = "software" ;
+main_Selector_9_in_1 = "Selector_9";
+main_Selector_9_in_2 = "Zoom" ;
+main_Selector_9_in_3 = 2 ;
+main_Selector_9_in_4 = NULL;
+main_Selector_9_in_5 = NULL;
+main_Selector_9_in_6 = NULL;
+main_Selector_9_in_7 = NULL;
+main_Selector_9_out_1 = 2 ;
+main_ArrangeMember_4_in_3 = NULL;
+main_ArrangeMember_4_in_4 = NULL;
+main_ArrangeMember_4_in_5 = NULL;
+main_ArrangeMember_4_in_6 = NULL;
+main_ArrangeMember_4_in_10 = NULL;
+main_ArrangeMember_4_in_11 = "image";
+main_ArrangeMember_4_in_12 = {4};
+main_ArrangeMember_4_in_13 = {2};
+main_ArrangeMember_4_in_14 = {3};
+Executive("product version 3 1 4");
+$sync
+main();

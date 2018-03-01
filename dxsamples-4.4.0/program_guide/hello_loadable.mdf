@@ -1,0 +1,7 @@
+MODULE Hello
+CATEGORY Greetings
+DESCRIPTION Prefixes "hello" to the input string
+LOADABLE hello_loadable
+INPUT value;  string;  "world"; input string
+OUTPUT greeting;  string; prefixed string
+

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Black-Scholes</title>
+</head>
+<body bgcolor="#dddddd">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Black-Scholes Hedges Values</h2>
+		<p><!-- The following applet describes npvcall.net.  It produces a representation 
+     of the visual program's control panels and provides execution control.
+--></p>
+		<div align="left">
+			<table border=0>
+				<tr>
+					<td valign="top" width=300>Key option valuation information is available through this representation of the portfolio's behavior over time. Strike price and interest rate have hardcoded values of $40.0 and 15% and the standard deviation of daily price fluctuations is fixed in this example. The Black-Scholes option valuation model is used to compute portfolio value. Notice that as time to maturity gets close to 0, the computed value falls off rapidly.</td>
+					<td><applet code="npvcall.class" width=300 height=350 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT=true>
+							<param name="name" value="npvcall">
+							<param name=NETNAME value="npvcall.net">
+							<param name=DXUIVERS value="4.3.3">
+							<param name=BACKGROUND value="[0.86, 0.86, 0.86]">
+							<param name=EXECUTE_ON_CHANGE value="true">
+						</applet></td>
+				</tr>
+				<tr>
+					<td colspan="2" valign="top"><applet code="imageWindow.class" width=512 height=384 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT=true>
+							<!--    <param name=cabbase value="dx.cab"> -->
+							<param name=IMAGE_NODE value="Image_3">
+							<param name=INITIAL_IMAGE value="htmlpages/npvcall3.0.0.gif">
+						</applet></td>
+				</tr>
+			</table>
+			<p></p>
+		</div>
+		<div align="center">
+			<hr>
+			<b>[ <a href="Status.html">Java Explorer</a> | <a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

@@ -1,0 +1,31 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Show the boundary of the data field, and add shading using the Normals
+    // module
+boundary = ShowBoundary(electrondensity);
+boundary = Normals(boundary);
+    // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+    // Display the boundary
+Display(boundary,camera);
+
+    // Mark the positions of the original field. This puts the positions
+    // into the data component so that we can operate on them
+marked = Mark(electrondensity,"positions");
+    // warp the positions using the Compute module
+warped = Compute("[$0.x, $0.y+sin($0.x), $0.z]", marked);
+    // Return the warped positions to the "positions" component
+new = Unmark(warped,"positions");
+    // Show the boundary of the new field, and add normals for shading
+boundary = ShowBoundary(new);
+boundary = Normals(boundary);
+    // Display the result
+Display(boundary,camera);
+
+
+
+
+

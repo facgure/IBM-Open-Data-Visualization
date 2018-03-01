@@ -1,0 +1,1182 @@
+//
+// time: Wed Nov 19 13:03:41 1997
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+//
+// macro reference (indirect): MOSstatesmac MOS_statesMacro.net
+//
+// macro reference (direct): MapOnStates MapOnStatesMacro.net
+include "MapOnStatesMacro.net"
+//
+// MODULE main
+//
+// comment: This visual program visualizes data from the United States Census of 1990 (the data is for 1989).
+// comment: 
+// comment: This visual program uses the macro MapOnStatesMacro.net, which you will find in samples/macros. You may either load this macro before loading the visual program, or let DX load the macro automatically for you.
+// comment: 
+// comment: The control panel allows you to choose which variable to look at (the top selector) and then within that category,
+// comment: which subset (bottom selector).
+// comment: 
+// comment: 
+// comment: 
+// comment: 
+// comment:  
+// page assignment: caption	order=5, windowed=0, showing=0
+// page assignment: colorbar	order=6, windowed=0, showing=0
+// page assignment: get_info	order=2, windowed=0, showing=0
+// page assignment: image	order=8, windowed=0, showing=0
+// page assignment: map	order=7, windowed=0, showing=1
+// page assignment: normalize	order=4, windowed=0, showing=0
+// page assignment: user_choice	order=3, windowed=0, showing=0
+// workspace: width = 351, height = 435
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Selector[3]: x = 344, y = 115, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_3"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "age" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 3 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "where people live" "population" "sex" "age" "number in household" "income" "type of water" "type of heat" "housing tenure" "occupancy status" "workers" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 11 2 3 4 5 6 7 8 9 10 }
+    // output[1]: visible = 1, type = 29, value = 3 
+    // output[2]: visible = 1, type = 32, value = "age" 
+    // page group: user_choice
+    //
+    // 
+    // node Transmitter[3]: x = 583, y = 550, inputs = 1, label = category
+    // page group: user_choice
+    //
+category = main_Selector_3_out_2;
+    // 
+    // node Receiver[3]: x = 17, y = 146, inputs = 1, label = category
+    // page group: caption
+    //
+main_Receiver_3_out_1[cache: 0] = category;
+    // 
+    // node Switch[1]: x = 112, y = 264, inputs = 12, label = Switch
+    // input[2]: defaulting = 0, visible = 1, type = 16777248, value = {"inside_urban_area" "outside_urban_area" "rural_farm" "rural_nonfarm"}
+    // input[3]: defaulting = 0, visible = 1, type = 16777248, value = {"males" "females"}
+    // input[4]: defaulting = 0, visible = 1, type = 16777248, value = {"age_under_1"  "age_30_to_34" "age_over_85"}
+    // input[5]: defaulting = 0, visible = 1, type = 16777248, value = {"in_household_1" "in_household_2" "in_household_3" "in_household_4" "in_household_5" "in_household_6" "in_household_7_or_more"}
+    // input[6]: defaulting = 0, visible = 1, type = 16777248, value = {"income_less_5000" "income_over_150000"}
+    // input[7]: defaulting = 0, visible = 1, type = 16777248, value = {"water_company" "water_drilled_well" "water_dug_well" "water_other"}
+    // input[8]: defaulting = 0, visible = 1, type = 16777248, value = {"heat_utility_gas" "heat_bottled_gas" "heat_electricity" "heat_oil" "heat_coal" "heat_wood" "heat_solar""heat_other" "heat_none"}
+    // input[9]: defaulting = 0, visible = 1, type = 16777248, value = {"housing_owner_occupied" "housing_renter_occupied"}
+    // input[10]: defaulting = 0, visible = 1, type = 16777248, value = {"housing_units_occupied" "housing_units_vacant"}
+    // input[11]: defaulting = 0, visible = 1, type = 16777248, value = {"workers_in_family_1" "workers_in_family_2" "workers_in_family_3_or_more"}
+    // input[12]: defaulting = 0, visible = 1, type = 67108863, value = "total_persons"
+    // page group: user_choice
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Selector_3_out_1,
+    main_Switch_1_in_2,
+    main_Switch_1_in_3,
+    main_Switch_1_in_4,
+    main_Switch_1_in_5,
+    main_Switch_1_in_6,
+    main_Switch_1_in_7,
+    main_Switch_1_in_8,
+    main_Switch_1_in_9,
+    main_Switch_1_in_10,
+    main_Switch_1_in_11,
+    main_Switch_1_in_12
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[2]: x = 234, y = 360, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_2"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "age_under_1" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = {"age_under_1" "age_30_to_34" "age_over_85" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = {0  1  2  }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "age_under_1" 
+    // page group: user_choice
+    //
+main_Selector_2_out_1[cache: 2],
+main_Selector_2_out_2[cache: 2] = 
+    Selector(
+    main_Selector_2_in_1,
+    main_Selector_2_in_2,
+    main_Selector_2_in_3,
+    main_Switch_1_out_1,
+    main_Selector_2_in_5,
+    main_Selector_2_in_6,
+    main_Selector_2_in_7
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[2]: x = 333, y = 556, inputs = 1, label = caption_label
+    // page group: user_choice
+    //
+caption_label = main_Selector_2_out_2;
+    // 
+    // node Receiver[2]: x = 130, y = 150, inputs = 1, label = caption_label
+    // page group: caption
+    //
+main_Receiver_2_out_1[cache: 0] = caption_label;
+    // 
+    // node List[1]: x = 93, y = 272, inputs = 2, label = List
+    // page group: caption
+    //
+main_List_1_out_1 = 
+    List(
+    main_Receiver_3_out_1,
+    main_Receiver_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Caption[1]: x = 168, y = 322, inputs = 9, label = Caption
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [.5 .15]
+    // page group: caption
+    //
+main_Caption_1_out_1 = 
+    Caption(
+    main_List_1_out_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node ImportSpreadsheet[2]: x = 225, y = 97, inputs = 10, label = ImportSpreadsheet
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "census.spreadsheet"
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "\t"
+    // page group: get_info
+    //
+main_ImportSpreadsheet_2_out_1,
+main_ImportSpreadsheet_2_out_2 = 
+    ImportSpreadsheet(
+    main_ImportSpreadsheet_2_in_1,
+    main_ImportSpreadsheet_2_in_2,
+    main_ImportSpreadsheet_2_in_3,
+    main_ImportSpreadsheet_2_in_4,
+    main_ImportSpreadsheet_2_in_5,
+    main_ImportSpreadsheet_2_in_6,
+    main_ImportSpreadsheet_2_in_7,
+    main_ImportSpreadsheet_2_in_8,
+    main_ImportSpreadsheet_2_in_9,
+    main_ImportSpreadsheet_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[31]: x = 418, y = 115, inputs = 1, label = imported
+    // page group: get_info
+    //
+imported = main_ImportSpreadsheet_2_out_1;
+    // 
+    // node Receiver[16]: x = 5, y = 77, inputs = 1, label = imported
+    // page group: user_choice
+    //
+main_Receiver_16_out_1[cache: 0] = imported;
+    // 
+    // node Mark[13]: x = 105, y = 453, inputs = 2, label = Mark
+    // page group: user_choice
+    //
+main_Mark_13_out_1 = 
+    Mark(
+    main_Receiver_16_out_1,
+    main_Selector_2_out_2
+    ) [instance: 13, cache: 1];
+    // 
+    // node Transmitter[26]: x = 147, y = 559, inputs = 1, label = selected_data
+    // page group: user_choice
+    //
+selected_data = main_Mark_13_out_1;
+    // 
+    // node Receiver[41]: x = 0, y = 82, inputs = 1, label = selected_data
+    // page group: normalize
+    //
+main_Receiver_41_out_1[cache: 0] = selected_data;
+    // 
+    // node Transmitter[16]: x = 445, y = 549, inputs = 1, label = category_number
+    // page group: user_choice
+    //
+category_number = main_Selector_3_out_1;
+    // 
+    // node Receiver[11]: x = 109, y = 83, inputs = 1, label = category_number
+    // page group: normalize
+    //
+main_Receiver_11_out_1[cache: 0] = category_number;
+    // 
+    // node Mark[9]: x = 117, y = 268, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "total_persons"
+    // page group: get_info
+    //
+main_Mark_9_out_1 = 
+    Mark(
+    main_ImportSpreadsheet_2_out_1,
+    main_Mark_9_in_2
+    ) [instance: 9, cache: 1];
+    // 
+    // node Transmitter[1]: x = 140, y = 367, inputs = 1, label = total_persons
+    // page group: get_info
+    //
+total_persons = main_Mark_9_out_1;
+    // 
+    // node Receiver[1]: x = 374, y = 80, inputs = 1, label = total_persons
+    // page group: normalize
+    //
+main_Receiver_1_out_1[cache: 0] = total_persons;
+    // 
+    // node Mark[8]: x = 4, y = 255, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "total_households"
+    // page group: get_info
+    //
+main_Mark_8_out_1 = 
+    Mark(
+    main_ImportSpreadsheet_2_out_1,
+    main_Mark_8_in_2
+    ) [instance: 8, cache: 1];
+    // 
+    // node Transmitter[4]: x = 6, y = 370, inputs = 1, label = total_households
+    // page group: get_info
+    //
+total_households = main_Mark_8_out_1;
+    // 
+    // node Receiver[4]: x = 243, y = 78, inputs = 1, label = total_households
+    // page group: normalize
+    //
+main_Receiver_4_out_1[cache: 0] = total_households;
+    // 
+    // node Mark[10]: x = 238, y = 266, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "total_housing_units"
+    // page group: get_info
+    //
+main_Mark_10_out_1 = 
+    Mark(
+    main_ImportSpreadsheet_2_out_1,
+    main_Mark_10_in_2
+    ) [instance: 10, cache: 1];
+    // 
+    // node Transmitter[5]: x = 245, y = 365, inputs = 1, label = housing_units
+    // page group: get_info
+    //
+housing_units = main_Mark_10_out_1;
+    // 
+    // node Receiver[5]: x = 600, y = 77, inputs = 1, label = housing_units
+    // page group: normalize
+    //
+main_Receiver_5_out_1[cache: 0] = housing_units;
+    // 
+    // node Mark[11]: x = 349, y = 264, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "housing_units_occupied"
+    // page group: get_info
+    //
+main_Mark_11_out_1 = 
+    Mark(
+    main_ImportSpreadsheet_2_out_1,
+    main_Mark_11_in_2
+    ) [instance: 11, cache: 1];
+    // 
+    // node Transmitter[6]: x = 350, y = 367, inputs = 1, label = occupied_units
+    // page group: get_info
+    //
+occupied_units = main_Mark_11_out_1;
+    // 
+    // node Receiver[6]: x = 477, y = 80, inputs = 1, label = occupied_units
+    // page group: normalize
+    //
+main_Receiver_6_out_1[cache: 0] = occupied_units;
+    // 
+    // node Mark[12]: x = 451, y = 269, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "total_families"
+    // page group: get_info
+    //
+main_Mark_12_out_1 = 
+    Mark(
+    main_ImportSpreadsheet_2_out_1,
+    main_Mark_12_in_2
+    ) [instance: 12, cache: 1];
+    // 
+    // node Transmitter[7]: x = 468, y = 366, inputs = 1, label = families
+    // page group: get_info
+    //
+families = main_Mark_12_out_1;
+    // 
+    // node Receiver[7]: x = 716, y = 76, inputs = 1, label = families
+    // page group: normalize
+    //
+main_Receiver_7_out_1[cache: 0] = families;
+    // 
+    // node Switch[2]: x = 71, y = 310, inputs = 12, label = Switch
+    // input[11]: defaulting = 1, visible = 1, type = 16777248, value = {"workers_in_family_1" "workers_in_family_2" "workers_in_family_3_or_more"}
+    // input[12]: defaulting = 0, visible = 1, type = 67108863, value = 1
+    // page group: normalize
+    //
+main_Switch_2_out_1 = 
+    Switch(
+    main_Receiver_11_out_1,
+    main_Receiver_1_out_1,
+    main_Receiver_1_out_1,
+    main_Receiver_1_out_1,
+    main_Receiver_4_out_1,
+    main_Receiver_4_out_1,
+    main_Receiver_5_out_1,
+    main_Receiver_6_out_1,
+    main_Receiver_6_out_1,
+    main_Receiver_5_out_1,
+    main_Receiver_7_out_1,
+    main_Switch_2_in_12
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[1]: x = 57, y = 430, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0)/float($1)"
+    // page group: normalize
+    // expression: value = float(data)/float(total)
+    // name[2]: value = data
+    // name[3]: value = total
+    //
+main_Compute_1_out_1 = 
+    Compute(
+    main_Compute_1_in_1,
+    main_Receiver_41_out_1,
+    main_Switch_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[27]: x = 93, y = 548, inputs = 1, label = normalized
+    // page group: normalize
+    //
+normalized = main_Compute_1_out_1;
+    // 
+    // node Receiver[43]: x = 138, y = 24, inputs = 1, label = normalized
+    // page group: map
+    //
+main_Receiver_43_out_1[cache: 0] = normalized;
+    // 
+    // node Colormap[1]: x = 263, y = 136, inputs = 19, label = Colormap
+    // input[1]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 0.666667] [1.0 0.0] }
+    // input[2]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[3]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[4]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[5]: defaulting = 0, visible = 0, type = 32, value = "Colormap_1"
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 0.0098033035
+    // input[8]: defaulting = 1, visible = 0, type = 5, value = 0.017556954
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 20
+    // input[12]: defaulting = 0, visible = 0, type = 16777221, value = { 0.0098033035 0.017556954 }
+    // input[17]: defaulting = 0, visible = 0, type = 5, value = 0.0098033035
+    // input[18]: defaulting = 0, visible = 0, type = 5, value = 0.017556954
+    // page group: map
+    // window: position = (0.0000,0.0000), size = 0.5078x0.4395
+    //
+main_Colormap_1_out_1[cache: 2],
+main_Colormap_1_out_2[cache: 2] = 
+    Colormap(
+    main_Colormap_1_in_1,
+    main_Colormap_1_in_2,
+    main_Colormap_1_in_3,
+    main_Colormap_1_in_4,
+    main_Colormap_1_in_5,
+    main_Receiver_43_out_1,
+    main_Colormap_1_in_7,
+    main_Colormap_1_in_8,
+    main_Colormap_1_in_9,
+    main_Colormap_1_in_10,
+    main_Colormap_1_in_11,
+    main_Colormap_1_in_12,
+    main_Colormap_1_in_13,
+    main_Colormap_1_in_14,
+    main_Colormap_1_in_15,
+    main_Colormap_1_in_16,
+    main_Colormap_1_in_17,
+    main_Colormap_1_in_18,
+    main_Colormap_1_in_19
+    ) [instance: 1, cache: 1];
+    // 
+    // node MapOnStates[3]: x = 111, y = 242, inputs = 11, label = MapOnStates
+    // input[4]: defaulting = 1, visible = 0, type = 16777245, value = {0}
+    // input[6]: defaulting = 0, visible = 1, type = 16777245, value = {0}
+    // input[7]: defaulting = 0, visible = 1, type = 67108863, value = "cull"
+    // input[11]: defaulting = 0, visible = 1, type = 16777245, value = {0}
+    // page group: map
+    //
+main_MapOnStates_3_out_1,
+main_MapOnStates_3_out_2,
+main_MapOnStates_3_out_3,
+main_MapOnStates_3_out_4,
+main_MapOnStates_3_out_5,
+main_MapOnStates_3_out_6 = 
+    MapOnStates(
+    main_Receiver_43_out_1,
+    main_MapOnStates_3_in_2,
+    main_MapOnStates_3_in_3,
+    main_MapOnStates_3_in_4,
+    main_MapOnStates_3_in_5,
+    main_MapOnStates_3_in_6,
+    main_MapOnStates_3_in_7,
+    main_MapOnStates_3_in_8,
+    main_MapOnStates_3_in_9,
+    main_Colormap_1_out_1,
+    main_MapOnStates_3_in_11
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[15]: x = 141, y = 357, inputs = 1, label = mapped_data
+    // page group: map
+    //
+mapped_data = main_MapOnStates_3_out_1;
+    // 
+    // node Receiver[109]: x = 21, y = 194, inputs = 1, label = mapped_data
+    // page group: image
+    //
+main_Receiver_109_out_1[cache: 0] = mapped_data;
+    // 
+    // node Transmitter[59]: x = 282, y = 373, inputs = 1, label = colormap
+    // page group: map
+    //
+colormap = main_MapOnStates_3_out_4;
+    // 
+    // node Receiver[108]: x = 156, y = 187, inputs = 1, label = colormap
+    // page group: image
+    //
+main_Receiver_108_out_1[cache: 0] = colormap;
+    // 
+    // node Receiver[12]: x = 56, y = 158, inputs = 1, label = category_number
+    // page group: colorbar
+    //
+main_Receiver_12_out_1[cache: 0] = category_number;
+    // 
+    // node Compute[34]: x = 91, y = 276, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0==11 ? 1 : 2"
+    // page group: colorbar
+    // expression: value = a==11 ? 1 : 2
+    // name[2]: value = a
+    //
+main_Compute_34_out_1 = 
+    Compute(
+    main_Compute_34_in_1,
+    main_Receiver_12_out_1
+    ) [instance: 34, cache: 1];
+    // 
+    // node Receiver[13]: x = 221, y = 157, inputs = 1, label = caption_label
+    // page group: colorbar
+    //
+main_Receiver_13_out_1[cache: 0] = caption_label;
+    // 
+    // node Format[1]: x = 384, y = 303, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "%s (fraction)"
+    // page group: colorbar
+    //
+main_Format_1_out_1 = 
+    Format(
+    main_Format_1_in_1,
+    main_Receiver_13_out_1,
+    main_Format_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[8]: x = 170, y = 355, inputs = 3, label = Switch
+    // page group: colorbar
+    //
+main_Switch_8_out_1 = 
+    Switch(
+    main_Compute_34_out_1,
+    main_Receiver_13_out_1,
+    main_Format_1_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Transmitter[17]: x = 177, y = 465, inputs = 1, label = colorbar_label
+    // page group: colorbar
+    //
+colorbar_label = main_Switch_8_out_1;
+    // 
+    // node Receiver[14]: x = 355, y = 261, inputs = 1, label = colorbar_label
+    // page group: image
+    //
+main_Receiver_14_out_1[cache: 0] = colorbar_label;
+    // 
+    // node ColorBar[1]: x = 146, y = 333, inputs = 14, label = ColorBar
+    // page group: image
+    //
+main_ColorBar_1_out_1 = 
+    ColorBar(
+    main_Receiver_108_out_1,
+    main_ColorBar_1_in_2,
+    main_ColorBar_1_in_3,
+    main_ColorBar_1_in_4,
+    main_ColorBar_1_in_5,
+    main_ColorBar_1_in_6,
+    main_ColorBar_1_in_7,
+    main_Receiver_14_out_1,
+    main_ColorBar_1_in_9,
+    main_ColorBar_1_in_10,
+    main_ColorBar_1_in_11,
+    main_ColorBar_1_in_12,
+    main_ColorBar_1_in_13,
+    main_ColorBar_1_in_14
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[30]: x = 204, y = 438, inputs = 1, label = caption
+    // page group: caption
+    //
+caption = main_Caption_1_out_1;
+    // 
+    // node Receiver[44]: x = 112, y = 429, inputs = 1, label = caption
+    // page group: image
+    //
+main_Receiver_44_out_1[cache: 0] = caption;
+    // 
+    // node Collect[1]: x = 0, y = 453, inputs = 3, label = Collect
+    // page group: image
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Receiver_109_out_1,
+    main_ColorBar_1_out_1,
+    main_Receiver_44_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[1]: x = 92, y = 553, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_1"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [0.83239 -0.319131 5]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [0.83239 -0.319131 172.179]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 89.5911
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 742
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.648
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[41]: defaulting = 0, visible = 1, type = 32, value = "rotate"
+    // page group: image
+    // depth: value = 8
+    // window: position = (0.3086,0.4336), size = 0.5906x0.5117
+    // internal caching: 1
+    //
+main_Image_1_out_1,
+main_Image_1_out_2,
+main_Image_1_out_3 = 
+    Image(
+    main_Image_1_in_1,
+    main_Collect_1_out_1,
+    main_Image_1_in_3,
+    main_Image_1_in_4,
+    main_Image_1_in_5,
+    main_Image_1_in_6,
+    main_Image_1_in_7,
+    main_Image_1_in_8,
+    main_Image_1_in_9,
+    main_Image_1_in_10,
+    main_Image_1_in_11,
+    main_Image_1_in_12,
+    main_Image_1_in_13,
+    main_Image_1_in_14,
+    main_Image_1_in_15,
+    main_Image_1_in_16,
+    main_Image_1_in_17,
+    main_Image_1_in_18,
+    main_Image_1_in_19,
+    main_Image_1_in_20,
+    main_Image_1_in_21,
+    main_Image_1_in_22,
+    main_Image_1_in_23,
+    main_Image_1_in_24,
+    main_Image_1_in_25,
+    main_Image_1_in_26,
+    main_Image_1_in_27,
+    main_Image_1_in_28,
+    main_Image_1_in_29,
+    main_Image_1_in_30,
+    main_Image_1_in_31,
+    main_Image_1_in_32,
+    main_Image_1_in_33,
+    main_Image_1_in_34,
+    main_Image_1_in_35,
+    main_Image_1_in_36,
+    main_Image_1_in_37,
+    main_Image_1_in_38,
+    main_Image_1_in_39,
+    main_Image_1_in_40,
+    main_Image_1_in_41,
+    main_Image_1_in_42,
+    main_Image_1_in_43,
+    main_Image_1_in_44,
+    main_Image_1_in_45,
+    main_Image_1_in_46,
+    main_Image_1_in_47,
+    main_Image_1_in_48
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[17]: x = 554, y = 274, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "state"
+    // page group: get_info
+    //
+main_Select_17_out_1 = 
+    Select(
+    main_ImportSpreadsheet_2_out_1,
+    main_Select_17_in_2,
+    main_Select_17_in_3
+    ) [instance: 17, cache: 1];
+    // 
+    // node Transmitter[9]: x = 536, y = 367, inputs = 1, label = statenames
+    // page group: get_info
+    //
+statenames = main_Select_17_out_1;
+    //
+    // decorator Annotate	pos=(55,16) size=574x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 105
+    // annotation user: This page selects certain information from the data file which is needed elsewhere
+    // annotation user: in the visual program.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: get_info
+    //
+    // decorator Annotate	pos=(44,25) size=481x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 71
+    // annotation user: This page allows the user to select a particular data item to visualize
+    // annotation user_end: <NULL>
+    // page group: user_choice
+    //
+    // decorator Annotate	pos=(1270,27) size=456x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 64
+    // annotation user: This page normalizes the selected data by the appropriate value.
+    // annotation user_end: <NULL>
+    // page group: image
+    //
+    // decorator Annotate	pos=(141,40) size=300x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 42
+    // annotation user: This page creates a caption for the image.
+    // annotation user_end: <NULL>
+    // page group: caption
+    //
+    // decorator Annotate	pos=(786,48) size=464x28 style(Label), value = <NULL>
+    // annotation user_begin: 64
+    // annotation user: This page maps the selected data onto a map of the United States
+    // annotation user_end: <NULL>
+    // page group: image
+    //
+    // decorator Annotate	pos=(53,68) size=377x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 51
+    // annotation user: This page autocolors the map and creates the image.
+    // annotation user_end: <NULL>
+    // page group: image
+    //
+    // decorator Annotate	pos=(98,46) size=299x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 43
+    // annotation user: This page creates a label for the colorbar.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: colorbar
+// network: end of macro body
+CacheScene("Image_1", main_Image_1_out_1, main_Image_1_out_2);
+}
+main_Selector_3_in_1 = "Selector_3";
+main_Selector_3_in_2 = "age" ;
+main_Selector_3_in_3 = 3 ;
+main_Selector_3_in_4 = NULL;
+main_Selector_3_in_5 = NULL;
+main_Selector_3_in_6 = NULL;
+main_Selector_3_in_7 = NULL;
+main_Selector_3_out_1 = 3 ;
+main_Selector_3_out_2 = "age" ;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Switch_1_in_2 = {"inside_urban_area" "outside_urban_area" "rural_farm" "rural_nonfarm"};
+main_Switch_1_in_3 = {"males" "females"};
+main_Switch_1_in_4 = {"age_under_1"  "age_30_to_34" "age_over_85"};
+main_Switch_1_in_5 = {"in_household_1" "in_household_2" "in_household_3" "in_household_4" "in_household_5" "in_household_6" "in_household_7_or_more"};
+main_Switch_1_in_6 = {"income_less_5000" "income_over_150000"};
+main_Switch_1_in_7 = {"water_company" "water_drilled_well" "water_dug_well" "water_other"};
+main_Switch_1_in_8 = {"heat_utility_gas" "heat_bottled_gas" "heat_electricity" "heat_oil" "heat_coal" "heat_wood" "heat_solar""heat_other" "heat_none"};
+main_Switch_1_in_9 = {"housing_owner_occupied" "housing_renter_occupied"};
+main_Switch_1_in_10 = {"housing_units_occupied" "housing_units_vacant"};
+main_Switch_1_in_11 = {"workers_in_family_1" "workers_in_family_2" "workers_in_family_3_or_more"};
+main_Switch_1_in_12 = "total_persons";
+main_Switch_1_out_1 = NULL;
+main_Selector_2_in_1 = "Selector_2";
+main_Selector_2_in_2 = "age_under_1" ;
+main_Selector_2_in_3 = 0 ;
+main_Selector_2_in_5 = NULL;
+main_Selector_2_in_6 = NULL;
+main_Selector_2_in_7 = NULL;
+main_Selector_2_out_2 = "age_under_1" ;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_List_1_out_1 = NULL;
+main_Caption_1_in_2 = [.5 .15];
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = NULL;
+main_Caption_1_in_7 = NULL;
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_ImportSpreadsheet_2_in_1 = "census.spreadsheet";
+main_ImportSpreadsheet_2_in_2 = "\t";
+main_ImportSpreadsheet_2_in_3 = NULL;
+main_ImportSpreadsheet_2_in_4 = NULL;
+main_ImportSpreadsheet_2_in_5 = NULL;
+main_ImportSpreadsheet_2_in_6 = NULL;
+main_ImportSpreadsheet_2_in_7 = NULL;
+main_ImportSpreadsheet_2_in_8 = NULL;
+main_ImportSpreadsheet_2_in_9 = NULL;
+main_ImportSpreadsheet_2_in_10 = NULL;
+main_ImportSpreadsheet_2_out_1 = NULL;
+main_Transmitter_31_out_1 = NULL;
+main_Receiver_16_out_1 = NULL;
+main_Mark_13_out_1 = NULL;
+main_Transmitter_26_out_1 = NULL;
+main_Receiver_41_out_1 = NULL;
+main_Transmitter_16_out_1 = NULL;
+main_Receiver_11_out_1 = NULL;
+main_Mark_9_in_2 = "total_persons";
+main_Mark_9_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Mark_8_in_2 = "total_households";
+main_Mark_8_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_Mark_10_in_2 = "total_housing_units";
+main_Mark_10_out_1 = NULL;
+main_Transmitter_5_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_Mark_11_in_2 = "housing_units_occupied";
+main_Mark_11_out_1 = NULL;
+main_Transmitter_6_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Mark_12_in_2 = "total_families";
+main_Mark_12_out_1 = NULL;
+main_Transmitter_7_out_1 = NULL;
+main_Receiver_7_out_1 = NULL;
+main_Switch_2_in_12 = 1;
+main_Switch_2_out_1 = NULL;
+main_Compute_1_in_1 = "float($0)/float($1)";
+main_Compute_1_out_1 = NULL;
+main_Transmitter_27_out_1 = NULL;
+main_Receiver_43_out_1 = NULL;
+main_Colormap_1_in_1 = { [0.0 0.666667] [1.0 0.0] };
+main_Colormap_1_in_2 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_3 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_4 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_5 = "Colormap_1";
+main_Colormap_1_in_7 = NULL;
+main_Colormap_1_in_8 = NULL;
+main_Colormap_1_in_9 = NULL;
+main_Colormap_1_in_10 = NULL;
+main_Colormap_1_in_11 = NULL;
+main_Colormap_1_in_12 = { 0.0098033035 0.017556954 };
+main_Colormap_1_in_13 = NULL;
+main_Colormap_1_in_14 = NULL;
+main_Colormap_1_in_15 = NULL;
+main_Colormap_1_in_16 = NULL;
+main_Colormap_1_in_17 = 0.0098033035;
+main_Colormap_1_in_18 = 0.017556954;
+main_Colormap_1_in_19 = NULL;
+main_Colormap_1_out_1 = NULL;
+main_MapOnStates_3_in_2 = NULL;
+main_MapOnStates_3_in_3 = NULL;
+main_MapOnStates_3_in_4 = NULL;
+main_MapOnStates_3_in_5 = NULL;
+main_MapOnStates_3_in_6 = {0};
+main_MapOnStates_3_in_7 = "cull";
+main_MapOnStates_3_in_8 = NULL;
+main_MapOnStates_3_in_9 = NULL;
+main_MapOnStates_3_in_11 = {0};
+main_MapOnStates_3_out_1 = NULL;
+main_MapOnStates_3_out_4 = NULL;
+main_Transmitter_15_out_1 = NULL;
+main_Receiver_109_out_1 = NULL;
+main_Transmitter_59_out_1 = NULL;
+main_Receiver_108_out_1 = NULL;
+main_Receiver_12_out_1 = NULL;
+main_Compute_34_in_1 = "$0==11 ? 1 : 2";
+main_Compute_34_out_1 = NULL;
+main_Receiver_13_out_1 = NULL;
+main_Format_1_in_1 = "%s (fraction)";
+main_Format_1_in_3 = NULL;
+main_Format_1_out_1 = NULL;
+main_Switch_8_out_1 = NULL;
+main_Transmitter_17_out_1 = NULL;
+main_Receiver_14_out_1 = NULL;
+main_ColorBar_1_in_2 = NULL;
+main_ColorBar_1_in_3 = NULL;
+main_ColorBar_1_in_4 = NULL;
+main_ColorBar_1_in_5 = NULL;
+main_ColorBar_1_in_6 = NULL;
+main_ColorBar_1_in_7 = NULL;
+main_ColorBar_1_in_9 = NULL;
+main_ColorBar_1_in_10 = NULL;
+main_ColorBar_1_in_11 = NULL;
+main_ColorBar_1_in_12 = NULL;
+main_ColorBar_1_in_13 = NULL;
+main_ColorBar_1_in_14 = NULL;
+main_ColorBar_1_out_1 = NULL;
+main_Transmitter_30_out_1 = NULL;
+main_Receiver_44_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_1_in_1 = "Image_1";
+main_Image_1_in_3 = "X8,,";
+main_Image_1_in_4 = 1;
+main_Image_1_in_5 = [0.83239 -0.319131 5];
+main_Image_1_in_6 = [0.83239 -0.319131 172.179];
+main_Image_1_in_7 = 89.5911;
+main_Image_1_in_8 = 742;
+main_Image_1_in_9 = 0.648;
+main_Image_1_in_10 = [0 1 0];
+main_Image_1_in_11 = NULL;
+main_Image_1_in_12 = 0;
+main_Image_1_in_13 = NULL;
+main_Image_1_in_14 = 1;
+main_Image_1_in_15 = NULL;
+main_Image_1_in_16 = NULL;
+main_Image_1_in_17 = NULL;
+main_Image_1_in_18 = NULL;
+main_Image_1_in_19 = 0;
+main_Image_1_in_20 = NULL;
+main_Image_1_in_21 = NULL;
+main_Image_1_in_22 = NULL;
+main_Image_1_in_23 = NULL;
+main_Image_1_in_25 = NULL;
+main_Image_1_in_26 = NULL;
+main_Image_1_in_27 = NULL;
+main_Image_1_in_28 = NULL;
+main_Image_1_in_29 = NULL;
+main_Image_1_in_30 = NULL;
+main_Image_1_in_31 = NULL;
+main_Image_1_in_32 = NULL;
+main_Image_1_in_33 = NULL;
+main_Image_1_in_34 = NULL;
+main_Image_1_in_35 = NULL;
+main_Image_1_in_36 = NULL;
+main_Image_1_in_37 = NULL;
+main_Image_1_in_38 = NULL;
+main_Image_1_in_39 = NULL;
+main_Image_1_in_40 = NULL;
+main_Image_1_in_41 = "rotate";
+main_Image_1_in_42 = NULL;
+main_Image_1_in_43 = NULL;
+main_Image_1_in_44 = NULL;
+main_Image_1_in_45 = NULL;
+main_Image_1_in_46 = NULL;
+main_Image_1_in_47 = NULL;
+main_Image_1_in_48 = NULL;
+main_Select_17_in_2 = "state";
+main_Select_17_in_3 = NULL;
+main_Select_17_out_1 = NULL;
+Executive("product version 4 1 1");
+$sync
+main();

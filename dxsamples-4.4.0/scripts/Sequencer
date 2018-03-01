@@ -1,0 +1,15 @@
+macro do_each_frame(frame)
+{
+   isovalue = frame*.05;
+   isosurface = Isosurface(data,isovalue);
+   Display(isosurface,camera);
+}
+
+data = Import("cloudwater");
+camera = AutoCamera(data);
+@startframe = 1;
+@endframe = 5;
+@nextframe = @startframe;
+sequence do_each_frame(@frame);
+play;
+

@@ -1,0 +1,106 @@
+State	MOSNum	FIPS
+AK	0	2
+AL	1	1
+AR	2	5
+AZ	3	4
+Alabama	1	 1
+Alaska	0	 2
+Arizona	3	 4
+Arkansas	2	 5
+CA	4	6
+CO	5	8
+CT	6	9
+California	4	 6
+Colorado	5	 8
+Connecticut	6	 9
+DC	7	11
+DE	8	10
+Delaware	8	10
+District of Columbia	7	11
+FL	9	12
+Florida	9	12
+GA	10	13
+Georgia	10	13
+HI	11	15
+Hawaii	11	15
+IA	12	19
+ID	13	16
+IL	14	17
+IN	15	18
+Idaho	13	16
+Illinois	14	17
+Indiana	15	18
+Iowa	12	19
+KS	16	20
+KY	17	21
+Kansas	16	20
+Kentucky	17	21
+LA	18	22
+Louisiana	18	22
+MA	19	25
+MD	20	24
+ME	21	23
+MI	22	26
+MN	23	27
+MO	24	29
+MS	25	28
+MT	26	30
+Maine	21	23
+Maryland	20	24
+Massachusetts	19	25
+Michigan	22	26
+Minnesota	23	27
+Mississippi	25	28
+Missouri	24	29
+Montana	26	30
+NC	27	37
+ND	28	38
+NE	29	31
+NH	30	33
+NJ	31	34
+NM	32	35
+NV	33	32
+NY	34	36
+Nebraska	29	31
+Nevada	33	32
+New Hampshire	30	33
+New Jersey	31	34
+New Mexico	32	35
+New York	34	36
+North Carolina	27	37
+North Dakota	28	38
+OH	35	39
+OK	36	40
+OR	37	41
+Ohio	35	39
+Oklahoma	36	40
+Oregon	37	41
+PA	38	42
+PR	39	43
+Pennsylvania	38	42
+Puerto Rico	39	43
+RI	40	44
+Rhode Island	40	44
+SC	41	45
+SD	42	46
+South Carolina	41	45
+South Dakota	42	46
+TN	43	47
+TX	44	48
+Tennessee	43	47
+Texas	44	48
+UT	45	49
+Utah	45	49
+VA	46	51
+VT	47	50
+Vermont	47	50
+Virginia	46	51
+WA	48	53
+WI	49	55
+WV	50	54
+WY	51	56
+Washington	48	53
+Washington D.C.	7	11
+West Virginia	50	54
+Wisconsin	49	55
+Wyoming	51	56

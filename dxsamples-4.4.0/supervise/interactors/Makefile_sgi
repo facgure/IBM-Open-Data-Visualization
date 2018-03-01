@@ -1,0 +1,12 @@
+FILES = myinteractors.o
+
+BASE = /usr/lpp/dx
+
+CFLAGS = -O -Dsgi -I$(BASE)/include
+LIBS     =   -L$(BASE)/lib_sgi -lDX -lsun -lgl -ly -ll -lX11 -lm -lmpc
+LITELIBS =   -L$(BASE)/lib_sgi -lDXlite -lm
+LDLIBFLAGS  =  -Wl,-e,DXEntry,-U,-exported_symbol,DXEntry
+SYSLIBS  =   -lm -lc
+
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec

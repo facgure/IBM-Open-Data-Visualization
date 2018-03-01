@@ -1,0 +1,22 @@
+FILES = user.o add.o makex.o hello.o
+
+BASE = @prefix@/dx
+include $(BASE)/lib_$(DXARCH)/arch.mak
+
+CC = @CC@
+
+CFLAGS = -O -D@ARCH@ -I$(BASE)/include @CFLAGS@
+
+LIBS   = -L$(BASE)/lib_@ARCH@ -lDX  @LIBS@
+
+LDFLAGS = @LDFLAGS@
+
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user.c:		user_inboard.mdf
+		mdf2c user_inboard.mdf > user.c

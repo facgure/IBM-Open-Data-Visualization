@@ -1,0 +1,15 @@
+// Import scattered point data of carbon dioxide concentration. This data
+// is a time series.
+data = Import("CO2.general",format="general");
+
+// Select frame 17 of the series
+frame17 = Select(data,17);
+
+// Connect the dots
+connected = Connect(frame17);
+
+// AutoColor and Display
+colored = AutoColor(connected);
+camera = AutoCamera(colored);
+Display(colored,camera);
+

@@ -1,0 +1,28 @@
+// Import the electron density data
+electrondensity = Import("watermolecule");
+
+// Partition the data for parallelism
+electrondensity = Partition(electrondensity);
+
+// Compute the gradient of the electron density
+gradientdensity = Gradient(electrondensity);
+
+// Compute the divergence and curl of the gradient field
+divergence, curl = DivCurl(gradientdensity);
+
+// compute an isosurface of the divergence field at the mean value (default
+// behavior of isosurface)
+isodiv = Isosurface(divergence);
+
+// create a set of approximately 50 samples of the data field
+samples = Sample(curl, 50);
+
+// create vector glyphs at each of the samples
+glyphs = AutoGlyph(samples,"arrow");
+
+// Collect the glyphs with the isosurface
+collected = Collect(isodiv, glyphs);
+
+// Display the collection
+camera = AutoCamera(collected,"off-diagonal",resolution = 300, aspect = 1);
+Display(collected,camera);

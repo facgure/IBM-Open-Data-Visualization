@@ -1,0 +1,11 @@
+BASE = /usr/lpp/dx
+
+EXP      = $(BASE)/lib_ibm6000/dxexec.exp
+CFLAGS = -g -Dibm6000 -I$(BASE)/include
+
+.c.o: ; cc -c -g $(CFLAGS) $*.c
+
+interactors: interactors.o
+	-rm interactors
+	$(CC) -o interactors interactors.o -e DXEntry -bI:$(EXP) -lm
+

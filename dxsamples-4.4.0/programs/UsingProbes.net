@@ -1,0 +1,662 @@
+//
+// time: Wed Apr  9 15:47:59 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+// CATEGORY Macros
+//
+// comment: This example shows how to use probes. In this case, the probe is used to choose the position of the MapToPlane.  
+// comment: 
+// comment: Start by executing the program using Execute Once in the Execute menu.  Once you have an image in the Image window, go to the Options menu in the Image window and click on "View Control", then in the Mode menu, choose "Cursors".   Probe_1 will be made active, a box will appear around the object, and a small square will show the current position of the probe point.  Choose Execute on Change in the Execute menu, and now drag the probe point (using the left button) to see the position of the plane change.  Because this example uses the Image tool, you may also use the other direct interactor options available in the View menu of the Image window.  Note that when you drag the probe point, you may drag in only one of the three axes shown by the bounding box.
+// comment: 
+// comment: This example uses a "dots" rendering approximation if you rotate the object while in execute-on-change mode. You can find this option under "Rendering Options" in the "Options" menu of the Image window.
+// workspace: width = 615, height = 626
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 5, y = 2, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scalar[1]: x = 178, y = 101, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_1"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 0.350000
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 0.1
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "2"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 2
+    // output[1]: visible = 1, type = 5, value = 0.350000
+    //
+    // 
+    // node Isosurface[1]: x = 19, y = 170, inputs = 6, label = Isosurface
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Scalar_1_out_1,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Gradient[1]: x = 549, y = 71, inputs = 2, label = Gradient
+    //
+main_Gradient_1_out_1 = 
+    Gradient(
+    main_Import_1_out_1,
+    main_Gradient_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Map[1]: x = 148, y = 244, inputs = 4, label = Map
+    //
+main_Map_1_out_1 = 
+    Map(
+    main_Isosurface_1_out_1,
+    main_Gradient_1_out_1,
+    main_Map_1_in_3,
+    main_Map_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 91, y = 361, inputs = 10, label = AutoColor
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_Map_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Probe[1]: x = 396, y = 192, inputs = 0, label = Probe_1  
+    // output[1]: visible = 1, type = 8, value = [-1.00304, 1.51505, -1.33442]
+    //
+    // 
+    // node Vector[2]: x = 562, y = 225, inputs = 11, label = Vector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Vector_2"
+    // input[3]: defaulting = 0, visible = 0, type = 8, value = [0, 0, 1]
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 8, value = [ 0.0 0.0 0.0 ]
+    // input[6]: defaulting = 1, visible = 0, type = 8, value = [ 1.0 1.0 1.0 ]
+    // input[7]: defaulting = 1, visible = 0, type = 8, value = [       1        1        1]
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "[ 1 1 1 ]"
+    // input[9]: defaulting = 1, visible = 0, type = 8, value = [ 1.0 1.0 1.0 ]
+    // output[1]: visible = 1, type = 8, value = [0, 0, 1]
+    //
+    // 
+    // node MapToPlane[1]: x = 361, y = 288, inputs = 3, label = MapToPlane
+    //
+main_MapToPlane_1_out_1 = 
+    MapToPlane(
+    main_Gradient_1_out_1,
+    main_Probe_1_out_1,
+    main_Vector_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[2]: x = 408, y = 381, inputs = 10, label = AutoColor
+    //
+main_AutoColor_2_out_1,
+main_AutoColor_2_out_2 = 
+    AutoColor(
+    main_MapToPlane_1_out_1,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Shade[4]: x = 416, y = 469, inputs = 7, label = Shade
+    // input[2]: defaulting = 0, visible = 1, type = 3, value = 0
+    //
+main_Shade_4_out_1 = 
+    Shade(
+    main_AutoColor_2_out_1,
+    main_Shade_4_in_2,
+    main_Shade_4_in_3,
+    main_Shade_4_in_4,
+    main_Shade_4_in_5,
+    main_Shade_4_in_6,
+    main_Shade_4_in_7
+    ) [instance: 4, cache: 1];
+    // 
+    // node Collect[1]: x = 351, y = 507, inputs = 2, label = Collect
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_AutoColor_1_out_1,
+    main_Shade_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[2]: x = 421, y = 564, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_2"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [0.95 -0.0500001 -1]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [-16.5376 1.81804 2.86418]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 9.64974
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 640
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.75
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0.0750289 0.987603 -0.137883]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0001
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // depth: value = 24
+    // window: position = (0.3367,0.2188), size = 0.5109x0.5117
+    // internal caching: 1
+    //
+main_Image_2_out_1,
+main_Image_2_out_2,
+main_Image_2_out_3 = 
+    Image(
+    main_Image_2_in_1,
+    main_Collect_1_out_1,
+    main_Image_2_in_3,
+    main_Image_2_in_4,
+    main_Image_2_in_5,
+    main_Image_2_in_6,
+    main_Image_2_in_7,
+    main_Image_2_in_8,
+    main_Image_2_in_9,
+    main_Image_2_in_10,
+    main_Image_2_in_11,
+    main_Image_2_in_12,
+    main_Image_2_in_13,
+    main_Image_2_in_14,
+    main_Image_2_in_15,
+    main_Image_2_in_16,
+    main_Image_2_in_17,
+    main_Image_2_in_18,
+    main_Image_2_in_19,
+    main_Image_2_in_20,
+    main_Image_2_in_21,
+    main_Image_2_in_22,
+    main_Image_2_in_23,
+    main_Image_2_in_24,
+    main_Image_2_in_25,
+    main_Image_2_in_26,
+    main_Image_2_in_27,
+    main_Image_2_in_28,
+    main_Image_2_in_29,
+    main_Image_2_in_30,
+    main_Image_2_in_31,
+    main_Image_2_in_32,
+    main_Image_2_in_33,
+    main_Image_2_in_34,
+    main_Image_2_in_35,
+    main_Image_2_in_36,
+    main_Image_2_in_37,
+    main_Image_2_in_38,
+    main_Image_2_in_39,
+    main_Image_2_in_40,
+    main_Image_2_in_41,
+    main_Image_2_in_42,
+    main_Image_2_in_43,
+    main_Image_2_in_44,
+    main_Image_2_in_45,
+    main_Image_2_in_46,
+    main_Image_2_in_47,
+    main_Image_2_in_48
+    ) [instance: 2, cache: 1];
+// network: end of macro body
+CacheScene("Image_2", main_Image_2_out_1, main_Image_2_out_2);
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Scalar_1_in_1 = "Scalar_1";
+main_Scalar_1_in_2 = NULL;
+main_Scalar_1_in_3 = 0.350000;
+main_Scalar_1_in_4 = NULL;
+main_Scalar_1_in_5 = NULL;
+main_Scalar_1_in_6 = NULL;
+main_Scalar_1_in_7 = NULL;
+main_Scalar_1_in_8 = NULL;
+main_Scalar_1_in_9 = NULL;
+main_Scalar_1_in_10 = NULL;
+main_Scalar_1_in_11 = NULL;
+main_Scalar_1_out_1 = 0.350000;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_Gradient_1_in_2 = NULL;
+main_Gradient_1_out_1 = NULL;
+main_Map_1_in_3 = NULL;
+main_Map_1_in_4 = NULL;
+main_Map_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_Probe_1_out_1 = [-1.00304, 1.51505, -1.33442];
+main_Vector_2_in_1 = "Vector_2";
+main_Vector_2_in_2 = NULL;
+main_Vector_2_in_3 = [0, 0, 1];
+main_Vector_2_in_4 = NULL;
+main_Vector_2_in_5 = NULL;
+main_Vector_2_in_6 = NULL;
+main_Vector_2_in_7 = NULL;
+main_Vector_2_in_8 = NULL;
+main_Vector_2_in_9 = NULL;
+main_Vector_2_in_10 = NULL;
+main_Vector_2_in_11 = NULL;
+main_Vector_2_out_1 = [0, 0, 1];
+main_MapToPlane_1_out_1 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = NULL;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = NULL;
+main_AutoColor_2_in_7 = NULL;
+main_AutoColor_2_in_8 = NULL;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = NULL;
+main_AutoColor_2_out_1 = NULL;
+main_Shade_4_in_2 = 0;
+main_Shade_4_in_3 = NULL;
+main_Shade_4_in_4 = NULL;
+main_Shade_4_in_5 = NULL;
+main_Shade_4_in_6 = NULL;
+main_Shade_4_in_7 = NULL;
+main_Shade_4_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_2_in_1 = "Image_2";
+main_Image_2_in_3 = "X24,,";
+main_Image_2_in_4 = 1;
+main_Image_2_in_5 = [0.95 -0.0500001 -1];
+main_Image_2_in_6 = [-16.5376 1.81804 2.86418];
+main_Image_2_in_7 = 9.64974;
+main_Image_2_in_8 = 640;
+main_Image_2_in_9 = 0.75;
+main_Image_2_in_10 = [0.0750289 0.987603 -0.137883];
+main_Image_2_in_11 = NULL;
+main_Image_2_in_12 = 0;
+main_Image_2_in_13 = NULL;
+main_Image_2_in_14 = 1;
+main_Image_2_in_15 = NULL;
+main_Image_2_in_16 = NULL;
+main_Image_2_in_17 = NULL;
+main_Image_2_in_18 = NULL;
+main_Image_2_in_19 = 0;
+main_Image_2_in_20 = NULL;
+main_Image_2_in_21 = NULL;
+main_Image_2_in_22 = NULL;
+main_Image_2_in_23 = NULL;
+main_Image_2_in_25 = NULL;
+main_Image_2_in_26 = NULL;
+main_Image_2_in_27 = NULL;
+main_Image_2_in_28 = NULL;
+main_Image_2_in_29 = NULL;
+main_Image_2_in_30 = NULL;
+main_Image_2_in_31 = NULL;
+main_Image_2_in_32 = NULL;
+main_Image_2_in_33 = NULL;
+main_Image_2_in_34 = NULL;
+main_Image_2_in_35 = NULL;
+main_Image_2_in_36 = NULL;
+main_Image_2_in_37 = NULL;
+main_Image_2_in_38 = NULL;
+main_Image_2_in_39 = NULL;
+main_Image_2_in_40 = NULL;
+main_Image_2_in_41 = NULL;
+main_Image_2_in_42 = NULL;
+main_Image_2_in_43 = NULL;
+main_Image_2_in_44 = NULL;
+main_Image_2_in_45 = NULL;
+main_Image_2_in_46 = NULL;
+main_Image_2_in_47 = NULL;
+main_Image_2_in_48 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

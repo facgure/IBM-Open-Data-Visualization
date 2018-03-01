@@ -1,0 +1,32 @@
+// Import the data
+electrondensity = Import("watermolecule");
+
+// Partition the data
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// Create a camera appropriate for the isosurface
+camera = AutoCamera(isosurface);
+
+// The light will come from the direction [1 1 1]
+lightdirection= [1 1 1];
+
+// The light will be red
+lightcolor = [1 0 0];
+
+// Create the distant light
+distantlight = Light(lightdirection, lightcolor);
+
+// The ambient light color will be green
+ambientcolor = [0.0 0.2 0.0];
+
+// Create the ambient light
+ambientlight = AmbientLight(ambientcolor);
+
+// Collect the isosurface, the ambient light and the distant light
+collected = Collect(isosurface, ambientlight, distantlight);
+
+// Display the collection, using the camera
+Display(collected,camera);

@@ -1,0 +1,13 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create a camera
+camera = AutoCamera(electrondensity,width=3);
+   // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+   // Show the connection elements of the isosurface
+connections = ShowConnections(isosurface);
+   // Display
+Display(connections,camera);

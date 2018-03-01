@@ -1,0 +1,127 @@
+# guidemake.in still needs a lot of work!
+FILES_HELLO = userhello.o hello.o
+FILES_HELLOERR = userhelloerr.o hello_errorchecking.o
+FILES_HELLOOUT = outboard.o hello.o 
+FILES_HELLOLOAD = hello.c userhello_load.c
+FILES_MAKEX = usermakex.o makex.o
+FILES_MAKEXEFF = usermakexeff.o makex_efficient.o
+FILES_ADD = useradd.o add.o
+FILES_ADD2 = useradd2.o add2.o
+FILES_ADD2INV = useradd2inv.o add2invalid.o
+FILES_ADDPAR = useraddpar.o add_parallel.o
+FILES_AVGCELL = useravgcell.o averagecell.o
+FILES_AVGCELLPAR = useravgcellpar.o averagecell_parallel.o
+FILES_PICK = userpick.o showpick.o
+FILES_ALL = userall.o hello.o hello_errorchecking.o add.o add2.o makex.o makex_efficient.o averagecell.o showpick.o add_parallel.o add2invalid.o averagecell_parallel.o
+
+BASE = @prefix@/dx
+include $(BASE)/dx/lib_$(DXARCH)/arch.mak
+
+CC = @CC@
+
+CFLAGS = -O -D@ARCH@ -I$(BASE)/include
+LIBS       = -L$(BASE)/lib_@ARCH@  -lDX \
+	            @LIBS@
+LITELIBS   = -L$(BASE)/lib_@ARCH@ -lDXlite -lm -ldl -lnsl -lsocket -lthread
+LDLIBFLAGS    = -G -e DXEntry
+
+hello:		$(FILES_HELLO)
+		$(CC) $(LDFLAGS) $(FILES_HELLO) $(LIBS) -o dxexec
+
+hello_err:	$(FILES_HELLOERR)
+		$(CC) $(LDFLAGS) $(FILES_HELLOERR) $(LIBS) -o dxexec
+
+hello_outboard:	$(FILES_HELLOOUT)
+		$(CC) $(FILES_HELLOOUT) $(LITELIBS) -o hello_outboard
+
+hello_loadable:	$(FILES_HELLOLOAD)
+		cc -I$(BASE)/include -D$(ARCH) -K pic -Xa -c userhello_load.c
+		cc -I$(BASE)/include -D$(ARCH) -K pic -Xa -c hello.c
+		$(CC) $(LDLIBFLAGS) -o hello_loadable userhello_load.o hello.o
+
+add:		$(FILES_ADD)
+		$(CC) $(LDFLAGS) $(FILES_ADD) $(LIBS) -o dxexec
+
+add_par:	$(FILES_ADDPAR)
+		$(CC) $(LDFLAGS) $(FILES_ADDPAR) $(LIBS) -o dxexec
+
+add2:		$(FILES_ADD2)
+		$(CC) $(LDFLAGS) $(FILES_ADD2) $(LIBS) -o dxexec
+
+add2_inv:	$(FILES_ADD2INV)
+		$(CC) $(LDFLAGS) $(FILES_ADD2INV) $(LIBS) -o dxexec
+
+makex:		$(FILES_MAKEX)
+		$(CC) $(LDFLAGS) $(FILES_MAKEX) $(LIBS) -o dxexec
+
+makex_eff:	$(FILES_MAKEXEFF)
+		$(CC) $(LDFLAGS) $(FILES_MAKEXEFF) $(LIBS) -o dxexec
+
+avgcell:	$(FILES_AVGCELL)
+		$(CC) $(LDFLAGS) $(FILES_AVGCELL) $(LIBS) -o dxexec
+
+avgcell_2:	$(FILES_AVGCELL2)
+		$(CC) $(LDFLAGS) $(FILES_AVGCELL2) $(LIBS) -o dxexec
+
+avgcell_par:	$(FILES_AVGCELLPAR)
+		$(CC) $(LDFLAGS) $(FILES_AVGCELLPAR) $(LIBS) -o dxexec
+
+showpick:	$(FILES_PICK)
+		$(CC) $(LDFLAGS) $(FILES_PICK) $(LIBS) -o dxexec
+
+all:		$(FILES_ALL)
+		$(CC) $(LDFLAGS) $(FILES_ALL) $(LIBS) -o dxexec
+
+
+
+# how to make the outboard main routine - the source is in $(DXROOT)/lib
+outboard.o:
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+
+
+# make the user files
+userhello.c:		hello.mdf
+			$(BASE)/bin/mdf2c hello.mdf > userhello.c
+
+userhelloerr.c:		helloerr.mdf
+			$(BASE)/bin/mdf2c helloerr.mdf > userhelloerr.c
+
+userhello_load.c:	hello_loadable.mdf
+			$(BASE)/bin/mdf2c -m hello_loadable.mdf > userhello_load.c
+
+useradd.c:		add.mdf
+			$(BASE)/bin/mdf2c add.mdf >useradd.c
+
+useradd2.c:		add2.mdf
+			$(BASE)/bin/mdf2c add2.mdf >useradd2.c
+
+useradd2inv.c:		add2inv.mdf
+			$(BASE)/bin/mdf2c add2inv.mdf >useradd2inv.c
+
+useraddtypes.c:		addtypes.mdf
+			$(BASE)/bin/mdf2c addtypes.mdf >useraddtypes.c
+
+usermakex.c:		makex.mdf
+			$(BASE)/bin/mdf2c makex.mdf >usermakex.c
+
+usermakexeff.c:		makexeff.mdf
+			$(BASE)/bin/mdf2c makexeff.mdf >usermakexeff.c
+
+useravgcell.c:		averagecell.mdf
+			$(BASE)/bin/mdf2c averagecell.mdf >useravgcell.c
+
+useravgcell2.c:		averagecell2.mdf
+			$(BASE)/bin/mdf2c averagecell2.mdf >useravgcell2.c
+
+useravgcellpar.c:	averagecellpar.mdf
+			$(BASE)/bin/mdf2c averagecellpar.mdf >useravgcellpar.c
+
+useraddpar.c:		addpar.mdf
+			$(BASE)/bin/mdf2c addpar.mdf >useraddpar.c
+
+userpick.c:		showpick.mdf
+			$(BASE)/bin/mdf2c showpick.mdf >userpick.c
+
+userall.c:		all.mdf
+			$(BASE)/bin/mdf2c all.mdf >userall.c
+

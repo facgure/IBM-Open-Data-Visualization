@@ -1,0 +1,26 @@
+// Import the electron density data
+electrondensity = Import("watermolecule");
+
+// Partition for parallelism
+//electrondensity = Partition(electrondensity);
+
+// Create a camera
+camera = AutoCamera(electrondensity,"off-front");
+
+// Color the data
+colored = AutoColor(electrondensity);
+
+// Take a slice in the y dimension, at position 30. The slice is 2 dimensional
+// (has only x and y positions)
+slice = Slice(colored,1,30);
+Display(slice,camera);
+
+// Take a slice in the z dimension at position 10.
+slice = Slice(colored,2,10);
+Display(slice,camera);
+
+// Create all possible slices in the z dimension.
+slices = Slice(colored,2);
+// Select the 9th slice from the series group and display
+slice = Select(slices,9);
+Display(slice,camera);

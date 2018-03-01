@@ -1,0 +1,16 @@
+MODULE Add
+CATEGORY User
+DESCRIPTION Adds a number to a field
+LOADABLE loadablelib 
+INPUT data; field; (none); field to add to
+INPUT addend; scalar; 0; value to add to field
+OUTPUT result; field; result of adding value to field
+
+MODULE MakeX
+CATEGORY Annotation 
+DESCRIPTION draws an X 
+LOADABLE loadablelib 
+INPUT input; field; (none); field to mark positions 
+INPUT size; scalar; 1; size 
+OUTPUT output;  field; field with positions marked 
+

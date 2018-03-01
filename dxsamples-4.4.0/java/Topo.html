@@ -1,0 +1,110 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Topo</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Topology of Colorado</h2>
+		<p>
+This visual program shows some ways to 
+visualize topographic data. 
+It imports a data set which describes the elevation of a
+region of Colorado and a satellite photograph of the same region.
+</p>
+		<p>
+<blockquote>
+<center>
+<b>Grey Scale Image / Elevation Data</b>
+<br>
+<img src="Topo.gif">
+</center>
+</blockquote>
+<p>
+The elevation data are assigned colors by height.  (Red and blue
+correspond to peaks and valleys.)  The visualization task is to
+create a realistic view of the surface by combining the photograph
+with the elevation data.  
+
+<p>
+<table border = 2>
+<tr bgcolor="black">
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 394 HEIGHT = 309
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Topo2.0.0.gif">
+</APPLET>
+</td>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 394 HEIGHT = 309
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_4">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Topo4.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+<p>
+<center>
+<table border = 0>
+<tr>
+<td>
+<h3>...about the visualization</h3>
+The image on left shows the satellite image combined with the elevation
+data.  The image on the right is rubbersheeted elevation data.  The 2 images
+share a common viewpoint.  If you rotate the image on the left, you'll see
+the one on the right from the same camera position.
+<h3>...about the visual program</h3>
+Reorient is used to ensure that the image color data is 
+assigned to the elevation data in the correct order, as 
+the original data sets, while on the same grid, do not 
+have the data in the same order. The "how" parameter of 
+Reorient was set so that the two small images have the 
+same orientation; the grey image is the photograph, while 
+the colored image is the elevation data.
+<p>
+If the image and elevation data had not been on the same 
+grid, then instead of Replace we could have used Map to 
+map the elevation data onto the image field.
+<p>
+You may specify a reduction factor.  This value is used
+as input the Reduce tool which reduces the resolution of 
+the data for better performance.  When you're satisfied
+with the camera position, you might select a reduction
+factor of 0.
+</td>
+<td>
+<APPLET
+	CODE="Topo.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="Topo">
+	<PARAM NAME=NETNAME VALUE="Topo.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+</td>
+</tr>
+</table>
+			<p>
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b>
+		
+		
+			
+
+</body>
+</html>

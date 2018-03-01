@@ -1,0 +1,18 @@
+
+data = Import("watermolecule");
+counter = 1;
+
+macro create_iso(isovalue, counter)->(counter)
+{
+   isosurface = Isosurface(data,isovalue);
+   filename = Format("iso%d", counter);
+   counter++;
+   Export(isosurface, filename);
+}
+
+counter = create_iso(0.1, counter);
+counter = create_iso(0.2, counter);
+counter = create_iso(0.3, counter);
+counter = create_iso(0.4, counter);
+counter = create_iso(0.5, counter);
+counter = create_iso(0.6, counter);

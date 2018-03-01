@@ -1,0 +1,184 @@
+Outboard modules:
+================
+
+For detailed information about outboard modules, please refer to 
+the Data Explorer Programmer's Reference, "Compiling, 
+Linking, and Debugging an Outboard Module."
+
+In this directory you will find a number of sample outboard modules.
+Copy the appropriate Makefile_architecturename to Makefile.
+
+hello.c is an example of the hello module. Use "make hello" to make
+an executable. Use "dx -mdf hello.mdf" to start dx using it.
+
+async.c is a simple asynchronous module (one which can initiate
+an execution). Use "make async" to make an executable. Use
+"dx -mdf async.mdf" to start dx using it.
+
+watchfile.c is a module which waits for a file to change.
+When the file changes, a new execution is triggered, and
+the data in the file is reimported. Use "make watchfile" to 
+make an executable. Use "dx -mdf watchfile.mdf"
+to start dx using it. 
+
+watchsocket.c is a module which waits for input over a socket,
+for example from a simulation program.  When input appears, a 
+new execution is triggered. Use "make watchsocket" to make 
+an executable. Use "dx -mdf watchsocket.mdf"
+to start dx using it. A sample net, watchsocket.net, uses
+this module.
+
+
+
+ 
+The basic steps to make an outboard module are:
+ 
+1) Decide on the interface to the module:  the inputs, the outputs and
+the module name.  Make an .mdf file which contains this information.
+It will be used at run time to describe your module to the system.  For
+examples of .mdf entries, see the section on adding modules in the
+programmers guide, see the examples in this directory, and look in
+$DXROOT/lib/dx.mdf (normally lib/dx.mdf) for the mdf entries
+for all the modules which come with DX.
+ 
+2) Using the sample makefiles and modules in this directory as templates,
+write your outboard module and compile it into a separate executable
+program.
+ 
+3) Start dx with the additional flag `-mdf yourmodule.mdf' when running
+with the user interface.  When running in script mode, the -mdf flag is
+not processed so you must add the commands: 
+  Executive("mdf file", "yourmodule.mdf");
+  $sync
+to your script before calling your module.
+ 
+4) To run your outboard module under a debugger, start dx with this
+additional flag `-outboarddebug'.  Instead of automatically starting 
+your outboard module, DX will prompt you to start your outboard by hand.  
+You can then start and run the module from the debugger.
+ 
+5) To change the interface to an outboard module or to add the mdf entry
+for an outboard module if you forgot to use the -mdf flag at startup,
+from the User Interface you can use the "Load Module Description File"
+option from the File menu.  From script mode, you can rerun the Executive
+command as described above.
+ 
+ 
+Special Consideration for Different Types of Outboards:
+======================================================
+ 
+Simple outboard modules:
+------------------------
+ 
+The simplest type of outboard doesn't need to save any information,
+doesn't communicate with any other process, and doesn't cause executions
+at asynchronous times.  It takes inputs, computes something based on
+them, and returns outputs.  The executable program which makes up the
+outboard module is run each time the module is called and exits after
+it returns the output values.
+ 
+Persistent outboard modules:
+---------------------------
+ 
+If the executable program which makes up the outboard module should not
+exit after each execution then the PERSISTENT flag should be set on the
+FLAGS line in the .mdf file.  Modules might need to do this so they can
+save information from one execution to another, or because the time it
+takes them to start up is long and it would be too slow to start and stop
+a new process during every execution of the network.
+ 
+Using the User Interface, a persistent outboard module is started the
+first time the module is called and does not exit until the box
+representing that module is deleted from the network (or the entire
+network is deleted), or by selecting the "Reset Server" option from the
+"Connection" menu.
+ 
+Using script mode, persistent outboard modules are loaded the first
+time the module is called and they do not exit until the executive
+exits or Executive("flush dictionary"); is run.
+ 
+Global variables can be safely be used to save information between
+executions of the module.  If the same outboard module occurs in a
+network more than once, a different process is started for each instance.
+ 
+Note that the module is not guaranteed to be called during every
+execution.  If the inputs to the module are changed from one value
+to another and then back to the original value, the previous
+results are saved by DX and are used without calling the module
+again.  You can use the "cache none" option on the module to
+prevent previous execution results from being saved, but you may
+have to set "cache none" on all subsequent modules which process
+the outputs of the module or the caching at the lower levels will
+still prevent the module from being called each time.  The flag
+SIDE_EFFECTS will guarantee that the module is called during every
+execution, with the performance penalty of it running even if the
+inputs are the same as a previous run.
+ 
+Modules which can cause executions:
+----------------------------------
+ 
+A module can request that it be rerun the next time the network is
+executed.  If DX is in execute-on-change mode this will cause a new
+execution.  If it is not in execute-on-change module, then the module
+will be called the next time the user runs the network.
+ 
+To be able to cause executions, a module must have the the ASYNC
+flag set on the FLAGS line in its .mdf file.  Then it can call the
+DXReadyToRun() function to request to be rerun.  See the sample
+outboard files "async.c", "watchfile.c", and "watchsocket.c"
+in this directory for examples of how to use this function.  
+The PERSISTENT flag will also need to be set so the module doesn't 
+exit after every execution.  DXReadyToRun() can be called from a 
+variety of places:  by a signal handler (signal), after a prescribed 
+time interval has passed (sleep, alarm), when a file appears (stat) or 
+when data is received across a pipe or socket from another process 
+(tracking a simulation).
+ 
+If an outboard module wants to wait for information from another file
+descriptor it should use DXRegisterInputHandler to add the file
+descriptor to the select list, specifying a worker routine to be
+called when data appears.  The worker routine then calls 
+DXReadyToRun which reruns the outboard module. For an  
+example, see watchsocket.c in this directory.
+ 
+ 
+Running an outboard on another machine:
+======================================
+ 
+If an outboard module should be run on only one particular machine
+(perhaps because it is compute intensive and needs to run on a fast
+machine, or because it needs to access a peripheral which is
+connected to only one machine), the OUTBOARD line can specify a host
+name as well as an executable name.  The dx libraries will take care
+of establishing a connection between where the main dx executive is
+running and the outboard host machine.  The DXMODULES environment
+variable or the -modules flag can be used to specify a search path
+for outboard modules executable files, or the OUTBOARD line can
+specify a fully qualified path name.
+ 
+A valid .rhosts file must be present to allow DX to use the
+"rsh" command to start a process on another machine.  See the
+unix manual page for "rsh" or "remsh" for more information.
+ 
+ 
+Miscellaneous information about outboard modules:
+================================================
+ 
+DXReadyToRun cannot be called between the time a module receives
+its inputs and when it returns its outputs.  If a module wants to
+immediately trigger another execution it can do it after the call
+to DXCallOutboard() in the outboard.c file.
+ 
+Outboard modules cannot be written in coroutine style.  They cannot
+produce outputs without being called by DX and thereby receiving new
+inputs (which can be ignored), and they must return something - the main
+dx executive will wait for the module to return before continuing.
+ 
+When running in script mode, the -mdf command line flag is not recognized
+so you must use the `Executive("mdf file", "yourmodule.mdf");' command.
+This must be followed by `$sync' before actually calling the module to
+ensure that the module definition completes before trying to use it.  
+ 
+An asynchronous module cannot be run in distributed mode, but it can be
+executed on another machine by setting the hostname on the OUTBOARD line.
+ 

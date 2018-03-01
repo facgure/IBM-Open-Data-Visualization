@@ -1,0 +1,153 @@
+//
+// time: Wed Apr  9 15:21:22 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program constructs axes for an isosurface. A grid is added, and the grid is colored red while the labels and ticks are colored yellow.
+// comment: 
+// comment: Note that if you are using the Image tool, AutoAxes functionality can be found under the Image window options menu.
+// workspace: width = 392, height = 478
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 188, y = 44, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "cloudwater"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Isosurface[1]: x = 214, y = 146, inputs = 6, label = Isosurface
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 300, y = 234, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "off-diagonal"
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoAxes[1]: x = 212, y = 327, inputs = 19, label = AutoAxes
+    // input[9]: defaulting = 0, visible = 1, type = 3, value = 1
+    // input[10]: defaulting = 0, visible = 1, type = 16777248, value = {"red" "yellow" "yellow"}
+    // input[11]: defaulting = 0, visible = 1, type = 16777248, value = {"grid" "labels" "ticks"}
+    //
+main_AutoAxes_1_out_1 = 
+    AutoAxes(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_AutoAxes_1_in_3,
+    main_AutoAxes_1_in_4,
+    main_AutoAxes_1_in_5,
+    main_AutoAxes_1_in_6,
+    main_AutoAxes_1_in_7,
+    main_AutoAxes_1_in_8,
+    main_AutoAxes_1_in_9,
+    main_AutoAxes_1_in_10,
+    main_AutoAxes_1_in_11,
+    main_AutoAxes_1_in_12,
+    main_AutoAxes_1_in_13,
+    main_AutoAxes_1_in_14,
+    main_AutoAxes_1_in_15,
+    main_AutoAxes_1_in_16,
+    main_AutoAxes_1_in_17,
+    main_AutoAxes_1_in_18,
+    main_AutoAxes_1_in_19
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 256, y = 416, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.3305,0.0625), size = 0.5109x0.5117
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_AutoAxes_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "cloudwater";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Isosurface_1_in_2 = NULL;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = "off-diagonal";
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = NULL;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_AutoAxes_1_in_3 = NULL;
+main_AutoAxes_1_in_4 = NULL;
+main_AutoAxes_1_in_5 = NULL;
+main_AutoAxes_1_in_6 = NULL;
+main_AutoAxes_1_in_7 = NULL;
+main_AutoAxes_1_in_8 = NULL;
+main_AutoAxes_1_in_9 = 1;
+main_AutoAxes_1_in_10 = {"red" "yellow" "yellow"};
+main_AutoAxes_1_in_11 = {"grid" "labels" "ticks"};
+main_AutoAxes_1_in_12 = NULL;
+main_AutoAxes_1_in_13 = NULL;
+main_AutoAxes_1_in_14 = NULL;
+main_AutoAxes_1_in_15 = NULL;
+main_AutoAxes_1_in_16 = NULL;
+main_AutoAxes_1_in_17 = NULL;
+main_AutoAxes_1_in_18 = NULL;
+main_AutoAxes_1_in_19 = NULL;
+main_AutoAxes_1_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

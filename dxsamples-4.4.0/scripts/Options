@@ -1,0 +1,24 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Color the front faces of the isosurface "medium goldenrod"
+isosurface = Color(isosurface, "medium goldenrod", component = "front colors");
+    // Use the Options module to set the "back specular" property to 0,
+    // and the "front shininess" property to 15
+isosurface = Options(isosurface, "back specular", 0, "front shininess", 15);
+    // set the camera using azimuth 65 degrees, elevation 5 degrees, 
+    // distance 10
+from = Direction(65, 5, 10);
+camera = AutoCamera(isosurface,from);
+    // Use ClipPlane to clip open the isosurface
+clippediso = ClipPlane(isosurface);
+    // Display the result
+Display(clippediso,camera);
+
+
+
+

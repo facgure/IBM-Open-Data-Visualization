@@ -1,0 +1,17 @@
+// This example script performs the "dilate" operation on an input caption.
+// The caption is made using a triplex stroke font. The dilation operation
+// fills in the "holes" between the white spaces.
+
+
+caption = Caption("Caption", position=[.5 .5], height=80, font="roman_tser");
+camera = AutoCamera(caption, resolution = 300);
+image = Render(caption,camera);
+Display(image);
+KeyIn("original image shown. Press enter when ready to continue");
+
+renamed = Rename(image,"colors","data");
+magnitude = Compute("mag($0)", renamed);
+morphed = Morph(magnitude,"dilate");
+vectorcolors = Compute("float([$0, $0, $0])", morphed);
+newimage = Rename(vectorcolors,"data","colors");
+Display(newimage);

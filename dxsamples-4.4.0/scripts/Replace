@@ -1,0 +1,20 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+    // Create a plane through the data
+plane = MapToPlane(electrondensity,[1 0 -0.9]);
+    // Compute the cube root of the electrondensity on the plane
+rtdensity = Compute("$0^0.3333",plane);
+    // Color based on the cube root
+colored = AutoColor(rtdensity);
+    // Replace the original data into the plane
+originaldata = Replace(plane, colored);
+    // Use RubberSheet to displace the plane according to the original data
+displaced = RubberSheet(originaldata);
+    // Add normals for shading and display
+displaced = Normals(displaced);
+Display(displaced,camera);

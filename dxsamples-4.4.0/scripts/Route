@@ -1,0 +1,12 @@
+macro f(selector)
+{
+  x, y = Route(selector, 17);
+  x = Compute("$0 + 1", x);
+  Echo(x);
+  Echo(y);
+}
+
+f(1);
+f(2);
+f(0);
+f(3);

@@ -1,0 +1,33 @@
+   # This data explorer header file will read an image ("cylinder.rgb"). The
+   # image is 350 x 300 and consists of rgb colors (3-vectors)
+   # You can contrast this to the header file for the general import format
+   # "image.general". You can read in this image, and display it, using the
+   # visual program ReadImage.net.
+   #
+   #
+   #
+   # First describe the positions. The image is written such that 
+   # x varies fastest, and the first pixel in the file is the one that is
+   # to be displayed at the top left.
+object 1 class gridpositions 300 350
+origin 0 0
+delta  0 -1
+delta  1 0
+   # 
+   # Next describe the connections
+object 2 class gridconnections 300 350
+   #
+   # Next indicate that the data may be found in the file "cylinder.rgb", 
+   # starting at byte 0.  There are three bytes (red, green, and blue) 
+   # for each pixel.
+object 3 class array type byte rank 1 shape 3 ieee msb items 105000 
+    data file cylinder.rgb,0
+    attribute "dep" string "positions"
+   #
+   # We will read the colors in as the "data" component. This will allow us
+   # to immediately begin operating on them (for example, to convert the 
+   # bytes to floating point colors)
+object "image" class field
+    component "positions" 1
+    component "connections" 2
+    component "data" 3 

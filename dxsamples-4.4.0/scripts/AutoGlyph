@@ -1,0 +1,45 @@
+    // Import data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create about 200 sample points
+sampled = Sample(electrondensity,200);
+    // Color the samples
+mapped = AutoColor(sampled);
+    // Create a camera
+camera = AutoCamera(mapped,"off-diagonal", resolution = 500, aspect = 1);
+    // Create glyphs. By default the smallest will be 5 percent the size of
+    // the largest (ratio = 0.05, and min = data min)
+glyphs = AutoGlyph(mapped);
+Display(glyphs,camera);
+
+    // This time, make all the glyphs the same size
+glyphs = AutoGlyph(mapped, ratio = 1);
+Display(glyphs,camera);
+
+    // This time, make the glyphs proportionally sized
+glyphs = AutoGlyph(mapped, ratio = 0, min=0);
+Display(glyphs,camera);
+   
+    // Take the gradient of the field
+grad = Gradient(electrondensity);
+    // Map the gradient field onto the samples
+mapped = Map(sampled,grad);
+    // Create glyphs. These will be vector glyphs, five times as long as
+    // the default length
+glyphs = AutoGlyph(mapped,scale=5, type="needle");
+Display(glyphs,camera);
+
+
+    // Create text glyphs from a set of sample points
+plane = MapToPlane(electrondensity);
+samples = Sample(plane,15);
+dots = AutoGlyph(samples, scale = 0.1, ratio=1);
+textglyphs = AutoGlyph(samples,"text");
+textglyphs = Color(textglyphs,"red");
+box = ShowBox(electrondensity);
+collected = Collect(box,textglyphs, dots);
+Display(collected, camera);
+
+
+

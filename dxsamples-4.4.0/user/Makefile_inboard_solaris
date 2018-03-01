@@ -1,0 +1,21 @@
+FILES = user.o add.o makex.o hello.o
+
+BASE = /usr/lpp/dx
+
+CC = cc
+
+CFLAGS = -O -Dsolaris -I$(BASE)/include
+
+LIBS   = -L$(BASE)/lib_solaris -L/usr/openwin/lib \
+	-lDX -lm -ly -ll -lX11 -ldl -lnsl -lsocket -lthread
+
+
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user.c:		user_inboard.mdf
+		mdf2c user_inboard.mdf > user.c

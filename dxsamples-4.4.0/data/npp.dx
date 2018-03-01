@@ -1,0 +1,78 @@
+object 1 class array type float rank 0 items 26 data 0
+attribute "dep" string "positions"
+#
+object 2 class array type float rank 1 shape 3 items 26 data 339
+attribute "dep" string "positions"
+#
+object 3 class array type int rank 1 shape 2 items 28 data 1354
+attribute "element type" string "lines"
+attribute "ref" string "positions"
+#
+object "molecule" class field
+component "data" value 1
+component "positions" value 2
+component "connections" value 3
+attribute "name" string "molecule"
+#
+end
+           1            3            3            3            3            3
+           3            1            1            3            1            3
+           2            4            4            3            3            3
+           3            3            3            1            1            1
+           1            1 
+   -9.208201      -3.5059            0
+     -7.1239      -3.4079            0
+   -5.986001      -1.1295            0
+   -5.768001      -5.5694            0
+     -3.4601      -1.1461            0
+     -3.2205      -5.5388            0
+     -2.1336      -3.2577            0
+     -7.0737    0.6481001            0
+   -6.763801    -7.402201            0
+     -1.5257    0.9892001            0
+     -2.0946      -7.2924            0
+      0.6289      -2.4338            0
+      0.6435      -0.0345            0
+      -2.342       3.0705            0
+      2.1567    -4.066101            0
+       2.889       1.3853            0
+       2.914       3.9443            0
+      5.2105       0.3091            0
+    5.050001       5.3174            0
+    7.367601       1.6492            0
+      7.3071       4.1772            0
+      1.1664       5.0579            0
+    5.464301      -1.7477            0
+      4.9519     7.402201            0
+    9.208201    0.6654001            0
+    9.070701       5.2914            0
+
+        0         1
+        1         3
+        1         2
+        3         8
+        2         7
+        2         4
+        4         6
+        5         6
+        3         5
+        5        10
+        4         9
+        6        11
+        9        12
+       11        12
+       11        14
+        9        13
+       12        15
+       15        16
+       15        17
+       17        22
+       16        21
+       17        19
+       19        24
+       19        20
+       20        25
+       20        18
+       16        18
+       18        23
+

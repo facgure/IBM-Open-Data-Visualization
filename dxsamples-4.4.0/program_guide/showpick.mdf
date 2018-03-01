@@ -1,0 +1,12 @@
+MODULE ShowPick
+CATEGORY User
+DESCRIPTION sets a triangle in a picked field to a particular color
+INPUT input; object; (none); object which was picked in
+INPUT pickobject; field; (none); picking structure
+INPUT color; string; "red"; color to set
+INPUT colorwhich; integer; 0; color element (0), vertex (1) or entire field (2)
+INPUT poke; integer; (all); poke selection
+INPUT pick; integer; (all); pick selection
+INPUT depth; integer; (bottom); selection depth
+OUTPUT output;  object; object with picked object marked using color
+

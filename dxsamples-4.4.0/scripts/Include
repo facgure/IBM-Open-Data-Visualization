@@ -1,0 +1,24 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Compute the gradient
+gradientdensity = Gradient(electrondensity);
+    // Compute the magnitude of the gradient
+maggradient = Compute("mag($0)",gradientdensity);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Map the magnitude of the gradient onto the isosurface
+mappediso = Map(isosurface,maggradient);
+    // Create a camera
+camera = AutoCamera(isosurface);
+    // Remove all points except those between values 0 and 1.5
+included = Include(mappediso,0,1.5);
+    // Display
+Display(included,camera);
+
+
+
+
+

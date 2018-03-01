@@ -1,0 +1,84 @@
+#
+# Example of faces, loops and edges components.
+# This example has no holes.
+#
+
+#
+# Positions array.  These are a list of all the verticies of the object;
+#   no particular order is required here.
+#
+object "position list" class array type float rank 1 shape 2 items 11 
+data follows
+    0.133985     0.812452    # point number 0
+    0.375019     0.896258    # point number 1 
+    0.532733      0.76484    # point number 2 
+    0.523806     0.404777    # point number 3 
+    0.300626     0.327407    # point number 4 
+    0.145888     0.508927    # point number 5 
+     0.68152     0.851137    # point number 6
+    0.815428     0.758889    # point number 7 
+     0.94636     0.592248    # point number 8 
+    0.729132     0.416679    # point number 9 
+    0.535709     0.190524    # point number 10 
+#
+#  Edges array.  This is a list of connected points, by point number.  All
+#  the edges associated with a particular face need to be listed together.
+#  If points 10, 3 and 7 make a triangle, the list is "10 3 7" and the 10
+#  is not repeated. 
+#  Note that below, for readability, the connected points for
+#  each loop are shown together. However, line breaks are not
+#  significant to the importer, and all of the following numbers
+#  could have been on the same line, or one to a line, with the
+#  same result.
+object "edge list" class array type int rank 0 items 21 data follows
+  1   2   6                    # edge point index 0
+  0   5   4   3   2   1        # edge point index 3
+  2   3   9   8   7   6        # edge point index 9
+  3  10   9                    # edge point index 15
+  3   4  10                    # edge point index 18
+attribute "ref" string "positions"
+
+#
+#  Loops array.  This is a list of connected edges, by edge number.  Each
+#  number is the edge index of where the next loop starts.
+object "loop list" class array type int rank 0 items 5 data follows
+  0     # loop index 0
+  3     #  1
+  9     #  2
+ 15     #  3
+ 18     #  4
+attribute "ref" string "edges"
+
+#
+#  Faces array.  This is list of which loops make faces.  If there are
+#   no holes in the faces, this is list of all loops.  If two or more
+#   loops actually describe the outside edges and inside hole edges of
+#   a face, then this list contains the starting loop numbers of the
+#   list of loops making up a face.
+#
+object "face list" class array type int rank 0 items 5 data follows
+ 0
+ 1
+ 2
+ 3
+ 4
+attribute "ref" string "loops"
+
+#
+#  data array. Dependent on faces.
+#
+object "data" class array type float rank 0 items 5 data follows
+  0 2.5 1.2 0.4 1.8
+attribute "dep" string "faces"
+
+#
+#
+#  Field definition to put the arrays together.
+#
+object "map" class field
+   component "positions"    "position list"
+   component "edges"        "edge list"
+   component "loops"        "loop list"
+   component "faces"        "face list"
+   component "data"         "data"
+end

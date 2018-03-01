@@ -1,0 +1,27 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create a camera
+camera = AutoCamera(electrondensity,width=4);
+   // Take a slab in the z dimension (dimension=2) at position 10. By default,
+   // the thickness is 0
+plane = Slab(electrondensity, 2, 10);
+   // Color the plane
+plane = AutoColor(plane,min=electrondensity);
+   // Create an image and display it
+image = Render(plane,camera);
+Display(image);
+
+   // Mark the "colors" component of the image as the "data". Now Compute
+   // can operate on the "colors"
+markedcolors = Mark(image,"colors");
+   // Compute the negative of the colors
+negative = Compute("[1.0, 1.0, 1.0] - $0", markedcolors);
+   // The Unmark module returns the modified colors to the "colors" component
+newimage = Unmark(negative,"colors"); 
+   // Display the result
+Display(newimage);
+
+

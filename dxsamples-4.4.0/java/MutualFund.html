@@ -1,0 +1,103 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Mutual Funds</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Mutual Fund Performance</h2>
+		<table border = 0>
+<tr bgcolor="white">
+<td>
+
+<APPLET
+	CODE="MutualFund.class" width = 330 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="MutualFund">
+	<PARAM NAME=NETNAME VALUE="MutualFund.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+</APPLET>
+</td>
+<td>
+<h4>...about the visualization</h4>
+This application shows the performance of a variety
+of mutual funds using data obtained from the web.
+A total of 15 parameters are associated with each
+fund in the source data and one additional value,
+sd, or the standard deviation of the performance,
+is calculated within the visual program.
+
+<h4>...about the visual program</h4>
+The 3 spatial
+axes correspond to the 1, 3, and 5 year performance;
+two additional parameters can be assigned to the size
+and color of the spheres.  Furthermore, by clicking on
+a sphere with the mouse you can query any of the
+parameters assigned to that fund.
+
+<h4>...about the conversion to web page</h4>
+In the <i>Mode</i> menu, select <i>Pick</i>.  
+Then click the mouse on a sphere.  You'll see the <i>Execution</i>
+turn green as Data Explorer computes the result of your
+query.  
+</td>
+</tr>
+</table>
+
+
+<table border = 0>
+<tr bgcolor="white">
+<td>
+<APPLET
+	CODE="CaptionLabels.class" WIDTH = 425 HEIGHT = 56
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="Caption">
+	<PARAM NAME=DXLOutput0 VALUE="PickStr">
+	<PARAM NAME="DXLOutput1" VALUE="SizeStr">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+	<PARAM NAME=FOREGROUND VALUE="[0.0, 0.0, 0.0]">
+</APPLET>
+</td>
+</tr>
+<tr>
+<td>
+
+<APPLET
+	CODE="imageWindow.class" WIDTH = 550 HEIGHT = 455
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/MutualFund2.0.0.gif">
+</APPLET>
+</td>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 154 HEIGHT = 450
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_3">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/MutualFund3.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

@@ -1,0 +1,1424 @@
+//
+// time: Thu Jun 21 09:46:40 2001
+//
+// version: 3.1.2 (format), 4.1.3 (DX)
+//
+//
+// Begin MDF
+// MODULE StereoImage
+// CATEGORY Macros
+// INPUT object; object; (no default);  
+// INPUT displayName; object; (no default);  
+// INPUT resetObject; object; (no default);  
+// INPUT resetCamera; object; (no default);  
+// INPUT perspectiveOnOff; object; (no default);  
+// INPUT perspectiveAOV; object; (no default);  
+// INPUT windowAspect; object; (no default);  
+// INPUT popUpWindow; object; (no default);  
+// INPUT windowSize; object; (no default);  
+// INPUT resetSize; object; (no default);  
+// INPUT decorationsFlag; object; (no default);  
+// INPUT resetSeparation; object; (no default);  
+// INPUT separationStepSize; object; (no default);  
+// INPUT defaultSeparation; object; (no default);  
+// INPUT resetOverlap; object; (no default);  
+// INPUT overlapStepSize; object; (no default);  
+// INPUT defaultOverlap; object; (no default);  
+// INPUT PickFirst; flag; (no default);  
+// INPUT PickInterpolate; flag; (no default);  
+// OUTPUT displayObject; object;  
+// OUTPUT displayCamera; object;  
+// OUTPUT displayWhere; object;  
+// OUTPUT pickResult; field;  
+// End MDF
+// page assignment: InOut	order=3, windowed=0, showing=0
+// page assignment: InteractionM	order=4, windowed=0, showing=0
+// page assignment: Pick	order=2, windowed=0, showing=0
+// page assignment: frustum	order=7, windowed=0, showing=0
+// page assignment: main	order=9, windowed=0, showing=0
+// page assignment: popdown	order=8, windowed=0, showing=1
+// page assignment: separation	order=6, windowed=0, showing=0
+// page assignment: stereoMode	order=5, windowed=0, showing=0
+// workspace: width = 683, height = 341
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro StereoImage(
+ object
+,displayName
+,resetObject
+,resetCamera
+,perspectiveOnOff
+,perspectiveAOV
+,windowAspect
+,popUpWindow
+,windowSize
+,resetSize
+,decorationsFlag
+,resetSeparation
+,separationStepSize
+,defaultSeparation
+,resetOverlap
+,overlapStepSize
+,defaultOverlap
+,PickFirst
+,PickInterpolate
+) -> (
+ displayObject
+,displayCamera
+,displayWhere
+,pickResult
+) {
+    // 
+    // node Input[1]: x = 47, y = 27, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 1, name = 'object', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_1_out_1 = object;
+    // 
+    // node Transmitter[7]: x = 47, y = 124, inputs = 1, label = data
+    // page group: InOut
+    //
+data = StereoImage_Input_1_out_1;
+    // 
+    // node Receiver[13]: x = 26, y = 7, inputs = 1, label = data
+    // page group: main
+    //
+StereoImage_Receiver_13_out_1[cache: 0] = data;
+    // 
+    // node Input[9]: x = 310, y = 206, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 9, name = 'windowSize', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_9_out_1 = windowSize;
+    // 
+    // node Transmitter[9]: x = 292, y = 280, inputs = 1, label = WindowSize
+    // page group: InOut
+    //
+WindowSize = StereoImage_Input_9_out_1;
+    // 
+    // node Receiver[17]: x = 79, y = 15, inputs = 1, label = WindowSize
+    // page group: main
+    //
+StereoImage_Receiver_17_out_1[cache: 0] = WindowSize;
+    // 
+    // node Compute[18]: x = 131, y = 114, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int($0.0)"
+    // page group: main
+    // expression: value = int(a.0)
+    // name[2]: value = a
+    //
+StereoImage_Compute_18_out_1 = 
+    Compute(
+    "int($0.0)",
+    StereoImage_Receiver_17_out_1
+    ) [instance: 18, cache: 1];
+    // 
+    // node Compute[19]: x = 217, y = 114, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0.1)/$0.0"
+    // page group: main
+    // expression: value = float(a.1)/a.0
+    // name[2]: value = a
+    //
+StereoImage_Compute_19_out_1 = 
+    Compute(
+    "float($0.1)/$0.0",
+    StereoImage_Receiver_17_out_1
+    ) [instance: 19, cache: 1];
+    // 
+    // node Input[5]: x = 490, y = 31, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 5, name = 'perspectiveOnOff', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_5_out_1 = perspectiveOnOff;
+    // 
+    // node Transmitter[17]: x = 451, y = 135, inputs = 1, label = PerspectiveOnOff
+    // page group: InOut
+    //
+PerspectiveOnOff = StereoImage_Input_5_out_1;
+    // 
+    // node Receiver[26]: x = 0, y = 208, inputs = 1, label = PerspectiveOnOff
+    // page group: main
+    //
+StereoImage_Receiver_26_out_1[cache: 0] = PerspectiveOnOff;
+    // 
+    // node Input[6]: x = 614, y = 33, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 6, name = 'perspectiveAOV', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_6_out_1 = perspectiveAOV;
+    // 
+    // node Transmitter[16]: x = 596, y = 134, inputs = 1, label = PerspectiveAOV
+    // page group: InOut
+    //
+PerspectiveAOV = StereoImage_Input_6_out_1;
+    // 
+    // node Receiver[25]: x = 1, y = 120, inputs = 1, label = PerspectiveAOV
+    // page group: main
+    //
+StereoImage_Receiver_25_out_1[cache: 0] = PerspectiveAOV;
+    // 
+    // node Camera[1]: x = 144, y = 213, inputs = 9, label = Camera
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [0 0 3]
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 5.0
+    // input[7]: defaulting = 1, visible = 1, type = 3, value = 0
+    // input[8]: defaulting = 1, visible = 1, type = 5, value = 60.0
+    // page group: main
+    //
+StereoImage_Camera_1_out_1 = 
+    Camera(
+    StereoImage_Receiver_13_out_1,
+    [0 0 3],
+    5.0,
+    StereoImage_Compute_18_out_1,
+    StereoImage_Compute_19_out_1,
+    NULL,
+    StereoImage_Receiver_26_out_1,
+    StereoImage_Receiver_25_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[2]: x = 141, y = 32, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 2, name = 'displayName', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_2_out_1 = displayName;
+    // 
+    // node Transmitter[14]: x = 114, y = 129, inputs = 1, label = DisplayName
+    // page group: InOut
+    //
+DisplayName = StereoImage_Input_2_out_1;
+    // 
+    // node Receiver[23]: x = 491, y = 20, inputs = 1, label = DisplayName
+    // page group: main
+    //
+StereoImage_Receiver_23_out_1[cache: 0] = DisplayName;
+    // 
+    // node Input[8]: x = 172, y = 205, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 8, name = 'popUpWindow', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_8_out_1 = popUpWindow;
+    // 
+    // node Transmitter[18]: x = 119, y = 283, inputs = 1, label = PopUpWindowReset
+    // page group: InOut
+    //
+PopUpWindowReset = StereoImage_Input_8_out_1;
+    // 
+    // node Receiver[27]: x = 73, y = 30, inputs = 1, label = PopUpWindowReset
+    // page group: popdown
+    //
+StereoImage_Receiver_27_out_1[cache: 0] = PopUpWindowReset;
+    // 
+    // node GetGlobal[3]: x = 118, y = 113, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = 1
+    // input[2]: defaulting = 1, visible = 1, type = 3, value = 0
+    // page group: popdown
+    //
+StereoImage_GetGlobal_3_out_1,
+StereoImage_GetGlobal_3_out_2 = 
+    GetGlobal(
+    1,
+    StereoImage_Receiver_27_out_1,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[5]: x = 98, y = 198, inputs = 1, label = popdownWindow
+    // page group: popdown
+    //
+popdownWindow = StereoImage_GetGlobal_3_out_1;
+    // 
+    // node Receiver[9]: x = 607, y = 13, inputs = 1, label = popdownWindow
+    // page group: main
+    //
+StereoImage_Receiver_9_out_1[cache: 0] = popdownWindow;
+    // 
+    // node Input[10]: x = 431, y = 201, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 10, name = 'resetSize', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_10_out_1 = resetSize;
+    // 
+    // node Transmitter[10]: x = 424, y = 278, inputs = 1, label = ResetSize
+    // page group: InOut
+    //
+ResetSize = StereoImage_Input_10_out_1;
+    // 
+    // node Receiver[18]: x = 648, y = 121, inputs = 1, label = ResetSize
+    // page group: main
+    //
+StereoImage_Receiver_18_out_1[cache: 0] = ResetSize;
+    // 
+    // node Input[11]: x = 542, y = 200, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 11, name = 'decorationsFlag', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_11_out_1 = decorationsFlag;
+    // 
+    // node Transmitter[11]: x = 524, y = 278, inputs = 1, label = Decorations
+    // page group: InOut
+    //
+Decorations = StereoImage_Input_11_out_1;
+    // 
+    // node Receiver[20]: x = 740, y = 123, inputs = 1, label = Decorations
+    // page group: main
+    //
+StereoImage_Receiver_20_out_1[cache: 0] = Decorations;
+    // 
+    // node SuperviseWindow[1]: x = 358, y = 134, inputs = 11, label = SuperviseWindow
+    // input[2]: defaulting = 1, visible = 1, type = 32, value = "gtv:0.1"
+    // input[3]: defaulting = 1, visible = 1, type = 8, value = [1280,1024]
+    // input[11]: defaulting = 1, visible = 1, type = 3, value = 0
+    // page group: main
+    //
+StereoImage_SuperviseWindow_1_out_1,
+StereoImage_SuperviseWindow_1_out_2,
+StereoImage_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    NULL,
+    StereoImage_Receiver_23_out_1,
+    StereoImage_Receiver_17_out_1,
+    NULL,
+    NULL,
+    NULL,
+    StereoImage_Receiver_9_out_1,
+    NULL,
+    StereoImage_Receiver_18_out_1,
+    NULL,
+    StereoImage_Receiver_20_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[2]: x = 734, y = 214, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null"
+    // page group: main
+    //
+StereoImage_Inquire_2_out_1 = 
+    Inquire(
+    StereoImage_SuperviseWindow_1_out_3,
+    "is null",
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[6]: x = 723, y = 290, inputs = 1, label = noEvent
+    // page group: main
+    //
+noEvent = StereoImage_Inquire_2_out_1;
+    // 
+    // node Receiver[10]: x = 39, y = 415, inputs = 1, label = noEvent
+    // page group: frustum
+    //
+StereoImage_Receiver_10_out_1[cache: 0] = noEvent;
+    // 
+    // node Compute[14]: x = 130, y = 444, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: frustum
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+StereoImage_Compute_14_out_1 = 
+    Compute(
+    "$0+1",
+    StereoImage_Receiver_10_out_1
+    ) [instance: 14, cache: 1];
+    // 
+    // node Inquire[1]: x = 631, y = 211, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is not null"
+    // page group: main
+    //
+StereoImage_Inquire_1_out_1 = 
+    Inquire(
+    StereoImage_SuperviseWindow_1_out_3,
+    "is not null",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Route[1]: x = 622, y = 286, inputs = 2, outputs = 2, label = Route
+    // page group: main
+    //
+StereoImage_Route_1_out_1,
+StereoImage_Route_1_out_2 = 
+    Route(
+    StereoImage_Inquire_1_out_1,
+    StereoImage_SuperviseWindow_1_out_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[1]: x = 614, y = 360, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: main
+    //
+StereoImage_Select_1_out_1 = 
+    Select(
+    StereoImage_Route_1_out_1,
+    0,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 636, y = 437, inputs = 1, label = keyPress
+    // page group: main
+    //
+keyPress = StereoImage_Select_1_out_1;
+    // 
+    // node Receiver[8]: x = 4, y = 34, inputs = 1, label = keyPress
+    // page group: frustum
+    //
+StereoImage_Receiver_8_out_1[cache: 0] = keyPress;
+    // 
+    // node Compute[13]: x = 4, y = 187, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3) == 61 || select($0, 3) == 45 ? 1 : 2"
+    // page group: frustum
+    // expression: value = select(a, 3) == 61 || select(a, 3) == 45 ? 1 : 2
+    // name[2]: value = a
+    //
+StereoImage_Compute_13_out_1 = 
+    Compute(
+    "select($0, 3) == 61 || select($0, 3) == 45 ? 1 : 2",
+    StereoImage_Receiver_8_out_1
+    ) [instance: 13, cache: 1];
+    // 
+    // node Input[17]: x = 374, y = 527, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 17, name = 'defaultOverlap', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_17_out_1 = defaultOverlap;
+    // 
+    // node Transmitter[23]: x = 379, y = 607, inputs = 1, label = DefaultOverlap
+    // page group: InOut
+    //
+DefaultOverlap = StereoImage_Input_17_out_1;
+    // 
+    // node Receiver[32]: x = 235, y = 27, inputs = 1, label = DefaultOverlap
+    // page group: frustum
+    //
+StereoImage_Receiver_32_out_1[cache: 0] = DefaultOverlap;
+    // 
+    // node Input[15]: x = 103, y = 530, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 15, name = 'resetOverlap', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_15_out_1 = resetOverlap;
+    // 
+    // node Transmitter[24]: x = 94, y = 619, inputs = 1, label = ResetOverlap
+    // page group: InOut
+    //
+ResetOverlap = StereoImage_Input_15_out_1;
+    // 
+    // node Receiver[33]: x = 313, y = 93, inputs = 1, label = ResetOverlap
+    // page group: frustum
+    //
+StereoImage_Receiver_33_out_1[cache: 0] = ResetOverlap;
+    // 
+    // node GetGlobal[4]: x = 282, y = 200, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 1, visible = 1, type = 67108863, value = {0.475}
+    // page group: frustum
+    //
+StereoImage_GetGlobal_4_out_1,
+StereoImage_GetGlobal_4_out_2 = 
+    GetGlobal(
+    StereoImage_Receiver_32_out_1,
+    StereoImage_Receiver_33_out_1,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Input[16]: x = 248, y = 530, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 16, name = 'overlapStepSize', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_16_out_1 = overlapStepSize;
+    // 
+    // node Transmitter[22]: x = 224, y = 614, inputs = 1, label = OverlapStepsize
+    // page group: InOut
+    //
+OverlapStepsize = StereoImage_Input_16_out_1;
+    // 
+    // node Receiver[31]: x = 100, y = 46, inputs = 1, label = OverlapStepsize
+    // page group: frustum
+    //
+StereoImage_Receiver_31_out_1[cache: 0] = OverlapStepsize;
+    // 
+    // node Compute[9]: x = 114, y = 161, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3) == 61 ? $1 : select($0, 3) == 45 ? -$1 : 0"
+    // page group: frustum
+    // expression: value = select(a, 3) == 61 ? b : select(a, 3) == 45 ? -b : 0
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+StereoImage_Compute_9_out_1 = 
+    Compute(
+    "select($0, 3) == 61 ? $1 : select($0, 3) == 45 ? -$1 : 0",
+    StereoImage_Receiver_8_out_1,
+    StereoImage_Receiver_31_out_1
+    ) [instance: 9, cache: 1];
+    // 
+    // node Compute[10]: x = 189, y = 261, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+$1"
+    // page group: frustum
+    // expression: value = a+b
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+StereoImage_Compute_10_out_1 = 
+    Compute(
+    "$0+$1",
+    StereoImage_GetGlobal_4_out_1,
+    StereoImage_Compute_9_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Switch[3]: x = 130, y = 344, inputs = 3, label = Switch
+    // page group: frustum
+    //
+StereoImage_Switch_3_out_1 = 
+    Switch(
+    StereoImage_Compute_13_out_1,
+    StereoImage_Compute_10_out_1,
+    StereoImage_GetGlobal_4_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Switch[4]: x = 231, y = 447, inputs = 3, label = Switch
+    // page group: frustum
+    //
+StereoImage_Switch_4_out_1 = 
+    Switch(
+    StereoImage_Compute_14_out_1,
+    StereoImage_Switch_3_out_1,
+    StereoImage_GetGlobal_4_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Transmitter[4]: x = 221, y = 547, inputs = 1, label = frustumOverlap
+    // page group: frustum
+    //
+frustumOverlap = StereoImage_Switch_4_out_1;
+    // 
+    // node Receiver[7]: x = 198, y = 88, inputs = 1, label = frustumOverlap
+    // page group: Pick
+    //
+StereoImage_Receiver_7_out_1[cache: 0] = frustumOverlap;
+    // 
+    // node Receiver[11]: x = 0, y = 363, inputs = 1, label = noEvent
+    // page group: separation
+    //
+StereoImage_Receiver_11_out_1[cache: 0] = noEvent;
+    // 
+    // node Compute[15]: x = 110, y = 417, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: separation
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+StereoImage_Compute_15_out_1 = 
+    Compute(
+    "$0+1",
+    StereoImage_Receiver_11_out_1
+    ) [instance: 15, cache: 1];
+    // 
+    // node Receiver[4]: x = 48, y = 15, inputs = 1, label = keyPress
+    // page group: separation
+    //
+StereoImage_Receiver_4_out_1[cache: 0] = keyPress;
+    // 
+    // node Compute[12]: x = 20, y = 141, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0,3) == 119 || select($0,3) == 110 ? 1 : 2"
+    // page group: separation
+    // expression: value = select(a,3) == 119 || select(a,3) == 110 ? 1 : 2
+    // name[2]: value = a
+    //
+StereoImage_Compute_12_out_1 = 
+    Compute(
+    "select($0,3) == 119 || select($0,3) == 110 ? 1 : 2",
+    StereoImage_Receiver_4_out_1
+    ) [instance: 12, cache: 1];
+    // 
+    // node Input[14]: x = 426, y = 366, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 14, name = 'defaultSeparation', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_14_out_1 = defaultSeparation;
+    // 
+    // node Transmitter[20]: x = 389, y = 452, inputs = 1, label = DefaultSeparation
+    // page group: InOut
+    //
+DefaultSeparation = StereoImage_Input_14_out_1;
+    // 
+    // node Receiver[29]: x = 216, y = 119, inputs = 1, label = DefaultSeparation
+    // page group: separation
+    //
+StereoImage_Receiver_29_out_1[cache: 0] = DefaultSeparation;
+    // 
+    // node Input[12]: x = 78, y = 367, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 12, name = 'resetSeparation', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_12_out_1 = resetSeparation;
+    // 
+    // node Transmitter[21]: x = 50, y = 454, inputs = 1, label = ResetSeparation
+    // page group: InOut
+    //
+ResetSeparation = StereoImage_Input_12_out_1;
+    // 
+    // node Receiver[30]: x = 325, y = 205, inputs = 1, label = ResetSeparation
+    // page group: separation
+    //
+StereoImage_Receiver_30_out_1[cache: 0] = ResetSeparation;
+    // 
+    // node GetGlobal[1]: x = 218, y = 205, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 1, visible = 1, type = 67108863, value = -.1
+    // page group: separation
+    //
+StereoImage_GetGlobal_1_out_1,
+StereoImage_GetGlobal_1_out_2 = 
+    GetGlobal(
+    StereoImage_Receiver_29_out_1,
+    StereoImage_Receiver_30_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[13]: x = 252, y = 375, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 13, name = 'separationStepSize', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_13_out_1 = separationStepSize;
+    // 
+    // node Transmitter[19]: x = 209, y = 454, inputs = 1, label = SeparationStepSize
+    // page group: InOut
+    //
+SeparationStepSize = StereoImage_Input_13_out_1;
+    // 
+    // node Receiver[28]: x = 206, y = 22, inputs = 1, label = SeparationStepSize
+    // page group: separation
+    //
+StereoImage_Receiver_28_out_1[cache: 0] = SeparationStepSize;
+    // 
+    // node Compute[1]: x = 114, y = 119, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3)== 119 ? $1 : select($0, 3) == 110 ? -$1 : 0"
+    // page group: separation
+    // expression: value = select(a, 3)== 119 ? b : select(a, 3) == 110 ? -b : 0
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+StereoImage_Compute_1_out_1 = 
+    Compute(
+    "select($0, 3)== 119 ? $1 : select($0, 3) == 110 ? -$1 : 0",
+    StereoImage_Receiver_4_out_1,
+    StereoImage_Receiver_28_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[2]: x = 71, y = 220, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+$1"
+    // page group: separation
+    // expression: value = a+b
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+StereoImage_Compute_2_out_1 = 
+    Compute(
+    "$0+$1",
+    StereoImage_GetGlobal_1_out_1,
+    StereoImage_Compute_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[1]: x = 89, y = 331, inputs = 3, label = Switch
+    // page group: separation
+    //
+StereoImage_Switch_1_out_1 = 
+    Switch(
+    StereoImage_Compute_12_out_1,
+    StereoImage_Compute_2_out_1,
+    StereoImage_GetGlobal_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[5]: x = 209, y = 397, inputs = 3, label = Switch
+    // page group: separation
+    //
+StereoImage_Switch_5_out_1 = 
+    Switch(
+    StereoImage_Compute_15_out_1,
+    StereoImage_Switch_1_out_1,
+    StereoImage_GetGlobal_1_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Transmitter[3]: x = 183, y = 492, inputs = 1, label = ocularSeparation
+    // page group: separation
+    //
+ocularSeparation = StereoImage_Switch_5_out_1;
+    // 
+    // node Receiver[6]: x = 307, y = 24, inputs = 1, label = ocularSeparation
+    // page group: Pick
+    //
+StereoImage_Receiver_6_out_1[cache: 0] = ocularSeparation;
+    // 
+    // node Input[7]: x = 43, y = 205, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 7, name = 'windowAspect', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_7_out_1 = windowAspect;
+    // 
+    // node Transmitter[15]: x = 38, y = 281, inputs = 1, label = Aspect
+    // page group: InOut
+    //
+Aspect = StereoImage_Input_7_out_1;
+    // 
+    // node Receiver[24]: x = 425, y = 100, inputs = 1, label = Aspect
+    // page group: Pick
+    //
+StereoImage_Receiver_24_out_1[cache: 0] = Aspect;
+    // 
+    // node Compute[11]: x = 319, y = 137, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0,$1,$2]"
+    // page group: Pick
+    // expression: value = [a,b,c]
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    //
+StereoImage_Compute_11_out_1 = 
+    Compute(
+    "[$0,$1,$2]",
+    StereoImage_Receiver_7_out_1,
+    StereoImage_Receiver_6_out_1,
+    StereoImage_Receiver_24_out_1
+    ) [instance: 11, cache: 1];
+    // 
+    // node CollectNamed[1]: x = 354, y = 210, inputs = 4, label = CollectNamed
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "mode"
+    // input[3]: defaulting = 1, visible = 1, type = 67108863, value = [1.0 2.0]
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "args"
+    // page group: Pick
+    //
+StereoImage_CollectNamed_1_out_1 = 
+    CollectNamed(
+    0,
+    "mode",
+    StereoImage_Compute_11_out_1,
+    "args"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[3]: x = 82, y = 18, inputs = 1, label = keyPress
+    // page group: stereoMode
+    //
+StereoImage_Receiver_3_out_1[cache: 0] = keyPress;
+    // 
+    // node Compute[3]: x = 112, y = 94, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3)== 49 ? -1 : select($0, 3) == 50 ? 0 : select($0,3) == 51 ? 1 : 2"
+    // page group: stereoMode
+    // expression: value = select(a, 3)== 49 ? -1 : select(a, 3) == 50 ? 0 : select(a,3) == 51 ? 1 : 2
+    // name[2]: value = a
+    //
+StereoImage_Compute_3_out_1 = 
+    Compute(
+    "select($0, 3)== 49 ? -1 : select($0, 3) == 50 ? 0 : select($0,3) == 51 ? 1 : 2",
+    StereoImage_Receiver_3_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[6]: x = 20, y = 92, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3)== 49 || select($0, 3) == 50 || select($0, 3) == 51 || select($0,3) == 52 ? 1 : 2"
+    // page group: stereoMode
+    // expression: value = select(a, 3)== 49 || select(a, 3) == 50 || select(a, 3) == 51 || select(a,3) == 52 ? 1 : 2
+    // name[2]: value = a
+    //
+StereoImage_Compute_6_out_1 = 
+    Compute(
+    "select($0, 3)== 49 || select($0, 3) == 50 || select($0, 3) == 51 || select($0,3) == 52 ? 1 : 2",
+    StereoImage_Receiver_3_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Receiver[2]: x = 20, y = 192, inputs = 1, label = keyPress
+    // page group: popdown
+    //
+StereoImage_Receiver_2_out_1[cache: 0] = keyPress;
+    // 
+    // node Compute[8]: x = 31, y = 279, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3)== 99 ?  0 : 1"
+    // page group: popdown
+    // expression: value = select(a, 3)== 99 ?  0 : 1
+    // name[2]: value = a
+    //
+StereoImage_Compute_8_out_1 = 
+    Compute(
+    "select($0, 3)== 99 ?  0 : 1",
+    StereoImage_Receiver_2_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Receiver[12]: x = 16, y = 275, inputs = 1, label = noEvent
+    // page group: stereoMode
+    //
+StereoImage_Receiver_12_out_1[cache: 0] = noEvent;
+    // 
+    // node Compute[16]: x = 137, y = 307, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: stereoMode
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+StereoImage_Compute_16_out_1 = 
+    Compute(
+    "$0+1",
+    StereoImage_Receiver_12_out_1
+    ) [instance: 16, cache: 1];
+    // 
+    // node Receiver[14]: x = 76, y = 14, inputs = 1, label = keyPress
+    // page group: InteractionM
+    //
+StereoImage_Receiver_14_out_1[cache: 0] = keyPress;
+    // 
+    // node Compute[20]: x = 106, y = 90, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3)== 114 ? 0 : select($0, 3) == 112 ? 1 : 2"
+    // page group: InteractionM
+    // expression: value = select(a, 3)== 114 ? 0 : select(a, 3) == 112 ? 1 : 2
+    // name[2]: value = a
+    //
+StereoImage_Compute_20_out_1 = 
+    Compute(
+    "select($0, 3)== 114 ? 0 : select($0, 3) == 112 ? 1 : 2",
+    StereoImage_Receiver_14_out_1
+    ) [instance: 20, cache: 1];
+    // 
+    // node Compute[21]: x = 14, y = 88, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, 3)== 114 || select($0, 3) == 112 || select($0, 3) == 122 ? 1 : 2"
+    // page group: InteractionM
+    // expression: value = select(a, 3)== 114 || select(a, 3) == 112 || select(a, 3) == 122 ? 1 : 2
+    // name[2]: value = a
+    //
+StereoImage_Compute_21_out_1 = 
+    Compute(
+    "select($0, 3)== 114 || select($0, 3) == 112 || select($0, 3) == 122 ? 1 : 2",
+    StereoImage_Receiver_14_out_1
+    ) [instance: 21, cache: 1];
+    // 
+    // node Receiver[15]: x = 10, y = 271, inputs = 1, label = noEvent
+    // page group: InteractionM
+    //
+StereoImage_Receiver_15_out_1[cache: 0] = noEvent;
+    // 
+    // node Compute[22]: x = 131, y = 303, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: InteractionM
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+StereoImage_Compute_22_out_1 = 
+    Compute(
+    "$0+1",
+    StereoImage_Receiver_15_out_1
+    ) [instance: 22, cache: 1];
+    // 
+    // node Route[6]: x = 307, y = 299, inputs = 2, outputs = 2, label = Route
+    // page group: separation
+    //
+StereoImage_Route_6_out_1,
+StereoImage_Route_6_out_2 = 
+    Route(
+    StereoImage_Compute_12_out_1,
+    StereoImage_Compute_2_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Echo[2]: x = 345, y = 403, inputs = 2, label = Echo
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"Separation:"}
+    // page group: separation
+    //
+    Echo(
+    {"Separation:"},
+    StereoImage_Route_6_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Route[5]: x = 405, y = 373, inputs = 2, outputs = 2, label = Route
+    // page group: frustum
+    //
+StereoImage_Route_5_out_1,
+StereoImage_Route_5_out_2 = 
+    Route(
+    StereoImage_Compute_13_out_1,
+    StereoImage_Compute_10_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Echo[3]: x = 497, y = 453, inputs = 2, label = Echo
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"Frustum:"}
+    // page group: frustum
+    //
+    Echo(
+    {"Frustum:"},
+    StereoImage_Route_5_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node GetGlobal[2]: x = 305, y = 161, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = -1
+    // input[2]: defaulting = 0, visible = 1, type = 3, value = 0
+    // page group: stereoMode
+    //
+StereoImage_GetGlobal_2_out_1,
+StereoImage_GetGlobal_2_out_2 = 
+    GetGlobal(
+    -1,
+    0,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node GetGlobal[5]: x = 299, y = 157, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // input[2]: defaulting = 0, visible = 1, type = 3, value = 0
+    // page group: InteractionM
+    //
+StereoImage_GetGlobal_5_out_1,
+StereoImage_GetGlobal_5_out_2 = 
+    GetGlobal(
+    0,
+    0,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Input[3]: x = 252, y = 34, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 3, name = 'resetObject', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_3_out_1 = resetObject;
+    // 
+    // node Input[4]: x = 364, y = 38, inputs = 0, label = Input
+    // page group: InOut
+    // parameter: position = 4, name = 'resetCamera', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_4_out_1 = resetCamera;
+    // 
+    // node Input[18]: x = 138, y = 285, inputs = 0, label = Input
+    // page group: Pick
+    // parameter: position = 18, name = 'PickFirst', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_18_out_1 = PickFirst;
+    // 
+    // node Input[19]: x = 207, y = 276, inputs = 0, label = Input
+    // page group: Pick
+    // parameter: position = 19, name = 'PickInterpolate', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoImage_Input_19_out_1 = PickInterpolate;
+    // 
+    // node Transmitter[13]: x = 340, y = 135, inputs = 1, label = ResetCamera
+    // page group: InOut
+    //
+ResetCamera = StereoImage_Input_4_out_1;
+    // 
+    // node Receiver[22]: x = 377, y = 218, inputs = 1, label = ResetCamera
+    // page group: main
+    //
+StereoImage_Receiver_22_out_1[cache: 0] = ResetCamera;
+    // 
+    // node Transmitter[12]: x = 230, y = 139, inputs = 1, label = ResetObject
+    // page group: InOut
+    //
+ResetObject = StereoImage_Input_3_out_1;
+    // 
+    // node Receiver[21]: x = 290, y = 301, inputs = 1, label = ResetObject
+    // page group: main
+    //
+StereoImage_Receiver_21_out_1[cache: 0] = ResetObject;
+    // 
+    // node Switch[7]: x = 74, y = 208, inputs = 3, label = Switch
+    // page group: InteractionM
+    //
+StereoImage_Switch_7_out_1 = 
+    Switch(
+    StereoImage_Compute_21_out_1,
+    StereoImage_Compute_20_out_1,
+    StereoImage_GetGlobal_5_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Switch[8]: x = 223, y = 326, inputs = 3, label = Switch
+    // page group: InteractionM
+    //
+StereoImage_Switch_8_out_1 = 
+    Switch(
+    StereoImage_Compute_22_out_1,
+    StereoImage_Switch_7_out_1,
+    StereoImage_GetGlobal_5_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Transmitter[8]: x = 238, y = 403, inputs = 1, label = interactionMode
+    // page group: InteractionM
+    //
+interactionMode = StereoImage_Switch_8_out_1;
+    // 
+    // node Receiver[16]: x = 489, y = 235, inputs = 1, label = interactionMode
+    // page group: main
+    //
+StereoImage_Receiver_16_out_1[cache: 0] = interactionMode;
+    // 
+    // node SuperviseState[1]: x = 374, y = 379, inputs = 9, label = SuperviseState
+    // input[3]: defaulting = 1, visible = 1, type = 3, value = 1
+    // input[8]: defaulting = 1, visible = 1, type = 1, value = 0
+    // page group: main
+    //
+StereoImage_SuperviseState_1_out_1,
+StereoImage_SuperviseState_1_out_2,
+StereoImage_SuperviseState_1_out_3,
+StereoImage_SuperviseState_1_out_4 = 
+    SuperviseState(
+    StereoImage_SuperviseWindow_1_out_1,
+    StereoImage_Camera_1_out_1,
+    StereoImage_Receiver_22_out_1,
+    StereoImage_Receiver_13_out_1,
+    StereoImage_Receiver_21_out_1,
+    StereoImage_SuperviseWindow_1_out_2,
+    StereoImage_SuperviseWindow_1_out_3,
+    StereoImage_Receiver_16_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[29]: x = 179, y = 661, inputs = 1, label = lastObject
+    // page group: main
+    //
+lastObject = StereoImage_SuperviseState_1_out_1;
+    // 
+    // node Receiver[38]: x = 208, y = 179, inputs = 1, label = lastObject
+    // page group: Pick
+    //
+StereoImage_Receiver_38_out_1[cache: 0] = lastObject;
+    // 
+    // node Switch[2]: x = 80, y = 212, inputs = 3, label = Switch
+    // page group: stereoMode
+    //
+StereoImage_Switch_2_out_1 = 
+    Switch(
+    StereoImage_Compute_6_out_1,
+    StereoImage_Compute_3_out_1,
+    StereoImage_GetGlobal_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[6]: x = 229, y = 330, inputs = 3, label = Switch
+    // page group: stereoMode
+    //
+StereoImage_Switch_6_out_1 = 
+    Switch(
+    StereoImage_Compute_16_out_1,
+    StereoImage_Switch_2_out_1,
+    StereoImage_GetGlobal_2_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[1]: x = 300, y = 400, inputs = 1, label = systemMode
+    // page group: stereoMode
+    //
+systemMode = StereoImage_Switch_6_out_1;
+    // 
+    // node Receiver[1]: x = 490, y = 213, inputs = 1, label = systemMode
+    // page group: Pick
+    //
+StereoImage_Receiver_1_out_1[cache: 0] = systemMode;
+    // 
+    // node Options[1]: x = 356, y = 309, inputs = 7, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "hardware"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "stereo camera mode"
+    // input[6]: defaulting = 0, visible = 1, type = 32, value = "stereo system mode"
+    // input[7]: defaulting = 1, visible = 1, type = 29, value = 0
+    // page group: Pick
+    //
+StereoImage_Options_1_out_1 = 
+    Options(
+    StereoImage_Receiver_38_out_1,
+    "rendering mode",
+    "hardware",
+    "stereo camera mode",
+    StereoImage_CollectNamed_1_out_1,
+    "stereo system mode",
+    StereoImage_Receiver_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[27]: x = 394, y = 389, inputs = 1, label = DisplayObject
+    // page group: Pick
+    //
+DisplayObject = StereoImage_Options_1_out_1;
+    // 
+    // node Receiver[36]: x = 641, y = 481, inputs = 1, label = DisplayObject
+    // page group: InOut
+    //
+StereoImage_Receiver_36_out_1[cache: 0] = DisplayObject;
+    // 
+    // node Output[1]: x = 662, y = 584, inputs = 1, label = Output
+    // page group: InOut
+    // parameter: position = 1, name = 'displayObject', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+displayObject = StereoImage_Receiver_36_out_1;
+    // 
+    // node Transmitter[26]: x = 458, y = 535, inputs = 1, label = DisplayCamera
+    // page group: main
+    //
+DisplayCamera = StereoImage_SuperviseState_1_out_2;
+    // 
+    // node Receiver[35]: x = 759, y = 480, inputs = 1, label = DisplayCamera
+    // page group: InOut
+    //
+StereoImage_Receiver_35_out_1[cache: 0] = DisplayCamera;
+    // 
+    // node Output[2]: x = 788, y = 575, inputs = 1, label = Output
+    // page group: InOut
+    // parameter: position = 2, name = 'displayCamera', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+displayCamera = StereoImage_Receiver_35_out_1;
+    // 
+    // node Transmitter[25]: x = 488, y = 456, inputs = 1, label = DisplayWhere
+    // page group: main
+    //
+DisplayWhere = StereoImage_SuperviseState_1_out_3;
+    // 
+    // node Receiver[34]: x = 890, y = 477, inputs = 1, label = DisplayWhere
+    // page group: InOut
+    //
+StereoImage_Receiver_34_out_1[cache: 0] = DisplayWhere;
+    // 
+    // node Output[3]: x = 919, y = 571, inputs = 1, label = Output
+    // page group: InOut
+    // parameter: position = 3, name = 'displayWhere', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+displayWhere = StereoImage_Receiver_34_out_1;
+    // 
+    // node Transmitter[28]: x = 670, y = 527, inputs = 1, label = remainingEvents
+    // page group: main
+    //
+remainingEvents = StereoImage_SuperviseState_1_out_4;
+    // 
+    // node Receiver[37]: x = 3, y = 287, inputs = 1, label = remainingEvents
+    // page group: Pick
+    //
+StereoImage_Receiver_37_out_1[cache: 0] = remainingEvents;
+    // 
+    // node Receiver[39]: x = 228, y = 345, inputs = 1, label = DisplayCamera
+    // page group: Pick
+    //
+StereoImage_Receiver_39_out_1[cache: 0] = DisplayCamera;
+    // 
+    // node Receiver[40]: x = 345, y = 469, inputs = 1, label = DisplayWhere
+    // page group: Pick
+    //
+StereoImage_Receiver_40_out_1[cache: 0] = DisplayWhere;
+    // 
+    // node StereoPick[2]: x = 133, y = 457, inputs = 11, label = StereoPick
+    // input[3]: visible = 1
+    // input[7]: visible = 1
+    // input[8]: visible = 1
+    // input[9]: visible = 1
+    // page group: Pick
+    //
+StereoImage_StereoPick_2_out_1 = 
+    StereoPick(
+    NULL,
+    NULL,
+    StereoImage_Receiver_37_out_1,
+    NULL,
+    StereoImage_Input_18_out_1,
+    NULL,
+    StereoImage_Input_19_out_1,
+    StereoImage_Receiver_38_out_1,
+    StereoImage_Receiver_39_out_1,
+    StereoImage_CollectNamed_1_out_1,
+    StereoImage_Receiver_40_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Output[4]: x = 184, y = 530, inputs = 1, label = Output
+    // page group: Pick
+    // parameter: position = 4, name = 'pickResult', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+pickResult = StereoImage_StereoPick_2_out_1;
+    // 
+    // node Route[3]: x = 176, y = 208, inputs = 2, outputs = 2, label = Route
+    // page group: stereoMode
+    //
+StereoImage_Route_3_out_1,
+StereoImage_Route_3_out_2 = 
+    Route(
+    StereoImage_Compute_6_out_1,
+    StereoImage_Compute_3_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Route[4]: x = 170, y = 204, inputs = 2, outputs = 2, label = Route
+    // page group: InteractionM
+    //
+StereoImage_Route_4_out_1,
+StereoImage_Route_4_out_2 = 
+    Route(
+    StereoImage_Compute_21_out_1,
+    StereoImage_Compute_20_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node SetGlobal[1]: x = 197, y = 302, inputs = 3, label = SetGlobal
+    // page group: separation
+    //
+    SetGlobal(
+    StereoImage_Compute_2_out_1,
+    StereoImage_GetGlobal_1_out_2,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node SetGlobal[2]: x = 320, y = 305, inputs = 3, label = SetGlobal
+    // page group: stereoMode
+    //
+    SetGlobal(
+    StereoImage_Route_3_out_1,
+    StereoImage_GetGlobal_2_out_2,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node SetGlobal[3]: x = 161, y = 270, inputs = 3, label = SetGlobal
+    // page group: popdown
+    //
+    SetGlobal(
+    StereoImage_Compute_8_out_1,
+    StereoImage_GetGlobal_3_out_2,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node SetGlobal[4]: x = 293, y = 355, inputs = 3, label = SetGlobal
+    // page group: frustum
+    //
+    SetGlobal(
+    StereoImage_Compute_10_out_1,
+    StereoImage_GetGlobal_4_out_2,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node SetGlobal[5]: x = 314, y = 301, inputs = 3, label = SetGlobal
+    // page group: InteractionM
+    //
+    SetGlobal(
+    StereoImage_Route_4_out_1,
+    StereoImage_GetGlobal_5_out_2,
+    NULL
+    ) [instance: 5, cache: 1];
+    //
+    // decorator Annotate	pos=(4,379) size=297x140 style(Label), value = <NULL>
+    // annotation user_begin: 255
+    // annotation user: <NULL>
+    // annotation user: hardware rendering.  Stereo camera
+    // annotation user: mode is set by a group consisting of 
+    // annotation user: two members: the integer selecting the
+    // annotation user: mode, and a 3-vector containing 
+    // annotation user: parameters to the mode.  The system 
+    // annotation user: mode and parameters cone in from other 
+    // annotation user: pages where they are maintained.
+    // annotation user_end: <NULL>
+    // page group: main
+    //
+    // decorator Annotate	pos=(705,361) size=289x76 style(Label), value = <NULL>
+    // annotation user_begin: 111
+    // annotation user: <NULL>
+    // annotation user: SuperviseWindow to extract keypresses
+    // annotation user: and to set a flag noting whether any 
+    // annotation user: keypress events actually occurred.
+    // annotation user_end: <NULL>
+    // page group: main
+    //
+    // decorator Annotate	pos=(760,26) size=287x60 style(Label), value = <NULL>
+    // annotation user_begin: 63
+    // annotation user: <NULL>
+    // annotation user: from a separate page where it is derived
+    // annotation user: from keypress events.
+    // annotation user_end: <NULL>
+    // page group: main
+    //
+    // decorator Annotate	pos=(199,4) size=273x76 style(Label), value = <NULL>
+    // annotation user_begin: 85
+    // annotation user: <NULL>
+    // annotation user: extracted from size passed in from the
+    // annotation user: window size interactor and passed to 
+    // annotation user: Camera.
+    // annotation user_end: <NULL>
+    // page group: main
+    //
+    // decorator Annotate	pos=(55,483) size=542x108 style(Label), value = <NULL>
+    // annotation user_begin: 358
+    // annotation user: <NULL>
+    // annotation user: Get/Set Global pair, returning to the default value when the Reset Separation
+    // annotation user: reset interactor is pressed.  On each execution, the keypress event (if one
+    // annotation user: occurred) is examined to see if its a '1', '2' or '3', and if so, the current value
+    // annotation user: is set to -1, 0 or 1 correspondingly.    If no key was pressed, or it wasn't a 
+    // annotation user: '1', '2' or '3', use the current value.
+    // annotation user_end: <NULL>
+    // page group: stereoMode
+    //
+    // decorator Annotate	pos=(411,18) size=306x156 style(Label), value = <NULL>
+    // annotation user_begin: 379
+    // annotation user: <NULL>
+    // annotation user: Get/Set  Global  pair. Revert  to the default
+    // annotation user: (set   via   an     interactor   in   the  control
+    // annotation user: panel)  by   pressing  the Reset separation
+    // annotation user: reset  interactor  in  the control panel.  On
+    // annotation user: each  execution,   look  at  the key pressed
+    // annotation user: (if     one  was)   and,   if   its  a  'w'  or   'n',
+    // annotation user: update       the     separation        parameter
+    // annotation user: accordingly. Otherwise, use the old value.
+    // annotation user_end: <NULL>
+    // page group: separation
+    //
+    // decorator Annotate	pos=(439,149) size=312x172 style(Label), value = <NULL>
+    // annotation user_begin: 405
+    // annotation user: <NULL>
+    // annotation user: a     Get/Set   Global    pair.  Revert   to   the
+    // annotation user: default     (set     via  an   interactor   in   the
+    // annotation user: control     panel)   by   pressing   the  Reset
+    // annotation user: frustom     reset     interactor       in     the
+    // annotation user: control  panel.  On  each  execution, look at
+    // annotation user: the   key  pressed  (if  one  was)   and,  if  its
+    // annotation user: a     '-'   or     '=',    update   the  separation
+    // annotation user: parameter  accordingly. Otherwise, use the
+    // annotation user: old value.
+    // annotation user_end: <NULL>
+    // page group: frustum
+    //
+    // decorator Annotate	pos=(233,25) size=450x108 style(Label), value = <NULL>
+    // annotation user_begin: 288
+    // annotation user: <NULL>
+    // annotation user: until the "Pop window up' reset interactor is set, GetLocal
+    // annotation user: wil produce a value of 0 to the popdownWindow transmitter,
+    // annotation user: and then to the input of SuperviseWindow, causing the window
+    // annotation user: to be invisible.  When the reset is pressed, the GetLocal reverts
+    // annotation user: to a value of 1 and the window reappears.
+    // annotation user_end: <NULL>
+    // page group: popdown
+    //
+    // decorator Annotate	pos=(49,479) size=542x108 style(Label), value = <NULL>
+    // annotation user_begin: 358
+    // annotation user: <NULL>
+    // annotation user: Get/Set Global pair, returning to the default value when the Reset Separation
+    // annotation user: reset interactor is pressed.  On each execution, the keypress event (if one
+    // annotation user: occurred) is examined to see if its a 'r', 'p' or 'z', and if so, the current value
+    // annotation user: is set to 0, 1, or 2 correspondingly.    If no key was pressed, or it wasn't a 
+    // annotation user: 'r', 'p' or 'z', use the current value.
+    // annotation user_end: <NULL>
+    // page group: InteractionM
+// network: end of macro body
+}
+StereoImage_Input_1_out_1 = NULL;
+StereoImage_Transmitter_7_out_1 = NULL;
+StereoImage_Receiver_13_out_1 = NULL;
+StereoImage_Input_9_out_1 = NULL;
+StereoImage_Transmitter_9_out_1 = NULL;
+StereoImage_Receiver_17_out_1 = NULL;
+StereoImage_Compute_18_out_1 = NULL;
+StereoImage_Compute_19_out_1 = NULL;
+StereoImage_Input_5_out_1 = NULL;
+StereoImage_Transmitter_17_out_1 = NULL;
+StereoImage_Receiver_26_out_1 = NULL;
+StereoImage_Input_6_out_1 = NULL;
+StereoImage_Transmitter_16_out_1 = NULL;
+StereoImage_Receiver_25_out_1 = NULL;
+StereoImage_Camera_1_out_1 = NULL;
+StereoImage_Input_2_out_1 = NULL;
+StereoImage_Transmitter_14_out_1 = NULL;
+StereoImage_Receiver_23_out_1 = NULL;
+StereoImage_Input_8_out_1 = NULL;
+StereoImage_Transmitter_18_out_1 = NULL;
+StereoImage_Receiver_27_out_1 = NULL;
+StereoImage_GetGlobal_3_out_1 = NULL;
+StereoImage_GetGlobal_3_out_2 = NULL;
+StereoImage_Transmitter_5_out_1 = NULL;
+StereoImage_Receiver_9_out_1 = NULL;
+StereoImage_Input_10_out_1 = NULL;
+StereoImage_Transmitter_10_out_1 = NULL;
+StereoImage_Receiver_18_out_1 = NULL;
+StereoImage_Input_11_out_1 = NULL;
+StereoImage_Transmitter_11_out_1 = NULL;
+StereoImage_Receiver_20_out_1 = NULL;
+StereoImage_SuperviseWindow_1_out_1 = NULL;
+StereoImage_SuperviseWindow_1_out_2 = NULL;
+StereoImage_SuperviseWindow_1_out_3 = NULL;
+StereoImage_Inquire_2_out_1 = NULL;
+StereoImage_Transmitter_6_out_1 = NULL;
+StereoImage_Receiver_10_out_1 = NULL;
+StereoImage_Compute_14_out_1 = NULL;
+StereoImage_Inquire_1_out_1 = NULL;
+StereoImage_Route_1_out_1 = NULL;
+StereoImage_Select_1_out_1 = NULL;
+StereoImage_Transmitter_2_out_1 = NULL;
+StereoImage_Receiver_8_out_1 = NULL;
+StereoImage_Compute_13_out_1 = NULL;
+StereoImage_Input_17_out_1 = NULL;
+StereoImage_Transmitter_23_out_1 = NULL;
+StereoImage_Receiver_32_out_1 = NULL;
+StereoImage_Input_15_out_1 = NULL;
+StereoImage_Transmitter_24_out_1 = NULL;
+StereoImage_Receiver_33_out_1 = NULL;
+StereoImage_GetGlobal_4_out_1 = NULL;
+StereoImage_GetGlobal_4_out_2 = NULL;
+StereoImage_Input_16_out_1 = NULL;
+StereoImage_Transmitter_22_out_1 = NULL;
+StereoImage_Receiver_31_out_1 = NULL;
+StereoImage_Compute_9_out_1 = NULL;
+StereoImage_Compute_10_out_1 = NULL;
+StereoImage_Switch_3_out_1 = NULL;
+StereoImage_Switch_4_out_1 = NULL;
+StereoImage_Transmitter_4_out_1 = NULL;
+StereoImage_Receiver_7_out_1 = NULL;
+StereoImage_Receiver_11_out_1 = NULL;
+StereoImage_Compute_15_out_1 = NULL;
+StereoImage_Receiver_4_out_1 = NULL;
+StereoImage_Compute_12_out_1 = NULL;
+StereoImage_Input_14_out_1 = NULL;
+StereoImage_Transmitter_20_out_1 = NULL;
+StereoImage_Receiver_29_out_1 = NULL;
+StereoImage_Input_12_out_1 = NULL;
+StereoImage_Transmitter_21_out_1 = NULL;
+StereoImage_Receiver_30_out_1 = NULL;
+StereoImage_GetGlobal_1_out_1 = NULL;
+StereoImage_GetGlobal_1_out_2 = NULL;
+StereoImage_Input_13_out_1 = NULL;
+StereoImage_Transmitter_19_out_1 = NULL;
+StereoImage_Receiver_28_out_1 = NULL;
+StereoImage_Compute_1_out_1 = NULL;
+StereoImage_Compute_2_out_1 = NULL;
+StereoImage_Switch_1_out_1 = NULL;
+StereoImage_Switch_5_out_1 = NULL;
+StereoImage_Transmitter_3_out_1 = NULL;
+StereoImage_Receiver_6_out_1 = NULL;
+StereoImage_Input_7_out_1 = NULL;
+StereoImage_Transmitter_15_out_1 = NULL;
+StereoImage_Receiver_24_out_1 = NULL;
+StereoImage_Compute_11_out_1 = NULL;
+StereoImage_CollectNamed_1_out_1 = NULL;
+StereoImage_Receiver_3_out_1 = NULL;
+StereoImage_Compute_3_out_1 = NULL;
+StereoImage_Compute_6_out_1 = NULL;
+StereoImage_Receiver_2_out_1 = NULL;
+StereoImage_Compute_8_out_1 = NULL;
+StereoImage_Receiver_12_out_1 = NULL;
+StereoImage_Compute_16_out_1 = NULL;
+StereoImage_Receiver_14_out_1 = NULL;
+StereoImage_Compute_20_out_1 = NULL;
+StereoImage_Compute_21_out_1 = NULL;
+StereoImage_Receiver_15_out_1 = NULL;
+StereoImage_Compute_22_out_1 = NULL;
+StereoImage_Route_6_out_1 = NULL;
+StereoImage_Route_5_out_1 = NULL;
+StereoImage_GetGlobal_2_out_1 = NULL;
+StereoImage_GetGlobal_2_out_2 = NULL;
+StereoImage_GetGlobal_5_out_1 = NULL;
+StereoImage_GetGlobal_5_out_2 = NULL;
+StereoImage_Input_3_out_1 = NULL;
+StereoImage_Input_4_out_1 = NULL;
+StereoImage_Input_18_out_1 = NULL;
+StereoImage_Input_19_out_1 = NULL;
+StereoImage_Transmitter_13_out_1 = NULL;
+StereoImage_Receiver_22_out_1 = NULL;
+StereoImage_Transmitter_12_out_1 = NULL;
+StereoImage_Receiver_21_out_1 = NULL;
+StereoImage_Switch_7_out_1 = NULL;
+StereoImage_Switch_8_out_1 = NULL;
+StereoImage_Transmitter_8_out_1 = NULL;
+StereoImage_Receiver_16_out_1 = NULL;
+StereoImage_SuperviseState_1_out_1 = NULL;
+StereoImage_SuperviseState_1_out_2 = NULL;
+StereoImage_SuperviseState_1_out_3 = NULL;
+StereoImage_SuperviseState_1_out_4 = NULL;
+StereoImage_Transmitter_29_out_1 = NULL;
+StereoImage_Receiver_38_out_1 = NULL;
+StereoImage_Switch_2_out_1 = NULL;
+StereoImage_Switch_6_out_1 = NULL;
+StereoImage_Transmitter_1_out_1 = NULL;
+StereoImage_Receiver_1_out_1 = NULL;
+StereoImage_Options_1_out_1 = NULL;
+StereoImage_Transmitter_27_out_1 = NULL;
+StereoImage_Receiver_36_out_1 = NULL;
+StereoImage_Transmitter_26_out_1 = NULL;
+StereoImage_Receiver_35_out_1 = NULL;
+StereoImage_Transmitter_25_out_1 = NULL;
+StereoImage_Receiver_34_out_1 = NULL;
+StereoImage_Transmitter_28_out_1 = NULL;
+StereoImage_Receiver_37_out_1 = NULL;
+StereoImage_Receiver_39_out_1 = NULL;
+StereoImage_Receiver_40_out_1 = NULL;
+StereoImage_StereoPick_2_out_1 = NULL;
+StereoImage_Route_3_out_1 = NULL;
+StereoImage_Route_4_out_1 = NULL;

@@ -1,0 +1,108 @@
+<html>
+<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Java Explorer and ActiveX</title>
+</head>
+<body bgcolor="#dddddd">
+		<h2>Platform requirement</h2>
+		
+In order to view the demos which use Java Explorer and ActiveX,
+you'll need to run Internet Explorer on a Windows 95 or NT machine.
+		<h2>The tear program</h2>
+<i>installDir</i>/java/server/bin_intelnt contains 
+<a href="http://raster:4444/tear.exe">tear.exe</a> which is
+used by the ActiveX control in order to read data files via a URL.
+<hr>
+<h2>ActiveX Version Control</h2>
+If you've already used Frank's DXView ActiveX control on your computer,
+then it's possible that there will be a version mismatch.  CAB
+files do carry a version number and the system should download a new
+CAB file if the version number is later than one which is already installed
+however this mechanism might fail.
+<p>
+On your NT machine, the <i>regsvr32</i> command can be used to uninstall
+an existing DXView control.  Then pointing your browser at one of these
+web pages which references DXView will automatically install a new DXView
+on your computer.
+<hr>
+<h2>Data Transfer</h2>
+In the current implementation connecting Java Explorer and ActiveX,
+Data Explorer is exporting objects in ascii format.  The reason for
+this is that there are some byte swapping issues to be resolved before
+the data can be exported in binary format.  Exporting in ascii format
+does not affect the rendered image however it does require additional
+execution time on the server machine, additional bandwidth to transmit
+an object which is much larger than the binary version,
+and more processing time on the client machine in order to perform
+type conversion on the ascii input.  In other words, performance
+should improve over what you experience in these demos.
+<hr>
+<h2>Security</h2>
+Active X controls have access to the capabilities and
+resources of the local host.  Java applets on the other
+hand, run in a <i>sandbox</i> which restricts their 
+access.  
+<p>
+Java Explorer applets need to communicate with
+the DXView ActiveX control.  By default, Internet Explorer prevents
+this from happening so that the Java applets in Java Explorer
+aren't permitted too much access to the machine.  There are
+two ways to work around this.  One is to digitally sign the
+CAB file which contains the applets and Active X controls.
+(We'll pursue this.)  The other is to count on the browser user
+to relax the Internet Explorer security restrictions.
+<h3>Internet Options</h3>
+Choose 'View/Internet Options' from the menubar.  You'll
+get a dialog box like this:
+<br>
+<hr>
+<img src="pagea.gif">
+<br>
+<hr>
+In this dialog box, switch to the <b><i>Security</i></b> page
+and select <b><i>Local intranet zone</i></b> then specify
+<b><i>Custom (for expert users)</i></b>.  Then click on the
+<b><i>Settings</i></b> button.
+<h3>Security Settings</h3>
+Enable everything.  Under <i>Java Permissions</i> specify
+<b><i>Custom</i></b>.  
+<br>
+<hr>
+<img src="pagea2.gif">
+<br>
+<hr>
+
+This selection will cause the dialog
+to present a <i>Java Custom Settings</i> button which you
+then click.
+<h3>Local Intranet Zone</h3>
+<br>
+<hr>
+<img src="pagea3.gif">
+<br>
+<hr>
+
+Enable everything.  Click on <b><i>OK</i></b> in all three
+dialog boxes.  Now you're good to go.
+<hr>
+<h2>Web Page Creation</h2>
+Java Explorer's automatic web page creation facility allows the
+user to specify a data type for transmission to the client.  Now it
+generates web pages which include ActiveX controls if the data type
+specified by the user would require such a control.
+<hr>
+<h2>These Demos</h2>
+There are just a few demos available which show the ability to
+connect Java Explorer with ActiveX components.  Although they 
+visualize atmospheric and atomic (a.k.a sci-vis) data sets, 
+many other types of
+visualizations are possible with this mechanism and will be included
+in the next go around. 
+
+		<p>
+		<hr>
+		<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b>
+	</body>
+</html>

@@ -1,0 +1,357 @@
+//
+// time: Fri Aug  1 10:03:06 1997
+//
+// version: 3.1.1 (format), 4.1.1 (DX)
+//
+//
+// MODULE main
+// page assignment: object1	order=1, windowed=0, showing=0
+// page assignment: object2	order=2, windowed=0, showing=0
+// page assignment: supervise	order=3, windowed=0, showing=1
+// workspace: width = 629, height = 618
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Construct[3]: x = 89, y = 69, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0 0  0]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [2 2 2]
+    // page group: object1
+    //
+main_Construct_3_out_1 = 
+    Construct(
+    main_Construct_3_in_1,
+    main_Construct_3_in_2,
+    main_Construct_3_in_3,
+    main_Construct_3_in_4
+    ) [instance: 3, cache: 1];
+    // 
+    // node ShowBoundary[2]: x = 115, y = 162, inputs = 2, label = ShowBoundary
+    // page group: object1
+    //
+main_ShowBoundary_2_out_1 = 
+    ShowBoundary(
+    main_Construct_3_out_1,
+    main_ShowBoundary_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node Caption[1]: x = 260, y = 169, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Use Execute-on-change mode"
+    // page group: object1
+    //
+main_Caption_1_out_1 = 
+    Caption(
+    main_Caption_1_in_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[1]: x = 147, y = 265, inputs = 2, label = Collect
+    // page group: object1
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_ShowBoundary_2_out_1,
+    main_Caption_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[29]: x = 119, y = 339, inputs = 1, label = object1
+    // page group: object1
+    //
+object1 = main_Collect_1_out_1;
+    // 
+    // node Receiver[35]: x = 47, y = 40, inputs = 1, label = object1
+    // page group: supervise
+    //
+main_Receiver_35_out_1[cache: 0] = object1;
+    // 
+    // node AutoCamera[5]: x = 11, y = 193, inputs = 9, label = AutoCamera
+    // page group: supervise
+    //
+main_AutoCamera_5_out_1 = 
+    AutoCamera(
+    main_Receiver_35_out_1,
+    main_AutoCamera_5_in_2,
+    main_AutoCamera_5_in_3,
+    main_AutoCamera_5_in_4,
+    main_AutoCamera_5_in_5,
+    main_AutoCamera_5_in_6,
+    main_AutoCamera_5_in_7,
+    main_AutoCamera_5_in_8,
+    main_AutoCamera_5_in_9
+    ) [instance: 5, cache: 1];
+    // 
+    // node Construct[4]: x = 61, y = 90, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0 0 0]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [3 3 3]
+    // page group: object2
+    //
+main_Construct_4_out_1 = 
+    Construct(
+    main_Construct_4_in_1,
+    main_Construct_4_in_2,
+    main_Construct_4_in_3,
+    main_Construct_4_in_4
+    ) [instance: 4, cache: 1];
+    // 
+    // node ShowConnections[1]: x = 87, y = 177, inputs = 1, label = ShowConnections
+    // page group: object2
+    //
+main_ShowConnections_1_out_1 = 
+    ShowConnections(
+    main_Construct_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[30]: x = 82, y = 316, inputs = 1, label = object2
+    // page group: object2
+    //
+object2 = main_ShowConnections_1_out_1;
+    // 
+    // node Receiver[36]: x = 342, y = 301, inputs = 1, label = object2
+    // page group: supervise
+    //
+main_Receiver_36_out_1[cache: 0] = object2;
+    // 
+    // node AutoCamera[6]: x = 293, y = 405, inputs = 9, label = AutoCamera
+    // page group: supervise
+    //
+main_AutoCamera_6_out_1 = 
+    AutoCamera(
+    main_Receiver_36_out_1,
+    main_AutoCamera_6_in_2,
+    main_AutoCamera_6_in_3,
+    main_AutoCamera_6_in_4,
+    main_AutoCamera_6_in_5,
+    main_AutoCamera_6_in_6,
+    main_AutoCamera_6_in_7,
+    main_AutoCamera_6_in_8,
+    main_AutoCamera_6_in_9
+    ) [instance: 6, cache: 1];
+    // 
+    // node SuperviseWindow[2]: x = 143, y = 67, inputs = 10, label = SuperviseWindow
+    // page group: supervise
+    //
+main_SuperviseWindow_2_out_1,
+main_SuperviseWindow_2_out_2,
+main_SuperviseWindow_2_out_3 = 
+    SuperviseWindow(
+    main_SuperviseWindow_2_in_1,
+    main_SuperviseWindow_2_in_2,
+    main_SuperviseWindow_2_in_3,
+    main_SuperviseWindow_2_in_4,
+    main_SuperviseWindow_2_in_5,
+    main_SuperviseWindow_2_in_6,
+    main_SuperviseWindow_2_in_7,
+    main_SuperviseWindow_2_in_8,
+    main_SuperviseWindow_2_in_9,
+    main_SuperviseWindow_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node SuperviseState[2]: x = 70, y = 339, inputs = 9, label = SuperviseState
+    // input[8]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: supervise
+    //
+main_SuperviseState_2_out_1,
+main_SuperviseState_2_out_2,
+main_SuperviseState_2_out_3,
+main_SuperviseState_2_out_4 = 
+    SuperviseState(
+    main_SuperviseWindow_2_out_1,
+    main_AutoCamera_5_out_1,
+    main_SuperviseState_2_in_3,
+    main_Receiver_35_out_1,
+    main_SuperviseState_2_in_5,
+    main_SuperviseWindow_2_out_2,
+    main_SuperviseWindow_2_out_3,
+    main_SuperviseState_2_in_8,
+    main_SuperviseState_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Display[2]: x = 109, y = 457, inputs = 8, label = Display
+    // input[3]: visible = 1
+    // page group: supervise
+    // depth: value = 24
+    //
+main_Display_2_out_1[cache: 2] = 
+    Display(
+    main_SuperviseState_2_out_1,
+    main_SuperviseState_2_out_2,
+    main_SuperviseState_2_out_3,
+    main_Display_2_in_4,
+    main_Display_2_in_5,
+    main_Display_2_in_6,
+    main_Display_2_in_7,
+    main_Display_2_in_8
+    ) [instance: 2, cache: 1];
+    // 
+    // node SuperviseWindow[3]: x = 377, y = 229, inputs = 10, label = SuperviseWindow
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [100 100]
+    // page group: supervise
+    //
+main_SuperviseWindow_3_out_1,
+main_SuperviseWindow_3_out_2,
+main_SuperviseWindow_3_out_3 = 
+    SuperviseWindow(
+    main_SuperviseWindow_3_in_1,
+    main_SuperviseWindow_3_in_2,
+    main_SuperviseWindow_3_in_3,
+    main_SuperviseWindow_3_in_4,
+    main_SuperviseWindow_2_out_1,
+    main_SuperviseWindow_3_in_6,
+    main_SuperviseWindow_3_in_7,
+    main_SuperviseWindow_3_in_8,
+    main_SuperviseWindow_3_in_9,
+    main_SuperviseWindow_3_in_10
+    ) [instance: 3, cache: 1];
+    // 
+    // node SuperviseState[3]: x = 413, y = 476, inputs = 9, label = SuperviseState
+    // input[8]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: supervise
+    //
+main_SuperviseState_3_out_1,
+main_SuperviseState_3_out_2,
+main_SuperviseState_3_out_3,
+main_SuperviseState_3_out_4 = 
+    SuperviseState(
+    main_SuperviseWindow_3_out_1,
+    main_AutoCamera_6_out_1,
+    main_SuperviseState_3_in_3,
+    main_Receiver_36_out_1,
+    main_SuperviseState_3_in_5,
+    main_SuperviseWindow_3_out_2,
+    main_SuperviseWindow_3_out_3,
+    main_SuperviseState_3_in_8,
+    main_SuperviseState_3_in_9
+    ) [instance: 3, cache: 1];
+    // 
+    // node Display[3]: x = 461, y = 556, inputs = 8, label = Display
+    // input[3]: visible = 1
+    // page group: supervise
+    // depth: value = 24
+    //
+main_Display_3_out_1[cache: 2] = 
+    Display(
+    main_SuperviseState_3_out_1,
+    main_SuperviseState_3_out_2,
+    main_SuperviseState_3_out_3,
+    main_Display_3_in_4,
+    main_Display_3_in_5,
+    main_Display_3_in_6,
+    main_Display_3_in_7,
+    main_Display_3_in_8
+    ) [instance: 3, cache: 1];
+    //
+    // decorator Annotate	pos=(119,13) size=508x44 style(Label), value = <NULL>
+    // annotation user_begin: 80
+    // annotation user: Go into execute on change mode. Each of the objects are independently
+    // annotation user: rotatable.
+    // annotation user_end: <NULL>
+    // page group: supervise
+// network: end of macro body
+}
+main_Construct_3_in_1 = {[0 0  0]};
+main_Construct_3_in_2 = NULL;
+main_Construct_3_in_3 = [2 2 2];
+main_Construct_3_in_4 = NULL;
+main_Construct_3_out_1 = NULL;
+main_ShowBoundary_2_in_2 = NULL;
+main_ShowBoundary_2_out_1 = NULL;
+main_Caption_1_in_1 = "Use Execute-on-change mode";
+main_Caption_1_in_2 = NULL;
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = NULL;
+main_Caption_1_in_7 = NULL;
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Transmitter_29_out_1 = NULL;
+main_Receiver_35_out_1 = NULL;
+main_AutoCamera_5_in_2 = NULL;
+main_AutoCamera_5_in_3 = NULL;
+main_AutoCamera_5_in_4 = NULL;
+main_AutoCamera_5_in_5 = NULL;
+main_AutoCamera_5_in_6 = NULL;
+main_AutoCamera_5_in_7 = NULL;
+main_AutoCamera_5_in_8 = NULL;
+main_AutoCamera_5_in_9 = NULL;
+main_AutoCamera_5_out_1 = NULL;
+main_Construct_4_in_1 = {[0 0 0]};
+main_Construct_4_in_2 = NULL;
+main_Construct_4_in_3 = [3 3 3];
+main_Construct_4_in_4 = NULL;
+main_Construct_4_out_1 = NULL;
+main_ShowConnections_1_out_1 = NULL;
+main_Transmitter_30_out_1 = NULL;
+main_Receiver_36_out_1 = NULL;
+main_AutoCamera_6_in_2 = NULL;
+main_AutoCamera_6_in_3 = NULL;
+main_AutoCamera_6_in_4 = NULL;
+main_AutoCamera_6_in_5 = NULL;
+main_AutoCamera_6_in_6 = NULL;
+main_AutoCamera_6_in_7 = NULL;
+main_AutoCamera_6_in_8 = NULL;
+main_AutoCamera_6_in_9 = NULL;
+main_AutoCamera_6_out_1 = NULL;
+main_SuperviseWindow_2_in_1 = NULL;
+main_SuperviseWindow_2_in_2 = NULL;
+main_SuperviseWindow_2_in_3 = NULL;
+main_SuperviseWindow_2_in_4 = NULL;
+main_SuperviseWindow_2_in_5 = NULL;
+main_SuperviseWindow_2_in_6 = NULL;
+main_SuperviseWindow_2_in_7 = NULL;
+main_SuperviseWindow_2_in_8 = NULL;
+main_SuperviseWindow_2_in_9 = NULL;
+main_SuperviseWindow_2_in_10 = NULL;
+main_SuperviseWindow_2_out_1 = NULL;
+main_SuperviseWindow_2_out_2 = NULL;
+main_SuperviseWindow_2_out_3 = NULL;
+main_SuperviseState_2_in_3 = NULL;
+main_SuperviseState_2_in_5 = NULL;
+main_SuperviseState_2_in_8 = 0;
+main_SuperviseState_2_in_9 = NULL;
+main_SuperviseState_2_out_1 = NULL;
+main_SuperviseState_2_out_2 = NULL;
+main_SuperviseState_2_out_3 = NULL;
+main_Display_2_in_4 = NULL;
+main_Display_2_in_5 = NULL;
+main_Display_2_in_6 = NULL;
+main_Display_2_in_7 = NULL;
+main_Display_2_in_8 = NULL;
+main_SuperviseWindow_3_in_1 = NULL;
+main_SuperviseWindow_3_in_2 = NULL;
+main_SuperviseWindow_3_in_3 = [100 100];
+main_SuperviseWindow_3_in_4 = NULL;
+main_SuperviseWindow_3_in_6 = NULL;
+main_SuperviseWindow_3_in_7 = NULL;
+main_SuperviseWindow_3_in_8 = NULL;
+main_SuperviseWindow_3_in_9 = NULL;
+main_SuperviseWindow_3_in_10 = NULL;
+main_SuperviseWindow_3_out_1 = NULL;
+main_SuperviseWindow_3_out_2 = NULL;
+main_SuperviseWindow_3_out_3 = NULL;
+main_SuperviseState_3_in_3 = NULL;
+main_SuperviseState_3_in_5 = NULL;
+main_SuperviseState_3_in_8 = 0;
+main_SuperviseState_3_in_9 = NULL;
+main_SuperviseState_3_out_1 = NULL;
+main_SuperviseState_3_out_2 = NULL;
+main_SuperviseState_3_out_3 = NULL;
+main_Display_3_in_4 = NULL;
+main_Display_3_in_5 = NULL;
+main_Display_3_in_6 = NULL;
+main_Display_3_in_7 = NULL;
+main_Display_3_in_8 = NULL;
+Executive("product version 4 1 1");
+$sync
+main();

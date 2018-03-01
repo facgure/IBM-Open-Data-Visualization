@@ -1,0 +1,36 @@
+
+// This macro shows either object1, object2, or object3, depending on
+// the setting of "which"
+macro ShowWhichOne(which,object1, object2, object3)
+{
+    whichone = Switch(which, object1, object2, object3);
+    Display(whichone,camera);
+}
+
+
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// Partition for parallelism
+electrondensity = Partition(electrondensity);
+
+// Create a camera
+camera = AutoCamera(electrondensity);
+
+// Create an isosurface at the value 0.3
+isosurface = Isosurface(electrondensity, 0.3);
+
+// Create a colored maptoplane through the data
+plane = MapToPlane(electrondensity);
+plane = AutoColor(plane);
+
+// Create a set of contour lines on the plane
+lines = Isosurface(plane,number = 10);
+lines = AutoColor(lines);
+
+// Show the isosurface
+ShowWhichOne(1, isosurface, plane, lines);
+// Show the plane
+ShowWhichOne(2, isosurface, plane, lines);
+// Show the contour lines
+ShowWhichOne(3, isosurface, plane, lines);

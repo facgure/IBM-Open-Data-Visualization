@@ -1,0 +1,575 @@
+//
+// time: Fri Aug  1 13:31:08 1997
+//
+// version: 3.1.1 (format), 4.1.1 (DX)
+//
+//
+// MODULE main
+//
+// comment: This program demonstrates picking with SuperviseState and SuperviseWindow. There default built-in interactors are used. They  are accessible using the selector interactor in the control panel.
+// page assignment: Display	order=5, windowed=0, showing=1
+// page assignment: Pick	order=4, windowed=0, showing=0
+// page assignment: Supervise	order=3, windowed=0, showing=0
+// page assignment: data	order=2, windowed=0, showing=0
+// workspace: width = 645, height = 599
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Construct[1]: x = 43, y = 20, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[-1 -1 -1]}
+    // input[2]: defaulting = 0, visible = 1, type = 16777224, value = {[2 2 2]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [2 2 2]
+    // input[4]: defaulting = 0, visible = 1, type = 16777245, value = {1 .. 8.}
+    // page group: data
+    //
+main_Construct_1_out_1 = 
+    Construct(
+    main_Construct_1_in_1,
+    main_Construct_1_in_2,
+    main_Construct_1_in_3,
+    main_Construct_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowBoundary[1]: x = 20, y = 138, inputs = 2, label = ShowBoundary
+    // page group: data
+    //
+main_ShowBoundary_1_out_1 = 
+    ShowBoundary(
+    main_Construct_1_out_1,
+    main_ShowBoundary_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 46, y = 251, inputs = 10, label = AutoColor
+    // page group: data
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_ShowBoundary_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node CollectNamed[1]: x = 58, y = 335, inputs = 2, label = CollectNamed
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // page group: data
+    //
+main_CollectNamed_1_out_1 = 
+    CollectNamed(
+    main_AutoColor_1_out_1,
+    main_CollectNamed_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[5]: x = 42, y = 429, inputs = 1, label = data
+    // page group: data
+    //
+data = main_CollectNamed_1_out_1;
+    // 
+    // node Receiver[5]: x = 55, y = 177, inputs = 1, label = data
+    // page group: Supervise
+    //
+main_Receiver_5_out_1[cache: 0] = data;
+    // 
+    // node AutoCamera[1]: x = 12, y = 318, inputs = 9, label = AutoCamera
+    // page group: Supervise
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Receiver_5_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node SuperviseWindow[1]: x = 157, y = 181, inputs = 10, label = SuperviseWindow
+    // input[1]: defaulting = 1, visible = 1, type = 32, value = "title"
+    // input[9]: defaulting = 0, visible = 1, type = 3, value = 1
+    // page group: Supervise
+    //
+main_SuperviseWindow_1_out_1,
+main_SuperviseWindow_1_out_2,
+main_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    main_SuperviseWindow_1_in_1,
+    main_SuperviseWindow_1_in_2,
+    main_SuperviseWindow_1_in_3,
+    main_SuperviseWindow_1_in_4,
+    main_SuperviseWindow_1_in_5,
+    main_SuperviseWindow_1_in_6,
+    main_SuperviseWindow_1_in_7,
+    main_SuperviseWindow_1_in_8,
+    main_SuperviseWindow_1_in_9,
+    main_SuperviseWindow_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Reset[1]: x = 209, y = 291, inputs = 6, label = Reset
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "main_Reset_1_out_1"
+    // input[2]: defaulting = 0, visible = 0, type = 29, value = 0
+    // input[3]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[4]: defaulting = 1, visible = 0, type = 29, value = 1
+    // input[5]: defaulting = 1, visible = 0, type = 29, value = 0
+    // output[1]: visible = 1, type = 29, value = 0
+    // page group: Supervise
+    // toggle : 0
+    //
+    // 
+    // node Selector[3]: x = 310, y = 295, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_3"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Rotate" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "Pan" "Zoom" "Rotate" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "Rotate" 
+    // page group: Supervise
+    //
+    // 
+    // node SuperviseState[1]: x = 123, y = 388, inputs = 9, label = SuperviseState
+    // page group: Supervise
+    //
+main_SuperviseState_1_out_1,
+main_SuperviseState_1_out_2,
+main_SuperviseState_1_out_3,
+main_SuperviseState_1_out_4 = 
+    SuperviseState(
+    main_SuperviseWindow_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_SuperviseState_1_in_3,
+    main_Receiver_5_out_1,
+    main_Reset_1_out_1,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_3,
+    main_Selector_3_out_1,
+    main_SuperviseState_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 516, y = 487, inputs = 1, label = events
+    // page group: Supervise
+    //
+events = main_SuperviseState_1_out_4;
+    // 
+    // node Receiver[3]: x = 30, y = 24, inputs = 1, label = events
+    // page group: Pick
+    //
+main_Receiver_3_out_1[cache: 0] = events;
+    // 
+    // node Transmitter[1]: x = 90, y = 506, inputs = 1, label = object
+    // page group: Supervise
+    //
+object = main_SuperviseState_1_out_1;
+    // 
+    // node Receiver[1]: x = 114, y = 248, inputs = 1, label = object
+    // page group: Pick
+    //
+main_Receiver_1_out_1[cache: 0] = object;
+    // 
+    // node Transmitter[2]: x = 166, y = 508, inputs = 1, label = camera
+    // page group: Supervise
+    //
+camera = main_SuperviseState_1_out_2;
+    // 
+    // node Receiver[2]: x = 169, y = 251, inputs = 1, label = camera
+    // page group: Pick
+    //
+main_Receiver_2_out_1[cache: 0] = camera;
+    // 
+    // node Pick[1]: x = 34, y = 331, inputs = 9, label = Pick_1
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Pick_1"
+    // input[3]: visible = 1
+    // input[6]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[7]: defaulting = 0, visible = 1, type = 3, value = 2
+    // input[8]: visible = 1
+    // input[9]: visible = 1
+    // page group: Pick
+    //
+main_Pick_1_out_1 = 
+    Pick(
+    main_Pick_1_in_1,
+    main_Pick_1_in_2,
+    main_Receiver_3_out_1,
+    main_Pick_1_in_4,
+    main_Pick_1_in_5,
+    main_Pick_1_in_6,
+    main_Pick_1_in_7,
+    main_Receiver_1_out_1,
+    main_Receiver_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoGlyph[1]: x = 56, y = 422, inputs = 7, label = AutoGlyph
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "text"
+    // page group: Pick
+    //
+main_AutoGlyph_1_out_1 = 
+    AutoGlyph(
+    main_Pick_1_out_1,
+    main_AutoGlyph_1_in_2,
+    main_AutoGlyph_1_in_3,
+    main_AutoGlyph_1_in_4,
+    main_AutoGlyph_1_in_5,
+    main_AutoGlyph_1_in_6,
+    main_AutoGlyph_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node Remove[2]: x = 337, y = 461, inputs = 2, label = Remove
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // page group: Pick
+    //
+main_Remove_2_out_1 = 
+    Remove(
+    main_Pick_1_out_1,
+    main_Remove_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node Glyph[1]: x = 197, y = 424, inputs = 7, label = Glyph
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "spiffy"
+    // input[4]: defaulting = 0, visible = 1, type = 5, value = .05
+    // page group: Pick
+    //
+main_Glyph_1_out_1 = 
+    Glyph(
+    main_Remove_2_out_1,
+    main_Glyph_1_in_2,
+    main_Glyph_1_in_3,
+    main_Glyph_1_in_4,
+    main_Glyph_1_in_5,
+    main_Glyph_1_in_6,
+    main_Glyph_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 233, y = 504, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "magenta"
+    // page group: Pick
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_Glyph_1_out_1,
+    main_Color_1_in_2,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[3]: x = 49, y = 505, inputs = 2, label = Collect
+    // page group: Pick
+    //
+main_Collect_3_out_1 = 
+    Collect(
+    main_AutoGlyph_1_out_1,
+    main_Color_1_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Receiver[12]: x = 207, y = 108, inputs = 1, label = object
+    // page group: Display
+    //
+main_Receiver_12_out_1[cache: 0] = object;
+    // 
+    // node Select[1]: x = 299, y = 171, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // page group: Display
+    //
+main_Select_1_out_1 = 
+    Select(
+    main_Receiver_12_out_1,
+    main_Select_1_in_2,
+    main_Select_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[4]: x = 110, y = 546, inputs = 1, label = glyph
+    // page group: Pick
+    //
+glyph = main_Collect_3_out_1;
+    // 
+    // node Receiver[4]: x = 455, y = 140, inputs = 1, label = glyph
+    // page group: Display
+    //
+main_Receiver_4_out_1[cache: 0] = glyph;
+    // 
+    // node CollectNamed[2]: x = 381, y = 217, inputs = 4, label = CollectNamed
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "glyph"
+    // page group: Display
+    //
+main_CollectNamed_2_out_1 = 
+    CollectNamed(
+    main_Select_1_out_1,
+    main_CollectNamed_2_in_2,
+    main_Receiver_4_out_1,
+    main_CollectNamed_2_in_4
+    ) [instance: 2, cache: 1];
+    // 
+    // node Inquire[4]: x = 377, y = 459, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is not null"
+    // page group: Supervise
+    //
+main_Inquire_4_out_1 = 
+    Inquire(
+    main_SuperviseState_1_out_4,
+    main_Inquire_4_in_2,
+    main_Inquire_4_in_3
+    ) [instance: 4, cache: 1];
+    // 
+    // node Transmitter[8]: x = 383, y = 536, inputs = 1, label = pickHappened
+    // page group: Supervise
+    //
+pickHappened = main_Inquire_4_out_1;
+    // 
+    // node Receiver[10]: x = 7, y = 145, inputs = 1, label = pickHappened
+    // page group: Display
+    //
+main_Receiver_10_out_1[cache: 0] = pickHappened;
+    // 
+    // node Compute[11]: x = 18, y = 253, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: Display
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+main_Compute_11_out_1 = 
+    Compute(
+    main_Compute_11_in_1,
+    main_Receiver_10_out_1
+    ) [instance: 11, cache: 1];
+    // 
+    // node Switch[7]: x = 60, y = 341, inputs = 3, label = Switch
+    // page group: Display
+    //
+main_Switch_7_out_1 = 
+    Switch(
+    main_Compute_11_out_1,
+    main_Receiver_12_out_1,
+    main_CollectNamed_2_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Receiver[13]: x = 155, y = 330, inputs = 1, label = camera
+    // page group: Display
+    //
+main_Receiver_13_out_1[cache: 0] = camera;
+    // 
+    // node Transmitter[10]: x = 270, y = 505, inputs = 1, label = where
+    // page group: Supervise
+    //
+where = main_SuperviseState_1_out_3;
+    // 
+    // node Receiver[14]: x = 221, y = 329, inputs = 1, label = where
+    // page group: Display
+    //
+main_Receiver_14_out_1[cache: 0] = where;
+    // 
+    // node Display[2]: x = 136, y = 486, inputs = 8, label = Display
+    // input[3]: visible = 1
+    // page group: Display
+    // depth: value = 24
+    //
+main_Display_2_out_1[cache: 2] = 
+    Display(
+    main_Switch_7_out_1,
+    main_Receiver_13_out_1,
+    main_Receiver_14_out_1,
+    main_Display_2_in_4,
+    main_Display_2_in_5,
+    main_Display_2_in_6,
+    main_Display_2_in_7,
+    main_Display_2_in_8
+    ) [instance: 2, cache: 1];
+    //
+    // decorator Annotate	pos=(36,36) size=547x44 style(Label), value = <NULL>
+    // annotation user_begin: 135
+    // annotation user: SuperviseWindow and SuperviseState are used to manage the image window.
+    // annotation user: The "events" output of SuperviseState is used on the Pick page.
+    // annotation user_end: <NULL>
+    // page group: Supervise
+    //
+    // decorator Annotate	pos=(115,19) size=481x172 style(Label), value = <NULL>
+    // annotation user_begin: 675
+    // annotation user: Because  SuperviseWindow rather  than the UserInterface owns the
+    // annotation user: window,   we   need   to   explicitly   give   Pick  the events  output  of
+    // annotation user: SuperviseState  (which   will   tell   Pick  the x,y pixel location  of  the
+    // annotation user: pick), the object  being displayed in  the image (so that  Pick  knows
+    // annotation user: what you're  looking at), and the camera used to view the object (so
+    // annotation user: that  Pick   knows  how  the  x,y  pixel  location   relate  to  the object
+    // annotation user: you're looking at).  The events output of SuperviseState passes out
+    // annotation user: only right and middle mouse events, because left-button events are
+    // annotation user: captured   by   the  UserInteractors  (rotate,   zoom,  and  pan).  Pick
+    // annotation user: extracts only button-down events.
+    // annotation user_end: <NULL>
+    // page group: Pick
+    //
+    // decorator Annotate	pos=(174,333) size=438x76 style(Label), value = <NULL>
+    // annotation user_begin: 224
+    // annotation user: This creates a group with a single named member. The
+    // annotation user: member has the name "data". This will ensure that
+    // annotation user: we can always select just the "data" from the object output
+    // annotation user: of SuperviseState. See the Display page for more information.
+    // annotation user_end: <NULL>
+    // page group: data
+    //
+    // decorator Annotate	pos=(280,347) size=365x252 style(Label), value = <NULL>
+    // annotation user_begin: 675
+    // annotation user: Display places the rendered object (which includes
+    // annotation user: both the colored box and the text  glyphs) into  the
+    // annotation user: cache,  where  SuperviseState  can retrieve  it. This
+    // annotation user: is  why we  use the Select  module  above to  select
+    // annotation user: out   only  the data  field,  to  be  collected with  the
+    // annotation user: textglyphs before going to Display. Otherwise each
+    // annotation user: and     every   pick     will     be    maintained   in   an
+    // annotation user: ever-broadening  hierarchy of groups of groups of
+    // annotation user: groups.
+    // annotation user: <NULL>
+    // annotation user: If   no    pick   occurred,  then   the  original   object
+    // annotation user: (from   SuperviseState)  is   simply   displayed.  If  a
+    // annotation user: pick  did  occur,   then   the  text  glyph for the pick
+    // annotation user: is combined  with  the original  data  and displayed
+    // annotation user: instead.
+    // annotation user_end: <NULL>
+    // page group: Display
+    //
+    // decorator Annotate	pos=(397,416) size=282x44 style(Label), value = <NULL>
+    // annotation user_begin: 68
+    // annotation user: A text glyph at the pick point is created
+    // annotation user: along with a marker glyph.
+    // annotation user_end: <NULL>
+    // page group: Pick
+// network: end of macro body
+}
+main_Construct_1_in_1 = {[-1 -1 -1]};
+main_Construct_1_in_2 = {[2 2 2]};
+main_Construct_1_in_3 = [2 2 2];
+main_Construct_1_in_4 = {1 .. 8.};
+main_Construct_1_out_1 = NULL;
+main_ShowBoundary_1_in_2 = NULL;
+main_ShowBoundary_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_CollectNamed_1_in_2 = "data";
+main_CollectNamed_1_out_1 = NULL;
+main_Transmitter_5_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = NULL;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_SuperviseWindow_1_in_1 = NULL;
+main_SuperviseWindow_1_in_2 = NULL;
+main_SuperviseWindow_1_in_3 = NULL;
+main_SuperviseWindow_1_in_4 = NULL;
+main_SuperviseWindow_1_in_5 = NULL;
+main_SuperviseWindow_1_in_6 = NULL;
+main_SuperviseWindow_1_in_7 = NULL;
+main_SuperviseWindow_1_in_8 = NULL;
+main_SuperviseWindow_1_in_9 = 1;
+main_SuperviseWindow_1_in_10 = NULL;
+main_SuperviseWindow_1_out_1 = NULL;
+main_SuperviseWindow_1_out_2 = NULL;
+main_SuperviseWindow_1_out_3 = NULL;
+main_Reset_1_in_1 = "main_Reset_1_out_1";
+main_Reset_1_in_2 = 0;
+main_Reset_1_in_3 = 0;
+main_Reset_1_in_4 = NULL;
+main_Reset_1_in_5 = NULL;
+main_Reset_1_in_6 = NULL;
+main_Reset_1_out_1 = 0;
+main_Selector_3_in_1 = "Selector_3";
+main_Selector_3_in_2 = "Rotate" ;
+main_Selector_3_in_3 = 0 ;
+main_Selector_3_in_4 = NULL;
+main_Selector_3_in_5 = NULL;
+main_Selector_3_in_6 = NULL;
+main_Selector_3_in_7 = NULL;
+main_Selector_3_out_1 = 0 ;
+main_SuperviseState_1_in_3 = NULL;
+main_SuperviseState_1_in_9 = NULL;
+main_SuperviseState_1_out_1 = NULL;
+main_SuperviseState_1_out_2 = NULL;
+main_SuperviseState_1_out_3 = NULL;
+main_SuperviseState_1_out_4 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_Pick_1_in_1 = "Pick_1";
+main_Pick_1_in_2 = NULL;
+main_Pick_1_in_4 = NULL;
+main_Pick_1_in_5 = NULL;
+main_Pick_1_in_6 = NULL;
+main_Pick_1_in_7 = 2;
+main_Pick_1_out_1 = NULL;
+main_AutoGlyph_1_in_2 = "text";
+main_AutoGlyph_1_in_3 = NULL;
+main_AutoGlyph_1_in_4 = NULL;
+main_AutoGlyph_1_in_5 = NULL;
+main_AutoGlyph_1_in_6 = NULL;
+main_AutoGlyph_1_in_7 = NULL;
+main_AutoGlyph_1_out_1 = NULL;
+main_Remove_2_in_2 = "data";
+main_Remove_2_out_1 = NULL;
+main_Glyph_1_in_2 = "spiffy";
+main_Glyph_1_in_3 = NULL;
+main_Glyph_1_in_4 = .05;
+main_Glyph_1_in_5 = NULL;
+main_Glyph_1_in_6 = NULL;
+main_Glyph_1_in_7 = NULL;
+main_Glyph_1_out_1 = NULL;
+main_Color_1_in_2 = "magenta";
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_Collect_3_out_1 = NULL;
+main_Receiver_12_out_1 = NULL;
+main_Select_1_in_2 = "data";
+main_Select_1_in_3 = NULL;
+main_Select_1_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_CollectNamed_2_in_2 = "data";
+main_CollectNamed_2_in_4 = "glyph";
+main_CollectNamed_2_out_1 = NULL;
+main_Inquire_4_in_2 = "is not null";
+main_Inquire_4_in_3 = NULL;
+main_Inquire_4_out_1 = NULL;
+main_Transmitter_8_out_1 = NULL;
+main_Receiver_10_out_1 = NULL;
+main_Compute_11_in_1 = "$0+1";
+main_Compute_11_out_1 = NULL;
+main_Switch_7_out_1 = NULL;
+main_Receiver_13_out_1 = NULL;
+main_Transmitter_10_out_1 = NULL;
+main_Receiver_14_out_1 = NULL;
+main_Display_2_in_4 = NULL;
+main_Display_2_in_5 = NULL;
+main_Display_2_in_6 = NULL;
+main_Display_2_in_7 = NULL;
+main_Display_2_in_8 = NULL;
+Executive("product version 4 1 1");
+$sync
+main();

@@ -1,0 +1,26 @@
+// This program finds both the surface area and the volume of an isosurface,
+// and captions the image with this information.
+
+cloudwater = Import("cloudwater");
+camera = AutoCamera(cloudwater,"off-diagonal");
+
+macro make_picture(isovalue)
+{
+  isosurface = Isosurface(cloudwater, isovalue);
+  surface_area = Measure(isosurface);
+  surface_area = Compute("$0/1e6", surface_area);
+  volume = Measure(isosurface, "volume");
+  volume = Compute("$0/1e9", volume);
+  caption1 = Format("isovalue = %4.2f", isovalue);
+  caption2 = Format("surface area = %5.0f square km", surface_area);
+  caption3 = Format("volume = %5.0f cubic km", volume);
+  caption = List(caption1, caption2, caption3);
+  caption = Caption(caption);
+  collected = Collect(caption, isosurface);
+  Display(collected,camera);
+}
+
+make_picture(0.15);
+make_picture(0.75);
+make_picture(1.00);
+make_picture(1.50);

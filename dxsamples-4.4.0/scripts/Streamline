@@ -1,0 +1,68 @@
+    // Compare Streamline to Streakline
+
+    // Import the data
+series = Import("seriesdata","series","dx");
+    // Create a camera for the data
+camera = AutoCamera(series,"off-diagonal");
+
+    // Select the first field
+field0 = Select(series,0);
+    // Create a set of starting points using the Sample module. By default 
+    // there will be approximately 100.
+starts = Sample(field0);
+    // Create streamlines of the first field using the starting points and
+    // display
+streamline = Streamline(field0,starts);
+Display(streamline,camera);
+
+
+     // Repeat for the second field in the series
+field1 = Select(series,1);
+starts = Sample(field1);
+streamline = Streamline(field1,starts);
+Display(streamline,camera);
+
+     // Repeat for the third field in the series
+field2 = Select(series,2);
+starts = Sample(field2);
+streamline = Streamline(field2,starts);
+Display(streamline,camera);
+
+     // Import a different data set
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create a vector field by taking the gradient
+gradient = Gradient(electrondensity);
+     // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+     // Create about 10 starting points
+starts = Sample(electrondensity, 10);
+     // Compute the divergence and curl of the gradient field
+div,curl = DivCurl(gradient);
+
+     // Create streamlines, using the curl field as input. This will cause
+     // any ribbons created from the streamlines to twist to indicate the
+     // vorticity of the vector field. We will map the original scalar field
+     // onto the streamlines and color them.
+lines = Streamline(gradient, starts,curl=curl);
+streamlinesmapped = Map(lines,electrondensity);
+colored = AutoColor(streamlinesmapped);
+ribbons = Ribbon(colored);
+Display(ribbons,camera);
+
+     // In this case we don't use the curl input to streamline.
+     // The ribbons will not look as smooth
+lines = Streamline(gradient, starts);
+streamlinesmapped = Map(lines,electrondensity);
+colored = AutoColor(streamlinesmapped);
+ribbons = Ribbon(colored);
+Display(ribbons,camera);
+
+
+
+
+
+
+
+

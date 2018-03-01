@@ -1,0 +1,38 @@
+input = Import("CO2.general",format="general");
+frame17 = Select(input,17);
+
+glyphs = AutoGlyph(frame17, scale=.5);
+glyphs = Color(glyphs,"dim grey");
+
+// force the glyphs to lie in front of the connected grid with a 2 pixel offset
+glyphs = Options(glyphs,"fuzz",2);
+
+grid = Construct([-100 -170], deltas = [10, 10], counts=[19, 34]);
+camera = AutoCamera(grid);
+
+connected = Regrid(frame17, grid);
+colored = AutoColor(connected);
+caption = Caption("default Regrid options", [.01 .99]);
+collected = Collect(colored, glyphs, caption);
+Display(collected,camera);
+
+connected = Regrid(frame17, grid, radius=15);
+colored = AutoColor(connected);
+caption = Caption("Regrid with radius set to 15", [.01 .99]);
+collected = Collect(colored,glyphs,caption);
+Display(collected,camera);
+
+connected = Regrid(frame17, grid, radius=45);
+colored = AutoColor(connected);
+caption = Caption("Regrid with radius set to 45", [.01 .99]);
+collected = Collect(colored,glyphs,caption);
+Display(collected,camera);
+
+connected = Regrid(frame17, grid, nearest=4, radius=45);
+colored = AutoColor(connected);
+caption = Caption("Regrid with radius set to 45, nearest set to 4", [.01 .99]);
+collected = Collect(colored,glyphs,caption);
+Display(collected,camera);
+
+
+

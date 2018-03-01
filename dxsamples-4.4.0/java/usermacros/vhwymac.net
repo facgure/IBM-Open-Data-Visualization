@@ -1,0 +1,220 @@
+//
+// time: Fri Oct 23 14:57:56 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE victorHiway
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT input_1; field; (no default);  
+// INPUT input_2; field; (no default);  
+// OUTPUT output_1; field;  
+// End MDF
+// page assignment: connections	order=2, windowed=0, showing=1
+// page assignment: import	order=3, windowed=0, showing=0
+// workspace: width = 473, height = 601
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro victorHiway(
+ input_1
+,input_2
+) -> (
+ output_1
+) {
+    // 
+    // node Input[1]: x = 0, y = 0, inputs = 0, label = Input
+    // page group: import
+    // parameter: position = 1, name = 'input_1', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+victorHiway_Input_1_out_1 = input_1;
+    // 
+    // node Mark[22]: x = 0, y = 93, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "LONGITUDE"
+    // page group: import
+    //
+victorHiway_Mark_22_out_1[cache: 2] = 
+    Mark(
+    victorHiway_Input_1_out_1,
+    "LONGITUDE"
+    ) [instance: 22, cache: 1];
+    // 
+    // node Mark[23]: x = 62, y = 91, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "LATITUDE"
+    // page group: import
+    //
+victorHiway_Mark_23_out_1[cache: 2] = 
+    Mark(
+    victorHiway_Input_1_out_1,
+    "LATITUDE"
+    ) [instance: 23, cache: 1];
+    // 
+    // node Compute[77]: x = 51, y = 189, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[-$0,$1,100]"
+    // page group: import
+    // expression: value = [-a,b,100]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+victorHiway_Compute_77_out_1[cache: 0] = 
+    Compute(
+    "[-$0,$1,100]",
+    victorHiway_Mark_22_out_1,
+    victorHiway_Mark_23_out_1
+    ) [instance: 77, cache: 1];
+    // 
+    // node Rename[2]: x = 54, y = 280, inputs = 3, label = Rename
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: import
+    //
+victorHiway_Rename_2_out_1[cache: 2] = 
+    Rename(
+    victorHiway_Compute_77_out_1,
+    "data",
+    "positions"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Mark[21]: x = 406, y = 231, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: import
+    //
+victorHiway_Mark_21_out_1[cache: 0] = 
+    Mark(
+    victorHiway_Rename_2_out_1,
+    "positions"
+    ) [instance: 21, cache: 1];
+    // 
+    // node Compute[79]: x = 406, y = 313, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "1"
+    // page group: import
+    // expression: value = 1
+    // name[2]: value = a
+    //
+victorHiway_Compute_79_out_1[cache: 2] = 
+    Compute(
+    "1",
+    victorHiway_Mark_21_out_1
+    ) [instance: 79, cache: 1];
+    // 
+    // node Input[40]: x = 360, y = 0, inputs = 0, label = Input
+    // page group: connections
+    // parameter: position = 2, name = 'input_2', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+victorHiway_Input_40_out_1 = input_2;
+    // 
+    // node Mark[29]: x = 366, y = 109, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "from"
+    // page group: connections
+    //
+victorHiway_Mark_29_out_1[cache: 2] = 
+    Mark(
+    victorHiway_Input_40_out_1,
+    "from"
+    ) [instance: 29, cache: 1];
+    // 
+    // node Mark[30]: x = 425, y = 109, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "to"
+    // page group: connections
+    //
+victorHiway_Mark_30_out_1[cache: 2] = 
+    Mark(
+    victorHiway_Input_40_out_1,
+    "to"
+    ) [instance: 30, cache: 1];
+    // 
+    // node Compute[80]: x = 376, y = 191, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0,$1]"
+    // page group: connections
+    // expression: value = [a,b]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+victorHiway_Compute_80_out_1[cache: 0] = 
+    Compute(
+    "[$0,$1]",
+    victorHiway_Mark_29_out_1,
+    victorHiway_Mark_30_out_1
+    ) [instance: 80, cache: 1];
+    // 
+    // node Extract[20]: x = 332, y = 288, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // page group: connections
+    //
+victorHiway_Extract_20_out_1[cache: 0] = 
+    Extract(
+    victorHiway_Compute_80_out_1,
+    "data"
+    ) [instance: 20, cache: 1];
+    // 
+    // node Options[2]: x = 323, y = 388, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "element type"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "lines"
+    // page group: connections
+    //
+victorHiway_Options_2_out_1[cache: 2] = 
+    Options(
+    victorHiway_Extract_20_out_1,
+    "element type",
+    "lines"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Replace[40]: x = 475, y = 421, inputs = 4, label = Replace
+    // page group: import
+    //
+victorHiway_Replace_40_out_1[cache: 2] = 
+    Replace(
+    victorHiway_Compute_79_out_1,
+    victorHiway_Rename_2_out_1,
+    NULL,
+    NULL
+    ) [instance: 40, cache: 1];
+    // 
+    // node Transmitter[4]: x = 486, y = 533, inputs = 1, label = wireless_4
+    // page group: import
+    //
+wireless_4 = victorHiway_Replace_40_out_1;
+    // 
+    // node Receiver[5]: x = 112, y = 303, inputs = 1, label = wireless_4
+    // page group: connections
+    //
+victorHiway_Receiver_5_out_1[cache: 0] = wireless_4;
+    // 
+    // node Replace[41]: x = 159, y = 456, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "data"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "connections"
+    // page group: connections
+    //
+victorHiway_Replace_41_out_1[cache: 2] = 
+    Replace(
+    victorHiway_Options_2_out_1,
+    victorHiway_Receiver_5_out_1,
+    "data",
+    "connections"
+    ) [instance: 41, cache: 1];
+    // 
+    // node Output[1]: x = 184, y = 541, inputs = 1, label = Output
+    // page group: connections
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = victorHiway_Replace_41_out_1;
+// network: end of macro body
+}
+victorHiway_Input_1_out_1 = NULL;
+victorHiway_Mark_22_out_1 = NULL;
+victorHiway_Mark_23_out_1 = NULL;
+victorHiway_Compute_77_out_1 = NULL;
+victorHiway_Rename_2_out_1 = NULL;
+victorHiway_Mark_21_out_1 = NULL;
+victorHiway_Compute_79_out_1 = NULL;
+victorHiway_Input_40_out_1 = NULL;
+victorHiway_Mark_29_out_1 = NULL;
+victorHiway_Mark_30_out_1 = NULL;
+victorHiway_Compute_80_out_1 = NULL;
+victorHiway_Extract_20_out_1 = NULL;
+victorHiway_Options_2_out_1 = NULL;
+victorHiway_Replace_40_out_1 = NULL;
+victorHiway_Transmitter_4_out_1 = NULL;
+victorHiway_Receiver_5_out_1 = NULL;
+victorHiway_Replace_41_out_1 = NULL;

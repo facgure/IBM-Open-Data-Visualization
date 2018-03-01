@@ -1,0 +1,113 @@
+/*
+ * (C) COPYRIGHT International Business Machines Corp. 1995
+ * 
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, 
+ * provided that the above copyright notice appear in all copies and that
+ * both that copyright notice and this permission notice appear in 
+ * supporting documentation, and that the name of IBM not be
+ * used in advertising or publicity pertaining to distribution of the
+ * software without specific prior written permission. 
+ * 
+ * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,       
+ * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY        
+ * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.       
+ *
+ * IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE. IN NO EVENT SHALL IBM BE LIABLE FOR ANY SPECIAL, INDIRECT
+ * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+ * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE 
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+ * OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
+
+
+
+
+README
+==============
+
+The DXF-DX format converter supports many of the entity types
+defined in the DXF file format.  It provides simple command
+line options to specify input and output file names, resolution
+of certain primitives and a verbose operation flag.
+
+Command Line Options:
+=====================
+
+    dxf2dx [-h] [-v] [-r'n'] [filein [fileout]]
+
+	with:
+
+	   -h:      this help message.
+	   -v:      verbose operation.
+ 	   -r'n':   resolution of circle and arc primitves (default 40).
+
+	and:
+
+	   filein:  input file name (default stdin).
+	   fileout: output file name (default dxf.dx).
+
+
+Known Limitations:
+==================
+-- The Entity Coordinate System (ECS) for 2-D primitives is not resolved
+   correctly.  This means that some 2-D primitives will appear in 
+   the wrong location in space.
+ 
+-- The entire DXF file is read into memory before any DX geometry is created.
+   Then the entire DX object is created.  Then the DX Object is written out
+   to disc.  This is kind of wasteful in memory.  A better implementation
+   would convert items as they are encountered in the DXF file.
+
+Supported Entities:
+===================
+
+  2-D Primitives:
+
+	CIRCLE		(including cylinders)
+	ARC		(including partial cylinders)
+	LINE
+
+
+  3-D Primitives:
+
+	3DLINE
+	3DFACE
+	POLYLINE	(inluding poly face meshes, 3-d meshes and polylines)
+	VERTEX
+
+  Block Inserts:
+
+	INSERT
+	BLOCK
+
+
+Unsupported Entities:
+======================
+
+        ATTDEF
+        ATTRIB
+        DIMENSION
+        POINT
+        SHAPE
+        SOLID
+        TEXT
+        TRACE
+        VIEWPORT
+
+
+Location of sample DXF files
+=============================
+
+        In this directory are two sample dxf files: x29.dxf and
+        balloon.dxf. You will also find a makefile to make
+        dxf2dx. See MANIFEST for a brief description of the files
+        in this directory.
+
+	anonymous ftp to avalon.chinalake.nav.mil://pub
+	to find hundreds of sample DXF files, format
+	specifications, 20-30 other file format specs
+	as well as samples of these other formats.

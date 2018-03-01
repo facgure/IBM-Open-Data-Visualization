@@ -1,0 +1,169 @@
+//
+// time: Wed Apr 16 11:05:26 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE PickPlot
+// CATEGORY Macros
+// DESCRIPTION get the x, y position in a picked plot
+// INPUT plot; group or series or value list or string list; (none); output of Plot module
+// INPUT pick; field; (none); the pick field
+// OUTPUT picked_points; object;  
+// End MDF
+//
+// comment: Inverts the transformation on a plotted line to extract the x,y position of a picked point in a plot.
+// workspace: width = 733, height = 611
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro PickPlot(
+ plot
+,pick
+) -> (
+ picked_points
+) {
+    // 
+    // node Input[1]: x = 239, y = 72, inputs = 0, label = Input
+    // parameter: position = 1, name = 'plot', value = ' ', descriptive = 0, description = 'output of Plot module', required = 1, visible = 1
+    //
+PickPlot_Input_1_out_1 = plot;
+    // 
+    // node Select[1]: x = 216, y = 148, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 0
+    //
+PickPlot_Select_1_out_1 = 
+    Select(
+    PickPlot_Input_1_out_1,
+    0,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[2]: x = 258, y = 216, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 0
+    //
+PickPlot_Select_2_out_1 = 
+    Select(
+    PickPlot_Select_1_out_1,
+    0,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Inquire[1]: x = 327, y = 272, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "transform matrix"
+    //
+PickPlot_Inquire_1_out_1 = 
+    Inquire(
+    PickPlot_Select_2_out_1,
+    "transform matrix",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 189, y = 325, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[select(select($0,0),0), select(select($0,1),1)]"
+    // expression: value = [select(select(a,0),0), select(select(a,1),1)]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+PickPlot_Compute_1_out_1 = 
+    Compute(
+    "[select(select($0,0),0), select(select($0,1),1)]",
+    PickPlot_Inquire_1_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[2]: x = 45, y = 128, inputs = 0, label = Input
+    // parameter: position = 2, name = 'pick', value = ' ', descriptive = 0, description = 'the pick field', required = 1, visible = 1
+    //
+PickPlot_Input_2_out_1 = pick;
+    // 
+    // node Mark[1]: x = 112, y = 231, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+PickPlot_Mark_1_out_1 = 
+    Mark(
+    PickPlot_Input_2_out_1,
+    "positions"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[3]: x = 104, y = 309, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0.x, $0.y]"
+    // expression: value = [a.x, a.y]
+    // name[2]: value = a
+    //
+PickPlot_Compute_3_out_1 = 
+    Compute(
+    "[$0.x, $0.y]",
+    PickPlot_Mark_1_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[2]: x = 179, y = 396, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0/$1"
+    // expression: value = pick/xform
+    // name[2]: value = pick
+    // name[3]: value = xform
+    //
+PickPlot_Compute_2_out_1 = 
+    Compute(
+    "$0/$1",
+    PickPlot_Compute_3_out_1,
+    PickPlot_Compute_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Extract[1]: x = 180, y = 471, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data"
+    //
+PickPlot_Extract_1_out_1 = 
+    Extract(
+    PickPlot_Compute_2_out_1,
+    "data"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 195, y = 549, inputs = 1, label = Output
+    // parameter: position = 1, name = 'picked_points', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+picked_points = PickPlot_Extract_1_out_1;
+    //
+    // decorator Annotate	pos=(327,229) size=208x28 style(Label), value = <NULL>
+    // annotation user_begin: 30
+    // annotation user: Select out the plotted line(s)
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(419,301) size=314x28 style(Label), value = <NULL>
+    // annotation user_begin: 45
+    // annotation user: Get the transformation applied to the line(s)
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(254,406) size=256x44 style(Label), value = <NULL>
+    // annotation user_begin: 73
+    // annotation user: invert the transformation and apply
+    // annotation user: it to the positions of the pick field
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(244,488) size=233x28 style(Label), value = <NULL>
+    // annotation user_begin: 32
+    // annotation user: just return the transformed data
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(278,166) size=224x28 style(Label), value = <NULL>
+    // annotation user_begin: 32
+    // annotation user: Select out the line(s) plus axes
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(45,17) size=536x52 style(Label), font=big_normal, value = <NULL>
+    // annotation user_begin: 130
+    // annotation user: This macro is intended for use ONLY when only one set of axes
+    // annotation user: are drawn (it will not work correctly if input2 is supplied to Plot)
+    // annotation user_end: <NULL>
+// network: end of macro body
+}
+PickPlot_Input_1_out_1 = NULL;
+PickPlot_Select_1_out_1 = NULL;
+PickPlot_Select_2_out_1 = NULL;
+PickPlot_Inquire_1_out_1 = NULL;
+PickPlot_Compute_1_out_1 = NULL;
+PickPlot_Input_2_out_1 = NULL;
+PickPlot_Mark_1_out_1 = NULL;
+PickPlot_Compute_3_out_1 = NULL;
+PickPlot_Compute_2_out_1 = NULL;
+PickPlot_Extract_1_out_1 = NULL;

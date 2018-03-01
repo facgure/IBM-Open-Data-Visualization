@@ -1,0 +1,6 @@
+file = colorado_elev.vit
+grid = 400 x 400
+header = bytes 268
+format = msb binary
+type = byte
+majority = row 

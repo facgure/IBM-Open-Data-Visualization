@@ -1,0 +1,31 @@
+This directory contains sample .c, .mdf, and makefiles for
+creating the sample modules discussed in the Programmer's
+reference. For instructions on how to create the various
+modules, please refer to the Programmer's reference.
+
+As one example, to create the hello module, type
+   make -f Makefile_architecturename hello
+
+This will make a version of dxexec which includes the hello module.
+
+To run dx using the hello module, type
+   dx -mdf hello.mdf -exec ./dxexec
+
+Note that if you load the visual programs in this directory
+without specifying the mdf file to the ui, or if you try to run 
+without specifying the appropriate dxexec, errors will occur.
+
+Because Data Explorer does not distribute HDF libraries, we do
+not include a makefile for the import examples, which for illustrative
+purposes use HDF. If you want to compile these programs, you can start 
+with the appropriate template for your architecture in /usr/lpp/samples/user 
+(e.g. Makefile_inboard_ibm6000, or Makefile_inboard_sgi).
+If you have the HDF libraries on your system, then simply add the 
+appropriate library to the LIBS line and add the appropriate include 
+directory to the CFLAGS line.  If you do not have the HDF libraries on 
+your system, and just want to use the import .c files as a template, 
+you'll need to comment out all of the HDF specific code before compiling 
+the programs. Note that you can also compile this as an
+outboard or runtime-loadable module by using the appropriate makefile 
+and modifying the .mdf file for the import program as appropriate 
+(see the examples in samples/user).

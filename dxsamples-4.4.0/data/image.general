@@ -1,0 +1,29 @@
+# this is an example header file which will allow importation of the data
+# contained in "cylinder.rgb". Compare this header to the dx header file
+# image.dx.  You can read in this image, and display it, using the
+# visual program ReadImage.net.
+#
+#
+# The data are found in the file "cylinder.rgb"
+file = cylinder.rgb
+#
+# The grid is 350x300 (pixels)
+grid = 350x300
+#
+# The data values in the file are bytes
+type = byte
+#
+# the data component contains the colors, which are 3-vectors
+structure = 3-vector
+#
+# the following line specifies that the data are organized such that the
+# first index (in this case x) varies fastest when reading the data.
+majority = column
+#
+# The data is stored in binary format
+format = msb binary
+#
+# here we specify origin_x, delta_x, origin_y, delta_y
+# Images are described from "top to bottom", hence the value of -1 for
+# delta_y
+positions = 0, 1, 0, -1

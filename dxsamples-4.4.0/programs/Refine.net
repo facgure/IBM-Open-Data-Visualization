@@ -1,0 +1,193 @@
+//
+// time: Tue Apr 29 11:55:58 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// MODULE main
+//
+// comment: This visual program shows the use of Refine to change the connections of a grid, in this example, a 2D grid. 
+// comment: 
+// comment: The leftmost image is the orginal data. The middle image uses Refine to convert quads to triangles. The rightmost image uses Refine to refine the grid by two levels; that is, converting a quad into 4x4=16 quads.
+// workspace: width = 519, height = 626
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Construct[1]: x = 16, y = 0, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0 0]}
+    // input[2]: defaulting = 0, visible = 1, type = 16777224, value = {[1 1]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [4 4]
+    //
+main_Construct_1_out_1 = 
+    Construct(
+    main_Construct_1_in_1,
+    main_Construct_1_in_2,
+    main_Construct_1_in_3,
+    main_Construct_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowConnections[2]: x = 36, y = 215, inputs = 1, label = ShowConnections
+    //
+main_ShowConnections_2_out_1 = 
+    ShowConnections(
+    main_Construct_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 192, y = 19, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 300
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Construct_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Render[1]: x = 105, y = 351, inputs = 3, label = Render
+    //
+main_Render_1_out_1 = 
+    Render(
+    main_ShowConnections_2_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Refine[1]: x = 257, y = 142, inputs = 2, label = Refine
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "triangles"
+    //
+main_Refine_1_out_1 = 
+    Refine(
+    main_Construct_1_out_1,
+    main_Refine_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowConnections[3]: x = 201, y = 220, inputs = 1, label = ShowConnections
+    //
+main_ShowConnections_3_out_1 = 
+    ShowConnections(
+    main_Refine_1_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Render[2]: x = 254, y = 342, inputs = 3, label = Render
+    //
+main_Render_2_out_1 = 
+    Render(
+    main_ShowConnections_3_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Refine[2]: x = 418, y = 115, inputs = 2, label = Refine
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 2
+    //
+main_Refine_2_out_1 = 
+    Refine(
+    main_Construct_1_out_1,
+    main_Refine_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node ShowConnections[4]: x = 386, y = 222, inputs = 1, label = ShowConnections
+    //
+main_ShowConnections_4_out_1 = 
+    ShowConnections(
+    main_Refine_2_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Render[3]: x = 433, y = 331, inputs = 3, label = Render
+    //
+main_Render_3_out_1 = 
+    Render(
+    main_ShowConnections_4_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node Collect[1]: x = 243, y = 436, inputs = 3, label = Collect
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Render_1_out_1,
+    main_Render_2_out_1,
+    main_Render_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Arrange[1]: x = 151, y = 483, inputs = 5, label = Arrange
+    //
+main_Arrange_1_out_1 = 
+    Arrange(
+    main_Collect_1_out_1,
+    main_Arrange_1_in_2,
+    main_Arrange_1_in_3,
+    main_Arrange_1_in_4,
+    main_Arrange_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 132, y = 564, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.1867,0.1211), size = 0.7141x0.2627
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Arrange_1_out_1,
+    main_Display_1_in_2,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Construct_1_in_1 = {[0 0]};
+main_Construct_1_in_2 = {[1 1]};
+main_Construct_1_in_3 = [4 4];
+main_Construct_1_in_4 = NULL;
+main_Construct_1_out_1 = NULL;
+main_ShowConnections_2_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = 300;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Render_1_in_3 = NULL;
+main_Render_1_out_1 = NULL;
+main_Refine_1_in_2 = "triangles";
+main_Refine_1_out_1 = NULL;
+main_ShowConnections_3_out_1 = NULL;
+main_Render_2_in_3 = NULL;
+main_Render_2_out_1 = NULL;
+main_Refine_2_in_2 = 2;
+main_Refine_2_out_1 = NULL;
+main_ShowConnections_4_out_1 = NULL;
+main_Render_3_in_3 = NULL;
+main_Render_3_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Arrange_1_in_2 = NULL;
+main_Arrange_1_in_3 = NULL;
+main_Arrange_1_in_4 = NULL;
+main_Arrange_1_in_5 = NULL;
+main_Arrange_1_out_1 = NULL;
+main_Display_1_in_2 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

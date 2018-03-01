@@ -1,0 +1,51 @@
+
+    // Import and partition the data
+electrondensity = Import("watermolecule");
+electrondensity = Partition(electrondensity);
+
+
+    // Create an isosurface at a value of 0.3
+isovalue = 0.3;
+isosurface = Isosurface(electrondensity,isovalue);
+
+    // Create a caption
+textstring = Format("isovalue %f",isovalue);
+
+    // Create text. Text exists in world coordinates, rather than screen
+    // coordinates
+text = Text(textstring, [1 1 1], 0.3);
+
+    // Collect the text with the isosurface
+collected = Collect(text,isosurface);
+
+    // Display the collection from the front
+camera = AutoCamera(electrondensity,"front");
+Display(collected,camera);
+
+    // Rotate the collection and display. Note that the text rotates in space
+collected = Rotate(collected,"y",45);
+Display(collected,camera);
+
+
+
+
+
+   // In the following example, some annotation data is imported. This
+   // data set consists of a set of labels at particular locations. The
+   // text module is used to display this data.
+
+annotation = Import("labels.dx");
+text = Text(annotation, height=0.5, font="roman_tser");
+camera = AutoCamera(text);
+Display(text,camera);
+
+
+   // In the following example, some annotation data is imported. This
+   // data set consists of a set of labels at particular locations. In
+   // addition, each label has an orientation specified by its "tangents"
+   // and "binormals" component. 
+
+annotation = Import("oriented_labels.dx");
+text = Text(annotation, height=1.5, font="roman_tser");
+camera = AutoCamera(text);
+Display(text,camera);

@@ -1,0 +1,99 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Grocery List</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Grocery Pruchasing Patterns</h2>
+		<h4>...the three dimensional representation in <i>Orbit</i> mode</h4>
+Each glyph in the 3D scatter plot represents a purchase.  Purchases
+are binned according to size of the unit (i.e. pint, pound, dozen), 
+food group, and food.  Each glyph is
+colored and sized according to the total amount spent.  
+<p>
+Click and drag the mouse inside the image to control the
+viewpoints.
+<p>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 576 HEIGHT = 418
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_4">
+	<PARAM NAME=OPEN_IN_ORBIT_MODE VALUE="true">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/GroceryList4.0.0.gif">
+</APPLET>
+
+
+<table border = 0>
+<tr>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 344 HEIGHT = 278
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/GroceryList2.0.0.gif">
+</APPLET>
+
+</td>
+<td>
+<h4>...about the visualization</h4>
+This plot is a view of spending in the grocery 
+list according to one of the 3 categorical variables:  
+food group, item, and unit.  
+<p>
+If you use the mouse to pick on the plot,
+the items 
+contributing to the picked category will appear in the other plot.
+<h4>...about the visual program</h4>
+This visual program shows the application of categorical tools 
+to the visualization of a grocery list.  
+<p>
+</td>
+</tr>
+</table>
+
+<table border = 0>
+<tr>
+<td>
+<APPLET
+	CODE="GroceryList.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="GroceryList">
+	<PARAM NAME=NETNAME VALUE="GroceryList.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<param name=BACKGROUND value="[1.0, 1.0, 1.0]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+</APPLET>
+
+</td>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 462 HEIGHT = 418
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_3">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/GroceryList3.0.0.gif">
+</APPLET>
+
+</td>
+</tr>
+</table>
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

@@ -1,0 +1,15 @@
+
+   // Import the data
+electrondensity=Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+   // Create a box showing the bounding box
+box = ShowBox(electrondensity);
+   // Create a MapToPlane and color it
+plane = MapToPlane(electrondensity,NULL,[0.2 0 1]);
+plane = AutoColor(plane);
+   // Collect the plane with the box and display
+collected = Collect(plane,box);
+Display(collected,camera);

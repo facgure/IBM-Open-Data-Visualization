@@ -1,0 +1,59 @@
+/*
+ * (C) COPYRIGHT International Business Machines Corp. 1994
+ * 
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, 
+ * provided that the above copyright notice appear in all copies and that
+ * both that copyright notice and this permission notice appear in 
+ * supporting documentation, and that the name of IBM not be
+ * used in advertising or publicity pertaining to distribution of the
+ * software without specific prior written permission. 
+ * 
+ * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,       
+ * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY        
+ * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.       
+ *
+ * IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE. IN NO EVENT SHALL IBM BE LIABLE FOR ANY SPECIAL, INDIRECT
+ * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+ * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE 
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+ * OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
+******************************************************************************
+ 
+The files in this directory facilitate the use of Data Explorer 
+with Fluent data. Included is a filter which reads Fluent data and writes
+a DX format file.  This filter is the same one that can be found
+at the Data Explorer repository at Cornell University. 
+ 
+******************************************************************************
+
+Filter name: Fluent2DX.c 
+
+Fluent2DX.c is the source file for a filter that reads Fluent Universal
+file data in ASCII format and produces a Data Explorer Group of Fields,
+one for each solved variable (velocity is stored as a single 3-vector)
+
+It should compile easily using:
+ 
+   cc -o Fluent2DX Fluent2DX.c
+  
+The execution syntax is: 
+
+   Fluent2DX fluent_universal_file_name > Data_Explorer_file_name
+  
+******************************************************************************
+
+Programs and data show some example visualizations of Fluent data
+can be found on the Data Explorer repository at Cornell University.
+The anonymous ftp address is
+
+	ftp.tc.cornell.edu
+
+and the URL of the World Wide Web page is
+
+	http://www.tc.cornell.edu/DX/
+ 

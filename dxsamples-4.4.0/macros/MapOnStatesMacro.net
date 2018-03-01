@@ -1,0 +1,1366 @@
+//
+// time: Wed Feb 26 16:51:17 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+//
+// macro reference (direct): MOSstatesmac MOS_statesMacro.net
+include "MOS_statesMacro.net"
+//
+// Begin MDF
+// MODULE MapOnStates
+// CATEGORY Macros
+// DESCRIPTION Map field onto the US states
+// INPUT Field; value list or string list or object; (States with values 0 .. 52); Field containing state-based data
+// INPUT StateComp; object; "state"; Component containing state names or abbrevs
+// INPUT HeightComp; object; "data"; Component containing state height data
+// INPUT H_Statistic; object; "mean"; Statistical operation on state height data
+// INPUT H_Autoscale; value list or field or string or string list; 1; Rescale height based on data min/max
+// INPUT ScaleFactor; value list or field or string or string list; 1; Scale factor on state height (0 for flat)
+// INPUT NoDataValue; value list or string list or object; 0.0; Value for states with no data (or "cull")
+// INPUT ColorComp; object; "data"; Component to use to color states
+// INPUT C_Statistic; object; "mean"; Statistical operation on data for colors
+// INPUT colormap; field; (no default); Colormap for coloring states based on ColorComp
+// INPUT C_Autoscale; value list or field or string or string list; 1; Scale colormap to match data range
+// OUTPUT RaisedStates; field; State face raised by mapped data 
+// OUTPUT StateEdges; field; Raised edges of states
+// OUTPUT RaisedOutlines; color field; Raised state outlines
+// OUTPUT StateColorMap; object; Colormap used, for input to ColorBar
+// OUTPUT StateResults; object; Data for the states
+// OUTPUT StateHeight; object; Height of the states
+// End MDF
+//
+// comment: This macro maps data onto 52 U.S. "states" including DC and PR.
+// comment: 
+// comment:  (C) COPYRIGHT International Business Machines Corp. 1996.
+// comment:  All Rights Reserved.
+// comment:  Licensed Materials - Property of IBM
+// comment: 
+// comment:  Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the name of IBM not be used in advertising or publicity pertaining to distribution of the software without specific prior written permission.
+// comment: 
+// comment: INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOFTWARE, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  IBM DOES NOT WARRANT AGAINST THE INFRINGMENT OF PATENTS, COPYRIGHT OR ANY OTHER INTELLECTUAL PROPERTY RIGHTS OF OTHERS.  IN NO EVENT SHALL IBM BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, IS WITH YOU.
+// page assignment: Colors	order=5, windowed=0, showing=0
+// page assignment: DoMap	order=4, windowed=0, showing=0
+// page assignment: Input	order=3, windowed=0, showing=1
+// page assignment: StateData	order=2, windowed=0, showing=0
+// workspace: width = 1251, height = 612
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro MapOnStates(
+ Field
+,StateComp = "state"
+,HeightComp = "data"
+,H_Statistic = "mean"
+,H_Autoscale = 1
+,ScaleFactor = 1
+,NoDataValue = 0.0
+,ColorComp = "data"
+,C_Statistic = "mean"
+,colormap
+,C_Autoscale = 1
+) -> (
+ RaisedStates
+,StateEdges
+,RaisedOutlines
+,StateColorMap
+,StateResults
+,StateHeight
+) {
+    // 
+    // node Input[16]: x = 1151, y = 46, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 1, name = 'Field', value = '(States with values 0 .. 52)', descriptive = 1, description = 'Field containing state-based data', required = 0, visible = 1
+    //
+MapOnStates_Input_16_out_1 = Field;
+    // 
+    // node Inquire[9]: x = 1122, y = 204, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: Input
+    //
+MapOnStates_Inquire_9_out_1 = 
+    Inquire(
+    MapOnStates_Input_16_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 9, cache: 1];
+    // 
+    // node ImportSpreadsheet[2]: x = 514, y = 54, inputs = 10, label = ImportSpreadsheet
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "MOS_key.txt"
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "\t"
+    // page group: Input
+    //
+MapOnStates_ImportSpreadsheet_2_out_1,
+MapOnStates_ImportSpreadsheet_2_out_2[cache: 0] = 
+    ImportSpreadsheet(
+    "MOS_key.txt",
+    "\t",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[40]: x = 523, y = 158, inputs = 1, label = MOS_key
+    // page group: Input
+    //
+MOS_key = MapOnStates_ImportSpreadsheet_2_out_1;
+    // 
+    // node Receiver[108]: x = 1181, y = 112, inputs = 1, label = MOS_key
+    // page group: Input
+    //
+MapOnStates_Receiver_108_out_1[cache: 0] = MOS_key;
+    // 
+    // node Mark[15]: x = 1203, y = 262, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "num"
+    // page group: Input
+    //
+MapOnStates_Mark_15_out_1 = 
+    Mark(
+    MapOnStates_Receiver_108_out_1,
+    "num"
+    ) [instance: 15, cache: 1];
+    // 
+    // node Switch[25]: x = 1144, y = 358, inputs = 3, label = Switch
+    // page group: Input
+    //
+MapOnStates_Switch_25_out_1 = 
+    Switch(
+    MapOnStates_Inquire_9_out_1,
+    MapOnStates_Input_16_out_1,
+    MapOnStates_Mark_15_out_1
+    ) [instance: 25, cache: 1];
+    // 
+    // node Transmitter[23]: x = 1165, y = 461, inputs = 1, label = field
+    // page group: Input
+    //
+field = MapOnStates_Switch_25_out_1;
+    // 
+    // node Receiver[86]: x = 79, y = 671, inputs = 1, label = field
+    // page group: StateData
+    //
+MapOnStates_Receiver_86_out_1[cache: 0] = field;
+    // 
+    // node ImportSpreadsheet[1]: x = 328, y = 44, inputs = 10, label = ImportSpreadsheet
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "MOS_lookup.txt"
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "\t"
+    // page group: Input
+    //
+MapOnStates_ImportSpreadsheet_1_out_1,
+MapOnStates_ImportSpreadsheet_1_out_2[cache: 0] = 
+    ImportSpreadsheet(
+    "MOS_lookup.txt",
+    "\t",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[26]: x = 325, y = 148, inputs = 1, label = MOS_lookup
+    // page group: Input
+    //
+MOS_lookup = MapOnStates_ImportSpreadsheet_1_out_1;
+    // 
+    // node Receiver[87]: x = 140, y = 671, inputs = 1, label = MOS_lookup
+    // page group: StateData
+    //
+MapOnStates_Receiver_87_out_1[cache: 0] = MOS_lookup;
+    // 
+    // node Input[26]: x = 1058, y = 59, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 2, name = 'StateComp', value = '"state"', descriptive = 0, description = 'Component containing state names or abbrevs', required = 0, visible = 1
+    //
+MapOnStates_Input_26_out_1 = StateComp;
+    // 
+    // node Transmitter[32]: x = 1041, y = 152, inputs = 1, label = state_comp
+    // page group: Input
+    //
+state_comp = MapOnStates_Input_26_out_1;
+    // 
+    // node Receiver[88]: x = 282, y = 671, inputs = 1, label = state_comp
+    // page group: StateData
+    //
+MapOnStates_Receiver_88_out_1[cache: 0] = state_comp;
+    // 
+    // node Input[30]: x = 675, y = 363, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 9, name = 'C_Statistic', value = '"mean"', descriptive = 0, description = 'Statistical operation on data for colors', required = 0, visible = 1
+    //
+MapOnStates_Input_30_out_1 = C_Statistic;
+    // 
+    // node Transmitter[43]: x = 678, y = 464, inputs = 1, label = color_op
+    // page group: Input
+    //
+color_op = MapOnStates_Input_30_out_1;
+    // 
+    // node Receiver[89]: x = 593, y = 671, inputs = 1, label = color_op
+    // page group: StateData
+    //
+MapOnStates_Receiver_89_out_1[cache: 0] = color_op;
+    // 
+    // node Input[29]: x = 534, y = 358, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 8, name = 'ColorComp', value = '"data"', descriptive = 0, description = 'Component to use to color states', required = 0, visible = 1
+    //
+MapOnStates_Input_29_out_1 = ColorComp;
+    // 
+    // node Transmitter[42]: x = 530, y = 459, inputs = 1, label = color_comp
+    // page group: Input
+    //
+color_comp = MapOnStates_Input_29_out_1;
+    // 
+    // node Receiver[94]: x = 674, y = 666, inputs = 1, label = color_comp
+    // page group: StateData
+    //
+MapOnStates_Receiver_94_out_1[cache: 0] = color_comp;
+    // 
+    // node Input[25]: x = 185, y = 47, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 7, name = 'NoDataValue', value = '0.0', descriptive = 0, description = 'Value for states with no data (or "cull")', required = 0, visible = 1
+    //
+MapOnStates_Input_25_out_1 = NoDataValue;
+    // 
+    // node Inquire[16]: x = 124, y = 124, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: Input
+    //
+MapOnStates_Inquire_16_out_1 = 
+    Inquire(
+    MapOnStates_Input_25_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 16, cache: 1];
+    // 
+    // node Switch[20]: x = 187, y = 198, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = "cull"
+    // page group: Input
+    //
+MapOnStates_Switch_20_out_1 = 
+    Switch(
+    MapOnStates_Inquire_16_out_1,
+    MapOnStates_Input_25_out_1,
+    "cull"
+    ) [instance: 20, cache: 1];
+    // 
+    // node Inquire[12]: x = 26, y = 269, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is float"
+    // page group: Input
+    //
+MapOnStates_Inquire_12_out_1 = 
+    Inquire(
+    MapOnStates_Switch_20_out_1,
+    "is float",
+    NULL
+    ) [instance: 12, cache: 1];
+    // 
+    // node Inquire[17]: x = 129, y = 274, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is int"
+    // page group: Input
+    //
+MapOnStates_Inquire_17_out_1 = 
+    Inquire(
+    MapOnStates_Switch_20_out_1,
+    "is int",
+    NULL
+    ) [instance: 17, cache: 1];
+    // 
+    // node Compute[60]: x = 98, y = 362, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0 || $1) ? 1 : 2"
+    // page group: Input
+    // expression: value = (a || b) ? 1 : 2
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_60_out_1 = 
+    Compute(
+    "($0 || $1) ? 1 : 2",
+    MapOnStates_Inquire_12_out_1,
+    MapOnStates_Inquire_17_out_1
+    ) [instance: 60, cache: 1];
+    // 
+    // node Switch[19]: x = 207, y = 430, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 16777245, value = {0.0}
+    // page group: Input
+    //
+MapOnStates_Switch_19_out_1 = 
+    Switch(
+    MapOnStates_Compute_60_out_1,
+    MapOnStates_Switch_20_out_1,
+    {0.0}
+    ) [instance: 19, cache: 1];
+    // 
+    // node Transmitter[29]: x = 216, y = 499, inputs = 1, label = nodatavalue
+    // page group: Input
+    //
+nodatavalue = MapOnStates_Switch_19_out_1;
+    // 
+    // node Receiver[91]: x = 773, y = 671, inputs = 1, label = nodatavalue
+    // page group: StateData
+    //
+MapOnStates_Receiver_91_out_1[cache: 0] = nodatavalue;
+    // 
+    // node Transmitter[28]: x = 64, y = 489, inputs = 1, label = CullStates
+    // page group: Input
+    //
+CullStates = MapOnStates_Compute_60_out_1;
+    // 
+    // node Receiver[92]: x = 877, y = 671, inputs = 1, label = CullStates
+    // page group: StateData
+    //
+MapOnStates_Receiver_92_out_1[cache: 0] = CullStates;
+    // 
+    // node Receiver[93]: x = 967, y = 709, inputs = 1, label = MOS_key
+    // page group: StateData
+    //
+MapOnStates_Receiver_93_out_1[cache: 0] = MOS_key;
+    // 
+    // node MOSstatesmac[2]: x = 381, y = 709, inputs = 8, label = MOSstatesmac
+    // page group: StateData
+    //
+MapOnStates_MOSstatesmac_2_out_1[cache: 0],
+MapOnStates_MOSstatesmac_2_out_2 = 
+    MOSstatesmac(
+    MapOnStates_Receiver_86_out_1,
+    MapOnStates_Receiver_87_out_1,
+    MapOnStates_Receiver_88_out_1,
+    MapOnStates_Receiver_89_out_1,
+    MapOnStates_Receiver_94_out_1,
+    MapOnStates_Receiver_91_out_1,
+    MapOnStates_Receiver_92_out_1,
+    MapOnStates_Receiver_93_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[47]: x = 439, y = 909, inputs = 1, label = ColorData
+    // page group: StateData
+    //
+ColorData = MapOnStates_MOSstatesmac_2_out_2;
+    // 
+    // node Receiver[47]: x = 482, y = 127, inputs = 1, label = ColorData
+    // page group: Colors
+    //
+MapOnStates_Receiver_47_out_1[cache: 0] = ColorData;
+    // 
+    // node AutoColor[8]: x = 534, y = 235, inputs = 10, label = AutoColor
+    // page group: Colors
+    //
+MapOnStates_AutoColor_8_out_1,
+MapOnStates_AutoColor_8_out_2 = 
+    AutoColor(
+    MapOnStates_Receiver_47_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 8, cache: 1];
+    // 
+    // node Receiver[73]: x = 838, y = 115, inputs = 1, label = CullStates
+    // page group: DoMap
+    //
+MapOnStates_Receiver_73_out_1[cache: 0] = CullStates;
+    // 
+    // node Import[5]: x = 689, y = 20, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "MOS_states.dx"
+    // page group: DoMap
+    //
+MapOnStates_Import_5_out_1[cache: 0] = 
+    Import(
+    "MOS_states.dx",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Select[6]: x = 993, y = 27, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "outline"
+    // page group: DoMap
+    //
+MapOnStates_Select_6_out_1 = 
+    Select(
+    MapOnStates_Import_5_out_1,
+    "outline",
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Receiver[36]: x = 821, y = 538, inputs = 1, label = field
+    // page group: StateData
+    //
+MapOnStates_Receiver_36_out_1[cache: 0] = field;
+    // 
+    // node Receiver[37]: x = 871, y = 537, inputs = 1, label = MOS_lookup
+    // page group: StateData
+    //
+MapOnStates_Receiver_37_out_1[cache: 0] = MOS_lookup;
+    // 
+    // node Receiver[43]: x = 1068, y = 535, inputs = 1, label = state_comp
+    // page group: StateData
+    //
+MapOnStates_Receiver_43_out_1[cache: 0] = state_comp;
+    // 
+    // node Input[24]: x = 963, y = 46, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 4, name = 'H_Statistic', value = '"mean"', descriptive = 0, description = 'Statistical operation on state height data', required = 0, visible = 1
+    //
+MapOnStates_Input_24_out_1 = H_Statistic;
+    // 
+    // node Transmitter[27]: x = 960, y = 144, inputs = 1, label = height_op
+    // page group: Input
+    //
+height_op = MapOnStates_Input_24_out_1;
+    // 
+    // node Receiver[38]: x = 1202, y = 546, inputs = 1, label = height_op
+    // page group: StateData
+    //
+MapOnStates_Receiver_38_out_1[cache: 0] = height_op;
+    // 
+    // node Input[27]: x = 844, y = 63, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 3, name = 'HeightComp', value = '"data"', descriptive = 0, description = 'Component containing state height data', required = 0, visible = 1
+    //
+MapOnStates_Input_27_out_1 = HeightComp;
+    // 
+    // node Transmitter[33]: x = 836, y = 147, inputs = 1, label = height_comp
+    // page group: Input
+    //
+height_comp = MapOnStates_Input_27_out_1;
+    // 
+    // node Receiver[44]: x = 1292, y = 543, inputs = 1, label = height_comp
+    // page group: StateData
+    //
+MapOnStates_Receiver_44_out_1[cache: 0] = height_comp;
+    // 
+    // node Receiver[40]: x = 1400, y = 556, inputs = 1, label = nodatavalue
+    // page group: StateData
+    //
+MapOnStates_Receiver_40_out_1[cache: 0] = nodatavalue;
+    // 
+    // node Receiver[79]: x = 1504, y = 557, inputs = 1, label = CullStates
+    // page group: StateData
+    //
+MapOnStates_Receiver_79_out_1[cache: 0] = CullStates;
+    // 
+    // node Receiver[83]: x = 1320, y = 687, inputs = 1, label = MOS_key
+    // page group: StateData
+    //
+MapOnStates_Receiver_83_out_1[cache: 0] = MOS_key;
+    // 
+    // node MOSstatesmac[1]: x = 1040, y = 722, inputs = 8, label = MOSstatesmac
+    // page group: StateData
+    //
+MapOnStates_MOSstatesmac_1_out_1,
+MapOnStates_MOSstatesmac_1_out_2 = 
+    MOSstatesmac(
+    MapOnStates_Receiver_36_out_1,
+    MapOnStates_Receiver_37_out_1,
+    MapOnStates_Receiver_43_out_1,
+    MapOnStates_Receiver_38_out_1,
+    MapOnStates_Receiver_44_out_1,
+    MapOnStates_Receiver_40_out_1,
+    MapOnStates_Receiver_79_out_1,
+    MapOnStates_Receiver_83_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[39]: x = 1035, y = 837, inputs = 1, label = good_states
+    // page group: StateData
+    //
+good_states = MapOnStates_MOSstatesmac_1_out_1;
+    // 
+    // node Receiver[72]: x = 1062, y = 82, inputs = 1, label = good_states
+    // page group: DoMap
+    //
+MapOnStates_Receiver_72_out_1[cache: 0] = good_states;
+    // 
+    // node Select[8]: x = 970, y = 142, inputs = 3, label = Select
+    // page group: DoMap
+    //
+MapOnStates_Select_8_out_1 = 
+    Select(
+    MapOnStates_Select_6_out_1,
+    MapOnStates_Receiver_72_out_1,
+    NULL
+    ) [instance: 8, cache: 1];
+    // 
+    // node Switch[23]: x = 900, y = 212, inputs = 3, label = Switch
+    // page group: DoMap
+    //
+MapOnStates_Switch_23_out_1 = 
+    Switch(
+    MapOnStates_Receiver_73_out_1,
+    MapOnStates_Select_6_out_1,
+    MapOnStates_Select_8_out_1
+    ) [instance: 23, cache: 1];
+    // 
+    // node Remove[11]: x = 747, y = 229, inputs = 2, label = Remove
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "normals"
+    // page group: DoMap
+    //
+MapOnStates_Remove_11_out_1[cache: 0] = 
+    Remove(
+    MapOnStates_Switch_23_out_1,
+    "normals"
+    ) [instance: 11, cache: 1];
+    // 
+    // node Compute[33]: x = 743, y = 313, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0)"
+    // page group: DoMap
+    // expression: value = float(a)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_33_out_1[cache: 0] = 
+    Compute(
+    "float($0)",
+    MapOnStates_Remove_11_out_1,
+    NULL
+    ) [instance: 33, cache: 1];
+    // 
+    // node Replace[33]: x = 723, y = 388, inputs = 4, label = Replace
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "state_num"
+    // page group: DoMap
+    //
+MapOnStates_Replace_33_out_1 = 
+    Replace(
+    MapOnStates_Compute_33_out_1,
+    MapOnStates_Compute_33_out_1,
+    NULL,
+    "state_num"
+    ) [instance: 33, cache: 1];
+    // 
+    // node Input[20]: x = 107, y = 147, inputs = 0, label = Input
+    // page group: StateData
+    // parameter: position = 6, name = 'ScaleFactor', value = '1', descriptive = 0, description = 'Scale factor on state height (0 for flat)', required = 0, visible = 1
+    //
+MapOnStates_Input_20_out_1 = ScaleFactor;
+    // 
+    // node Transmitter[45]: x = 1170, y = 853, inputs = 1, label = StateData
+    // page group: StateData
+    //
+StateData = MapOnStates_MOSstatesmac_1_out_2;
+    // 
+    // node Receiver[64]: x = 266, y = 20, inputs = 1, label = StateData
+    // page group: StateData
+    //
+MapOnStates_Receiver_64_out_1[cache: 0] = StateData;
+    // 
+    // node Statistics[2]: x = 315, y = 143, inputs = 1, label = Statistics
+    // page group: StateData
+    //
+MapOnStates_Statistics_2_out_1[cache: 0],
+MapOnStates_Statistics_2_out_2[cache: 0],
+MapOnStates_Statistics_2_out_3[cache: 0],
+MapOnStates_Statistics_2_out_4,
+MapOnStates_Statistics_2_out_5 = 
+    Statistics(
+    MapOnStates_Receiver_64_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[39]: x = 838, y = 374, inputs = 0, label = Input
+    // page group: Input
+    // parameter: position = 5, name = 'H_Autoscale', value = '1', descriptive = 0, description = 'Rescale height based on data min/max', required = 0, visible = 1
+    //
+MapOnStates_Input_39_out_1 = H_Autoscale;
+    // 
+    // node Compute[68]: x = 814, y = 458, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 ? 1 : 2"
+    // page group: Input
+    // expression: value = a == 1 ? 1 : 2
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_68_out_1 = 
+    Compute(
+    "$0 == 1 ? 1 : 2",
+    MapOnStates_Input_39_out_1,
+    NULL
+    ) [instance: 68, cache: 1];
+    // 
+    // node Transmitter[58]: x = 790, y = 550, inputs = 1, label = absolute_height
+    // page group: Input
+    //
+absolute_height = MapOnStates_Compute_68_out_1;
+    // 
+    // node Receiver[107]: x = 193, y = 111, inputs = 1, label = absolute_height
+    // page group: StateData
+    //
+MapOnStates_Receiver_107_out_1[cache: 0] = absolute_height;
+    // 
+    // node Compute[24]: x = 150, y = 274, inputs = 5, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0==0.0 || $1 == $2 || $3 == 2 ? int(1) : int(2)"
+    // page group: StateData
+    // expression: value = a==0.0 || b == c || d == 2 ? int(1) : int(2)
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+    //
+MapOnStates_Compute_24_out_1 = 
+    Compute(
+    "$0==0.0 || $1 == $2 || $3 == 2 ? int(1) : int(2)",
+    MapOnStates_Input_20_out_1,
+    MapOnStates_Statistics_2_out_4,
+    MapOnStates_Statistics_2_out_5,
+    MapOnStates_Receiver_107_out_1
+    ) [instance: 24, cache: 1];
+    // 
+    // node Compute[73]: x = 255, y = 261, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0*$1"
+    // page group: StateData
+    // expression: value = a*b
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_73_out_1 = 
+    Compute(
+    "$0*$1",
+    MapOnStates_Receiver_64_out_1,
+    MapOnStates_Input_20_out_1
+    ) [instance: 73, cache: 1];
+    // 
+    // node Compute[21]: x = 340, y = 302, inputs = 5, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0-$1)/($2-$1)*10.0*$3"
+    // page group: StateData
+    // expression: value = (a-b)/(c-b)*10.0*d
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+    //
+MapOnStates_Compute_21_out_1 = 
+    Compute(
+    "($0-$1)/($2-$1)*10.0*$3",
+    MapOnStates_Receiver_64_out_1,
+    MapOnStates_Statistics_2_out_4,
+    MapOnStates_Statistics_2_out_5,
+    MapOnStates_Input_20_out_1
+    ) [instance: 21, cache: 1];
+    // 
+    // node Switch[5]: x = 265, y = 383, inputs = 3, label = Switch
+    // page group: StateData
+    //
+MapOnStates_Switch_5_out_1 = 
+    Switch(
+    MapOnStates_Compute_24_out_1,
+    MapOnStates_Compute_73_out_1,
+    MapOnStates_Compute_21_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Transmitter[31]: x = 253, y = 484, inputs = 1, label = scaled_height
+    // page group: StateData
+    //
+scaled_height = MapOnStates_Switch_5_out_1;
+    // 
+    // node Receiver[48]: x = 896, y = 358, inputs = 1, label = scaled_height
+    // page group: DoMap
+    //
+MapOnStates_Receiver_48_out_1[cache: 0] = scaled_height;
+    // 
+    // node Map[5]: x = 907, y = 482, inputs = 4, label = Map
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "data"
+    // page group: DoMap
+    //
+MapOnStates_Map_5_out_1 = 
+    Map(
+    MapOnStates_Replace_33_out_1,
+    MapOnStates_Receiver_48_out_1,
+    "data",
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Mark[3]: x = 942, y = 638, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: DoMap
+    //
+MapOnStates_Mark_3_out_1 = 
+    Mark(
+    MapOnStates_Map_5_out_1,
+    "positions"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[15]: x = 955, y = 714, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0.x,$0.y,$1.x]"
+    // page group: DoMap
+    // expression: value = [a.x,a.y,b.x]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_15_out_1[cache: 0] = 
+    Compute(
+    "[$0.x,$0.y,$1.x]",
+    MapOnStates_Mark_3_out_1,
+    MapOnStates_Map_5_out_1
+    ) [instance: 15, cache: 1];
+    // 
+    // node Unmark[6]: x = 1044, y = 764, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: DoMap
+    //
+MapOnStates_Unmark_6_out_1[cache: 0] = 
+    Unmark(
+    MapOnStates_Compute_15_out_1,
+    "positions"
+    ) [instance: 6, cache: 1];
+    // 
+    // node Options[1]: x = 936, y = 871, inputs = 5, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "fuzz"
+    // input[3]: defaulting = 0, visible = 1, type = 29, value = 3
+    // page group: DoMap
+    //
+MapOnStates_Options_1_out_1[cache: 0] = 
+    Options(
+    MapOnStates_Unmark_6_out_1,
+    "fuzz",
+    3,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[2]: x = 1076, y = 909, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "slategrey"
+    // page group: DoMap
+    //
+MapOnStates_Color_2_out_1 = 
+    Color(
+    MapOnStates_Options_1_out_1,
+    "slategrey",
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[60]: x = 235, y = 198, inputs = 1, label = CullStates
+    // page group: DoMap
+    //
+MapOnStates_Receiver_60_out_1[cache: 0] = CullStates;
+    // 
+    // node Select[5]: x = 356, y = 123, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "interior"
+    // page group: DoMap
+    //
+MapOnStates_Select_5_out_1 = 
+    Select(
+    MapOnStates_Import_5_out_1,
+    "interior",
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Receiver[59]: x = 446, y = 143, inputs = 1, label = good_states
+    // page group: DoMap
+    //
+MapOnStates_Receiver_59_out_1[cache: 0] = good_states;
+    // 
+    // node Select[7]: x = 376, y = 205, inputs = 3, label = Select
+    // page group: DoMap
+    //
+MapOnStates_Select_7_out_1 = 
+    Select(
+    MapOnStates_Select_5_out_1,
+    MapOnStates_Receiver_59_out_1,
+    NULL
+    ) [instance: 7, cache: 1];
+    // 
+    // node Switch[18]: x = 306, y = 275, inputs = 3, label = Switch
+    // page group: DoMap
+    //
+MapOnStates_Switch_18_out_1[cache: 0] = 
+    Switch(
+    MapOnStates_Receiver_60_out_1,
+    MapOnStates_Select_5_out_1,
+    MapOnStates_Select_7_out_1
+    ) [instance: 18, cache: 1];
+    // 
+    // node Compute[31]: x = 375, y = 347, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0)"
+    // page group: DoMap
+    // expression: value = float(a)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_31_out_1[cache: 0] = 
+    Compute(
+    "float($0)",
+    MapOnStates_Switch_18_out_1,
+    NULL
+    ) [instance: 31, cache: 1];
+    // 
+    // node Replace[32]: x = 370, y = 434, inputs = 4, label = Replace
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "state_num"
+    // page group: DoMap
+    //
+MapOnStates_Replace_32_out_1 = 
+    Replace(
+    MapOnStates_Compute_31_out_1,
+    MapOnStates_Compute_31_out_1,
+    NULL,
+    "state_num"
+    ) [instance: 32, cache: 1];
+    // 
+    // node Input[19]: x = 328, y = 13, inputs = 0, label = Input
+    // page group: Colors
+    // parameter: position = 10, name = 'colormap', value = '(no default)', descriptive = 1, description = 'Colormap for coloring states based on ColorComp', required = 0, visible = 1
+    //
+MapOnStates_Input_19_out_1 = colormap;
+    // 
+    // node Inquire[15]: x = 420, y = 241, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: Colors
+    //
+MapOnStates_Inquire_15_out_1 = 
+    Inquire(
+    MapOnStates_Input_19_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 15, cache: 1];
+    // 
+    // node Mark[10]: x = 47, y = 147, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: Colors
+    //
+MapOnStates_Mark_10_out_1 = 
+    Mark(
+    MapOnStates_Input_19_out_1,
+    "positions"
+    ) [instance: 10, cache: 1];
+    // 
+    // node Statistics[3]: x = 4, y = 245, inputs = 1, label = Statistics
+    // page group: Colors
+    //
+MapOnStates_Statistics_3_out_1[cache: 0],
+MapOnStates_Statistics_3_out_2[cache: 0],
+MapOnStates_Statistics_3_out_3[cache: 0],
+MapOnStates_Statistics_3_out_4,
+MapOnStates_Statistics_3_out_5 = 
+    Statistics(
+    MapOnStates_Mark_10_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[74]: x = 226, y = 387, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0 < $1) ? $1 : ($0 > $2) ? $2 : $0"
+    // page group: Colors
+    // expression: value = (a < b) ? b : (a > c) ? c : a
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    //
+MapOnStates_Compute_74_out_1 = 
+    Compute(
+    "($0 < $1) ? $1 : ($0 > $2) ? $2 : $0",
+    MapOnStates_Receiver_47_out_1,
+    MapOnStates_Statistics_3_out_4,
+    MapOnStates_Statistics_3_out_5
+    ) [instance: 74, cache: 1];
+    // 
+    // node Input[28]: x = 621, y = 34, inputs = 0, label = Input
+    // page group: Colors
+    // parameter: position = 11, name = 'C_Autoscale', value = '1', descriptive = 0, description = 'Scale colormap to match data range', required = 0, visible = 1
+    //
+MapOnStates_Input_28_out_1 = C_Autoscale;
+    // 
+    // node Compute[61]: x = 594, y = 119, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 ? 1 : 2"
+    // page group: Colors
+    // expression: value = a == 1 ? 1 : 2
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_61_out_1 = 
+    Compute(
+    "$0 == 1 ? 1 : 2",
+    MapOnStates_Input_28_out_1,
+    NULL
+    ) [instance: 61, cache: 1];
+    // 
+    // node Transmitter[34]: x = 632, y = 227, inputs = 1, label = AbsCmap
+    // page group: Colors
+    //
+AbsCmap = MapOnStates_Compute_61_out_1;
+    // 
+    // node Receiver[45]: x = 172, y = 28, inputs = 1, label = AbsCmap
+    // page group: Colors
+    //
+MapOnStates_Receiver_45_out_1[cache: 0] = AbsCmap;
+    // 
+    // node Receiver[95]: x = 906, y = 14, inputs = 1, label = ColorData
+    // page group: StateData
+    //
+MapOnStates_Receiver_95_out_1[cache: 0] = ColorData;
+    // 
+    // node Statistics[5]: x = 852, y = 123, inputs = 1, label = Statistics
+    // page group: StateData
+    //
+MapOnStates_Statistics_5_out_1[cache: 0],
+MapOnStates_Statistics_5_out_2[cache: 0],
+MapOnStates_Statistics_5_out_3[cache: 0],
+MapOnStates_Statistics_5_out_4,
+MapOnStates_Statistics_5_out_5 = 
+    Statistics(
+    MapOnStates_Receiver_95_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Transmitter[48]: x = 905, y = 229, inputs = 1, label = CMin
+    // page group: StateData
+    //
+CMin = MapOnStates_Statistics_5_out_4;
+    // 
+    // node Receiver[61]: x = 124, y = 297, inputs = 1, label = CMin
+    // page group: Colors
+    //
+MapOnStates_Receiver_61_out_1[cache: 0] = CMin;
+    // 
+    // node Transmitter[49]: x = 972, y = 227, inputs = 1, label = CMax
+    // page group: StateData
+    //
+CMax = MapOnStates_Statistics_5_out_5;
+    // 
+    // node Receiver[62]: x = 179, y = 300, inputs = 1, label = CMax
+    // page group: Colors
+    //
+MapOnStates_Receiver_62_out_1[cache: 0] = CMax;
+    // 
+    // node Compute[62]: x = 53, y = 375, inputs = 6, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0.x-$1.x)/($2.x-$1.x)*($4.x-$3.x)+$3.x"
+    // page group: Colors
+    // expression: value = (a.x-b.x)/(c.x-b.x)*(e.x-d.x)+d.x
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+    // name[6]: value = e
+    //
+MapOnStates_Compute_62_out_1[cache: 0] = 
+    Compute(
+    "($0.x-$1.x)/($2.x-$1.x)*($4.x-$3.x)+$3.x",
+    MapOnStates_Mark_10_out_1,
+    MapOnStates_Statistics_3_out_4,
+    MapOnStates_Statistics_3_out_5,
+    MapOnStates_Receiver_61_out_1,
+    MapOnStates_Receiver_62_out_1
+    ) [instance: 62, cache: 1];
+    // 
+    // node Unmark[13]: x = 87, y = 461, inputs = 2, label = Unmark
+    // page group: Colors
+    //
+MapOnStates_Unmark_13_out_1 = 
+    Unmark(
+    MapOnStates_Compute_62_out_1,
+    NULL
+    ) [instance: 13, cache: 1];
+    // 
+    // node Switch[21]: x = 230, y = 177, inputs = 3, label = Switch
+    // page group: Colors
+    //
+MapOnStates_Switch_21_out_1 = 
+    Switch(
+    MapOnStates_Receiver_45_out_1,
+    MapOnStates_Unmark_13_out_1,
+    MapOnStates_Input_19_out_1
+    ) [instance: 21, cache: 1];
+    // 
+    // node Color[7]: x = 266, y = 455, inputs = 5, label = Color
+    // page group: Colors
+    //
+MapOnStates_Color_7_out_1 = 
+    Color(
+    MapOnStates_Compute_74_out_1,
+    MapOnStates_Switch_21_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 7, cache: 1];
+    // 
+    // node Switch[8]: x = 321, y = 561, inputs = 3, label = Switch
+    // page group: Colors
+    //
+MapOnStates_Switch_8_out_1[cache: 0] = 
+    Switch(
+    MapOnStates_Inquire_15_out_1,
+    MapOnStates_Color_7_out_1,
+    MapOnStates_AutoColor_8_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Replace[34]: x = 318, y = 653, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // page group: Colors
+    //
+MapOnStates_Replace_34_out_1 = 
+    Replace(
+    MapOnStates_Switch_8_out_1,
+    MapOnStates_Switch_8_out_1,
+    "colors",
+    NULL
+    ) [instance: 34, cache: 1];
+    // 
+    // node Transmitter[12]: x = 434, y = 691, inputs = 1, label = ColorMap
+    // page group: Colors
+    //
+ColorMap = MapOnStates_Replace_34_out_1;
+    // 
+    // node Receiver[1]: x = 295, y = 649, inputs = 1, label = ColorMap
+    // page group: DoMap
+    //
+MapOnStates_Receiver_1_out_1[cache: 0] = ColorMap;
+    // 
+    // node Color[4]: x = 240, y = 745, inputs = 5, label = Color
+    // page group: DoMap
+    //
+MapOnStates_Color_4_out_1 = 
+    Color(
+    MapOnStates_Replace_32_out_1,
+    MapOnStates_Receiver_1_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Receiver[2]: x = 654, y = 701, inputs = 1, label = ColorMap
+    // page group: DoMap
+    //
+MapOnStates_Receiver_2_out_1[cache: 0] = ColorMap;
+    // 
+    // node Color[5]: x = 626, y = 775, inputs = 5, label = Color
+    // page group: DoMap
+    //
+MapOnStates_Color_5_out_1 = 
+    Color(
+    MapOnStates_Replace_33_out_1,
+    MapOnStates_Receiver_2_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Receiver[42]: x = 520, y = 439, inputs = 1, label = scaled_height
+    // page group: DoMap
+    //
+MapOnStates_Receiver_42_out_1[cache: 0] = scaled_height;
+    // 
+    // node Map[4]: x = 493, y = 532, inputs = 4, label = Map
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "data"
+    // page group: DoMap
+    //
+MapOnStates_Map_4_out_1 = 
+    Map(
+    MapOnStates_Replace_32_out_1,
+    MapOnStates_Receiver_42_out_1,
+    "data",
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Mark[1]: x = 446, y = 610, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: DoMap
+    //
+MapOnStates_Mark_1_out_1 = 
+    Mark(
+    MapOnStates_Map_4_out_1,
+    "positions"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 504, y = 685, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0.x,$0.y,$1.x]"
+    // page group: DoMap
+    // expression: value = [a.x,a.y,b.x]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MapOnStates_Compute_1_out_1[cache: 0] = 
+    Compute(
+    "[$0.x,$0.y,$1.x]",
+    MapOnStates_Mark_1_out_1,
+    MapOnStates_Map_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Unmark[5]: x = 493, y = 773, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: DoMap
+    //
+MapOnStates_Unmark_5_out_1 = 
+    Unmark(
+    MapOnStates_Compute_1_out_1,
+    "positions"
+    ) [instance: 5, cache: 1];
+    // 
+    // node Replace[11]: x = 353, y = 909, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // page group: DoMap
+    //
+MapOnStates_Replace_11_out_1 = 
+    Replace(
+    MapOnStates_Color_4_out_1,
+    MapOnStates_Unmark_5_out_1,
+    "colors",
+    "colors"
+    ) [instance: 11, cache: 1];
+    // 
+    // node Output[2]: x = 366, y = 998, inputs = 1, label = Output
+    // page group: DoMap
+    // parameter: position = 1, name = 'RaisedStates', value = ' ', descriptive = 0, description = 'State face raised by mapped data ', required = 0, visible = 1
+    //
+RaisedStates = MapOnStates_Replace_11_out_1;
+    // 
+    // node Output[5]: x = 973, y = 1036, inputs = 1, label = Output
+    // page group: DoMap
+    // parameter: position = 3, name = 'RaisedOutlines', value = ' ', descriptive = 0, description = 'Raised state outlines', required = 0, visible = 1
+    //
+RaisedOutlines = MapOnStates_Color_2_out_1;
+    // 
+    // node RubberSheet[3]: x = 802, y = 659, inputs = 4, label = RubberSheet
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = 1.0
+    // page group: DoMap
+    //
+MapOnStates_RubberSheet_3_out_1 = 
+    RubberSheet(
+    MapOnStates_Map_5_out_1,
+    1.0,
+    NULL,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Replace[13]: x = 782, y = 755, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "normals"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "normals"
+    // page group: DoMap
+    //
+MapOnStates_Replace_13_out_1 = 
+    Replace(
+    MapOnStates_Switch_23_out_1,
+    MapOnStates_RubberSheet_3_out_1,
+    "normals",
+    "normals"
+    ) [instance: 13, cache: 1];
+    // 
+    // node Replace[12]: x = 711, y = 875, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // page group: DoMap
+    //
+MapOnStates_Replace_12_out_1 = 
+    Replace(
+    MapOnStates_Color_5_out_1,
+    MapOnStates_Replace_13_out_1,
+    "colors",
+    "colors"
+    ) [instance: 12, cache: 1];
+    // 
+    // node Output[6]: x = 747, y = 965, inputs = 1, label = Output
+    // page group: DoMap
+    // parameter: position = 2, name = 'StateEdges', value = ' ', descriptive = 0, description = 'Raised edges of states', required = 0, visible = 1
+    //
+StateEdges = MapOnStates_Replace_12_out_1;
+    // 
+    // node Switch[13]: x = 481, y = 385, inputs = 3, label = Switch
+    // page group: Colors
+    //
+MapOnStates_Switch_13_out_1 = 
+    Switch(
+    MapOnStates_Inquire_15_out_1,
+    MapOnStates_Switch_21_out_1,
+    MapOnStates_AutoColor_8_out_2
+    ) [instance: 13, cache: 1];
+    // 
+    // node Transmitter[35]: x = 498, y = 504, inputs = 1, label = DataCMap
+    // page group: Colors
+    //
+DataCMap = MapOnStates_Switch_13_out_1;
+    // 
+    // node Receiver[27]: x = 57, y = 1202, inputs = 1, label = DataCMap
+    // page group: DoMap
+    //
+MapOnStates_Receiver_27_out_1[cache: 0] = DataCMap;
+    // 
+    // node Output[7]: x = 70, y = 1310, inputs = 1, label = Output
+    // page group: DoMap
+    // parameter: position = 4, name = 'StateColorMap', value = ' ', descriptive = 0, description = 'Colormap used, for input to ColorBar', required = 0, visible = 1
+    //
+StateColorMap = MapOnStates_Receiver_27_out_1;
+    // 
+    // node Receiver[69]: x = 167, y = 1208, inputs = 1, label = StateData
+    // page group: DoMap
+    //
+MapOnStates_Receiver_69_out_1[cache: 0] = StateData;
+    // 
+    // node Output[8]: x = 182, y = 1310, inputs = 1, label = Output
+    // page group: DoMap
+    // parameter: position = 5, name = 'StateResults', value = ' ', descriptive = 0, description = 'Data for the states', required = 0, visible = 1
+    //
+StateResults = MapOnStates_Receiver_69_out_1;
+    // 
+    // node Receiver[105]: x = 564, y = 1185, inputs = 1, label = scaled_height
+    // page group: DoMap
+    //
+MapOnStates_Receiver_105_out_1[cache: 0] = scaled_height;
+    // 
+    // node Output[11]: x = 560, y = 1300, inputs = 1, label = Output
+    // page group: DoMap
+    // parameter: position = 6, name = 'StateHeight', value = ' ', descriptive = 0, description = 'Height of the states', required = 0, visible = 1
+    //
+StateHeight = MapOnStates_Receiver_105_out_1;
+    // 
+    // node Transmitter[19]: x = 471, y = 269, inputs = 1, label = DMin
+    // page group: StateData
+    //
+DMin = MapOnStates_Statistics_2_out_4;
+    // 
+    // node Transmitter[20]: x = 581, y = 227, inputs = 1, label = DMax
+    // page group: StateData
+    //
+DMax = MapOnStates_Statistics_2_out_5;
+    // 
+    // node Transmitter[21]: x = 95, y = 379, inputs = 1, label = RescaleSwitch
+    // page group: StateData
+    //
+RescaleSwitch = MapOnStates_Compute_24_out_1;
+    // 
+    // node Transmitter[37]: x = 20, y = 260, inputs = 1, label = heightscale
+    // page group: StateData
+    //
+heightscale = MapOnStates_Input_20_out_1;
+// network: end of macro body
+}
+MapOnStates_Input_16_out_1 = NULL;
+MapOnStates_Inquire_9_out_1 = NULL;
+MapOnStates_ImportSpreadsheet_2_out_1 = NULL;
+MapOnStates_Transmitter_40_out_1 = NULL;
+MapOnStates_Receiver_108_out_1 = NULL;
+MapOnStates_Mark_15_out_1 = NULL;
+MapOnStates_Switch_25_out_1 = NULL;
+MapOnStates_Transmitter_23_out_1 = NULL;
+MapOnStates_Receiver_86_out_1 = NULL;
+MapOnStates_ImportSpreadsheet_1_out_1 = NULL;
+MapOnStates_Transmitter_26_out_1 = NULL;
+MapOnStates_Receiver_87_out_1 = NULL;
+MapOnStates_Input_26_out_1 = NULL;
+MapOnStates_Transmitter_32_out_1 = NULL;
+MapOnStates_Receiver_88_out_1 = NULL;
+MapOnStates_Input_30_out_1 = NULL;
+MapOnStates_Transmitter_43_out_1 = NULL;
+MapOnStates_Receiver_89_out_1 = NULL;
+MapOnStates_Input_29_out_1 = NULL;
+MapOnStates_Transmitter_42_out_1 = NULL;
+MapOnStates_Receiver_94_out_1 = NULL;
+MapOnStates_Input_25_out_1 = NULL;
+MapOnStates_Inquire_16_out_1 = NULL;
+MapOnStates_Switch_20_out_1 = NULL;
+MapOnStates_Inquire_12_out_1 = NULL;
+MapOnStates_Inquire_17_out_1 = NULL;
+MapOnStates_Compute_60_out_1 = NULL;
+MapOnStates_Switch_19_out_1 = NULL;
+MapOnStates_Transmitter_29_out_1 = NULL;
+MapOnStates_Receiver_91_out_1 = NULL;
+MapOnStates_Transmitter_28_out_1 = NULL;
+MapOnStates_Receiver_92_out_1 = NULL;
+MapOnStates_Receiver_93_out_1 = NULL;
+MapOnStates_MOSstatesmac_2_out_2 = NULL;
+MapOnStates_Transmitter_47_out_1 = NULL;
+MapOnStates_Receiver_47_out_1 = NULL;
+MapOnStates_AutoColor_8_out_1 = NULL;
+MapOnStates_AutoColor_8_out_2 = NULL;
+MapOnStates_Receiver_73_out_1 = NULL;
+MapOnStates_Import_5_out_1 = NULL;
+MapOnStates_Select_6_out_1 = NULL;
+MapOnStates_Receiver_36_out_1 = NULL;
+MapOnStates_Receiver_37_out_1 = NULL;
+MapOnStates_Receiver_43_out_1 = NULL;
+MapOnStates_Input_24_out_1 = NULL;
+MapOnStates_Transmitter_27_out_1 = NULL;
+MapOnStates_Receiver_38_out_1 = NULL;
+MapOnStates_Input_27_out_1 = NULL;
+MapOnStates_Transmitter_33_out_1 = NULL;
+MapOnStates_Receiver_44_out_1 = NULL;
+MapOnStates_Receiver_40_out_1 = NULL;
+MapOnStates_Receiver_79_out_1 = NULL;
+MapOnStates_Receiver_83_out_1 = NULL;
+MapOnStates_MOSstatesmac_1_out_1 = NULL;
+MapOnStates_MOSstatesmac_1_out_2 = NULL;
+MapOnStates_Transmitter_39_out_1 = NULL;
+MapOnStates_Receiver_72_out_1 = NULL;
+MapOnStates_Select_8_out_1 = NULL;
+MapOnStates_Switch_23_out_1 = NULL;
+MapOnStates_Remove_11_out_1 = NULL;
+MapOnStates_Compute_33_out_1 = NULL;
+MapOnStates_Replace_33_out_1 = NULL;
+MapOnStates_Input_20_out_1 = NULL;
+MapOnStates_Transmitter_45_out_1 = NULL;
+MapOnStates_Receiver_64_out_1 = NULL;
+MapOnStates_Statistics_2_out_4 = NULL;
+MapOnStates_Statistics_2_out_5 = NULL;
+MapOnStates_Input_39_out_1 = NULL;
+MapOnStates_Compute_68_out_1 = NULL;
+MapOnStates_Transmitter_58_out_1 = NULL;
+MapOnStates_Receiver_107_out_1 = NULL;
+MapOnStates_Compute_24_out_1 = NULL;
+MapOnStates_Compute_73_out_1 = NULL;
+MapOnStates_Compute_21_out_1 = NULL;
+MapOnStates_Switch_5_out_1 = NULL;
+MapOnStates_Transmitter_31_out_1 = NULL;
+MapOnStates_Receiver_48_out_1 = NULL;
+MapOnStates_Map_5_out_1 = NULL;
+MapOnStates_Mark_3_out_1 = NULL;
+MapOnStates_Compute_15_out_1 = NULL;
+MapOnStates_Unmark_6_out_1 = NULL;
+MapOnStates_Options_1_out_1 = NULL;
+MapOnStates_Color_2_out_1 = NULL;
+MapOnStates_Receiver_60_out_1 = NULL;
+MapOnStates_Select_5_out_1 = NULL;
+MapOnStates_Receiver_59_out_1 = NULL;
+MapOnStates_Select_7_out_1 = NULL;
+MapOnStates_Switch_18_out_1 = NULL;
+MapOnStates_Compute_31_out_1 = NULL;
+MapOnStates_Replace_32_out_1 = NULL;
+MapOnStates_Input_19_out_1 = NULL;
+MapOnStates_Inquire_15_out_1 = NULL;
+MapOnStates_Mark_10_out_1 = NULL;
+MapOnStates_Statistics_3_out_4 = NULL;
+MapOnStates_Statistics_3_out_5 = NULL;
+MapOnStates_Compute_74_out_1 = NULL;
+MapOnStates_Input_28_out_1 = NULL;
+MapOnStates_Compute_61_out_1 = NULL;
+MapOnStates_Transmitter_34_out_1 = NULL;
+MapOnStates_Receiver_45_out_1 = NULL;
+MapOnStates_Receiver_95_out_1 = NULL;
+MapOnStates_Statistics_5_out_4 = NULL;
+MapOnStates_Statistics_5_out_5 = NULL;
+MapOnStates_Transmitter_48_out_1 = NULL;
+MapOnStates_Receiver_61_out_1 = NULL;
+MapOnStates_Transmitter_49_out_1 = NULL;
+MapOnStates_Receiver_62_out_1 = NULL;
+MapOnStates_Compute_62_out_1 = NULL;
+MapOnStates_Unmark_13_out_1 = NULL;
+MapOnStates_Switch_21_out_1 = NULL;
+MapOnStates_Color_7_out_1 = NULL;
+MapOnStates_Switch_8_out_1 = NULL;
+MapOnStates_Replace_34_out_1 = NULL;
+MapOnStates_Transmitter_12_out_1 = NULL;
+MapOnStates_Receiver_1_out_1 = NULL;
+MapOnStates_Color_4_out_1 = NULL;
+MapOnStates_Receiver_2_out_1 = NULL;
+MapOnStates_Color_5_out_1 = NULL;
+MapOnStates_Receiver_42_out_1 = NULL;
+MapOnStates_Map_4_out_1 = NULL;
+MapOnStates_Mark_1_out_1 = NULL;
+MapOnStates_Compute_1_out_1 = NULL;
+MapOnStates_Unmark_5_out_1 = NULL;
+MapOnStates_Replace_11_out_1 = NULL;
+MapOnStates_RubberSheet_3_out_1 = NULL;
+MapOnStates_Replace_13_out_1 = NULL;
+MapOnStates_Replace_12_out_1 = NULL;
+MapOnStates_Switch_13_out_1 = NULL;
+MapOnStates_Transmitter_35_out_1 = NULL;
+MapOnStates_Receiver_27_out_1 = NULL;
+MapOnStates_Receiver_69_out_1 = NULL;
+MapOnStates_Receiver_105_out_1 = NULL;

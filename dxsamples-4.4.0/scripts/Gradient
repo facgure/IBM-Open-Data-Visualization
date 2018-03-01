@@ -1,0 +1,14 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Compute the gradient
+gradientdensity = Gradient(electrondensity);
+   // Map the gradient onto a plane
+plane = MapToPlane(gradientdensity);
+   // Color the plane and display
+colored = AutoColor(plane);
+camera = AutoCamera(colored);
+Display(colored,camera);
+

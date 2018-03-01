@@ -1,0 +1,326 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Generator" content="Lotus Word Pro">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.14-5.0smp i686) [Netscape]">
+   <title>Body</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<h1>
+Stereo Rendering with Data Explorer</h1>
+
+<p><br>This document describes the stereo mode capability of OpenDX.
+<br>&nbsp;
+<h2>
+Notes for OpenDX</h2>
+
+<p><br>The necessary functionality for stereo operation is divided into
+two areas: manipulation of the windowing system to create stereo image
+buffers, and manipulation of the camera to create left and right eye views.
+Several versions of each are built in to OpenDX - see hwStereoSys.c and
+hwStereoCams.c in src/exec/hwrender to see the code implementing the built-in
+modes. In addition, you can implement your own modes by implementing several
+routines described below, and then cause DX to load object modules containing
+the implementations of these modes at run-time.
+<p>dx -edit TestStereo
+<p>When DX comes up, put it in exec-on-change, and you'll see a simple
+image of my favorite sample data set. In this example, interaction modes
+are specified by keystrokes in the view window. If you type 'z' you'll
+enter zoom mode; button down motion up and down the imge zoom in and out.
+'r' gets you rotate mode, and 'p' gets you pan mode.
+<p>Similarly, stereo modes are selected with keystrokes in the image window.
+If you hit the '2' key you will select a simple side-by-side stereo mode;
+you might have to zoom the image out to see it. I don't recall what '3'
+gets you, but '4' gets you a squashed over/under stereo mode.
+<p>There's more discussion of all this below, including how to set it up
+appropriately for your own hardware environment.
+<br>&nbsp;
+<h2>
+Stereo System Modes</h2>
+
+<p><br>In order to support the widest possible range of applications, we
+have implemented a structure whereby any number of different stereo modes
+can be incorporated simultaneously, and selected at run-time. Thus, whether
+your hardware requires separate left and right windows placed side-by-side
+onto the display, or (as is true on our SGI) separate viewports in a single
+window placed over-and-under, you can very simply install a very small
+amount of custom code to tell DX exactly what to do. Furthermore, this
+code also allows the user to specify the means whereby the hardware itself
+is placed in stereo mode. This code can be either linked into the DX visualization
+executive or loaded at run-time and consists of a table of functions that
+specify different stereo modes. This table is accessed by index, where
+the index corresponds to the particular stereo mode desired. When the selected
+mode is -1 (the default), mono mode is chosen.
+<p>A default set of two stereo modes should, however, suit most needs.
+The first of these (index 0) implements stereo in side-by-side viewports
+in a single window (which is either passed into the DX Display modules
+from the SuperviseWindow module, or specified by the camera passed into
+Display, or which defaults to 640x480) and does not affect the hardware
+at all. This mode is quite useful for cross-eyed stereo. The second mode
+(index 1) implements what appears to be a standard SGI mode, in which a
+single window (which must be a full-screen window with no 'decorations'
+- eg. window borders and menus) is divided into separate over-and-under
+viewports, one filling the top 492 rows of pixels and the other, the bottom
+492 rows. This mode allows you to specify the command used to place the
+hardware into stereo mode as environment variables. Thus, if you place
+the system into stereo mode by entering the command '/usr/gfx/setmon -n
+STR_RECT' at a command-line, by placing this command string into an environment
+variable named DX_INIT_STEREO_COMMAND and the corresponding command to
+revert to mono mode (on our SGI, '/usr/gfx/setmon -n 60HZ') into an environment
+variable named DX_EXIT_STEREO_COMMAND, DX will make the necessary calls
+via system() when the stereo mode 1 is entered or exitted.
+<p>I will include a sample a run-time loadable set of functions that illustrate
+how you can supercede the default modes. If you have to do so, however,
+I'd very much like to hear about it so that we can augment the built-in
+modes prior to a formal release of this technology.
+<br>&nbsp;
+<h2>
+Stereo Camera Modes</h2>
+
+<p><br>In stereo mode DX will use precisely the same camera model as it
+does in mono mode - a single viewpoint and projection. However, immediately
+prior to rendering, this information is handed to a stereo camera model
+that returns left and right viewing information, including separate look-to
+and look-from points and projection matrices. Much like the implementation
+of stereo system modes above, we would like to support any camera models
+as the user desires, and further, any number concurrently to be selected
+among. We have therefore implemented this as a table of functions that
+can be linked into DX, be run-time loaded, or allowed to default to a built-in
+stereo camera model. In addition to the current viewing information, the
+selected camera model is passed user-specified arguments that allow the
+model to be parameterized. For example, the simplest mode I can think of
+is to separate the left and right viewpoints by a fixed distance; this
+distance can be passed in as a parameter.
+<p>The default stereo camera model implements stereo by providing look-to
+and look-from separation (eg. parallel displaced viewing directions) and
+asymmetric projection matrices. These are parameterized by three values:
+the separation of the viewpoints as distance in model space (the 'ocular
+separation'), the degree of asymmetry of the projection frustums - the
+'frustum overlap', and the aspect ratio to be used. While the ocular separation
+and aspect ratio are fairly obvious, the parameterization of frustum overlap
+requires explanation. It is given as a floating point number, varying from
+0 to 1, in which a value of 0.0 corresponds to zero overlap in the divergent
+direction, and 1.0, to zero overlap in the convergent direction.
+<br>&nbsp;
+<h2>
+The Stereo Sample Net</h2>
+
+<p><br>I have included a sample network showing the use of stereo in DX.
+This example should show you how to create a full-screen image window,
+how to implement key-stroke commands within that window, and how to control
+stereo mode.
+<p>To run the sample, install the new files, then set an environment variable
+named 'DXHWMOD' to 'DXhwddOGL.o' to cause DX to use OpenG. Then set the
+environment vaiables named DX_INIT_STEREO_COMMAND and DX_EXIT_STEREO_COMMAND
+environment variables to the appropriate command-line strings that will
+set your hardware into stereo mode - for our SGIs, it would be "/usr/gfx/setmon
+-n STR_RECT" and "/usr/gfx/setmon -n 60HZ", INCLUDING thr double quotes
+(I think that if you use csh, it would be something like "setenv DX_INIT_STEREO_COMMAND
+"\"string\"") and run the network by typing 'dx -edit stereo'. You will
+see the network editor open. Hit Execute On Change from the Execute pulldown
+and
+<p>a 800x400 window will appear containing an image of two isosurfaces
+of a test dataset. You'll see that the window is in rotate mode; click
+and drag to rotate the image. Now with the mouse in the image window, hit
+the '2' key. The image will go into side-by-side stereo mode, showing two
+400x400 images; if you have the knack of it, you can see this in stereo
+by crossing your eyes. Hit '1' to return to mono mode. In either mode,
+pressing 'r', 'p' or 'z' will select rotation, panning or zooming from
+the default user interactors.
+<p>In model space, the geometry you are looking at fills a cube of side
+2, centered at the origin. Default values are used for the separation and
+overlap of the default camera model. By pressing the 'w' key in the image
+window you can widen the separation, and by pressing the 'n' key you can
+narrow it. (Note: currently there is a negation problem here - the default
+separation is -1 and 'w' and 'n' are reversed). By pressing the '-' key
+you can increase frustum overlap, while by pressing the '=' key you lessen
+it.
+<p>Now, using the Windows / Open All Control Panels pulldown selection,
+open the control panel. You will see interactors for the default settings
+of the separation and overlap; you can revert to the default values by
+selecting 'reset separation' or 'reset overlap'. The amount that keypress
+events either increase or decrease these values is adjustable using the
+'Separation stepsize' and
+<p>'Overlap stepsize' interactors, and you can revert to the defaults by
+pressing the 'Reset separation' and 'Reset overlap' interactors. You can
+also revert to the default camera by pressing the 'Reset camera' interactor.
+<p>Now change the 'Window size' interactor to 'full-screen', clear the
+'window decoration' toggle in the control panel, reset the server (using
+the Connections / Reset Server command from the Execute pulldown on the
+visual program editor - this is required in the alpha version but will
+not be required in the next version) and re-enter Execute On Change mode.
+You should get a full screen undecorated image of the object. Now press
+'3' (rather than 2) to enable stereo, to use the over/under system mode
+rather than the side by side mode. If you installed the correct environment
+variable commands to cause your system to go into stereo mode, it will.
+<p>In this mode, you will find that the key-press still work - hitting
+'1' will revert the image to mono mode. However, the window will overlay
+your control panels. To retrieve them, you can hit 'c' in the image window
+to close it, and later pop it back up using the "Pop window up" interactor
+that you will find in the control panel.
+<br>&nbsp;
+<h2>
+Sample Network Details</h2>
+
+<p><br>The sample network is divided into six pages. Perhaps the most interesting
+is the one named 'main', in which the standard SuperviseWindow/SuperviseState/Display
+sequence is augmented to add stereo parameterization. This occurs in the
+lower left of the page. In addition to the standard "rendering mode" option,
+causing the Display module to function in hardware rendering mode, two
+options are added to the renderable object: one named 'stereo system mode',
+which contains a simple integer specifying which stereo system mode to
+use - eg. mono, side by side, over-under etc., and one named 'stereo camera
+mode', which consists of a group containing two named members: 'mode',
+hard-wired to 0 to select the default stereo camera mode, and 'args', a
+three-vector containing the current values of the separation, overlap and
+aspect ratio parameters to the default stereo camera mode. Here the stereo
+system mode and the separation and overlap parameters come in from from
+other pages where they are derived from current values and keypress events.
+<h2>
+The APIs</h2>
+Separate APIs are used to implement user-defined stereo system modes and
+stereo camera models. These are handled in a manner very similar to the
+User Interactor API in vanilla DX.
+<p>The set of available modes (or camera models) is specified as a table,
+where each table entry consists of pointers to functions implementing the
+particular mode. For stereo system modes, table entries consist of instances
+of the structure typedeffed as 'StereoSystemMode' in hwStereo.h. In this
+structure, the entry points are:
+<p>int InitializeStereoSystemMode(Display *dpy, Window frame)
+<p>InitializeStereoSystemMode is used to place the system into stereo mode.
+The X display and image window are passed in as parameters.
+<p>int CreateStereoWindows(Display *dpy, Window frame,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Window *leftWindow, WindowInfo *leftWindowInfo,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Window *rightWindow, WindowInfo *rightWindowInfo);
+<p>Given an X display and a frame window, CreateStereoWindows specifies
+windows to contain the left and right views and viewports into those windows
+into which the views should be rendered. The leftWindow and rightWindow
+may either be independent windows, created (using standard X calls) as
+child windows of the frame, or may be set to the frame window itself. leftWindowInfo
+and rightWindowInfo are pointers to structures that define viewports into
+the leftWindow and rightWindow. Thus, two separate windows may be created
+and returned to DX, with viewports specifying zero offsets and full sizes
+in each, or the frame window may be used by passing its window ID back
+as leftWindow and rightWindow, and using leftWindowInfo and rightWindowInfo
+to specify separate viewports.
+<p>int ExitStereoMode(Display *dpy, Window frame, Window leftWindow, Window
+rightWindow)
+<p>ExitStereoMode is used to exit stereo mode. It should delete the left
+and right windows if they were created in InitStereoMode, and reset the
+hardware into mono mode.
+<p>Specifying your own set of default stereo system modes is accomplished
+in one of two ways - either by linking in an implementation of a function
+that installs the system mode table, or by loading in a function which
+will be called at runtime to load in a table. The first method involves
+implementing the function:
+<p>DefaultStereoSystemModes(int *nModes, StereoSystemModes **modeTable)
+<p>which sets *nModes to the number of modes being installed and **modeTable
+to point to a table of modes that is either allocated or statically present
+in the file. Alternatively, you can implement a file which implements the
+equivalent function:
+<p>DXEntry(int *nModes, StereoSystemModes **modeTable)
+<p>You can then compile and link this into an object file. Then you cause
+DX to load it at runtime by adding the directory containing the run-time
+loadable file to the list held in the DXMODULES environment and set the
+DX_STEREO_SYSTEM_FILE environment variable to the actual name of the loadable
+file. Both of these methods are illustrated in the sysmodes.c, makefile.link
+and makefile.runtime that I've included in this package. NOTE: in each
+case, you must edit the makefile and set BASE to the directory point where
+you've installed DX.
+<p>Similarly, the set of available stereo camera models is specified by
+a table of structures of type StereoCameraModel, also defined in hwStereo.h.
+The entry points therein are:
+<p>void *InitializeStereoCameraMode(void *block, dxObject)
+<p>InitializeStereoCameraMode is used to manage a parameter block for the
+stereo mode. Whenever a window is placed into stereo mode, this routine
+is called and passed the stereo camera mode argument (the 'args' member
+of the group passed in as the 'stereo camera model' attribute on the renderable
+object). InitializeStereoCameraMode can then allocate a parameter block
+and process the argument object to derive parameter values to place into
+the block. This block is then passed to subsequent calls to the remaining
+functions of the mode. If the argument object to the stereo mode changes
+without actually changing the mode itself, the current argument block is
+passed in so that the parameter values it contains can be updated.
+<p>int ExitStereoCameraMode(void *block)
+<p>Implementations of ExitStereoCameraMode should free up any space allocated
+in the parameter block.
+<p>int CreateStereoCameras(void *block,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+int projection, float fov, float width,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+float *from, float *to, float *up, float near, float far,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+float *lFrom, float *lTo, float *lUp, float **lProjection,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+float *rFrom, float *rTo, float *rUp, float **rProjection);
+<p>CreateStereoCameras is passed the parameter block along with camera
+information, and should returns the left and right camera parameters and
+a pointer to projection matrices for each. The
+<p>camera information includes the projection type (1 implies a perspective
+transformation and 0 an orthographic transformation), the field of view
+(for perspective transformation) and width (for orthographic tranlformation),
+the current camera look-from, look-to and up vectors and the distance to
+the near and far clipping planes. The projection model used is very similar
+to that discussed in the OpenGL manuals, with the exception that a left-hand
+coordinate system is used.
+<p>int MapStereoXY(void *block, Window frame, Window view, WindowInfo viewInfo,
+int vx, int vy, int *fx, int *fy)
+<p>Given an event location (eg. button- or key-press event) in the view
+window passed in as the view window and/or viewport passed in as the view
+and viewInfo parameters, transform the point (vx, vy) to the corresponding
+point in the single-window model. This allows DX components external to
+the rendering process to handle event locations transparently to stereo
+rendering.
+<p>Again similar to the handling of stereo system modes, user-defined stereo
+camera models can be installed either at link- or run-time by implementing:
+<p>DefaultStereoCameraModes(int *nModes, StereoCameraModes **modeTable)
+<p>or
+<p>DXEntry(int *nModes, StereoCameraModes **modeTable)
+<p>and is illustrated in mymodes.c and makefile that I've included. To
+install runtime loadable stereo camera modes you must add the directory
+containing the loadable file to the list of directories in the DXMODULES
+environment variable and set environment variable DX_STEREO_CAMERA_FILE
+to the actual name of the loadable file.
+<br>&nbsp;
+<h2>
+Installing Custom Stereo System and Camera Modes</h2>
+The use of custom stereo system and camra files is illustrated in the <i>src
+</i>subdirectory.&nbsp; There you will find <i>mymodes.c </i>and<i> mycams.c</i>
+along with a makefile that should work on your system (if you are running
+on the system on which the samples were installed).&nbsp; In <i>src, </i>build
+<i>mymodes </i>and <i>mycams, </i>and then return to the parent directory.&nbsp;
+Set&nbsp; the DX_STEREO_CAMERA_FILE environment variable to<i> src/mymodes
+</i>and X_STEREO_SYSTEM_FILE to <i>src/mycams.&nbsp; </i>Rerun the example.&nbsp;
+Now when you place it in stereo mode by striking '2' in the image window
+you will see the alternative diagonal stereo pairs.
+<br>&nbsp;
+<h1>
+Picking</h1>
+
+<p><br>Picking is provided via the StereoPick module and is demonstrated
+in TestStereo.net. Run it again with the lt-in stereo modes (that is, unset
+the DX_STEREO_CAMERA_FILE and&nbsp; DX_STEREO_SYSTEM_FILE environment variables),
+and place the cursor in the display window. Initially, the example is not
+in stereo mode. Using the center button, click on the object; a sphere
+glyph will appear at the pick point. Pick again elsewhere and it'll move.
+Now pick a third time near the center.
+<p>Now enter side-by-side stereo by hitting the '2' key. You'll see the
+side-by-side images, and the pick sphere will appear in both. Zoom out.
+Now, instead of picking on the object itself, you pick on the virtual 3D
+object which, in this case, is centered in between the two images (to actually
+see the virtual 3-D image you'll need to look at it cross-eyed, or use
+a stereo-opticon of some sort). You therefore can right button in the center
+and you'll see a sphere glyph appear in both eye views.
+<br>&nbsp;
+<h2>
+Caveats</h2>
+
+<p><br>Lots. The code at this stage is inadequately tested and should be
+considered alpha code. Any bugs found or comments on inadequacies encountered
+will be gratefully received.
+</body>
+</html>

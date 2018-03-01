@@ -1,0 +1,938 @@
+//
+// time: Wed Apr  9 15:21:01 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program demonstrates the differences between several kinds of glyphs. You can use the selector interactor in the control panel to see the differences (choose Open All Control Panels in the Windows menu).  In each case we are looking at a simple data field of six points, with data values 0, 1, or 2. 
+// comment: 
+// comment: The "standard glyphs" choice simply uses AutoGlyph to draw a scalar glyph (a sphere) at each point. The size of the glyph depends on the data value. The glyphs are then colored using AutoColor so that the largest data values are red, and the smallest data values are blue.
+// comment: 
+// comment: The "user-specified glyph" choice passes a field in as the "type" parameter to AutoGlyph. In this example, the field is simply an isosurface, which is composed of triangles. This object is used as the glyph, and is made larger or smaller depending on the data value. For best results, the object passed to AutoGlyph should be approximately unity in size; this is why a Scale module is used before passing the isosurface to AutoGlyph. These glyphs are like the standard glyphs in that they are given a default color if the original data field is uncolored, and they pass through colors or data to the output glyph.
+// comment: 
+// comment: The "annotation glyphs" choice shows a different use of AutoGlyph. In this case, the "type" parameter to AutoGlyph is a group of glyphs. In this example, the group is composed of a multi-colored isosurface, a red isosurface, and a yellow arrow. These are considered "annotation glyphs" by AutoGlyph, and the first member of the group (the colored isosurface) is assigned to data value 0, the second member of the group is assigned to data value 1, and the third member of the group is assigned to data value 2. To use annotation glyphs, the data component must be composed of integers, bytes, or short integers. Another difference is that any colors present on the object passed in as the annotation glyph are preserved in the output; colors present on the input field (the first parameter to AutoGlyph) are ignored.
+// page assignment: Image	order=5, windowed=0, showing=0
+// page assignment: annotation	order=3, windowed=0, showing=0
+// page assignment: glyphpoints	order=4, windowed=0, showing=1
+// page assignment: import	order=2, windowed=0, showing=0
+// workspace: width = 576, height = 435
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node ProbeList[1]: x = 237, y = 180, inputs = 0, label = ProbeList_1
+    // output[1]: visible = 1, type = 16777224, value = {[-3.10369,7.95081,-2.3587][0.980723,10.8908,4.62][5.4203,7.51672,1.67361][2.53458,5.47452,0.80999][-1.23907,0.413398,0.80999][5.4203,-0.962872,-0.787831]}
+    // page group: glyphpoints
+    //
+    // 
+    // node Construct[1]: x = 248, y = 282, inputs = 4, label = Construct
+    // input[4]: defaulting = 0, visible = 1, type = 16777245, value = {0 1 1 0 2 2}
+    // page group: glyphpoints
+    //
+main_Construct_1_out_1 = 
+    Construct(
+    main_ProbeList_1_out_1,
+    main_Construct_1_in_2,
+    main_Construct_1_in_3,
+    main_Construct_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 239, y = 373, inputs = 1, label = glyph_points
+    // page group: glyphpoints
+    //
+glyph_points = main_Construct_1_out_1;
+    // 
+    // node Receiver[4]: x = 24, y = 118, inputs = 1, label = glyph_points
+    // page group: Image
+    //
+main_Receiver_4_out_1[cache: 0] = glyph_points;
+    // 
+    // node AutoGlyph[1]: x = 24, y = 255, inputs = 7, label = AutoGlyph
+    // input[5]: defaulting = 0, visible = 1, type = 5, value = .2
+    // page group: Image
+    //
+main_AutoGlyph_1_out_1 = 
+    AutoGlyph(
+    main_Receiver_4_out_1,
+    main_AutoGlyph_1_in_2,
+    main_AutoGlyph_1_in_3,
+    main_AutoGlyph_1_in_4,
+    main_AutoGlyph_1_in_5,
+    main_AutoGlyph_1_in_6,
+    main_AutoGlyph_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[3]: x = 65, y = 334, inputs = 10, label = AutoColor
+    // page group: Image
+    //
+main_AutoColor_3_out_1,
+main_AutoColor_3_out_2 = 
+    AutoColor(
+    main_AutoGlyph_1_out_1,
+    main_AutoColor_3_in_2,
+    main_AutoColor_3_in_3,
+    main_AutoColor_3_in_4,
+    main_AutoColor_3_in_5,
+    main_AutoColor_3_in_6,
+    main_AutoColor_3_in_7,
+    main_AutoColor_3_in_8,
+    main_AutoColor_3_in_9,
+    main_AutoColor_3_in_10
+    ) [instance: 3, cache: 1];
+    // 
+    // node Import[2]: x = 100, y = 108, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "cloudwater"
+    // page group: import
+    //
+main_Import_2_out_1 = 
+    Import(
+    main_Import_2_in_1,
+    main_Import_2_in_2,
+    main_Import_2_in_3,
+    main_Import_2_in_4,
+    main_Import_2_in_5,
+    main_Import_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Isosurface[1]: x = 109, y = 185, inputs = 6, label = Isosurface
+    // page group: import
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_2_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Import[5]: x = 220, y = 110, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "temperature"
+    // page group: import
+    //
+main_Import_5_out_1 = 
+    Import(
+    main_Import_5_in_1,
+    main_Import_5_in_2,
+    main_Import_5_in_3,
+    main_Import_5_in_4,
+    main_Import_5_in_5,
+    main_Import_5_in_6
+    ) [instance: 5, cache: 1];
+    // 
+    // node Map[1]: x = 218, y = 215, inputs = 4, label = Map
+    // page group: import
+    //
+main_Map_1_out_1 = 
+    Map(
+    main_Isosurface_1_out_1,
+    main_Import_5_out_1,
+    main_Map_1_in_3,
+    main_Map_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[4]: x = 205, y = 290, inputs = 10, label = AutoColor
+    // page group: import
+    //
+main_AutoColor_4_out_1,
+main_AutoColor_4_out_2 = 
+    AutoColor(
+    main_Map_1_out_1,
+    main_AutoColor_4_in_2,
+    main_AutoColor_4_in_3,
+    main_AutoColor_4_in_4,
+    main_AutoColor_4_in_5,
+    main_AutoColor_4_in_6,
+    main_AutoColor_4_in_7,
+    main_AutoColor_4_in_8,
+    main_AutoColor_4_in_9,
+    main_AutoColor_4_in_10
+    ) [instance: 4, cache: 1];
+    // 
+    // node Scale[2]: x = 238, y = 367, inputs = 2, label = Scale
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [.00006 .00006 .00006]
+    // page group: import
+    //
+main_Scale_2_out_1 = 
+    Scale(
+    main_AutoColor_4_out_1,
+    main_Scale_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[1]: x = 252, y = 464, inputs = 1, label = cloud
+    // page group: import
+    //
+cloud = main_Scale_2_out_1;
+    // 
+    // node Receiver[2]: x = 203, y = 127, inputs = 1, label = cloud
+    // page group: Image
+    //
+main_Receiver_2_out_1[cache: 0] = cloud;
+    // 
+    // node AutoGlyph[3]: x = 156, y = 258, inputs = 7, label = AutoGlyph
+    // input[5]: defaulting = 0, visible = 1, type = 5, value = .2
+    // page group: Image
+    //
+main_AutoGlyph_3_out_1 = 
+    AutoGlyph(
+    main_Receiver_4_out_1,
+    main_Receiver_2_out_1,
+    main_AutoGlyph_3_in_3,
+    main_AutoGlyph_3_in_4,
+    main_AutoGlyph_3_in_5,
+    main_AutoGlyph_3_in_6,
+    main_AutoGlyph_3_in_7
+    ) [instance: 3, cache: 1];
+    // 
+    // node AutoColor[5]: x = 185, y = 338, inputs = 10, label = AutoColor
+    // page group: Image
+    //
+main_AutoColor_5_out_1,
+main_AutoColor_5_out_2 = 
+    AutoColor(
+    main_AutoGlyph_3_out_1,
+    main_AutoColor_5_in_2,
+    main_AutoColor_5_in_3,
+    main_AutoColor_5_in_4,
+    main_AutoColor_5_in_5,
+    main_AutoColor_5_in_6,
+    main_AutoColor_5_in_7,
+    main_AutoColor_5_in_8,
+    main_AutoColor_5_in_9,
+    main_AutoColor_5_in_10
+    ) [instance: 5, cache: 1];
+    // 
+    // node Construct[2]: x = 271, y = 122, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0 0 0]}
+    // input[4]: defaulting = 0, visible = 1, type = 16777245, value = {[0 1 0]}
+    // page group: annotation
+    //
+main_Construct_2_out_1 = 
+    Construct(
+    main_Construct_2_in_1,
+    main_Construct_2_in_2,
+    main_Construct_2_in_3,
+    main_Construct_2_in_4
+    ) [instance: 2, cache: 1];
+    // 
+    // node AutoGlyph[2]: x = 280, y = 208, inputs = 7, label = AutoGlyph
+    // page group: annotation
+    //
+main_AutoGlyph_2_out_1 = 
+    AutoGlyph(
+    main_Construct_2_out_1,
+    main_AutoGlyph_2_in_2,
+    main_AutoGlyph_2_in_3,
+    main_AutoGlyph_2_in_4,
+    main_AutoGlyph_2_in_5,
+    main_AutoGlyph_2_in_6,
+    main_AutoGlyph_2_in_7
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[1]: x = 17, y = 138, inputs = 1, label = cloud
+    // page group: annotation
+    //
+main_Receiver_1_out_1[cache: 0] = cloud;
+    // 
+    // node Import[3]: x = 121, y = 128, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    // page group: annotation
+    //
+main_Import_3_out_1 = 
+    Import(
+    main_Import_3_in_1,
+    main_Import_3_in_2,
+    main_Import_3_in_3,
+    main_Import_3_in_4,
+    main_Import_3_in_5,
+    main_Import_3_in_6
+    ) [instance: 3, cache: 1];
+    // 
+    // node Isosurface[2]: x = 95, y = 215, inputs = 6, label = Isosurface
+    // page group: annotation
+    //
+main_Isosurface_2_out_1 = 
+    Isosurface(
+    main_Import_3_out_1,
+    main_Isosurface_2_in_2,
+    main_Isosurface_2_in_3,
+    main_Isosurface_2_in_4,
+    main_Isosurface_2_in_5,
+    main_Isosurface_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node String[1]: x = 194, y = 254, inputs = 0, label = String
+    // output[1]: visible = 1, type = 32, value = "purple"
+    // page group: annotation
+    //
+    // 
+    // node Color[1]: x = 153, y = 331, inputs = 5, label = Color
+    // page group: annotation
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_Isosurface_2_out_1,
+    main_String_1_out_1,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[2]: x = 164, y = 459, inputs = 3, label = Collect
+    // page group: annotation
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_Receiver_1_out_1,
+    main_Color_1_out_1,
+    main_AutoGlyph_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[2]: x = 187, y = 542, inputs = 1, label = annotation
+    // page group: annotation
+    //
+annotation = main_Collect_2_out_1;
+    // 
+    // node Receiver[3]: x = 377, y = 132, inputs = 1, label = annotation
+    // page group: Image
+    //
+main_Receiver_3_out_1[cache: 0] = annotation;
+    // 
+    // node AutoGlyph[4]: x = 379, y = 269, inputs = 7, label = AutoGlyph
+    // page group: Image
+    //
+main_AutoGlyph_4_out_1 = 
+    AutoGlyph(
+    main_Receiver_4_out_1,
+    main_Receiver_3_out_1,
+    main_AutoGlyph_4_in_3,
+    main_AutoGlyph_4_in_4,
+    main_AutoGlyph_4_in_5,
+    main_AutoGlyph_4_in_6,
+    main_AutoGlyph_4_in_7
+    ) [instance: 4, cache: 1];
+    // 
+    // node Selector[1]: x = 23, y = 450, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "annotation glyphs" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 3 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "standard glyphs" "user-specified glyph" "annotation glyphs" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 3 }
+    // input[6]: defaulting = 1, visible = 0, type = 3, value = 0
+    // output[1]: visible = 1, type = 29, value = 3 
+    // output[2]: visible = 1, type = 32, value = "annotation glyphs" 
+    // page group: Image
+    //
+    // 
+    // node Switch[1]: x = 145, y = 462, inputs = 4, label = Switch
+    // page group: Image
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Selector_1_out_1,
+    main_AutoColor_3_out_1,
+    main_AutoColor_5_out_1,
+    main_AutoGlyph_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[8]: x = 288, y = 521, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_8"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [2.71545 5.62248 1.24114]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [2.71545 5.62248 48.3821]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 25.2628
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 640
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.75
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // page group: Image
+    // depth: value = 24
+    // window: position = (0.3844,0.0957), size = 0.5109x0.5117
+    // internal caching: 1
+    //
+main_Image_8_out_1,
+main_Image_8_out_2,
+main_Image_8_out_3 = 
+    Image(
+    main_Image_8_in_1,
+    main_Switch_1_out_1,
+    main_Image_8_in_3,
+    main_Image_8_in_4,
+    main_Image_8_in_5,
+    main_Image_8_in_6,
+    main_Image_8_in_7,
+    main_Image_8_in_8,
+    main_Image_8_in_9,
+    main_Image_8_in_10,
+    main_Image_8_in_11,
+    main_Image_8_in_12,
+    main_Image_8_in_13,
+    main_Image_8_in_14,
+    main_Image_8_in_15,
+    main_Image_8_in_16,
+    main_Image_8_in_17,
+    main_Image_8_in_18,
+    main_Image_8_in_19,
+    main_Image_8_in_20,
+    main_Image_8_in_21,
+    main_Image_8_in_22,
+    main_Image_8_in_23,
+    main_Image_8_in_24,
+    main_Image_8_in_25,
+    main_Image_8_in_26,
+    main_Image_8_in_27,
+    main_Image_8_in_28,
+    main_Image_8_in_29,
+    main_Image_8_in_30,
+    main_Image_8_in_31,
+    main_Image_8_in_32,
+    main_Image_8_in_33,
+    main_Image_8_in_34,
+    main_Image_8_in_35,
+    main_Image_8_in_36,
+    main_Image_8_in_37,
+    main_Image_8_in_38,
+    main_Image_8_in_39,
+    main_Image_8_in_40,
+    main_Image_8_in_41,
+    main_Image_8_in_42,
+    main_Image_8_in_43,
+    main_Image_8_in_44,
+    main_Image_8_in_45,
+    main_Image_8_in_46,
+    main_Image_8_in_47,
+    main_Image_8_in_48
+    ) [instance: 8, cache: 1];
+    //
+    // decorator Annotate	pos=(94,29) size=459x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 131
+    // annotation user: This page imports some data and creates a colored isosurface of
+    // annotation user: it. It also scales the isosurface to be of approximately unit size.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: import
+    //
+    // decorator Annotate	pos=(77,20) size=523x76 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 261
+    // annotation user: This page creates "annotation glyphs", simply a group of renderable
+    // annotation user: objects. In this case it is a group consisting of the isosurface of the cloud,
+    // annotation user: an isosurface of a watermolecule, and a sphere. The resulting group is
+    // annotation user: passed to AutoGlyph as an annotation glyph.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: annotation
+    //
+    // decorator Annotate	pos=(139,93) size=437x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 82
+    // annotation user: This page simply creates a field with a few points in it at which
+    // annotation user: to place glyphs.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: glyphpoints
+    //
+    // decorator Annotate	pos=(54,40) size=549x60 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 163
+    // annotation user: This page switches between the three different uses of the AutoGlyph module:
+    // annotation user: standard glyphs, user-specified glyphs, or annotation glyphs. The result
+    // annotation user: is displayed.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: Image
+// network: end of macro body
+CacheScene("Image_8", main_Image_8_out_1, main_Image_8_out_2);
+}
+main_ProbeList_1_out_1 = {[-3.10369,7.95081,-2.3587][0.980723,10.8908,4.62][5.4203,7.51672,1.67361][2.53458,5.47452,0.80999][-1.23907,0.413398,0.80999][5.4203,-0.962872,-0.787831]};
+main_Construct_1_in_2 = NULL;
+main_Construct_1_in_3 = NULL;
+main_Construct_1_in_4 = {0 1 1 0 2 2};
+main_Construct_1_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_AutoGlyph_1_in_2 = NULL;
+main_AutoGlyph_1_in_3 = NULL;
+main_AutoGlyph_1_in_4 = NULL;
+main_AutoGlyph_1_in_5 = .2;
+main_AutoGlyph_1_in_6 = NULL;
+main_AutoGlyph_1_in_7 = NULL;
+main_AutoGlyph_1_out_1 = NULL;
+main_AutoColor_3_in_2 = NULL;
+main_AutoColor_3_in_3 = NULL;
+main_AutoColor_3_in_4 = NULL;
+main_AutoColor_3_in_5 = NULL;
+main_AutoColor_3_in_6 = NULL;
+main_AutoColor_3_in_7 = NULL;
+main_AutoColor_3_in_8 = NULL;
+main_AutoColor_3_in_9 = NULL;
+main_AutoColor_3_in_10 = NULL;
+main_AutoColor_3_out_1 = NULL;
+main_Import_2_in_1 = "cloudwater";
+main_Import_2_in_2 = NULL;
+main_Import_2_in_3 = NULL;
+main_Import_2_in_4 = NULL;
+main_Import_2_in_5 = NULL;
+main_Import_2_in_6 = NULL;
+main_Import_2_out_1 = NULL;
+main_Isosurface_1_in_2 = NULL;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_Import_5_in_1 = "temperature";
+main_Import_5_in_2 = NULL;
+main_Import_5_in_3 = NULL;
+main_Import_5_in_4 = NULL;
+main_Import_5_in_5 = NULL;
+main_Import_5_in_6 = NULL;
+main_Import_5_out_1 = NULL;
+main_Map_1_in_3 = NULL;
+main_Map_1_in_4 = NULL;
+main_Map_1_out_1 = NULL;
+main_AutoColor_4_in_2 = NULL;
+main_AutoColor_4_in_3 = NULL;
+main_AutoColor_4_in_4 = NULL;
+main_AutoColor_4_in_5 = NULL;
+main_AutoColor_4_in_6 = NULL;
+main_AutoColor_4_in_7 = NULL;
+main_AutoColor_4_in_8 = NULL;
+main_AutoColor_4_in_9 = NULL;
+main_AutoColor_4_in_10 = NULL;
+main_AutoColor_4_out_1 = NULL;
+main_Scale_2_in_2 = [.00006 .00006 .00006];
+main_Scale_2_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_AutoGlyph_3_in_3 = NULL;
+main_AutoGlyph_3_in_4 = NULL;
+main_AutoGlyph_3_in_5 = .2;
+main_AutoGlyph_3_in_6 = NULL;
+main_AutoGlyph_3_in_7 = NULL;
+main_AutoGlyph_3_out_1 = NULL;
+main_AutoColor_5_in_2 = NULL;
+main_AutoColor_5_in_3 = NULL;
+main_AutoColor_5_in_4 = NULL;
+main_AutoColor_5_in_5 = NULL;
+main_AutoColor_5_in_6 = NULL;
+main_AutoColor_5_in_7 = NULL;
+main_AutoColor_5_in_8 = NULL;
+main_AutoColor_5_in_9 = NULL;
+main_AutoColor_5_in_10 = NULL;
+main_AutoColor_5_out_1 = NULL;
+main_Construct_2_in_1 = {[0 0 0]};
+main_Construct_2_in_2 = NULL;
+main_Construct_2_in_3 = NULL;
+main_Construct_2_in_4 = {[0 1 0]};
+main_Construct_2_out_1 = NULL;
+main_AutoGlyph_2_in_2 = NULL;
+main_AutoGlyph_2_in_3 = NULL;
+main_AutoGlyph_2_in_4 = NULL;
+main_AutoGlyph_2_in_5 = NULL;
+main_AutoGlyph_2_in_6 = NULL;
+main_AutoGlyph_2_in_7 = NULL;
+main_AutoGlyph_2_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Import_3_in_1 = "watermolecule";
+main_Import_3_in_2 = NULL;
+main_Import_3_in_3 = NULL;
+main_Import_3_in_4 = NULL;
+main_Import_3_in_5 = NULL;
+main_Import_3_in_6 = NULL;
+main_Import_3_out_1 = NULL;
+main_Isosurface_2_in_2 = NULL;
+main_Isosurface_2_in_3 = NULL;
+main_Isosurface_2_in_4 = NULL;
+main_Isosurface_2_in_5 = NULL;
+main_Isosurface_2_in_6 = NULL;
+main_Isosurface_2_out_1 = NULL;
+main_String_1_out_1 = "purple";
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_AutoGlyph_4_in_3 = NULL;
+main_AutoGlyph_4_in_4 = NULL;
+main_AutoGlyph_4_in_5 = NULL;
+main_AutoGlyph_4_in_6 = NULL;
+main_AutoGlyph_4_in_7 = NULL;
+main_AutoGlyph_4_out_1 = NULL;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "annotation glyphs" ;
+main_Selector_1_in_3 = 3 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_1 = 3 ;
+main_Switch_1_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_8_in_1 = "Image_8";
+main_Image_8_in_3 = "X24,,";
+main_Image_8_in_4 = 1;
+main_Image_8_in_5 = [2.71545 5.62248 1.24114];
+main_Image_8_in_6 = [2.71545 5.62248 48.3821];
+main_Image_8_in_7 = 25.2628;
+main_Image_8_in_8 = 640;
+main_Image_8_in_9 = 0.75;
+main_Image_8_in_10 = [0 1 0];
+main_Image_8_in_11 = NULL;
+main_Image_8_in_12 = 0;
+main_Image_8_in_13 = NULL;
+main_Image_8_in_14 = 1;
+main_Image_8_in_15 = NULL;
+main_Image_8_in_16 = NULL;
+main_Image_8_in_17 = NULL;
+main_Image_8_in_18 = NULL;
+main_Image_8_in_19 = 0;
+main_Image_8_in_20 = NULL;
+main_Image_8_in_21 = NULL;
+main_Image_8_in_22 = NULL;
+main_Image_8_in_23 = NULL;
+main_Image_8_in_25 = NULL;
+main_Image_8_in_26 = NULL;
+main_Image_8_in_27 = NULL;
+main_Image_8_in_28 = NULL;
+main_Image_8_in_29 = NULL;
+main_Image_8_in_30 = NULL;
+main_Image_8_in_31 = NULL;
+main_Image_8_in_32 = NULL;
+main_Image_8_in_33 = NULL;
+main_Image_8_in_34 = NULL;
+main_Image_8_in_35 = NULL;
+main_Image_8_in_36 = NULL;
+main_Image_8_in_37 = NULL;
+main_Image_8_in_38 = NULL;
+main_Image_8_in_39 = NULL;
+main_Image_8_in_40 = NULL;
+main_Image_8_in_41 = NULL;
+main_Image_8_in_42 = NULL;
+main_Image_8_in_43 = NULL;
+main_Image_8_in_44 = NULL;
+main_Image_8_in_45 = NULL;
+main_Image_8_in_46 = NULL;
+main_Image_8_in_47 = NULL;
+main_Image_8_in_48 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

@@ -1,0 +1,29 @@
+# This makefile has three targets:
+#    loadablelib creates a "library" of two run-time loadable modules,
+#       makex and add
+#    hello creates a single runtime loadable executable, the hello module.
+#    all creates both of the above.
+
+BASE=/usr/lpp/dx
+INC = $(BASE)/include
+BIN = $(BASE)/bin
+LIB = $(BASE)/lib
+
+CFLAGS = -I$(INC) -D$(ARCH)
+LDFLAGS = -shared -all -e DXEntry -expect_unresolved main -expect_unresolved DX*
+SYSLIBS = -lm -lc
+
+.DEFAULT:       all
+
+
+loadablelib: 	makex.o add.o
+		$(BIN)/mdf2c -m user_loadable.mdf > user.c
+		cc $(CFLAGS) -c user.c
+		ld $(LDFLAGS) -o loadablelib user.o makex.o add.o $(SYSLIBS)
+
+hello:		hello.o
+		$(BIN)/mdf2c -m hello_loadable.mdf > user.c
+		cc $(CFLAGS) -c user.c
+		ld $(LDFLAGS) -o hello user.o hello.o $(SYSLIBS)
+	
+all:		hello loadablelib	

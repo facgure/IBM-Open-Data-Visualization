@@ -1,0 +1,585 @@
+//
+// time: Tue Mar  4 13:54:07 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE ArrangeMember
+// CATEGORY Windows
+// DESCRIPTION Interactive Image window 
+// INPUT object; object; (no default);  
+// INPUT renderMode[visible:0]; value or string or object; (no default);  
+// INPUT defaultCamera[visible:0]; value list or string list or object; (no default);  
+// INPUT resetCamera[visible:0]; flag; (no default);  
+// INPUT bkgndColor[visible:0]; value list or string list or object; (no default);  
+// INPUT throttle[visible:0]; scalar; (no default);  
+// INPUT interactionMode[visible:0]; integer; (no default);  
+// INPUT parentSize; value list or field or string or string list; (no default);  
+// INPUT parent; window; (no default);  
+// INPUT mapped; flag; (no default);  
+// INPUT title; value list or string list or object; (no default);  
+// INPUT totalSubimages; value list or field or string or string list; (no default);  
+// INPUT nHorizontal; value list or field or string or string list; (no default);  
+// INPUT which; value list or field or string or string list; (no default);  
+// OUTPUT renderable; object;  
+// OUTPUT camera; object;  
+// OUTPUT where; window;  
+// End MDF
+//
+// comment: This complex macro allows you to place an independent window within a larger window. For an example of the use of this macro, see IndependentlyArrange.net.
+// page assignment: Main	order=4, windowed=0, showing=1
+// page assignment: camera	order=3, windowed=0, showing=0
+// page assignment: sizeOffset	order=2, windowed=0, showing=0
+// workspace: width = 635, height = 626
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro ArrangeMember(
+ object
+,renderMode
+,defaultCamera
+,resetCamera
+,bkgndColor
+,throttle
+,interactionMode
+,parentSize
+,parent
+,mapped
+,title
+,totalSubimages
+,nHorizontal
+,which
+) -> (
+ renderable
+,camera
+,where
+) {
+    // 
+    // node Input[33]: x = 15, y = 20, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 1, name = 'object', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_33_out_1 = object;
+    // 
+    // node Transmitter[25]: x = 0, y = 112, inputs = 1, label = inputObject
+    // page group: Main
+    //
+inputObject = ArrangeMember_Input_33_out_1;
+    // 
+    // node Receiver[2]: x = 154, y = 4, inputs = 1, label = inputObject
+    // page group: camera
+    //
+ArrangeMember_Receiver_2_out_1[cache: 0] = inputObject;
+    // 
+    // node AutoCamera[1]: x = 143, y = 105, inputs = 9, label = AutoCamera
+    // page group: camera
+    //
+ArrangeMember_AutoCamera_1_out_1 = 
+    AutoCamera(
+    ArrangeMember_Receiver_2_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[42]: x = 47, y = 36, inputs = 0, label = Input
+    // page group: sizeOffset
+    // parameter: position = 8, name = 'parentSize', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_42_out_1 = parentSize;
+    // 
+    // node Input[39]: x = 203, y = 25, inputs = 0, label = Input
+    // page group: sizeOffset
+    // parameter: position = 12, name = 'totalSubimages', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_39_out_1 = totalSubimages;
+    // 
+    // node Input[40]: x = 312, y = 23, inputs = 0, label = Input
+    // page group: sizeOffset
+    // parameter: position = 13, name = 'nHorizontal', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_40_out_1 = nHorizontal;
+    // 
+    // node Compute[5]: x = 220, y = 136, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0/$1"
+    // page group: sizeOffset
+    // expression: value = a/b
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+ArrangeMember_Compute_5_out_1 = 
+    Compute(
+    "$0/$1",
+    ArrangeMember_Input_39_out_1,
+    ArrangeMember_Input_40_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Compute[4]: x = 144, y = 243, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int([($0.x + ($2-1)) / $2, ($0.y + ($1-1)) / $1]) "
+    // page group: sizeOffset
+    // expression: value = int([(size.x + (nCols-1)) / nCols, (size.y + (nRows-1)) / nRows]) 
+    // name[2]: value = size
+    // name[3]: value = nRows
+    // name[4]: value = nCols
+    //
+ArrangeMember_Compute_4_out_1 = 
+    Compute(
+    "int([($0.x + ($2-1)) / $2, ($0.y + ($1-1)) / $1]) ",
+    ArrangeMember_Input_42_out_1,
+    ArrangeMember_Compute_5_out_1,
+    ArrangeMember_Input_40_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Transmitter[29]: x = 194, y = 325, inputs = 1, label = size
+    // page group: sizeOffset
+    //
+size = ArrangeMember_Compute_4_out_1;
+    // 
+    // node Receiver[33]: x = 424, y = 42, inputs = 1, label = size
+    // page group: camera
+    //
+ArrangeMember_Receiver_33_out_1[cache: 0] = size;
+    // 
+    // node Compute[2]: x = 359, y = 151, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x"
+    // page group: camera
+    // expression: value = a.x
+    // name[2]: value = a
+    //
+ArrangeMember_Compute_2_out_1 = 
+    Compute(
+    "$0.x",
+    ArrangeMember_Receiver_33_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[3]: x = 452, y = 153, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0.y+0.99)/$0.x"
+    // page group: camera
+    // expression: value = float(a.y+0.99)/a.x
+    // name[2]: value = a
+    //
+ArrangeMember_Compute_3_out_1 = 
+    Compute(
+    "float($0.y+0.99)/$0.x",
+    ArrangeMember_Receiver_33_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Input[41]: x = 535, y = 9, inputs = 0, label = Input
+    // page group: sizeOffset
+    // parameter: position = 14, name = 'which', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_41_out_1 = which;
+    // 
+    // node Compute[7]: x = 525, y = 138, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0/$1"
+    // page group: sizeOffset
+    // expression: value = a/b
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+ArrangeMember_Compute_7_out_1 = 
+    Compute(
+    "$0/$1",
+    ArrangeMember_Input_41_out_1,
+    ArrangeMember_Input_40_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Compute[8]: x = 420, y = 142, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$1 % $0"
+    // page group: sizeOffset
+    // expression: value = b % a
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+ArrangeMember_Compute_8_out_1 = 
+    Compute(
+    "$1 % $0",
+    ArrangeMember_Input_40_out_1,
+    ArrangeMember_Input_41_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Compute[10]: x = 480, y = 243, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0.x*$1, $0.y*$2]"
+    // page group: sizeOffset
+    // expression: value = [a.x*b, a.y*c]
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    //
+ArrangeMember_Compute_10_out_1 = 
+    Compute(
+    "[$0.x*$1, $0.y*$2]",
+    ArrangeMember_Compute_4_out_1,
+    ArrangeMember_Compute_8_out_1,
+    ArrangeMember_Compute_7_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Input[37]: x = 82, y = 0, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 11, name = 'title', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_37_out_1 = title;
+    // 
+    // node Inquire[5]: x = 89, y = 86, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: Main
+    //
+ArrangeMember_Inquire_5_out_1 = 
+    Inquire(
+    ArrangeMember_Input_37_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Switch[14]: x = 185, y = 117, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 16777248, value = {"ArrangeMember"}
+    // page group: Main
+    //
+ArrangeMember_Switch_14_out_1 = 
+    Switch(
+    ArrangeMember_Inquire_5_out_1,
+    ArrangeMember_Input_37_out_1,
+    {"ArrangeMember"}
+    ) [instance: 14, cache: 1];
+    // 
+    // node Transmitter[31]: x = 604, y = 62, inputs = 1, label = me
+    // page group: sizeOffset
+    //
+me = ArrangeMember_Input_41_out_1;
+    // 
+    // node Receiver[36]: x = 298, y = 20, inputs = 1, label = me
+    // page group: Main
+    //
+ArrangeMember_Receiver_36_out_1[cache: 0] = me;
+    // 
+    // node Format[1]: x = 276, y = 110, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "%s_%d"
+    // page group: Main
+    //
+ArrangeMember_Format_1_out_1 = 
+    Format(
+    "%s_%d",
+    ArrangeMember_Switch_14_out_1,
+    ArrangeMember_Receiver_36_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[35]: x = 369, y = 13, inputs = 1, label = size
+    // page group: Main
+    //
+ArrangeMember_Receiver_35_out_1[cache: 0] = size;
+    // 
+    // node Transmitter[30]: x = 530, y = 326, inputs = 1, label = offset
+    // page group: sizeOffset
+    //
+offset = ArrangeMember_Compute_10_out_1;
+    // 
+    // node Receiver[34]: x = 431, y = 15, inputs = 1, label = offset
+    // page group: Main
+    //
+ArrangeMember_Receiver_34_out_1[cache: 0] = offset;
+    // 
+    // node Input[35]: x = 496, y = 16, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 9, name = 'parent', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_35_out_1 = parent;
+    // 
+    // node Input[36]: x = 593, y = 33, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 10, name = 'mapped', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ArrangeMember_Input_36_out_1 = mapped;
+    // 
+    // node SuperviseWindow[1]: x = 379, y = 125, inputs = 10, label = SuperviseWindow
+    // input[1]: defaulting = 1, visible = 1, type = 32, value = "Image2"
+    // input[9]: defaulting = 0, visible = 1, type = 3, value = 1
+    // input[10]: defaulting = 0, visible = 1, type = 3, value = 1
+    // page group: Main
+    //
+ArrangeMember_SuperviseWindow_1_out_1,
+ArrangeMember_SuperviseWindow_1_out_2,
+ArrangeMember_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    ArrangeMember_Format_1_out_1,
+    NULL,
+    ArrangeMember_Receiver_35_out_1,
+    ArrangeMember_Receiver_34_out_1,
+    ArrangeMember_Input_35_out_1,
+    NULL,
+    ArrangeMember_Input_36_out_1,
+    NULL,
+    1,
+    1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[3]: x = 9, y = 3, inputs = 0, label = Input
+    // page group: camera
+    // parameter: position = 3, name = 'defaultCamera', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 0
+    //
+ArrangeMember_Input_3_out_1 = defaultCamera;
+    // 
+    // node Inquire[1]: x = 4, y = 113, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: camera
+    //
+ArrangeMember_Inquire_1_out_1 = 
+    Inquire(
+    ArrangeMember_Input_3_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[1]: x = 82, y = 208, inputs = 3, label = Switch
+    // page group: camera
+    //
+ArrangeMember_Switch_1_out_1 = 
+    Switch(
+    ArrangeMember_Inquire_1_out_1,
+    ArrangeMember_Input_3_out_1,
+    ArrangeMember_AutoCamera_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 72, y = 288, inputs = 1, label = defaultCamera1
+    // page group: camera
+    //
+defaultCamera1 = ArrangeMember_Switch_1_out_1;
+    // 
+    // node Receiver[3]: x = 36, y = 245, inputs = 1, label = defaultCamera1
+    // page group: Main
+    //
+ArrangeMember_Receiver_3_out_1[cache: 0] = defaultCamera1;
+    // 
+    // node Input[4]: x = 162, y = 214, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 4, name = 'resetCamera', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 0
+    //
+ArrangeMember_Input_4_out_1 = resetCamera;
+    // 
+    // node Receiver[26]: x = 253, y = 210, inputs = 1, label = inputObject
+    // page group: Main
+    //
+ArrangeMember_Receiver_26_out_1[cache: 0] = inputObject;
+    // 
+    // node Input[31]: x = 445, y = 273, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 7, name = 'interactionMode', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 0
+    //
+ArrangeMember_Input_31_out_1 = interactionMode;
+    // 
+    // node SuperviseState[1]: x = 200, y = 304, inputs = 9, label = SuperviseState
+    // input[5]: defaulting = 0, visible = 1, type = 3, value = 0
+    // input[8]: defaulting = 1, visible = 1, type = 1, value = 0
+    // page group: Main
+    //
+ArrangeMember_SuperviseState_1_out_1,
+ArrangeMember_SuperviseState_1_out_2,
+ArrangeMember_SuperviseState_1_out_3,
+ArrangeMember_SuperviseState_1_out_4 = 
+    SuperviseState(
+    ArrangeMember_SuperviseWindow_1_out_1,
+    ArrangeMember_Receiver_3_out_1,
+    ArrangeMember_Input_4_out_1,
+    ArrangeMember_Receiver_26_out_1,
+    0,
+    ArrangeMember_SuperviseWindow_1_out_2,
+    ArrangeMember_SuperviseWindow_1_out_3,
+    ArrangeMember_Input_31_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[2]: x = 236, y = 440, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 2, name = 'renderMode', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 0
+    //
+ArrangeMember_Input_2_out_1 = renderMode;
+    // 
+    // node Options[1]: x = 144, y = 478, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    // page group: Main
+    //
+ArrangeMember_Options_1_out_1 = 
+    Options(
+    ArrangeMember_SuperviseState_1_out_1,
+    "rendering mode",
+    ArrangeMember_Input_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[26]: x = 99, y = 366, inputs = 1, label = superCam
+    // page group: Main
+    //
+superCam = ArrangeMember_SuperviseState_1_out_2;
+    // 
+    // node Receiver[27]: x = 262, y = 183, inputs = 1, label = superCam
+    // page group: camera
+    //
+ArrangeMember_Receiver_27_out_1[cache: 0] = superCam;
+    // 
+    // node Input[5]: x = 586, y = 8, inputs = 0, label = Input
+    // page group: camera
+    // parameter: position = 5, name = 'bkgndColor', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 0
+    //
+ArrangeMember_Input_5_out_1 = bkgndColor;
+    // 
+    // node Inquire[4]: x = 515, y = 83, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is  null + 1"
+    // page group: camera
+    //
+ArrangeMember_Inquire_4_out_1 = 
+    Inquire(
+    ArrangeMember_Input_5_out_1,
+    "is  null + 1",
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Switch[13]: x = 571, y = 157, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 16777248, value = {"black"}
+    // page group: camera
+    //
+ArrangeMember_Switch_13_out_1 = 
+    Switch(
+    ArrangeMember_Inquire_4_out_1,
+    ArrangeMember_Input_5_out_1,
+    {"black"}
+    ) [instance: 13, cache: 1];
+    // 
+    // node UpdateCamera[1]: x = 349, y = 261, inputs = 10, label = UpdateCamera
+    // page group: camera
+    //
+ArrangeMember_UpdateCamera_1_out_1 = 
+    UpdateCamera(
+    ArrangeMember_Receiver_27_out_1,
+    NULL,
+    NULL,
+    NULL,
+    ArrangeMember_Compute_2_out_1,
+    ArrangeMember_Compute_3_out_1,
+    NULL,
+    NULL,
+    NULL,
+    ArrangeMember_Switch_13_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[18]: x = 431, y = 362, inputs = 1, label = actualCam
+    // page group: camera
+    //
+actualCam = ArrangeMember_UpdateCamera_1_out_1;
+    // 
+    // node Receiver[32]: x = 298, y = 422, inputs = 1, label = actualCam
+    // page group: Main
+    //
+ArrangeMember_Receiver_32_out_1[cache: 0] = actualCam;
+    // 
+    // node Input[6]: x = 391, y = 389, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 6, name = 'throttle', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 0
+    //
+ArrangeMember_Input_6_out_1 = throttle;
+    // 
+    // node Display[1]: x = 391, y = 478, inputs = 10, label = Display
+    // input[3]: defaulting = 1, visible = 1, type = 1024, value = NULL
+    // input[4]: visible = 1
+    // page group: Main
+    // depth: value = 24
+    //
+ArrangeMember_Display_1_out_1[cache: 2] = 
+    Display(
+    ArrangeMember_Options_1_out_1,
+    ArrangeMember_Receiver_32_out_1,
+    ArrangeMember_SuperviseState_1_out_3,
+    ArrangeMember_Input_6_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 68, y = 564, inputs = 1, label = Output
+    // page group: Main
+    // parameter: position = 1, name = 'renderable', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+renderable = ArrangeMember_Options_1_out_1;
+    // 
+    // node Output[2]: x = 507, y = 485, inputs = 1, label = Output
+    // page group: Main
+    // parameter: position = 2, name = 'camera', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+camera = ArrangeMember_Receiver_32_out_1;
+    // 
+    // node Output[3]: x = 368, y = 564, inputs = 1, label = Output
+    // page group: Main
+    // parameter: position = 3, name = 'where', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+where = ArrangeMember_Display_1_out_1;
+    // 
+    // node Transmitter[8]: x = 443, y = 555, inputs = 1, label = imageWindow
+    // page group: Main
+    //
+imageWindow = ArrangeMember_Display_1_out_1;
+    // 
+    // node Transmitter[24]: x = 397, y = 203, inputs = 1, label = windowSz
+    // page group: Main
+    //
+windowSz = ArrangeMember_SuperviseWindow_1_out_2;
+// network: end of macro body
+}
+ArrangeMember_Input_33_out_1 = NULL;
+ArrangeMember_Transmitter_25_out_1 = NULL;
+ArrangeMember_Receiver_2_out_1 = NULL;
+ArrangeMember_AutoCamera_1_out_1 = NULL;
+ArrangeMember_Input_42_out_1 = NULL;
+ArrangeMember_Input_39_out_1 = NULL;
+ArrangeMember_Input_40_out_1 = NULL;
+ArrangeMember_Compute_5_out_1 = NULL;
+ArrangeMember_Compute_4_out_1 = NULL;
+ArrangeMember_Transmitter_29_out_1 = NULL;
+ArrangeMember_Receiver_33_out_1 = NULL;
+ArrangeMember_Compute_2_out_1 = NULL;
+ArrangeMember_Compute_3_out_1 = NULL;
+ArrangeMember_Input_41_out_1 = NULL;
+ArrangeMember_Compute_7_out_1 = NULL;
+ArrangeMember_Compute_8_out_1 = NULL;
+ArrangeMember_Compute_10_out_1 = NULL;
+ArrangeMember_Input_37_out_1 = NULL;
+ArrangeMember_Inquire_5_out_1 = NULL;
+ArrangeMember_Switch_14_out_1 = NULL;
+ArrangeMember_Transmitter_31_out_1 = NULL;
+ArrangeMember_Receiver_36_out_1 = NULL;
+ArrangeMember_Format_1_out_1 = NULL;
+ArrangeMember_Receiver_35_out_1 = NULL;
+ArrangeMember_Transmitter_30_out_1 = NULL;
+ArrangeMember_Receiver_34_out_1 = NULL;
+ArrangeMember_Input_35_out_1 = NULL;
+ArrangeMember_Input_36_out_1 = NULL;
+ArrangeMember_SuperviseWindow_1_out_1 = NULL;
+ArrangeMember_SuperviseWindow_1_out_2 = NULL;
+ArrangeMember_SuperviseWindow_1_out_3 = NULL;
+ArrangeMember_Input_3_out_1 = NULL;
+ArrangeMember_Inquire_1_out_1 = NULL;
+ArrangeMember_Switch_1_out_1 = NULL;
+ArrangeMember_Transmitter_2_out_1 = NULL;
+ArrangeMember_Receiver_3_out_1 = NULL;
+ArrangeMember_Input_4_out_1 = NULL;
+ArrangeMember_Receiver_26_out_1 = NULL;
+ArrangeMember_Input_31_out_1 = NULL;
+ArrangeMember_SuperviseState_1_out_1 = NULL;
+ArrangeMember_SuperviseState_1_out_2 = NULL;
+ArrangeMember_SuperviseState_1_out_3 = NULL;
+ArrangeMember_Input_2_out_1 = NULL;
+ArrangeMember_Options_1_out_1 = NULL;
+ArrangeMember_Transmitter_26_out_1 = NULL;
+ArrangeMember_Receiver_27_out_1 = NULL;
+ArrangeMember_Input_5_out_1 = NULL;
+ArrangeMember_Inquire_4_out_1 = NULL;
+ArrangeMember_Switch_13_out_1 = NULL;
+ArrangeMember_UpdateCamera_1_out_1 = NULL;
+ArrangeMember_Transmitter_18_out_1 = NULL;
+ArrangeMember_Receiver_32_out_1 = NULL;
+ArrangeMember_Input_6_out_1 = NULL;
+ArrangeMember_Display_1_out_1 = NULL;

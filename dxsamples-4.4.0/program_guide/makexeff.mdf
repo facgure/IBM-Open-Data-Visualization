@@ -1,0 +1,6 @@
+MODULE MakeXEfficient
+CATEGORY Annotation 
+DESCRIPTION draws an X 
+INPUT input; field; (none); field to mark positions 
+INPUT size; scalar; 1; size 
+OUTPUT output;  field; field with positions marked 

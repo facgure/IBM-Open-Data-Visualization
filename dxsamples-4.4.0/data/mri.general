@@ -1,0 +1,5 @@
+file = MRI.data
+grid = 128x128x16
+format = msb binary
+type = unsigned short
+positions = 0, 1.773153, 0, 1.773153, 0, 2.066667

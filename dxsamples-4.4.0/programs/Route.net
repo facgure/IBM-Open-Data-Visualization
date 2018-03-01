@@ -1,0 +1,166 @@
+//
+// time: Wed Apr  9 15:42:49 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program uses Route to turn on or turn off the branch leading to WriteImage. Only if the interactor is set will the image be saved.
+// workspace: width = 474, height = 470
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 164, y = 17, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "southeastern_topo.dx"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 382, y = 159, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 300
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Import_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[2]: x = 222, y = 87, inputs = 10, label = AutoColor
+    //
+main_AutoColor_2_out_1,
+main_AutoColor_2_out_2 = 
+    AutoColor(
+    main_Import_1_out_1,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Render[1]: x = 259, y = 179, inputs = 3, label = Render
+    //
+main_Render_1_out_1 = 
+    Render(
+    main_AutoColor_2_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 297, y = 401, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.2836,0.0586), size = 0.2453x0.2881
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Render_1_out_1,
+    main_Display_1_in_2,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[1]: x = 45, y = 100, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "don't save" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "save image" "don't save" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "don't save" 
+    //
+    // 
+    // node Route[1]: x = 166, y = 219, inputs = 2, outputs = 2, label = Route
+    //
+main_Route_1_out_1,
+main_Route_1_out_2 = 
+    Route(
+    main_Selector_1_out_1,
+    main_Render_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node WriteImage[1]: x = 170, y = 408, inputs = 4, label = WriteImage
+    //
+    WriteImage(
+    main_Route_1_out_1,
+    main_WriteImage_1_in_2,
+    main_WriteImage_1_in_3,
+    main_WriteImage_1_in_4
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "southeastern_topo.dx";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = 300;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = NULL;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = NULL;
+main_AutoColor_2_in_7 = NULL;
+main_AutoColor_2_in_8 = NULL;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = NULL;
+main_AutoColor_2_out_1 = NULL;
+main_Render_1_in_3 = NULL;
+main_Render_1_out_1 = NULL;
+main_Display_1_in_2 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "don't save" ;
+main_Selector_1_in_3 = 0 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_1 = 0 ;
+main_Route_1_out_1 = NULL;
+main_WriteImage_1_in_2 = NULL;
+main_WriteImage_1_in_3 = NULL;
+main_WriteImage_1_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

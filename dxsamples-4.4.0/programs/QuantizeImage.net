@@ -1,0 +1,105 @@
+//
+// time: Tue Apr 29 11:53:31 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// MODULE main
+//
+// comment: This simple visual program shows how the QuantizeImage module quantizes the colors in an image to a user-specified number (in this case 128).  The colors are stored as a colormap attached to the image field, rather than as one-color-per-pixel. 
+// comment: 
+
+// workspace: width = 375, height = 333
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node ReadImage[1]: x = 57, y = 89, inputs = 9, label = ReadImage
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "cylinder.rgb"
+    //
+main_ReadImage_1_out_1 = 
+    ReadImage(
+    main_ReadImage_1_in_1,
+    main_ReadImage_1_in_2,
+    main_ReadImage_1_in_3,
+    main_ReadImage_1_in_4,
+    main_ReadImage_1_in_5,
+    main_ReadImage_1_in_6,
+    main_ReadImage_1_in_7,
+    main_ReadImage_1_in_8,
+    main_ReadImage_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 83, y = 223, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.0000,0.0000), size = 0.2844x0.3613
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_ReadImage_1_out_1,
+    main_Display_1_in_2,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+    // 
+    // node QuantizeImage[1]: x = 189, y = 211, inputs = 2, label = QuantizeImage
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 128
+    //
+main_QuantizeImage_1_out_1 = 
+    QuantizeImage(
+    main_ReadImage_1_out_1,
+    main_QuantizeImage_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[2]: x = 317, y = 271, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.3906,0.0000), size = 0.2844x0.3613
+    //
+main_Display_2_out_1[cache: 2] = 
+    Display(
+    main_QuantizeImage_1_out_1,
+    main_Display_2_in_2,
+    main_Display_2_in_3,
+    main_Display_2_in_4,
+    main_Display_2_in_5,
+    main_Display_2_in_6,
+    main_Display_2_in_7,
+    main_Display_2_in_8
+    ) [instance: 2, cache: 1];
+// network: end of macro body
+}
+main_ReadImage_1_in_1 = "cylinder.rgb";
+main_ReadImage_1_in_2 = NULL;
+main_ReadImage_1_in_3 = NULL;
+main_ReadImage_1_in_4 = NULL;
+main_ReadImage_1_in_5 = NULL;
+main_ReadImage_1_in_6 = NULL;
+main_ReadImage_1_in_7 = NULL;
+main_ReadImage_1_in_8 = NULL;
+main_ReadImage_1_in_9 = NULL;
+main_ReadImage_1_out_1 = NULL;
+main_Display_1_in_2 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+main_QuantizeImage_1_in_2 = 128;
+main_QuantizeImage_1_out_1 = NULL;
+main_Display_2_in_2 = NULL;
+main_Display_2_in_3 = "X24,,";
+main_Display_2_in_4 = NULL;
+main_Display_2_in_5 = NULL;
+main_Display_2_in_6 = NULL;
+main_Display_2_in_7 = NULL;
+main_Display_2_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

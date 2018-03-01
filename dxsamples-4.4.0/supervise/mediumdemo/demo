@@ -1,0 +1,4 @@
+#! /bin/csh
+
+setenv DX_USER_INTERACTOR_FILE ./interactors/interactors
+dx -edit -program demo.net -execute_on_change

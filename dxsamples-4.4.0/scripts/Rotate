@@ -1,0 +1,23 @@
+// import the electron density field
+electrondensity = Import("watermolecule");
+
+// partition the data for parallelism
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at value 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// Create a camera
+camera = AutoCamera(electrondensity);
+
+// Display the isosurface using the camera
+Display(isosurface,camera);
+
+// Rotate the isosurface about the y axis by 45 degrees and display
+rotated = Rotate(isosurface,"y",45);
+Display(rotated,camera);
+
+// Rotate the isosurface about the x axis by 45 degrees and then about the
+// z axis by 30 degrees and display
+rotated = Rotate(isosurface,"x",45, "z", 30);
+Display(rotated,camera);

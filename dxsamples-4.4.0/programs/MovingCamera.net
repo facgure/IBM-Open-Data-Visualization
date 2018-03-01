@@ -1,0 +1,291 @@
+//
+// time: Wed Apr  9 15:40:00 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+// CATEGORY Macros
+//
+// comment: This example uses the sequencer to change the look-from position. Unlike most of the other examples, this example does not use the Image tool.  This is because we want to set the camera direction explicitly using the sequencer, rather than use the direct interactors. Note however, that because we are not using the Image tool, none of the direct interactors from the Image window will be available for this example.
+// comment: 
+// comment: The Sequencer is used as input to the Direction module, which creates an [x y z] position from azimuth, elevation, and distance. The Sequencer is being used to change the azimuth. To run this example, double-click on the Sequencer (or choose the Sequencer option from the Execute menu).  Press the right facing arrow to start the Sequencer.
+// comment: 
+// comment: The background color is white, set in AutoCamera. If you are using the Image tool, you can set the background color using the "Set Background Color" choice in the Options menu of the Image window.
+// workspace: width = 599, height = 622
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 142, y = 15, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowBox[1]: x = 527, y = 181, inputs = 1, label = ShowBox
+    //
+main_ShowBox_1_out_1,
+main_ShowBox_1_out_2 = 
+    ShowBox(
+    main_Import_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[3]: x = 446, y = 324, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "red"
+    //
+main_Color_3_out_1 = 
+    Color(
+    main_ShowBox_1_out_1,
+    main_Color_3_in_2,
+    main_Color_3_in_3,
+    main_Color_3_in_4,
+    main_Color_3_in_5
+    ) [instance: 3, cache: 1];
+    // 
+    // node Sequencer[1]: x = 413, y = 416, inputs = 7, label = Sequencer
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Sequencer_1"
+    // input[4]: defaulting = 1, visible = 0, type = 1, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 1, value = 360
+    // input[6]: defaulting = 1, visible = 0, type = 1, value = 10
+    // input[7]: defaulting = 0, visible = 0, type = 16777217, value = { 0 360 10 5 355 1 }
+    // vcr[1]: min = 0, max = 360, beg = 5, end = 355, cur = 335, inc = 10, loop = on, step = off, pal = on
+    // window: position = (0.0000,0.0000), size = 0.2188x0.0781
+    //
+    main_Sequencer_1_out_1 = @frame;
+    // 
+    // node Scalar[2]: x = 549, y = 423, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_2"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 10.0000
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = -80.0
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 80.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "0"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 0
+    // output[1]: visible = 1, type = 5, value = 10.0000
+    //
+    // 
+    // node Direction[1]: x = 458, y = 486, inputs = 3, label = Direction
+    //
+main_Direction_1_out_1 = 
+    Direction(
+    main_Sequencer_1_out_1,
+    main_Scalar_2_out_1,
+    main_Direction_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 222, y = 486, inputs = 9, label = AutoCamera
+    // input[9]: defaulting = 0, visible = 1, type = 32, value = "white"
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Color_3_out_1,
+    main_Direction_1_out_1,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node MapToPlane[1]: x = 350, y = 192, inputs = 3, label = MapToPlane
+    //
+main_MapToPlane_1_out_1 = 
+    MapToPlane(
+    main_Import_1_out_1,
+    main_MapToPlane_1_in_2,
+    main_MapToPlane_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 231, y = 279, inputs = 10, label = AutoColor
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_MapToPlane_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scalar[1]: x = 169, y = 193, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_1"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 0.230000
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 0.1
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "2"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 2
+    // output[1]: visible = 1, type = 5, value = 0.230000
+    //
+    // 
+    // node Isosurface[1]: x = 0, y = 215, inputs = 6, label = Isosurface
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Scalar_1_out_1,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowPositions[1]: x = 0, y = 300, inputs = 2, label = ShowPositions
+    //
+main_ShowPositions_1_out_1 = 
+    ShowPositions(
+    main_Isosurface_1_out_1,
+    main_ShowPositions_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Shade[4]: x = 112, y = 365, inputs = 7, label = Shade
+    // input[2]: defaulting = 0, visible = 1, type = 3, value = 0
+    //
+main_Shade_4_out_1 = 
+    Shade(
+    main_AutoColor_1_out_1,
+    main_Shade_4_in_2,
+    main_Shade_4_in_3,
+    main_Shade_4_in_4,
+    main_Shade_4_in_5,
+    main_Shade_4_in_6,
+    main_Shade_4_in_7
+    ) [instance: 4, cache: 1];
+    // 
+    // node Collect[1]: x = 98, y = 452, inputs = 3, label = Collect
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_ShowPositions_1_out_1,
+    main_Shade_4_out_1,
+    main_Color_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 127, y = 560, inputs = 4, label = Display
+    // depth: value = 24
+    // window: position = (0.4070,0.0078), size = 0.5109x0.5117
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Collect_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_ShowBox_1_out_1 = NULL;
+main_Color_3_in_2 = "red";
+main_Color_3_in_3 = NULL;
+main_Color_3_in_4 = NULL;
+main_Color_3_in_5 = NULL;
+main_Color_3_out_1 = NULL;
+main_Sequencer_1_in_1 = "Sequencer_1";
+main_Sequencer_1_in_2 = NULL;
+main_Sequencer_1_in_3 = NULL;
+main_Sequencer_1_in_4 = NULL;
+main_Sequencer_1_in_5 = NULL;
+main_Sequencer_1_in_6 = NULL;
+main_Sequencer_1_in_7 = { 0 360 10 5 355 1 };
+main_Sequencer_1_out_1 = NULL;
+
+@startframe = 5;
+@nextframe  = @startframe;
+@endframe   = 355;
+@deltaframe = 10;
+main_Scalar_2_in_1 = "Scalar_2";
+main_Scalar_2_in_2 = NULL;
+main_Scalar_2_in_3 = 10.0000;
+main_Scalar_2_in_4 = NULL;
+main_Scalar_2_in_5 = NULL;
+main_Scalar_2_in_6 = NULL;
+main_Scalar_2_in_7 = NULL;
+main_Scalar_2_in_8 = NULL;
+main_Scalar_2_in_9 = NULL;
+main_Scalar_2_in_10 = NULL;
+main_Scalar_2_in_11 = NULL;
+main_Scalar_2_out_1 = 10.0000;
+main_Direction_1_in_3 = NULL;
+main_Direction_1_out_1 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = NULL;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = "white";
+main_AutoCamera_1_out_1 = NULL;
+main_MapToPlane_1_in_2 = NULL;
+main_MapToPlane_1_in_3 = NULL;
+main_MapToPlane_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_Scalar_1_in_1 = "Scalar_1";
+main_Scalar_1_in_2 = NULL;
+main_Scalar_1_in_3 = 0.230000;
+main_Scalar_1_in_4 = NULL;
+main_Scalar_1_in_5 = NULL;
+main_Scalar_1_in_6 = NULL;
+main_Scalar_1_in_7 = NULL;
+main_Scalar_1_in_8 = NULL;
+main_Scalar_1_in_9 = NULL;
+main_Scalar_1_in_10 = NULL;
+main_Scalar_1_in_11 = NULL;
+main_Scalar_1_out_1 = 0.230000;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_ShowPositions_1_in_2 = NULL;
+main_ShowPositions_1_out_1 = NULL;
+main_Shade_4_in_2 = 0;
+main_Shade_4_in_3 = NULL;
+main_Shade_4_in_4 = NULL;
+main_Shade_4_in_5 = NULL;
+main_Shade_4_in_6 = NULL;
+main_Shade_4_in_7 = NULL;
+main_Shade_4_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+
+sequence main();
+play;

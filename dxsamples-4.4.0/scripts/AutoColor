@@ -1,0 +1,73 @@
+      // Import the data
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+     // Create a camera for the isosurface
+camera = AutoCamera(isosurface);
+     // AutoColor the isosurface. Since all the data values are the same, the 
+     // isosurface will be a constant shade of blue
+colored = AutoColor(isosurface);
+     // Display the result
+Display(colored,camera);
+Echo("coloring an isosurface");
+
+
+     // Now color the isosurface, but use the "min" input to set the color map.
+     // Now the color will relate to the isovalue relative to the range of the
+     // data values in the data field. If the isosurface value changes, the 
+     // color changes
+colored = AutoColor(isosurface,min=electrondensity);
+Display(colored,camera);
+Echo("coloring an isosurface, setting min");
+     // Now take the gradient of the field
+gradient = Gradient(electrondensity);
+     // Map the gradient of the field onto the isosurface
+mapped = Map(isosurface,gradient);
+     // Use AutoColor to color the isosurface based on the (magnitude of) the
+     // gradient
+colored = AutoColor(mapped);
+Display(colored,camera);
+Echo("coloring a mapped isosurface");
+
+
+     // Now use the "min" input to AutoColor to set the color map based on
+     // the entire gradient field, rather than just the gradient on the 
+     // isosurface. This means that as the isosurface value is changed, there
+     // will be a consistent relationship between color and data values
+colored = AutoColor(mapped,min=gradient);
+Display(colored,camera);
+Echo("coloring a mapped isosurface, setting min");
+
+     // Now set the range = 2, so that two passes around the color wheel will
+     // be used for the color map. (The default is 2/3 of the color wheel, 
+     // from blue to red.
+colored = AutoColor(mapped,range=2);
+Display(colored,camera);
+Echo("coloring a mapped isosurface, range=2");
+
+     // Now set the starting color to red rather than blue, and set the
+     // range to -0.6666. This will give the smallest values the color red,
+     // and the largest values the color blue
+colored = AutoColor(mapped,start=0, range = -0.6666);
+Display(colored,camera);
+Echo("coloring a mapped isosurface, red to blue");
+
+     // AutoColor may also be used to color 3 dimensional fields for
+     // volume rendering. 
+     // First, reduce the resolution of the data by a factor of 2 in each
+     // dimension.
+electrondensity = Reduce(electrondensity,2);
+colored = AutoColor(electrondensity);
+camera = AutoCamera(colored,"off-diagonal");
+Display(colored,camera);
+
+    // Now look at only a subset of the data range
+colored = AutoColor(electrondensity,min=0.1,max=4);
+Display(colored,camera);
+
+   // Increase the intensity of the colors
+colored = AutoColor(electrondensity,intensity = 5, min=0.1,max=4);
+Display(colored,camera);
+

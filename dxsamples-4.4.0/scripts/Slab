@@ -1,0 +1,33 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+box = ShowBox(electrondensity);
+
+// Partition for parallelism
+electrondensity = Partition(electrondensity);
+
+// Create a camera
+camera = AutoCamera(electrondensity,"off-top",width = 5);
+
+// Color the entire volume
+colored = AutoColor(electrondensity);
+
+// Create a slab, in the y dimension, starting at position element 30, of
+// thickness 0 (a plane)
+slab = Slab(colored,1,30,0);
+// Display the slab with the bounding box of the data
+collected = Collect(box,slab);
+Display(collected,camera);
+
+// Create a slab, in the z dimension, starting a position element 10, of
+// thickness 0
+slab = Slab(colored,2,10,0);
+// Display the slab with the bounding box of the data
+collected = Collect(box,slab);
+Display(collected,camera);
+
+// Create a slab, in the y dimension, starting a position element 10, of
+// thickness 40 elements. This is a volume.
+slab = Slab(colored,1,10,40);
+// Display the slab with the bounding box of the data
+collected = Collect(box,slab);
+Display(collected,camera);

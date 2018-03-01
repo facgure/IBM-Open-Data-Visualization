@@ -1,0 +1,40 @@
+vectorfield = Import("seriesdata","series");
+box = ShowBox(vectorfield);
+box = Color(box,"cadet blue");
+camera = AutoCamera(vectorfield,"off-diagonal");
+
+
+   // Create a line with 5 points 
+density = 5;
+sizeofline = [1 0 0];
+linegrid = Grid([2 2 2],"line", sizeofline, density);
+linegrid = ShowConnections(linegrid);
+linegrid = Color(linegrid,"red");
+streaklines = Streakline(NULL,vectorfield,linegrid);
+streaklines = Collect(streaklines,linegrid,box);
+Display(streaklines,camera);
+
+   // Create an ellipse with 80 points 
+density = 80;
+sizeofellipse = {[0.5 0 0],[0 1 0]};
+ellipsegrid = Grid([2 2 2],"ellipse", sizeofellipse, density);
+ellipsegrid = ShowConnections(ellipsegrid);
+ellipsegrid = Color(ellipsegrid,"red");
+streaklines = Streakline(NULL,vectorfield,ellipsegrid);
+streaklines = Collect(streaklines,ellipsegrid,box);
+Display(streaklines,camera);
+
+   // Create a brick with 48 points 
+density = {4 3 4};
+sizeofbrick = {[1.5 0 0],[0 1.5 0],[0 1 1]};
+brickgrid = Grid([2 2 2],"brick", sizeofbrick, density);
+brickgrid = ShowConnections(brickgrid);
+brickgrid = Color(brickgrid,"red");
+streaklines = Streakline(NULL,vectorfield,brickgrid);
+streaklines = Collect(streaklines,brickgrid,box);
+Display(streaklines,camera);
+
+
+
+
+

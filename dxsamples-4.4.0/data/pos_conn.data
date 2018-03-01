@@ -1,0 +1,9 @@
+object 1 class gridpositions counts 3 2 3 
+origin             0             0             0 
+delta             1             0             0 
+delta             0             2             0 
+delta             0             0             1 
+#
+object 2 class gridconnections counts 3 2 3
+#
+end

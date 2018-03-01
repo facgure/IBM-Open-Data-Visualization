@@ -1,0 +1,21 @@
+FILES = user.o add.o makex.o hello.o
+
+BASE = /usr/lpp/dx
+
+LDFLAGS=-bE:$(BASE)/lib_ibm6000/dxexec.exp \
+	-L$(BASE)/lib_ibm6000
+
+CFLAGS = -O -Dibm6000 -I$(BASE)/include
+
+LIBS = -lDX -ly -ll -lX11 -lm
+
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user.c:		user_inboard.mdf
+		mdf2c user_inboard.mdf > user.c
+

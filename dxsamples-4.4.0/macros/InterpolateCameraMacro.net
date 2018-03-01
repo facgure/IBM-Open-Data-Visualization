@@ -1,0 +1,370 @@
+//
+// time: Tue Jun 10 15:28:23 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// Begin MDF
+// MODULE InterpolateCameraMacro
+// CATEGORY Macros
+// DESCRIPTION interpolates within a camera group
+// INPUT numframes; value list or field or string or string list; (none); total number of frames
+// INPUT current_frame; value list or field or string or string list; (none); current frame
+// INPUT camera_group; group or field or series or value list or string list; (none); group of cameras to interpolate in
+// OUTPUT newcamera; camera;  
+// End MDF
+// workspace: width = 1573, height = 790
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro InterpolateCameraMacro(
+ numframes
+,current_frame
+,camera_group
+) -> (
+ newcamera
+) {
+    // 
+    // node Input[2]: x = 192, y = 31, inputs = 0, label = Input
+    // parameter: position = 1, name = 'numframes', value = '(none)', descriptive = 1, description = 'total number of frames', required = 1, visible = 1
+    //
+InterpolateCameraMacro_Input_2_out_1 = numframes;
+    // 
+    // node Input[3]: x = 304, y = 36, inputs = 0, label = Input
+    // parameter: position = 2, name = 'current_frame', value = '(none)', descriptive = 1, description = 'current frame', required = 1, visible = 1
+    //
+InterpolateCameraMacro_Input_3_out_1 = current_frame;
+    // 
+    // node Input[1]: x = 94, y = 26, inputs = 0, label = Input
+    // parameter: position = 3, name = 'camera_group', value = '(none)', descriptive = 1, description = 'group of cameras to interpolate in', required = 1, visible = 1
+    //
+InterpolateCameraMacro_Input_1_out_1 = camera_group;
+    // 
+    // node Inquire[1]: x = 100, y = 159, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "member count"
+    //
+InterpolateCameraMacro_Inquire_1_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Input_1_out_1,
+    "member count",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 223, y = 192, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "(float($1)/float($0-1))*($2-1)"
+    // expression: value = (float(current)/float(total_frames-1))*(numcameras-1)
+    // name[2]: value = total_frames
+    // name[3]: value = current
+    // name[4]: value = numcameras
+    //
+InterpolateCameraMacro_Compute_1_out_1 = 
+    Compute(
+    "(float($1)/float($0-1))*($2-1)",
+    InterpolateCameraMacro_Input_2_out_1,
+    InterpolateCameraMacro_Input_3_out_1,
+    InterpolateCameraMacro_Inquire_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[3]: x = 228, y = 287, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int($0)"
+    // expression: value = int(fraction)
+    // name[2]: value = fraction
+    //
+InterpolateCameraMacro_Compute_3_out_1 = 
+    Compute(
+    "int($0)",
+    InterpolateCameraMacro_Compute_1_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[4]: x = 349, y = 292, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0-$1"
+    // expression: value = fraction-which
+    // name[2]: value = fraction
+    // name[3]: value = which
+    //
+InterpolateCameraMacro_Compute_4_out_1 = 
+    Compute(
+    "$0-$1",
+    InterpolateCameraMacro_Compute_1_out_1,
+    InterpolateCameraMacro_Compute_3_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Compute[5]: x = 262, y = 439, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == ($1-1) ? 1 : 2"
+    // expression: value = which == (groupsize-1) ? 1 : 2
+    // name[2]: value = which
+    // name[3]: value = groupsize
+    //
+InterpolateCameraMacro_Compute_5_out_1 = 
+    Compute(
+    "$0 == ($1-1) ? 1 : 2",
+    InterpolateCameraMacro_Compute_3_out_1,
+    InterpolateCameraMacro_Inquire_1_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Compute[6]: x = 700, y = 286, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // expression: value = a+1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+InterpolateCameraMacro_Compute_6_out_1 = 
+    Compute(
+    "$0+1",
+    InterpolateCameraMacro_Compute_3_out_1,
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Select[1]: x = 148, y = 392, inputs = 3, label = Select
+    //
+InterpolateCameraMacro_Select_1_out_1 = 
+    Select(
+    InterpolateCameraMacro_Input_1_out_1,
+    InterpolateCameraMacro_Compute_3_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 144, y = 503, inputs = 1, label = cam1
+    //
+cam1 = InterpolateCameraMacro_Select_1_out_1;
+    // 
+    // node Receiver[1]: x = 942, y = 274, inputs = 1, label = cam1
+    //
+InterpolateCameraMacro_Receiver_1_out_1[cache: 0] = cam1;
+    // 
+    // node Inquire[2]: x = 822, y = 379, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera from"
+    //
+InterpolateCameraMacro_Inquire_2_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_1_out_1,
+    "camera from",
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Select[2]: x = 562, y = 337, inputs = 3, label = Select
+    //
+InterpolateCameraMacro_Select_2_out_1 = 
+    Select(
+    InterpolateCameraMacro_Input_1_out_1,
+    InterpolateCameraMacro_Compute_3_out_1,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Select[3]: x = 631, y = 347, inputs = 3, label = Select
+    //
+InterpolateCameraMacro_Select_3_out_1 = 
+    Select(
+    InterpolateCameraMacro_Input_1_out_1,
+    InterpolateCameraMacro_Compute_6_out_1,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Switch[1]: x = 562, y = 420, inputs = 3, label = Switch
+    //
+InterpolateCameraMacro_Switch_1_out_1 = 
+    Switch(
+    InterpolateCameraMacro_Compute_5_out_1,
+    InterpolateCameraMacro_Select_2_out_1,
+    InterpolateCameraMacro_Select_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 563, y = 505, inputs = 1, label = cam2
+    //
+cam2 = InterpolateCameraMacro_Switch_1_out_1;
+    // 
+    // node Receiver[2]: x = 1324, y = 282, inputs = 1, label = cam2
+    //
+InterpolateCameraMacro_Receiver_2_out_1[cache: 0] = cam2;
+    // 
+    // node Inquire[5]: x = 1235, y = 381, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera from"
+    //
+InterpolateCameraMacro_Inquire_5_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_2_out_1,
+    "camera from",
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Transmitter[3]: x = 376, y = 371, inputs = 1, label = fraction
+    //
+fraction = InterpolateCameraMacro_Compute_4_out_1;
+    // 
+    // node Receiver[3]: x = 1138, y = 281, inputs = 1, label = fraction
+    //
+InterpolateCameraMacro_Receiver_3_out_1[cache: 0] = fraction;
+    // 
+    // node Compute[7]: x = 955, y = 523, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 + $2*($1-$0)"
+    // expression: value = cam1 + fraction*(cam2-cam1)
+    // name[2]: value = cam1
+    // name[3]: value = cam2
+    // name[4]: value = fraction
+    //
+InterpolateCameraMacro_Compute_7_out_1 = 
+    Compute(
+    "$0 + $2*($1-$0)",
+    InterpolateCameraMacro_Inquire_2_out_1,
+    InterpolateCameraMacro_Inquire_5_out_1,
+    InterpolateCameraMacro_Receiver_3_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Inquire[3]: x = 914, y = 382, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera to"
+    //
+InterpolateCameraMacro_Inquire_3_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_1_out_1,
+    "camera to",
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Inquire[6]: x = 1317, y = 384, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera to"
+    //
+InterpolateCameraMacro_Inquire_6_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_2_out_1,
+    "camera to",
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Compute[10]: x = 1077, y = 521, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 + $2*($1-$0)"
+    // expression: value = cam1 + fraction*(cam2-cam1)
+    // name[2]: value = cam1
+    // name[3]: value = cam2
+    // name[4]: value = fraction
+    //
+InterpolateCameraMacro_Compute_10_out_1 = 
+    Compute(
+    "$0 + $2*($1-$0)",
+    InterpolateCameraMacro_Inquire_3_out_1,
+    InterpolateCameraMacro_Inquire_6_out_1,
+    InterpolateCameraMacro_Receiver_3_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Inquire[4]: x = 996, y = 382, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera up"
+    //
+InterpolateCameraMacro_Inquire_4_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_1_out_1,
+    "camera up",
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Inquire[7]: x = 1409, y = 384, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera up"
+    //
+InterpolateCameraMacro_Inquire_7_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_2_out_1,
+    "camera up",
+    NULL
+    ) [instance: 7, cache: 1];
+    // 
+    // node Compute[11]: x = 1176, y = 525, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 + $2*($1-$0)"
+    // expression: value = cam1 + fraction*(cam2-cam1)
+    // name[2]: value = cam1
+    // name[3]: value = cam2
+    // name[4]: value = fraction
+    //
+InterpolateCameraMacro_Compute_11_out_1 = 
+    Compute(
+    "$0 + $2*($1-$0)",
+    InterpolateCameraMacro_Inquire_4_out_1,
+    InterpolateCameraMacro_Inquire_7_out_1,
+    InterpolateCameraMacro_Receiver_3_out_1
+    ) [instance: 11, cache: 1];
+    // 
+    // node Inquire[8]: x = 1083, y = 385, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera angle"
+    //
+InterpolateCameraMacro_Inquire_8_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_1_out_1,
+    "camera angle",
+    NULL
+    ) [instance: 8, cache: 1];
+    // 
+    // node Inquire[9]: x = 1501, y = 387, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera angle"
+    //
+InterpolateCameraMacro_Inquire_9_out_1 = 
+    Inquire(
+    InterpolateCameraMacro_Receiver_2_out_1,
+    "camera angle",
+    NULL
+    ) [instance: 9, cache: 1];
+    // 
+    // node Compute[12]: x = 1305, y = 537, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 + $2*($1-$0)"
+    // expression: value = cam1 + fraction*(cam2-cam1)
+    // name[2]: value = cam1
+    // name[3]: value = cam2
+    // name[4]: value = fraction
+    //
+InterpolateCameraMacro_Compute_12_out_1 = 
+    Compute(
+    "$0 + $2*($1-$0)",
+    InterpolateCameraMacro_Inquire_8_out_1,
+    InterpolateCameraMacro_Inquire_9_out_1,
+    InterpolateCameraMacro_Receiver_3_out_1
+    ) [instance: 12, cache: 1];
+    // 
+    // node UpdateCamera[1]: x = 1036, y = 690, inputs = 10, label = UpdateCamera
+    //
+InterpolateCameraMacro_UpdateCamera_1_out_1 = 
+    UpdateCamera(
+    InterpolateCameraMacro_Receiver_1_out_1,
+    InterpolateCameraMacro_Compute_10_out_1,
+    InterpolateCameraMacro_Compute_7_out_1,
+    NULL,
+    NULL,
+    NULL,
+    InterpolateCameraMacro_Compute_11_out_1,
+    NULL,
+    InterpolateCameraMacro_Compute_12_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 1295, y = 728, inputs = 1, label = Output
+    // parameter: position = 1, name = 'newcamera', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+newcamera = InterpolateCameraMacro_UpdateCamera_1_out_1;
+// network: end of macro body
+}
+InterpolateCameraMacro_Input_2_out_1 = NULL;
+InterpolateCameraMacro_Input_3_out_1 = NULL;
+InterpolateCameraMacro_Input_1_out_1 = NULL;
+InterpolateCameraMacro_Inquire_1_out_1 = NULL;
+InterpolateCameraMacro_Compute_1_out_1 = NULL;
+InterpolateCameraMacro_Compute_3_out_1 = NULL;
+InterpolateCameraMacro_Compute_4_out_1 = NULL;
+InterpolateCameraMacro_Compute_5_out_1 = NULL;
+InterpolateCameraMacro_Compute_6_out_1 = NULL;
+InterpolateCameraMacro_Select_1_out_1 = NULL;
+InterpolateCameraMacro_Transmitter_1_out_1 = NULL;
+InterpolateCameraMacro_Receiver_1_out_1 = NULL;
+InterpolateCameraMacro_Inquire_2_out_1 = NULL;
+InterpolateCameraMacro_Select_2_out_1 = NULL;
+InterpolateCameraMacro_Select_3_out_1 = NULL;
+InterpolateCameraMacro_Switch_1_out_1 = NULL;
+InterpolateCameraMacro_Transmitter_2_out_1 = NULL;
+InterpolateCameraMacro_Receiver_2_out_1 = NULL;
+InterpolateCameraMacro_Inquire_5_out_1 = NULL;
+InterpolateCameraMacro_Transmitter_3_out_1 = NULL;
+InterpolateCameraMacro_Receiver_3_out_1 = NULL;
+InterpolateCameraMacro_Compute_7_out_1 = NULL;
+InterpolateCameraMacro_Inquire_3_out_1 = NULL;
+InterpolateCameraMacro_Inquire_6_out_1 = NULL;
+InterpolateCameraMacro_Compute_10_out_1 = NULL;
+InterpolateCameraMacro_Inquire_4_out_1 = NULL;
+InterpolateCameraMacro_Inquire_7_out_1 = NULL;
+InterpolateCameraMacro_Compute_11_out_1 = NULL;
+InterpolateCameraMacro_Inquire_8_out_1 = NULL;
+InterpolateCameraMacro_Inquire_9_out_1 = NULL;
+InterpolateCameraMacro_Compute_12_out_1 = NULL;
+InterpolateCameraMacro_UpdateCamera_1_out_1 = NULL;

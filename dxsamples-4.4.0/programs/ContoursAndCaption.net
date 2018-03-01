@@ -1,0 +1,885 @@
+//
+// time: Wed Apr  9 15:25:42 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+// CATEGORY Macros
+//
+// comment: This example shows the use of the scalar list interactor (or the Enumerate tool) to select a set of isosurface values.  The Isosurface module will create a set of contour lines, because the input to Isosurface is a surface rather than a volume, as it is the output of the MapToPlane module.  Choose Sequencer in the Execute menu, and press the play button.  Choose Open All Control Panels in the Windows menu to see the scalar list interactor. You can add or delete points in the list by using the Add and Delete buttons (values between 0 and 1 are good ones to try for this data set).  Because this example uses the Image tool, you can use the direct interactors in the View menu of the Image window.
+// comment: 
+// comment: This example uses the Sequencer and the Compute module to create a changing position for input to the MapToPlane module. Double-click on the Compute module to see how the output of the Sequencer is converted into a vector, which is the position for the MapToPlane.
+// comment: 
+// comment: This example also makes a caption for the image, which lists the current position of the MapToPlane.
+// comment: 
+// comment: To run this example, start by double-clicking on the Sequencer (or choose Sequencer from the Execute menu). Press the Play button (the right facing arrow).  You will see the image and the caption change.  
+// comment: 
+// comment: Notice that the max and min inputs to the AutoColor module are set to 0 and 1, respectively (double-click on the AutoColor tool to open its configuration dialog box). If these values were not set, then AutoColor would color each set of contours based on the minimum and maximum data values of that set. Since the set of contours varies as the position of the MapToPlane varies, colors would not have a consistent relationship to data values. One solution would be to pass the entire data field into AutoColor as the "min" input; this would tell AutoColor to create a color map based on the entire range of the data. However, because the data varies greatly, and has a very small number of very large data values, this is not an effective visualization (although you can try it to see what it looks like). Instead, we have explicitly set the range of data values which we want AutoColor to use to choose the color map. Any data values smaller than the minimum would be colored grey; any data values larger than the maximum would be colored red; this is accomplished using the "outofrange" parameter of AutoColor.
+// comment: 
+// comment: This example uses a "dots" rendering approximation if you rotate the object while in execute-on-change mode. You can find this option under "Rendering Options" in the "Options" menu of the Image window.
+// page assignment: contour_val	order=5, windowed=0, showing=0
+// page assignment: image	order=6, windowed=0, showing=0
+// page assignment: import	order=2, windowed=0, showing=1
+// page assignment: maptoplane	order=4, windowed=0, showing=0
+// page assignment: position	order=3, windowed=0, showing=0
+// workspace: width = 297, height = 336
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 134, y = 157, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    // page group: import
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 144, y = 274, inputs = 1, label = imported
+    // page group: import
+    //
+imported = main_Import_1_out_1;
+    // 
+    // node Receiver[2]: x = 42, y = 14, inputs = 1, label = imported
+    // page group: maptoplane
+    //
+main_Receiver_2_out_1[cache: 0] = imported;
+    // 
+    // node Sequencer[2]: x = 124, y = 88, inputs = 7, label = Sequencer
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Sequencer_2"
+    // input[4]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 1, visible = 0, type = 1, value = 30
+    // input[6]: defaulting = 1, visible = 0, type = 1, value = 2
+    // input[7]: defaulting = 0, visible = 0, type = 16777217, value = { 1 30 2 1 30 1 }
+    // page group: position
+    // vcr[2]: min = 1, max = 30, beg = 1, end = 30, cur = 1, inc = 2, loop = off, step = off, pal = off
+    // window: position = (0.0000,0.0000), size = 0.2188x0.0781
+    //
+    main_Sequencer_2_out_1 = @frame;
+    // 
+    // node Compute[1]: x = 132, y = 177, inputs = 2, label = Compute is being used to convert the Sequencer output into a series of positions for MapToPlane
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[1, 0, ($0/25. - 1.8)]"
+    // page group: position
+    // expression: value = [1, 0, (frame/25. - 1.8)]
+    // name[2]: value = frame
+    //
+main_Compute_1_out_1 = 
+    Compute(
+    main_Compute_1_in_1,
+    main_Sequencer_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 157, y = 267, inputs = 1, label = position
+    // page group: position
+    //
+position = main_Compute_1_out_1;
+    // 
+    // node Receiver[5]: x = 151, y = 15, inputs = 1, label = position
+    // page group: maptoplane
+    //
+main_Receiver_5_out_1[cache: 0] = position;
+    // 
+    // node MapToPlane[2]: x = 13, y = 109, inputs = 3, label = MapToPlane
+    // page group: maptoplane
+    //
+main_MapToPlane_2_out_1 = 
+    MapToPlane(
+    main_Receiver_2_out_1,
+    main_Receiver_5_out_1,
+    main_MapToPlane_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Selector[1]: x = 81, y = 214, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "use scalar list" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 1 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "use scalar list" "uniformly spaced from min to max" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 }
+    // output[1]: visible = 1, type = 29, value = 1 
+    // output[2]: visible = 1, type = 32, value = "use scalar list" 
+    // page group: contour_val
+    //
+    // 
+    // node ScalarList[1]: x = 165, y = 217, inputs = 11, label = ScalarList
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "ScalarList_1"
+    // input[3]: defaulting = 0, visible = 0, type = 16777221, value = { 0.0300000 0.0800000 0.160000 0.250000 0.350000 0.400000 0.690000 1.0 }
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 0.02
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 8.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "2"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 2
+    // output[1]: visible = 1, type = 16777221, value = { 0.0300000 0.0800000 0.160000 0.250000 0.350000 0.400000 0.690000 1.0 }
+    // page group: contour_val
+    //
+    // 
+    // node Receiver[7]: x = 66, y = 80, inputs = 1, label = imported
+    // page group: contour_val
+    //
+main_Receiver_7_out_1[cache: 0] = imported;
+    // 
+    // node Statistics[1]: x = 260, y = 236, inputs = 1, label = Statistics
+    // page group: contour_val
+    //
+main_Statistics_1_out_1,
+main_Statistics_1_out_2,
+main_Statistics_1_out_3,
+main_Statistics_1_out_4,
+main_Statistics_1_out_5 = 
+    Statistics(
+    main_Receiver_7_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Enumerate[1]: x = 218, y = 343, inputs = 5, label = Enumerate
+    // input[4]: defaulting = 0, visible = 1, type = 29, value = .25
+    // page group: contour_val
+    //
+main_Enumerate_1_out_1 = 
+    Enumerate(
+    main_Statistics_1_out_4,
+    main_Statistics_1_out_5,
+    main_Enumerate_1_in_3,
+    main_Enumerate_1_in_4,
+    main_Enumerate_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[1]: x = 165, y = 441, inputs = 3, label = Switch
+    // page group: contour_val
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Selector_1_out_1,
+    main_ScalarList_1_out_1,
+    main_Enumerate_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[4]: x = 158, y = 561, inputs = 1, label = contour_line_values
+    // page group: contour_val
+    //
+contour_line_values = main_Switch_1_out_1;
+    // 
+    // node Receiver[8]: x = 254, y = 20, inputs = 1, label = contour_line_values
+    // page group: maptoplane
+    //
+main_Receiver_8_out_1[cache: 0] = contour_line_values;
+    // 
+    // node Isosurface[1]: x = 46, y = 247, inputs = 6, label = Isosurface
+    // page group: maptoplane
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_MapToPlane_2_out_1,
+    main_Receiver_8_out_1,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[2]: x = 99, y = 348, inputs = 10, label = AutoColor
+    // input[7]: defaulting = 0, visible = 1, type = 5, value = 0.00000
+    // input[8]: defaulting = 0, visible = 1, type = 5, value = 1.00000
+    // input[10]: defaulting = 0, visible = 1, type = 16777248, value = {"grey" "red"}
+    // page group: maptoplane
+    //
+main_AutoColor_2_out_1,
+main_AutoColor_2_out_2 = 
+    AutoColor(
+    main_Isosurface_1_out_1,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[1]: x = 263, y = 101, inputs = 1, label = position
+    // page group: image
+    //
+main_Receiver_1_out_1[cache: 0] = position;
+    // 
+    // node Format[1]: x = 254, y = 210, inputs = 5, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "position of MapToPlane: %4.2f"
+    // page group: image
+    //
+main_Format_1_out_1 = 
+    Format(
+    main_Format_1_in_1,
+    main_Receiver_1_out_1,
+    main_Format_1_in_3,
+    main_Format_1_in_4,
+    main_Format_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Caption[1]: x = 265, y = 382, inputs = 9, label = Caption
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "fixed"
+    // page group: image
+    //
+main_Caption_1_out_1 = 
+    Caption(
+    main_Format_1_out_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowBox[2]: x = 4, y = 345, inputs = 1, label = ShowBox
+    // page group: maptoplane
+    //
+main_ShowBox_2_out_1,
+main_ShowBox_2_out_2 = 
+    ShowBox(
+    main_MapToPlane_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[2]: x = 24, y = 473, inputs = 2, label = Collect
+    // page group: maptoplane
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_ShowBox_2_out_1,
+    main_AutoColor_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[3]: x = 27, y = 545, inputs = 1, label = plane
+    // page group: maptoplane
+    //
+plane = main_Collect_2_out_1;
+    // 
+    // node Receiver[6]: x = 37, y = 93, inputs = 1, label = plane
+    // page group: image
+    //
+main_Receiver_6_out_1[cache: 0] = plane;
+    // 
+    // node Receiver[4]: x = 122, y = 94, inputs = 1, label = imported
+    // page group: image
+    //
+main_Receiver_4_out_1[cache: 0] = imported;
+    // 
+    // node ShowBox[1]: x = 127, y = 196, inputs = 1, label = ShowBox
+    // page group: image
+    //
+main_ShowBox_1_out_1,
+main_ShowBox_1_out_2 = 
+    ShowBox(
+    main_Receiver_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[3]: x = 111, y = 287, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "red"
+    // page group: image
+    //
+main_Color_3_out_1 = 
+    Color(
+    main_ShowBox_1_out_1,
+    main_Color_3_in_2,
+    main_Color_3_in_3,
+    main_Color_3_in_4,
+    main_Color_3_in_5
+    ) [instance: 3, cache: 1];
+    // 
+    // node Collect[1]: x = 84, y = 456, inputs = 3, label = Collect
+    // page group: image
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Receiver_6_out_1,
+    main_Color_3_out_1,
+    main_Caption_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[2]: x = 86, y = 554, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_2"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [0.95 -0.05 -1.05]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [-8.48571 5.36782 7.02201]
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 9.86198
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 640
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.75
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0.06979 0.864128 -0.49841]
+    // input[11]: defaulting = 0, visible = 0, type = 5, value = 40.0
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // page group: image
+    // depth: value = 24
+    // window: position = (0.3969,0.1318), size = 0.5109x0.5117
+    // internal caching: 1
+    //
+main_Image_2_out_1,
+main_Image_2_out_2,
+main_Image_2_out_3 = 
+    Image(
+    main_Image_2_in_1,
+    main_Collect_1_out_1,
+    main_Image_2_in_3,
+    main_Image_2_in_4,
+    main_Image_2_in_5,
+    main_Image_2_in_6,
+    main_Image_2_in_7,
+    main_Image_2_in_8,
+    main_Image_2_in_9,
+    main_Image_2_in_10,
+    main_Image_2_in_11,
+    main_Image_2_in_12,
+    main_Image_2_in_13,
+    main_Image_2_in_14,
+    main_Image_2_in_15,
+    main_Image_2_in_16,
+    main_Image_2_in_17,
+    main_Image_2_in_18,
+    main_Image_2_in_19,
+    main_Image_2_in_20,
+    main_Image_2_in_21,
+    main_Image_2_in_22,
+    main_Image_2_in_23,
+    main_Image_2_in_24,
+    main_Image_2_in_25,
+    main_Image_2_in_26,
+    main_Image_2_in_27,
+    main_Image_2_in_28,
+    main_Image_2_in_29,
+    main_Image_2_in_30,
+    main_Image_2_in_31,
+    main_Image_2_in_32,
+    main_Image_2_in_33,
+    main_Image_2_in_34,
+    main_Image_2_in_35,
+    main_Image_2_in_36,
+    main_Image_2_in_37,
+    main_Image_2_in_38,
+    main_Image_2_in_39,
+    main_Image_2_in_40,
+    main_Image_2_in_41,
+    main_Image_2_in_42,
+    main_Image_2_in_43,
+    main_Image_2_in_44,
+    main_Image_2_in_45,
+    main_Image_2_in_46,
+    main_Image_2_in_47,
+    main_Image_2_in_48
+    ) [instance: 2, cache: 1];
+    //
+    // decorator Annotate	pos=(101,49) size=196x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 26
+    // annotation user: This page imports the data
+    // annotation user_end: <NULL>
+    // page group: import
+    //
+    // decorator Annotate	pos=(95,23) size=487x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 103
+    // annotation user: This page uses the Sequencer to compute the current location of the
+    // annotation user: cutting plane of the visualization.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: position
+    //
+    // decorator Annotate	pos=(90,24) size=471x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 64
+    // annotation user: This page computes the contour line values based on user choice.
+    // annotation user_end: <NULL>
+    // page group: contour_val
+    //
+    // decorator Annotate	pos=(19,29) size=574x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 134
+    // annotation user: This page creates a box around the imported data, creates a caption, and collects
+    // annotation user: these with the cutting plane, then creates an image.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: image
+    //
+    // decorator Annotate	pos=(154,209) size=461x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 94
+    // annotation user: This page creates a cutting plane through the data (MapToPlane)
+    // annotation user: and draws contour lines on it.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: maptoplane
+// network: end of macro body
+CacheScene("Image_2", main_Image_2_out_1, main_Image_2_out_2);
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_Sequencer_2_in_1 = "Sequencer_2";
+main_Sequencer_2_in_2 = NULL;
+main_Sequencer_2_in_3 = NULL;
+main_Sequencer_2_in_4 = NULL;
+main_Sequencer_2_in_5 = NULL;
+main_Sequencer_2_in_6 = NULL;
+main_Sequencer_2_in_7 = { 1 30 2 1 30 1 };
+main_Sequencer_2_out_1 = NULL;
+
+@startframe = 1;
+@nextframe  = @startframe;
+@endframe   = 30;
+@deltaframe = 2;
+main_Compute_1_in_1 = "[1, 0, ($0/25. - 1.8)]";
+main_Compute_1_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_MapToPlane_2_in_3 = NULL;
+main_MapToPlane_2_out_1 = NULL;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "use scalar list" ;
+main_Selector_1_in_3 = 1 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_1 = 1 ;
+main_ScalarList_1_in_1 = "ScalarList_1";
+main_ScalarList_1_in_2 = NULL;
+main_ScalarList_1_in_3 = { 0.0300000 0.0800000 0.160000 0.250000 0.350000 0.400000 0.690000 1.0 };
+main_ScalarList_1_in_4 = NULL;
+main_ScalarList_1_in_5 = NULL;
+main_ScalarList_1_in_6 = NULL;
+main_ScalarList_1_in_7 = NULL;
+main_ScalarList_1_in_8 = NULL;
+main_ScalarList_1_in_9 = NULL;
+main_ScalarList_1_in_10 = NULL;
+main_ScalarList_1_in_11 = NULL;
+main_ScalarList_1_out_1 = { 0.0300000 0.0800000 0.160000 0.250000 0.350000 0.400000 0.690000 1.0 };
+main_Receiver_7_out_1 = NULL;
+main_Statistics_1_out_4 = NULL;
+main_Statistics_1_out_5 = NULL;
+main_Enumerate_1_in_3 = NULL;
+main_Enumerate_1_in_4 = .25;
+main_Enumerate_1_in_5 = NULL;
+main_Enumerate_1_out_1 = NULL;
+main_Switch_1_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_8_out_1 = NULL;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = NULL;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = NULL;
+main_AutoColor_2_in_7 = 0.00000;
+main_AutoColor_2_in_8 = 1.00000;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = {"grey" "red"};
+main_AutoColor_2_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Format_1_in_1 = "position of MapToPlane: %4.2f";
+main_Format_1_in_3 = NULL;
+main_Format_1_in_4 = NULL;
+main_Format_1_in_5 = NULL;
+main_Format_1_out_1 = NULL;
+main_Caption_1_in_2 = NULL;
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = NULL;
+main_Caption_1_in_7 = "fixed";
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_ShowBox_2_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_ShowBox_1_out_1 = NULL;
+main_Color_3_in_2 = "red";
+main_Color_3_in_3 = NULL;
+main_Color_3_in_4 = NULL;
+main_Color_3_in_5 = NULL;
+main_Color_3_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_2_in_1 = "Image_2";
+main_Image_2_in_3 = "X24,,";
+main_Image_2_in_4 = 1;
+main_Image_2_in_5 = [0.95 -0.05 -1.05];
+main_Image_2_in_6 = [-8.48571 5.36782 7.02201];
+main_Image_2_in_7 = NULL;
+main_Image_2_in_8 = 640;
+main_Image_2_in_9 = 0.75;
+main_Image_2_in_10 = [0.06979 0.864128 -0.49841];
+main_Image_2_in_11 = 40.0;
+main_Image_2_in_12 = 1;
+main_Image_2_in_13 = NULL;
+main_Image_2_in_14 = 1;
+main_Image_2_in_15 = NULL;
+main_Image_2_in_16 = NULL;
+main_Image_2_in_17 = NULL;
+main_Image_2_in_18 = NULL;
+main_Image_2_in_19 = 0;
+main_Image_2_in_20 = NULL;
+main_Image_2_in_21 = NULL;
+main_Image_2_in_22 = NULL;
+main_Image_2_in_23 = NULL;
+main_Image_2_in_25 = NULL;
+main_Image_2_in_26 = NULL;
+main_Image_2_in_27 = NULL;
+main_Image_2_in_28 = NULL;
+main_Image_2_in_29 = NULL;
+main_Image_2_in_30 = NULL;
+main_Image_2_in_31 = NULL;
+main_Image_2_in_32 = NULL;
+main_Image_2_in_33 = NULL;
+main_Image_2_in_34 = NULL;
+main_Image_2_in_35 = NULL;
+main_Image_2_in_36 = NULL;
+main_Image_2_in_37 = NULL;
+main_Image_2_in_38 = NULL;
+main_Image_2_in_39 = NULL;
+main_Image_2_in_40 = NULL;
+main_Image_2_in_41 = NULL;
+main_Image_2_in_42 = NULL;
+main_Image_2_in_43 = NULL;
+main_Image_2_in_44 = NULL;
+main_Image_2_in_45 = NULL;
+main_Image_2_in_46 = NULL;
+main_Image_2_in_47 = NULL;
+main_Image_2_in_48 = NULL;
+Executive("product version 3 1 4");
+$sync
+
+sequence main();
+play;

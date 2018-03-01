@@ -1,0 +1,52 @@
+There are a number of example visual programs in this directory. 
+Each one has a brief description, which may be found by choosing the 
+"Help on Visual Program" option in the Help menu of the Visual Program Editor.  
+You can also access the comment by choosing "Comments" when you have
+selected a visual program in the Data Explorer File Selection dialog box.
+These examples illustrate a few ways that you can put modules 
+together to make a visualization.
+
+There are a number of subdirectories of samples/programs. These
+subdirectories organize the sample visual programs by topic. So, for example,
+in 2D_DATA, you will find visual programs which
+visualize two-dimensional data.
+
+NOTES: 
+   The visual program PlotLine2 requires that the macro 
+   MakeLine_macro.net be loaded before the visual program can be opened. 
+
+   The visual program Bounce requires that the macro 
+   Matte_macro.net be loaded before the visual program can be opened. 
+
+   The visual program FlyThrough requires that the macro 
+   InterpolatePositions_Macro.net be loaded before the visual program can 
+   be opened. 
+
+   The visual program Factorial requires that the macro 
+   Factorial_macro.net be loaded before the visual program can 
+   be opened. 
+
+   All required macros can be found in this directory. 
+   To load a macro, go to the file menu and choose "Load Macro". 
+   Then select the macro.  
+
+Note that you will also find script language examples for many of 
+the modules in the directory samples/scripts.
+
+Only the example visual program ExampleSMP contains a Partition module. If you 
+are using DX SMP, this module will divide the data to take advantage 
+of the multiple processors, so you should use it just after import in
+any of your visual programs. If you are using DX, the Partition module 
+will have no effect, and is not necessary.
+
+If you Rotate the object you are viewing while in execute-on-change
+mode, or navigate within the images, some of the example visual programs
+will use an approximatation (typically a dot-surface representation)
+to increase the rendering speed. This option is set using the 
+"Rendering Options" choice in the Options menu of the Image window.
+You can disable the approximation by choosing "none" for button-down
+approximation, or alternatively you can enable the approximation for
+visual programs which do not use it by choosing an approximation for
+button-down rendering.
+
+

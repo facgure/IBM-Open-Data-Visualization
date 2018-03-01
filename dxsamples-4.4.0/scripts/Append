@@ -1,0 +1,31 @@
+// Append can be used to append a field onto an already existing series
+// (or multigrid, or group).
+
+
+// First, create a series
+field1 = Construct(origin = [0 0], counts=[3 3], data= {1.0 .. 9.0});
+field2 = Construct(origin = [3 3], counts=[3 3], data= {10.0 .. 18.0});
+series = CollectSeries(field1, 1, field2, 2);
+
+// Now create a third field and Append it to the series
+field3 = Construct(origin = [3 0], counts=[3 3], data= {19.0 .. 27.0});
+newseries = Append(series, field3, 3);
+// The new object is a series with three members
+Print(newseries,"r1");
+
+// The new series will be colored as a single entity by AutoColor
+colored = AutoColor(newseries);
+camera = AutoCamera(newseries);
+Display(colored,camera);
+KeyIn("original series + appended field, colored as a whole (press enter to continue)");
+
+
+// contrast to this just using collect. In this case, the series and
+// the separate field will be colored separately.
+group = Collect(series, field3);
+// The new object is a group with two members: a series and a field
+Print(group,"r1");
+colored = AutoColor(group);
+camera = AutoCamera(group);
+Display(colored,camera);
+KeyIn("original series + appended field, colored as separate entities (press enter to continue)");

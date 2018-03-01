@@ -1,0 +1,67 @@
+This directory contains template makefiles for creating
+inboard, outboard, and runtime-loadable modules. The
+modules themselves (the .c files) are the same in each case.
+The differences are 
+     1) the .mdf (module description file)
+     2) the compilation and linking process (i.e. the Makefile)
+     3) the way you start dx using your module.
+
+Inboard modules are compiled into Data Explorer.  In other
+words, you are replacing the version of dxexec (usually)
+found in bin_architecture with your own copy.
+To start dx using inboard modules, you need to give the
+user interface the module description file, and you need to
+specify the dxexec to use:  
+        dx -mdf my.mdf -exec mydxexec
+(you can also load the module description file after dx is
+started using Load Module Description in the File menu, and
+you can restart the executive by using Disconnect from Server
+and Start Server in the Connection menu.  Note that you would
+need to specify the dxexec to start using Options in the 
+Start Server dialog).
+
+Outboard modules run as separate processes. They are quick
+to link, as you are not creating an entire version of 
+Data Explorer when you link. However outboard modules will
+typically be less efficient to use, especially if significant
+amounts of data need to be transferred to and from the
+outboard module. This is because data objects need to be
+passed to and from the outboard module via sockets, rather
+than as pointers to shared memory. To start dx using
+outboard modules, you need to give the user interface
+the module description file:  
+       dx -mdf my.mdf
+(you can also load the module description file after dx is
+started using Load Module Description in the File menu.)
+
+Runtime-loadable modules are, as their name implies, loadable
+once Data Explorer is running. You do not need to maintain
+a separate copy of dxexec as you do with inboard modules.
+To start dx using runtime-loadable modules, you need to give
+the user interface the module description file: 
+       dx -mdf my.mdf
+(you can also load the module description file after dx is
+started using Load Module Description in the File menu.)
+Runtime-loadable modules are not available on the IBM
+Power Visualization System, Sun OS 4.1, and Data General Aviion.
+
+The makefiles "Makefile_inboard_machine_arch_name" are templates for
+creating inboard modules. Simply replace makex.o, add.o, and hello.o
+with the names of your .o files. These makefiles assumes that
+user_inboard.mdf is the name of the module description file which
+describes all of your modules.
+
+The makefiles "Makefile_outboard_machine_arch_name" are
+templates for creating outboard modules. Simply replace
+"hello.o", etc. with the names of your .o files, replace 
+"m_Hello" etc. with the names of your modules, and replace 
+"hello", etc. with the names you want for your executables. 
+The .mdf file for the outboard modules is user_outboard.mdf.
+
+The makefiles "Makefile_loadable_machine_arch_name" are
+templates for creating runtime loadable modules. "loadablelib"
+is an example of how to make a "library" of runtime loadable
+modules; simply replace makex and add by the names of your
+modules. "hello" is an example of how to make an executable
+containing a single module. See also the mdf files hello_loadable.mdf
+and user_loadable.mdf. 

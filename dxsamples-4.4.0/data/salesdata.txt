@@ -1,0 +1,12 @@
+product     region    salesperson      sales
+tractors     NE           joe             1.3
+tractors     NW           mary            3.4
+trucks       SOUTH        joe             3.2
+bicycles     SOUTH        lisa            2.3
+canoes       SOUTH        lisa            5.0
+bicycles     WEST         mary            1.2
+rowboats     NE           joe             3.2
+rowboats     SOUTH        bob             2.2
+trucks       NW           mary            4.3
+canoes       WEST         bob             1.3
+ 

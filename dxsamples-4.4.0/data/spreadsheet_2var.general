@@ -1,0 +1,12 @@
+file = spreadsheet_2var
+grid = 5 x 8 x 6
+format = text
+interleaving = field
+majority = row
+field = temperature, velocity
+structure = scalar, 3-vector
+type = float, float
+dependency = positions, positions
+positions = regular, regular, regular, 0, 1, 0, 1, 0, 1
+
+end

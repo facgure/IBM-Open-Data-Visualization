@@ -1,0 +1,543 @@
+//
+// time: Tue Apr 29 13:20:27 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// MODULE main
+//
+// comment: This visual programs shows the use of several standard colormaps which have been included with Data Explorer. These colormaps are part of the PRAVDA (Perceptual Rule-based Architecture for Visualizing Data Accurately) package available on the Data Explorer bonus pak.  PRAVDA provides many additional colormaps, but more importantly, will suggest the most appropriate colormap to use for a given application, based on characteristics of the data. 
+// comment: 
+// comment: The topography colormaps have data values applicable to data sets with heights measured in either meters or kilometers. It is not appropriate to use these maps with data which is not measured in these units, as the colormaps are being pinned to a particular range of data. For all of the other maps, the colormaps are automatically scaled to the data set under consideration.
+// page assignment: choose_map	order=3, windowed=0, showing=0
+// page assignment: data	order=2, windowed=0, showing=0
+// page assignment: display	order=4, windowed=0, showing=1
+// workspace: width = 831, height = 574
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Selector[2]: x = 33, y = 20, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_2"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "topo_one_deg.dx" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "ROM_ozone.dx" "magnetism.dx" "head_slice.dx" "topo_one_deg.dx" "southeastern_topo.dx" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 0 0 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "topo_one_deg.dx" 
+    // page group: data
+    //
+    // 
+    // node Format[2]: x = 55, y = 92, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "%s"
+    // page group: data
+    //
+main_Format_2_out_1 = 
+    Format(
+    main_Format_2_in_1,
+    main_Selector_2_out_2,
+    main_Format_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Import[1]: x = 81, y = 170, inputs = 6, label = Import
+    // input[1]: defaulting = 1, visible = 1, type = 32, value = "southeastern_topo.dx"
+    // page group: data
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Format_2_out_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 74, y = 291, inputs = 1, label = data_set
+    // page group: data
+    //
+data_set = main_Import_1_out_1;
+    // 
+    // node Receiver[1]: x = 41, y = 81, inputs = 1, label = data_set
+    // page group: display
+    //
+main_Receiver_1_out_1[cache: 0] = data_set;
+    // 
+    // node Selector[1]: x = 37, y = 76, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "segmented black to red; for high spatial freq" 
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "segmented_black-red" 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "continuous blue to yellow; for low spatial freq" "continuous cyan to red; for low spatial freq" "continuous; for mixed spatial freq" "continuous violet to white; for high spatial freq" "segmented black to red; for high spatial freq" "segmented green to white; for high spatial freq" "segmented; for high spatial freq" "segmented hue" "segmented; for low spatial freq" "heat" "rain" "topography gray (km) (use for topo_1_deg data)" "topography gray (m) (use for southeastern_topo data)" "topography (km) (use for topo_1_deg data)" "topography (m) (use for southeastern_topo data)" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 32, value = "segmented_black-red" 
+    // output[2]: visible = 1, type = 32, value = "segmented black to red; for high spatial freq" 
+    // page group: choose_map
+    //
+    // 
+    // node Inquire[1]: x = 219, y = 280, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "topography_km-gray"
+    // page group: choose_map
+    //
+main_Inquire_1_out_1 = 
+    Inquire(
+    main_Selector_1_out_1,
+    main_Inquire_1_in_2,
+    main_Inquire_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[2]: x = 302, y = 278, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "topography_m-gray"
+    // page group: choose_map
+    //
+main_Inquire_2_out_1 = 
+    Inquire(
+    main_Selector_1_out_1,
+    main_Inquire_2_in_2,
+    main_Inquire_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Inquire[3]: x = 394, y = 278, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "topography_km"
+    // page group: choose_map
+    //
+main_Inquire_3_out_1 = 
+    Inquire(
+    main_Selector_1_out_1,
+    main_Inquire_3_in_2,
+    main_Inquire_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node Inquire[4]: x = 489, y = 278, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "topography_m"
+    // page group: choose_map
+    //
+main_Inquire_4_out_1 = 
+    Inquire(
+    main_Selector_1_out_1,
+    main_Inquire_4_in_2,
+    main_Inquire_4_in_3
+    ) [instance: 4, cache: 1];
+    // 
+    // node Compute[1]: x = 339, y = 396, inputs = 5, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0||$1||$2||$3) + 1"
+    // page group: choose_map
+    // expression: value = (a||b||c||d) + 1
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+    //
+main_Compute_1_out_1 = 
+    Compute(
+    main_Compute_1_in_1,
+    main_Inquire_1_out_1,
+    main_Inquire_2_out_1,
+    main_Inquire_3_out_1,
+    main_Inquire_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[2]: x = 450, y = 431, inputs = 1, label = data_set
+    // page group: choose_map
+    //
+main_Receiver_2_out_1[cache: 0] = data_set;
+    // 
+    // node Format[1]: x = 22, y = 190, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "%s.cm"
+    // page group: choose_map
+    //
+main_Format_1_out_1 = 
+    Format(
+    main_Format_1_in_1,
+    main_Selector_1_out_1,
+    main_Format_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Import[2]: x = 2, y = 281, inputs = 6, label = Import
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "colormap"
+    // page group: choose_map
+    //
+main_Import_2_out_1 = 
+    Import(
+    main_Format_1_out_1,
+    main_Import_2_in_2,
+    main_Import_2_in_3,
+    main_Import_2_in_4,
+    main_Import_2_in_5,
+    main_Import_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Mark[1]: x = 220, y = 413, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: choose_map
+    //
+main_Mark_1_out_1 = 
+    Mark(
+    main_Import_2_out_1,
+    main_Mark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 196, y = 497, inputs = 1, label = cmap_positions
+    // page group: choose_map
+    //
+cmap_positions = main_Mark_1_out_1;
+    // 
+    // node Receiver[5]: x = 520, y = 427, inputs = 1, label = cmap_positions
+    // page group: choose_map
+    //
+main_Receiver_5_out_1[cache: 0] = cmap_positions;
+    // 
+    // node Switch[1]: x = 372, y = 529, inputs = 3, label = Switch
+    // page group: choose_map
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Compute_1_out_1,
+    main_Receiver_2_out_1,
+    main_Receiver_5_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Colormap[1]: x = 35, y = 460, inputs = 19, label = Colormap
+    // input[1]: defaulting = 0, visible = 0, type = 16777224, value = {[0 0.66666001 ] [0.16666667 0.66666001 ] [0.16666667 0.533328 ] [0.33333334 0.533328 ] [0.33333334 0.39999601 ] [0.5 0.39999601 ] [0.5 0.266664 ] [0.66666669 0.266664 ] [0.66666669 0.133332 ] [0.83333331 0.133332 ] [0.83333331 0 ] [1 0 ] }
+    // input[2]: defaulting = 0, visible = 0, type = 16777224, value = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] }
+    // input[3]: defaulting = 0, visible = 0, type = 16777224, value = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] }
+    // input[4]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[5]: defaulting = 0, visible = 0, type = 32, value = "Colormap_1"
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = -6.8196874
+    // input[8]: defaulting = 1, visible = 0, type = 5, value = 5.4873819
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 20
+    // input[12]: defaulting = 0, visible = 0, type = 16777221, value = { -6.8196874 5.4873819 }
+    // input[13]: defaulting = 0, visible = 0, type = 16777224, value = {[0 0.66666001 ] [0.16666667 0.66666001 ] [0.16666667 0.533328 ] [0.33333334 0.533328 ] [0.33333334 0.39999601 ] [0.5 0.39999601 ] [0.5 0.266664 ] [0.66666669 0.266664 ] [0.66666669 0.133332 ] [0.83333331 0.133332 ] [0.83333331 0 ] [1 0 ] }
+    // input[14]: defaulting = 0, visible = 0, type = 16777224, value = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] }
+    // input[15]: defaulting = 0, visible = 0, type = 16777224, value = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] }
+    // input[17]: defaulting = 0, visible = 0, type = 5, value = -6.8196874
+    // input[18]: defaulting = 0, visible = 0, type = 5, value = 5.4873819
+    // page group: choose_map
+    // window: position = (0.4109,0.2188), size = 0.5078x0.4395
+    //
+main_Colormap_1_out_1[cache: 2],
+main_Colormap_1_out_2[cache: 2] = 
+    Colormap(
+    main_Colormap_1_in_1,
+    main_Colormap_1_in_2,
+    main_Colormap_1_in_3,
+    main_Colormap_1_in_4,
+    main_Colormap_1_in_5,
+    main_Switch_1_out_1,
+    main_Colormap_1_in_7,
+    main_Colormap_1_in_8,
+    main_Colormap_1_in_9,
+    main_Import_2_out_1,
+    main_Colormap_1_in_11,
+    main_Colormap_1_in_12,
+    main_Colormap_1_in_13,
+    main_Colormap_1_in_14,
+    main_Colormap_1_in_15,
+    main_Colormap_1_in_16,
+    main_Colormap_1_in_17,
+    main_Colormap_1_in_18,
+    main_Colormap_1_in_19
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 45, y = 560, inputs = 1, label = colormap
+    // page group: choose_map
+    //
+colormap = main_Colormap_1_out_1;
+    // 
+    // node Receiver[3]: x = 249, y = 76, inputs = 1, label = colormap
+    // page group: display
+    //
+main_Receiver_3_out_1[cache: 0] = colormap;
+    // 
+    // node Color[1]: x = 101, y = 191, inputs = 5, label = Color
+    // page group: display
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_Receiver_1_out_1,
+    main_Receiver_3_out_1,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 312, y = 342, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 1, visible = 1, type = 32, value = "off-front"
+    // input[9]: defaulting = 0, visible = 1, type = 8, value = [.25 .25 .25]
+    // page group: display
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Color_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[2]: x = 418, y = 345, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "back"
+    // input[6]: defaulting = 0, visible = 1, type = 8, value = [1 0 0]
+    // input[9]: defaulting = 0, visible = 1, type = 8, value = [.25 .25 .25]
+    // page group: display
+    //
+main_AutoCamera_2_out_1 = 
+    AutoCamera(
+    main_Color_1_out_1,
+    main_AutoCamera_2_in_2,
+    main_AutoCamera_2_in_3,
+    main_AutoCamera_2_in_4,
+    main_AutoCamera_2_in_5,
+    main_AutoCamera_2_in_6,
+    main_AutoCamera_2_in_7,
+    main_AutoCamera_2_in_8,
+    main_AutoCamera_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node ColorBar[1]: x = 393, y = 199, inputs = 14, label = ColorBar
+    // page group: display
+    //
+main_ColorBar_1_out_1 = 
+    ColorBar(
+    main_Receiver_3_out_1,
+    main_ColorBar_1_in_2,
+    main_ColorBar_1_in_3,
+    main_ColorBar_1_in_4,
+    main_ColorBar_1_in_5,
+    main_ColorBar_1_in_6,
+    main_ColorBar_1_in_7,
+    main_ColorBar_1_in_8,
+    main_ColorBar_1_in_9,
+    main_ColorBar_1_in_10,
+    main_ColorBar_1_in_11,
+    main_ColorBar_1_in_12,
+    main_ColorBar_1_in_13,
+    main_ColorBar_1_in_14
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[1]: x = 99, y = 367, inputs = 2, label = Collect
+    // page group: display
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Color_1_out_1,
+    main_ColorBar_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[4]: x = 206, y = 72, inputs = 1, label = data_set_name
+    // page group: data
+    //
+data_set_name = main_Selector_2_out_2;
+    // 
+    // node Receiver[6]: x = 182, y = 349, inputs = 1, label = data_set_name
+    // page group: display
+    //
+main_Receiver_6_out_1[cache: 0] = data_set_name;
+    // 
+    // node Inquire[5]: x = 222, y = 427, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match + 1"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "topo_one_deg.dx"
+    // page group: display
+    //
+main_Inquire_5_out_1 = 
+    Inquire(
+    main_Receiver_6_out_1,
+    main_Inquire_5_in_2,
+    main_Inquire_5_in_3
+    ) [instance: 5, cache: 1];
+    // 
+    // node Switch[2]: x = 312, y = 430, inputs = 3, label = Switch
+    // page group: display
+    //
+main_Switch_2_out_1 = 
+    Switch(
+    main_Inquire_5_out_1,
+    main_AutoCamera_1_out_1,
+    main_AutoCamera_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Display[1]: x = 147, y = 512, inputs = 8, label = Display
+    // page group: display
+    // depth: value = 24
+    // window: position = (0.4086,0.2578), size = 0.5109x0.5117
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Collect_1_out_1,
+    main_Switch_2_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(241,169) size=323x108 style(Label), value = <NULL>
+    // annotation user_begin: 228
+    // annotation user: If one of the topography colormaps is
+    // annotation user: chosen, then the "positions" of the colormap
+    // annotation user: matter; they are used to set the range of the
+    // annotation user: colormap editor in this case. Otherwise, the
+    // annotation user: map is allowed to range over the range of 
+    // annotation user: input data.
+    // annotation user_end: <NULL>
+    // page group: choose_map
+    //
+    // decorator Annotate	pos=(129,0) size=323x140 style(Label), value = <NULL>
+    // annotation user_begin: 296
+    // annotation user: A   sampling  of  different colormaps are
+    // annotation user: presented. These colormaps are taken
+    // annotation user: from PRAVDA Color (Perceptual Rule-based
+    // annotation user: Architecture for Visualizing Data
+    // annotation user: Accurately),  which  is  available on  the
+    // annotation user: Data Explorer bonus pak. See also
+    // annotation user: http://www.almaden.ibm.com/dx/vis96/
+    // annotation user: proceedings/PRAVDA/index.htm
+    // annotation user_end: <NULL>
+    // page group: choose_map
+    //
+    // decorator Annotate	pos=(392,447) size=439x28 style(Label), value = <NULL>
+    // annotation user_begin: 62
+    // annotation user: a different camera is used for the "topo_one_deg.dx" data set.
+    // annotation user_end: <NULL>
+    // page group: display
+// network: end of macro body
+}
+main_Selector_2_in_1 = "Selector_2";
+main_Selector_2_in_2 = "topo_one_deg.dx" ;
+main_Selector_2_in_3 = 0 ;
+main_Selector_2_in_4 = NULL;
+main_Selector_2_in_5 = NULL;
+main_Selector_2_in_6 = NULL;
+main_Selector_2_in_7 = NULL;
+main_Selector_2_out_2 = "topo_one_deg.dx" ;
+main_Format_2_in_1 = "%s";
+main_Format_2_in_3 = NULL;
+main_Format_2_out_1 = NULL;
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "segmented black to red; for high spatial freq" ;
+main_Selector_1_in_3 = "segmented_black-red" ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_1 = "segmented_black-red" ;
+main_Inquire_1_in_2 = "string match";
+main_Inquire_1_in_3 = "topography_km-gray";
+main_Inquire_1_out_1 = NULL;
+main_Inquire_2_in_2 = "string match";
+main_Inquire_2_in_3 = "topography_m-gray";
+main_Inquire_2_out_1 = NULL;
+main_Inquire_3_in_2 = "string match";
+main_Inquire_3_in_3 = "topography_km";
+main_Inquire_3_out_1 = NULL;
+main_Inquire_4_in_2 = "string match";
+main_Inquire_4_in_3 = "topography_m";
+main_Inquire_4_out_1 = NULL;
+main_Compute_1_in_1 = "($0||$1||$2||$3) + 1";
+main_Compute_1_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_Format_1_in_1 = "%s.cm";
+main_Format_1_in_3 = NULL;
+main_Format_1_out_1 = NULL;
+main_Import_2_in_2 = "colormap";
+main_Import_2_in_3 = NULL;
+main_Import_2_in_4 = NULL;
+main_Import_2_in_5 = NULL;
+main_Import_2_in_6 = NULL;
+main_Import_2_out_1 = NULL;
+main_Mark_1_in_2 = "positions";
+main_Mark_1_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_Switch_1_out_1 = NULL;
+main_Colormap_1_in_1 = {[0 0.66666001 ] [0.16666667 0.66666001 ] [0.16666667 0.533328 ] [0.33333334 0.533328 ] [0.33333334 0.39999601 ] [0.5 0.39999601 ] [0.5 0.266664 ] [0.66666669 0.266664 ] [0.66666669 0.133332 ] [0.83333331 0.133332 ] [0.83333331 0 ] [1 0 ] };
+main_Colormap_1_in_2 = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] };
+main_Colormap_1_in_3 = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] };
+main_Colormap_1_in_4 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_5 = "Colormap_1";
+main_Colormap_1_in_7 = NULL;
+main_Colormap_1_in_8 = NULL;
+main_Colormap_1_in_9 = NULL;
+main_Colormap_1_in_11 = NULL;
+main_Colormap_1_in_12 = { -6.8196874 5.4873819 };
+main_Colormap_1_in_13 = {[0 0.66666001 ] [0.16666667 0.66666001 ] [0.16666667 0.533328 ] [0.33333334 0.533328 ] [0.33333334 0.39999601 ] [0.5 0.39999601 ] [0.5 0.266664 ] [0.66666669 0.266664 ] [0.66666669 0.133332 ] [0.83333331 0.133332 ] [0.83333331 0 ] [1 0 ] };
+main_Colormap_1_in_14 = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] };
+main_Colormap_1_in_15 = {[0 0 ] [0.16666667 0 ] [0.16666667 0.2 ] [0.33333334 0.2 ] [0.33333334 0.40000001 ] [0.5 0.40000001 ] [0.5 0.60000002 ] [0.66666669 0.60000002 ] [0.66666669 0.80000001 ] [0.83333331 0.80000001 ] [0.83333331 1 ] [1 1 ] };
+main_Colormap_1_in_16 = NULL;
+main_Colormap_1_in_17 = -6.8196874;
+main_Colormap_1_in_18 = 5.4873819;
+main_Colormap_1_in_19 = NULL;
+main_Colormap_1_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = NULL;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = [.25 .25 .25];
+main_AutoCamera_1_out_1 = NULL;
+main_AutoCamera_2_in_2 = "back";
+main_AutoCamera_2_in_3 = NULL;
+main_AutoCamera_2_in_4 = NULL;
+main_AutoCamera_2_in_5 = NULL;
+main_AutoCamera_2_in_6 = [1 0 0];
+main_AutoCamera_2_in_7 = NULL;
+main_AutoCamera_2_in_8 = NULL;
+main_AutoCamera_2_in_9 = [.25 .25 .25];
+main_AutoCamera_2_out_1 = NULL;
+main_ColorBar_1_in_2 = NULL;
+main_ColorBar_1_in_3 = NULL;
+main_ColorBar_1_in_4 = NULL;
+main_ColorBar_1_in_5 = NULL;
+main_ColorBar_1_in_6 = NULL;
+main_ColorBar_1_in_7 = NULL;
+main_ColorBar_1_in_8 = NULL;
+main_ColorBar_1_in_9 = NULL;
+main_ColorBar_1_in_10 = NULL;
+main_ColorBar_1_in_11 = NULL;
+main_ColorBar_1_in_12 = NULL;
+main_ColorBar_1_in_13 = NULL;
+main_ColorBar_1_in_14 = NULL;
+main_ColorBar_1_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Inquire_5_in_2 = "string match + 1";
+main_Inquire_5_in_3 = "topo_one_deg.dx";
+main_Inquire_5_out_1 = NULL;
+main_Switch_2_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

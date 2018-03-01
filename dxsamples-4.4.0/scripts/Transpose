@@ -1,0 +1,19 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// Partition for parallelism
+electrondensity = Partition(electrondensity);
+
+// Show the bounding box of the data
+box = ShowBox(electrondensity);
+
+// Create a camera and display the bounding box
+camera = AutoCamera(electrondensity,"off-diagonal");
+Display(box,camera);
+
+// Transpose the data so that the y and z axes are interchanged
+transposed = Transpose(electrondensity,{0 2 1});
+
+// Display the new bounding box
+box = ShowBox(transposed);
+Display(box,camera);

@@ -1,0 +1,39 @@
+// Import the data
+electrondensity = Import("watermolecule");
+// Partition the data
+electrondensity = Partition(electrondensity);
+// Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+box = ShowBox(isosurface);
+collected = Collect(box,isosurface);
+
+
+// create a camera looking out roughly along the [1 1 1] direction.
+// The aspect ratio is 1, and the resolution is 300 pixels
+// Display the isosurface using this camera
+camera = AutoCamera(isosurface,"off-diagonal",resolution = 300, aspect = 1);
+Display(collected,camera);
+
+
+// create a camera looking out along the y direction.
+// The aspect ratio is 0.5, and the resolution is 300 pixels
+// Display the isosurface using this camera
+camera = AutoCamera(isosurface,"top",resolution = 300, aspect = 0.5);
+Display(collected,camera);
+
+// create a camera looking out along the z direction.
+// The aspect ratio is 0.5, and the resolution is 300 pixels
+// Change the up direction of the camera so that the "x" direction is up
+// Display the isosurface using this camera
+camera = AutoCamera(isosurface,"front",resolution = 300, aspect = 0.5, 
+    up=[1 0 0]);
+Display(collected,camera);
+
+// create a perspective camera looking out along the z direction.
+// The aspect ratio is 0.5, and the resolution is 300 pixels
+// Change the up direction of the camera so that the "x" direction is up
+// Display the isosurface using this camera
+camera = AutoCamera(isosurface,"front",resolution = 300, aspect = 0.5, 
+    up=[1 0 0], perspective = 1);
+Display(collected,camera);
+

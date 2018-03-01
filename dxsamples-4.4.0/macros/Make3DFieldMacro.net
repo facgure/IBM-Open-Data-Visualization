@@ -1,0 +1,98 @@
+//
+// time: Wed Feb 12 11:23:35 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE Make3DField
+// CATEGORY Macros
+// DESCRIPTION creates a field with three dimensional positions from the data components of three input fields
+// INPUT x_axis; value list or field or string or string list; (none); field containing data values which should end up as x axis positions
+// INPUT y_axis; value list or field or string or string list; (none); field containing data which should end up as y axis positions
+// INPUT z_axis; value list or field or string or string list; (none); field containing positions which should end up as z axis positions
+// INPUT data; value list or string list; (no default); data values for new field
+// OUTPUT new_field; field; new field 
+// End MDF
+//
+// comment: Given three fields with scalar data components, creates an output field with scattered positions at [x, y, z], where the x's are taken from the data component of the first field, the y's are taken from the data component of the second field, and the z's are taken from the data component of the third field.  Optionally adds a data component to the output field if given a fourth field. All four fields should have the name number of data values.
+// comment: 
+// comment: This macro is used by the sample program ScatterData in samples/programs.
+// workspace: width = 370, height = 562
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro Make3DField(
+ x_axis
+,y_axis
+,z_axis
+,data
+) -> (
+ new_field
+) {
+    // 
+    // node Input[6]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'x_axis', value = ' ', descriptive = 0, description = 'field containing data values which should end up as x axis positions', required = 1, visible = 1
+    //
+Make3DField_Input_6_out_1 = x_axis;
+    // 
+    // node Input[7]: x = 53, y = 6, inputs = 0, label = Input
+    // parameter: position = 2, name = 'y_axis', value = ' ', descriptive = 0, description = 'field containing data which should end up as y axis positions', required = 1, visible = 1
+    //
+Make3DField_Input_7_out_1 = y_axis;
+    // 
+    // node Input[8]: x = 134, y = 7, inputs = 0, label = Input
+    // parameter: position = 3, name = 'z_axis', value = ' ', descriptive = 0, description = 'field containing positions which should end up as z axis positions', required = 1, visible = 1
+    //
+Make3DField_Input_8_out_1 = z_axis;
+    // 
+    // node Compute[7]: x = 35, y = 222, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0, $1,$2]"
+    // expression: value = [a, b,c]
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    //
+Make3DField_Compute_7_out_1 = 
+    Compute(
+    "[$0, $1,$2]",
+    Make3DField_Input_6_out_1,
+    Make3DField_Input_7_out_1,
+    Make3DField_Input_8_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Extract[17]: x = 45, y = 303, inputs = 2, label = Extract
+    //
+Make3DField_Extract_17_out_1 = 
+    Extract(
+    Make3DField_Compute_7_out_1,
+    NULL
+    ) [instance: 17, cache: 1];
+    // 
+    // node Input[9]: x = 328, y = 94, inputs = 0, label = Input
+    // parameter: position = 4, name = 'data', value = '(no default)', descriptive = 1, description = 'data values for new field', required = 0, visible = 1
+    //
+Make3DField_Input_9_out_1 = data;
+    // 
+    // node Construct[4]: x = 126, y = 345, inputs = 4, label = Construct
+    //
+Make3DField_Construct_4_out_1 = 
+    Construct(
+    Make3DField_Extract_17_out_1,
+    NULL,
+    NULL,
+    Make3DField_Input_9_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Output[4]: x = 121, y = 500, inputs = 1, label = Output
+    // parameter: position = 1, name = 'new_field', value = ' ', descriptive = 0, description = 'new field ', required = 0, visible = 1
+    //
+new_field = Make3DField_Construct_4_out_1;
+// network: end of macro body
+}
+Make3DField_Input_6_out_1 = NULL;
+Make3DField_Input_7_out_1 = NULL;
+Make3DField_Input_8_out_1 = NULL;
+Make3DField_Compute_7_out_1 = NULL;
+Make3DField_Extract_17_out_1 = NULL;
+Make3DField_Input_9_out_1 = NULL;
+Make3DField_Construct_4_out_1 = NULL;

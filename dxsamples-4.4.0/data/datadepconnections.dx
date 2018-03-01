@@ -1,0 +1,38 @@
+# This example describes a regular 2-dimensional grid. In this example, 
+# unlike other examples in this directory, the data are dependent on (in a
+# one-to-one correspondence with) the connections component, rather than
+# the positions component. Data Explorer interprets this as implying that
+# the data value within each connection element is the constant given by
+# the corresponding data value. If, for example, you AutoColored and 
+# rendered this field, you would see blocks of constant color.
+#
+# object 1 are the regular positions. The grid is 4x4. The origin is
+# at [0 0], and the deltas are 1 in the first dimension, and
+# 2 in the second dimension
+#
+object 1 class gridpositions counts 4 4 
+origin             0             0             
+delta             1             0             
+delta             0             2             
+#
+# object 2 are the regular connections, quads, connecting the positions
+#
+object 2 class gridconnections counts 4 4 
+#
+# object 3 are the data, which are in a one-to-one correspondence with
+# the connections ("dep" on connections)
+#
+object 3 class array type float rank 0 items 9 data follows
+           1          3.4            5            2          
+           3.2        5.5            0.3          4.5  
+           4.0
+attribute "dep" string "connections"
+#
+# A field is created with three components: "positions", "connections",
+# and "data"
+object "regular positions regular connections" class field
+component "positions" value 1
+component "connections" value 2
+component "data" value 3
+#
+end

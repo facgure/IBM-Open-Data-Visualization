@@ -1,0 +1,16 @@
+BASE=/usr/lpp/dx
+
+# The -Aa (ANSI mode) option is only supported by the C compiler sold
+# as an optional separate product.
+CFLAGS=-O -Dhp700 -I$(BASE)/include -Aa -D_HPUX_SOURCE
+
+LDFLAGS     = -L$(BASE)/lib_hp700 -L/usr/lib/X11R5  -Wl,-E 
+LIBS        = -lDX -ly -ll -lm -lX11 -ldld
+LITELIBS    = -L$(BASE)/lib_hp700 -lDXlite -lm
+LDLIBFLAGS = -q -b -E -e DXEntry
+SYSLIBS = -ldld -lm -lc
+
+interactors:	interactors.c
+	cc -I$(BASE)/include -D$(ARCH) -Aa +z -c interactors.c
+	ld $(LDLIBFLAGS) -o interactors interactors.o $(SYSLIBS)
+

@@ -1,0 +1,13 @@
+
+# A module which requests to be rerun after a delay.  
+# It causes a new execution if system is in execute-on-change mode. 
+# Otherwise, it runs at next execute-once.
+
+MODULE Async
+CATEGORY Special
+DESCRIPTION This module requests to be rerun after a delay.
+FLAGS ASYNC PERSISTENT
+OUTBOARD async
+INPUT seconds; integer; 20; seconds until next run
+OUTPUT seconds; integer; delay time used
+

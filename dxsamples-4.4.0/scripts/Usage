@@ -1,0 +1,26 @@
+// this must be run -readahead off to look for memory leaks
+
+// If a leak is present, then the memory usage as displayed by Usage
+// will increase.
+
+macro show()
+{
+  iso = Isosurface(data);
+  Print(iso);
+}
+
+data = Import("cloudwater");
+
+show();  
+show();
+Executive("flush cache");
+Usage("memory", 0);
+
+
+show();
+Executive("flush cache");
+Usage("memory", 0);
+
+show();
+Executive("flush cache");
+Usage("memory", 0);

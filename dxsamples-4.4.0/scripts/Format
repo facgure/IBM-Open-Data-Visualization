@@ -1,0 +1,55 @@
+// value1 is 32.5678. 
+value1 = 32.5678;
+
+
+
+// The following will output the string "number = 32.567799" 
+output = Format("number = %f", value1);
+Echo(output);
+
+
+
+// The following will output the string "number = 32.57"
+output = Format("number = %3.2f", value1);
+Echo(output);
+
+
+
+// The following will output the string "number =       32.57"
+output = Format("number = %11.2f", value1);
+Echo(output);
+
+
+
+// value2 is 134569891.45
+// value3 is "New York"
+value2 = 134569891.45;
+value3 = "New York";
+
+
+ 
+// The following will output the string 
+//     "number = 134569888.000000, state = New York"
+output = Format("number = %f, state = %s", value2, value3);
+Echo(output);
+
+
+
+// The following will output the string "number =  134569888, state = New York"
+output = Format("number = %10.0f, state = %s", value2, value3);
+Echo(output);
+
+
+
+// The following will output the string "number = 1.3457e+08, state = New York"
+output = Format("number = %g, state = %s", value2, value3);
+Echo(output);
+
+
+
+// The following will output the string 
+//     "number = 1.3457e+08, state =        New York"   
+output = Format("number = %g, state = %15s", value2, value3);
+Echo(output);
+
+

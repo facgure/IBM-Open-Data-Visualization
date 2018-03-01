@@ -1,0 +1,62 @@
+object 1 class gridpositions 3 3 3
+   origin 0.0 0.0 0.0
+   delta  1.0 0.0 0.0
+   delta  0.0 1.0 0.0
+   delta  0.0 0.0 1.0
+
+object 2 class gridpositions 3 3 3
+   origin 0.5 0.0 0.0
+   delta  1.0 0.0 0.0
+   delta  0.0 1.0 0.0
+   delta  0.0 0.0 1.0
+
+object 3 class gridpositions 3 3 3
+   origin 1.0 0.0 0.0
+   delta  1.0 0.0 0.0
+   delta  0.0 1.0 0.0
+   delta  0.0 0.0 1.0
+
+object 4 class gridconnections 3 3 3
+ 
+object 5 class array type float rank 0 items 27 data follows
+1 2 3 4 5 6 7 8 9 10
+11 12 13 14 15 16 17 18 19 20
+21 22 23 24 25 26 27 
+attribute "dep" string "positions"
+
+object 6 class array type float rank 0 items 27 data follows
+11 12 13 14 15 16 17 18 19 20
+21 22 23 24 25 26 27 28 29 30 
+31 32 33 34 35 36 37 
+attribute "dep" string "positions"
+
+object 7 class array type float rank 0 items 27 data follows
+21 22 23 24 25 26 27 28 29 30 
+31 32 33 34 35 36 37 38 39 40 
+41 42 43 44 45 46 47 
+attribute "dep" string "positions"
+
+object 8 class field
+   component "positions" value 1
+   component "connections" value 4
+   component "data" value 5
+attribute "field label" string "first member"
+
+object 9 class field
+   component "positions" value 2
+   component "connections" value 4
+   component "data" value 6
+attribute "field label" string "second member"
+
+object 10 class field
+   component "positions" value 3
+   component "connections" value 4
+   component "data" value 7
+attribute "field label" string "third member"
+
+object "series" class series
+   member 0 value 8 
+   member 1 value 9 
+   member 2 value 10 
+
+

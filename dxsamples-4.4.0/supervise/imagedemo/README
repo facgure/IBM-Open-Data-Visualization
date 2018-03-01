@@ -1,0 +1,14 @@
+This directory contains a simple preliminary demonstration of 
+SuperviseWindow used with an image. 
+"demo" allows you to interactively query a pixel
+location and color in an image. 
+"demo1" allows you to specify with two picks the corners
+of the image subset you wish to see.
+
+Run either  'demo' or 'demo1', and when DX comes up, put it in 
+execute-on-change mode.  
+
+Pick using any mouse button.
+
+
+

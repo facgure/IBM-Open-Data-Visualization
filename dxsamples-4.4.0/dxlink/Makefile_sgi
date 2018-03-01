@@ -1,0 +1,27 @@
+
+BASE = /usr/local/dx
+
+LIBDXL=$(BASE)/lib_sgi/libDXL.a
+
+CFLAGS   = -O -Dsgi -DBASE=\"$(BASE)\" -I$(BASE)/include
+
+LIBS = -L$(BASE)/lib_sgi $(LIBDXL) -lm
+XLIBS   = -lXm -lXt -lX11
+
+all: sealevel maptoplane xapp xapp_supervise demoapp
+
+sealevel: sealevel.o
+	$(CC) sealevel.o $(LIBS) -o sealevel
+
+maptoplane: maptoplane.o
+	$(CC) maptoplane.o $(LIBS) -o maptoplane
+
+xapp:  xapp.o
+	$(CC) xapp.o $(LIBS) $(XLIBS) -o xapp
+
+xapp_supervise:  xapp_supervise.o
+	$(CC) xapp_supervise.o $(LIBS) $(XLIBS) -o xapp_supervise
+
+demoapp:  demoapp.o
+	$(CC) demoapp.o $(LIBS) $(XLIBS) -o demoapp 
+

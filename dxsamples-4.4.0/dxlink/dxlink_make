@@ -1,0 +1,35 @@
+
+BASE = /usr/local/dx
+
+include /usr/local/dx/lib_macos/arch.mak
+
+LIBDXL=$(BASE)/lib_macos/libDXL.a
+
+CFLAGS   = -O -Dmacos -DBASE=\"$(BASE)\" -I$(BASE)/include \
+	 $(DXCFLAGS)
+ 
+
+LIBS = -L$(BASE)/lib_macos  \
+        $(LIBDXL) $(DXEXECLINKLIBS)
+
+# OTHERLIBS = $(DXEXECLINKLIBS)
+
+# XLIBS   = -lXm -lXt -lXmu -lX11 -lw -lgen
+
+
+all:  sealevel maptoplane xapp xapp_supervise demoapp
+
+sealevel: sealevel.o
+	$(CC) sealevel.o $(LIBS) -o sealevel 
+
+maptoplane: maptoplane.o
+	$(CC) maptoplane.o $(LIBS) -o maptoplane 
+
+xapp:  xapp.o
+	$(CC) xapp.o $(LIBS) $(XLIBS) -o xapp 
+
+xapp_supervise:  xapp_supervise.o
+	$(CC) xapp_supervise.o $(LIBS) $(XLIBS) -o xapp_supervise 
+
+demoapp:  demoapp.o
+	$(CC) demoapp.o $(LIBS) $(XLIBS) -o demoapp 

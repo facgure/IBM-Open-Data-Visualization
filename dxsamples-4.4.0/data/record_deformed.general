@@ -1,0 +1,11 @@
+file = record_deformed
+grid = 5 x 4
+format = text
+interleaving = record-vector
+majority = row
+field = rainfall, temperature, locations
+structure = scalar, scalar, 2-vector
+type = float, int, float
+dependency = positions, positions, positions
+
+end

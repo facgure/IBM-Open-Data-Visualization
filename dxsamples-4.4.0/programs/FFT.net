@@ -1,0 +1,280 @@
+//
+// time: Wed Apr  9 15:33:44 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program uses the FFT and DFT modules on some sample data sets.
+// comment: 
+// comment: The FFT module computes a Fast Fourier Transform.
+// comment: This module requires that the number of items in each
+// comment: dimension be a power of 2.
+// comment: 
+// comment: The DFT module computes a Discrete Fourier Transform.
+// comment: It does not have the above requirement.
+// comment: 
+// comment: In situations where the number of items is a power of 2,
+// comment: the FFT module is preferable, as the algorithm takes less time.  Results are the same between the two modules.
+// workspace: width = 552, height = 602
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Selector[3]: x = 47, y = 97, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_3"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "exp function" 
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "exp(-pi*(a.x*a.x/(A*A)+a.y*a.y/(b*b)))" 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "exp function" "cos(y)*delta(x)" "delta(y)" "cos(2 pi x)*cos(2 pi y)" "exp(-pi (x squared + y squared))" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 32, value = "exp(-pi*(a.x*a.x/(A*A)+a.y*a.y/(b*b)))" 
+    // output[2]: visible = 1, type = 32, value = "exp function" 
+    //
+    // 
+    // node Construct[1]: x = 101, y = 6, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[-64 -64]}
+    // input[2]: defaulting = 0, visible = 1, type = 16777224, value = {[0 1][1 0]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [128 128]
+    //
+main_Construct_1_out_1 = 
+    Construct(
+    main_Construct_1_in_1,
+    main_Construct_1_in_2,
+    main_Construct_1_in_3,
+    main_Construct_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[2]: x = 215, y = 30, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+main_Mark_2_out_1 = 
+    Mark(
+    main_Construct_1_out_1,
+    main_Mark_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute2[1]: x = 155, y = 128, inputs = 9, label = Compute2
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "a"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "pi"
+    // input[5]: defaulting = 0, visible = 1, type = 16777245, value = {3.1415}
+    // input[6]: defaulting = 0, visible = 1, type = 32, value = "A"
+    // input[7]: defaulting = 0, visible = 1, type = 16777245, value = {10}
+    // input[8]: defaulting = 0, visible = 1, type = 32, value = "b"
+    // input[9]: defaulting = 0, visible = 1, type = 16777245, value = {100}
+    //
+main_Compute2_1_out_1 = 
+    Compute2(
+    main_Selector_3_out_1,
+    main_Compute2_1_in_2,
+    main_Mark_2_out_1,
+    main_Compute2_1_in_4,
+    main_Compute2_1_in_5,
+    main_Compute2_1_in_6,
+    main_Compute2_1_in_7,
+    main_Compute2_1_in_8,
+    main_Compute2_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[2]: x = 133, y = 398, inputs = 10, label = AutoColor
+    //
+main_AutoColor_2_out_1,
+main_AutoColor_2_out_2 = 
+    AutoColor(
+    main_Compute2_1_out_1,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Selector[2]: x = 304, y = 268, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_2"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "fft" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 1 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "fft" "dft" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 }
+    // output[1]: visible = 1, type = 29, value = 1 
+    // output[2]: visible = 1, type = 32, value = "fft" 
+    //
+    // 
+    // node FFT[1]: x = 186, y = 238, inputs = 3, label = FFT
+    // input[2]: defaulting = 1, visible = 1, type = 32, value = "forward"
+    // input[3]: defaulting = 0, visible = 1, type = 3, value = 1
+    //
+main_FFT_1_out_1 = 
+    FFT(
+    main_Compute2_1_out_1,
+    main_FFT_1_in_2,
+    main_FFT_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node DFT[2]: x = 480, y = 199, inputs = 3, label = DFT
+    // input[3]: defaulting = 0, visible = 1, type = 3, value = 1
+    //
+main_DFT_2_out_1 = 
+    DFT(
+    main_Compute2_1_out_1,
+    main_DFT_2_in_2,
+    main_DFT_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[1]: x = 401, y = 244, inputs = 3, label = Switch
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Selector_2_out_1,
+    main_FFT_1_out_1,
+    main_DFT_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[3]: x = 412, y = 340, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "abs($0)"
+    // expression: value = abs(a)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_3_out_1 = 
+    Compute(
+    main_Compute_3_in_1,
+    main_Switch_1_out_1,
+    main_Compute_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node AutoColor[1]: x = 282, y = 403, inputs = 10, label = AutoColor
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_Compute_3_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[2]: x = 186, y = 475, inputs = 2, label = Collect
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_AutoColor_2_out_1,
+    main_AutoColor_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Arrange[2]: x = 269, y = 505, inputs = 5, label = Arrange
+    //
+main_Arrange_2_out_1 = 
+    Arrange(
+    main_Collect_2_out_1,
+    main_Arrange_2_in_2,
+    main_Arrange_2_in_3,
+    main_Arrange_2_in_4,
+    main_Arrange_2_in_5
+    ) [instance: 2, cache: 1];
+    // 
+    // node Display[4]: x = 359, y = 540, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.5805,0.2275), size = 0.2109x0.1934
+    //
+main_Display_4_out_1[cache: 2] = 
+    Display(
+    main_Arrange_2_out_1,
+    main_Display_4_in_2,
+    main_Display_4_in_3,
+    main_Display_4_in_4,
+    main_Display_4_in_5,
+    main_Display_4_in_6,
+    main_Display_4_in_7,
+    main_Display_4_in_8
+    ) [instance: 4, cache: 1];
+// network: end of macro body
+}
+main_Selector_3_in_1 = "Selector_3";
+main_Selector_3_in_2 = "exp function" ;
+main_Selector_3_in_3 = "exp(-pi*(a.x*a.x/(A*A)+a.y*a.y/(b*b)))" ;
+main_Selector_3_in_4 = NULL;
+main_Selector_3_in_5 = NULL;
+main_Selector_3_in_6 = NULL;
+main_Selector_3_in_7 = NULL;
+main_Selector_3_out_1 = "exp(-pi*(a.x*a.x/(A*A)+a.y*a.y/(b*b)))" ;
+main_Construct_1_in_1 = {[-64 -64]};
+main_Construct_1_in_2 = {[0 1][1 0]};
+main_Construct_1_in_3 = [128 128];
+main_Construct_1_in_4 = NULL;
+main_Construct_1_out_1 = NULL;
+main_Mark_2_in_2 = "positions";
+main_Mark_2_out_1 = NULL;
+main_Compute2_1_in_2 = "a";
+main_Compute2_1_in_4 = "pi";
+main_Compute2_1_in_5 = {3.1415};
+main_Compute2_1_in_6 = "A";
+main_Compute2_1_in_7 = {10};
+main_Compute2_1_in_8 = "b";
+main_Compute2_1_in_9 = {100};
+main_Compute2_1_out_1 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = NULL;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = NULL;
+main_AutoColor_2_in_7 = NULL;
+main_AutoColor_2_in_8 = NULL;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = NULL;
+main_AutoColor_2_out_1 = NULL;
+main_Selector_2_in_1 = "Selector_2";
+main_Selector_2_in_2 = "fft" ;
+main_Selector_2_in_3 = 1 ;
+main_Selector_2_in_4 = NULL;
+main_Selector_2_in_5 = NULL;
+main_Selector_2_in_6 = NULL;
+main_Selector_2_in_7 = NULL;
+main_Selector_2_out_1 = 1 ;
+main_FFT_1_in_2 = NULL;
+main_FFT_1_in_3 = 1;
+main_FFT_1_out_1 = NULL;
+main_DFT_2_in_2 = NULL;
+main_DFT_2_in_3 = 1;
+main_DFT_2_out_1 = NULL;
+main_Switch_1_out_1 = NULL;
+main_Compute_3_in_1 = "abs($0)";
+main_Compute_3_in_3 = NULL;
+main_Compute_3_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_Arrange_2_in_2 = NULL;
+main_Arrange_2_in_3 = NULL;
+main_Arrange_2_in_4 = NULL;
+main_Arrange_2_in_5 = NULL;
+main_Arrange_2_out_1 = NULL;
+main_Display_4_in_2 = NULL;
+main_Display_4_in_3 = "X24,,";
+main_Display_4_in_4 = NULL;
+main_Display_4_in_5 = NULL;
+main_Display_4_in_6 = NULL;
+main_Display_4_in_7 = NULL;
+main_Display_4_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

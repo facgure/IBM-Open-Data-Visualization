@@ -1,0 +1,9 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// create an isosurface at the value 0.2
+iso = Isosurface(electrondensity,0.2);
+
+// Export the isosurface field to the file "isosurface" in dx format
+Export(iso, "isosurface","dx");
+

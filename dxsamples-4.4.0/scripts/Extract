@@ -1,0 +1,8 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// Extract the positions component. 
+positions = Extract(electrondensity,"positions");
+
+// Print the positions component
+Print(positions);

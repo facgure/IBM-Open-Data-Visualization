@@ -1,0 +1,577 @@
+//
+// time: Wed Apr  9 15:40:54 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+// CATEGORY Macros
+//
+// comment: This example shows one way to use the Plot module. Grid is used to construct a line through the electron density data. The data is mapped onto the line, and then Compute is used to extract only the x component of the positions. The line is then plotted.
+// comment: 
+// comment: Arrange is used to show an isosurface with the line (drawn in red) together with the plot. You could alternatively use two Image tools to have two separate image windows. Because we are using AutoCamera, Render, and Display rather than the Image tool, the image window direct interactors are not available in this visualization.
+// comment: 
+// comment: You can use the interactor in the control panel to control the vertical position of the line.
+// page assignment: display	order=6, windowed=0, showing=0
+// page assignment: image1	order=2, windowed=0, showing=1
+// page assignment: line	order=3, windowed=0, showing=0
+// page assignment: line_to_plot	order=4, windowed=0, showing=0
+// page assignment: plot	order=5, windowed=0, showing=0
+// workspace: width = 591, height = 613
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 40, y = 20, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    // page group: image1
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Isosurface[1]: x = 9, y = 109, inputs = 6, label = Isosurface
+    // input[2]: defaulting = 0, visible = 1, type = 16777221, value = { 0.300000 }
+    // page group: image1
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[2]: x = 25, y = 237, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "green"
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 0.400000
+    // page group: image1
+    //
+main_Color_2_out_1 = 
+    Color(
+    main_Isosurface_1_out_1,
+    main_Color_2_in_2,
+    main_Color_2_in_3,
+    main_Color_2_in_4,
+    main_Color_2_in_5
+    ) [instance: 2, cache: 1];
+    // 
+    // node ShowBox[1]: x = 116, y = 167, inputs = 1, label = ShowBox
+    // page group: image1
+    //
+main_ShowBox_1_out_1,
+main_ShowBox_1_out_2 = 
+    ShowBox(
+    main_Import_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scalar[1]: x = 34, y = 20, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_1"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 0.00000
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = -1.0
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "5"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 5
+    // output[1]: visible = 1, type = 5, value = 0.00000
+    // page group: line
+    //
+    // 
+    // node Compute[2]: x = 20, y = 106, inputs = 2, label = Compute--construct a point at [1.0, y, -1.0], where y is provided by an interactor
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[1.0, $0, -1.0]"
+    // page group: line
+    // expression: value = [1.0, y, -1.0]
+    // name[2]: value = y
+    //
+main_Compute_2_out_1 = 
+    Compute(
+    main_Compute_2_in_1,
+    main_Scalar_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Grid[1]: x = 27, y = 188, inputs = 4, label = Grid- line extending in x direction
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "line"
+    // input[3]: defaulting = 0, visible = 1, type = 16777224, value = {[1.5, 0, 0]}
+    // input[4]: defaulting = 0, visible = 1, type = 16777217, value = {50}
+    // page group: line
+    //
+main_Grid_1_out_1 = 
+    Grid(
+    main_Compute_2_out_1,
+    main_Grid_1_in_2,
+    main_Grid_1_in_3,
+    main_Grid_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowConnections[1]: x = 14, y = 279, inputs = 1, label = ShowConnections
+    // page group: line
+    //
+main_ShowConnections_1_out_1 = 
+    ShowConnections(
+    main_Grid_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 37, y = 361, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "red"
+    // page group: line
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_ShowConnections_1_out_1,
+    main_Color_1_in_2,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 41, y = 466, inputs = 1, label = line
+    // page group: line
+    //
+line = main_Color_1_out_1;
+    // 
+    // node Receiver[1]: x = 258, y = 22, inputs = 1, label = line
+    // page group: image1
+    //
+main_Receiver_1_out_1[cache: 0] = line;
+    // 
+    // node Collect[1]: x = 126, y = 347, inputs = 3, label = Collect
+    // page group: image1
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Color_2_out_1,
+    main_ShowBox_1_out_1,
+    main_Receiver_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 143, y = 448, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "off-front"
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 400
+    // input[5]: defaulting = 0, visible = 1, type = 5, value = 1.20000
+    // page group: image1
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Collect_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Render[1]: x = 44, y = 487, inputs = 3, label = Render
+    // page group: image1
+    //
+main_Render_1_out_1 = 
+    Render(
+    main_Collect_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 136, y = 551, inputs = 1, label = image1
+    // page group: image1
+    //
+image1 = main_Render_1_out_1;
+    // 
+    // node Receiver[3]: x = 66, y = 99, inputs = 1, label = image1
+    // page group: display
+    //
+main_Receiver_3_out_1[cache: 0] = image1;
+    // 
+    // node Receiver[5]: x = 40, y = 19, inputs = 1, label = line
+    // page group: line_to_plot
+    //
+main_Receiver_5_out_1[cache: 0] = line;
+    // 
+    // node Transmitter[2]: x = 272, y = 540, inputs = 1, label = imported
+    // page group: image1
+    //
+imported = main_Import_1_out_1;
+    // 
+    // node Receiver[2]: x = 123, y = 20, inputs = 1, label = imported
+    // page group: line_to_plot
+    //
+main_Receiver_2_out_1[cache: 0] = imported;
+    // 
+    // node Map[1]: x = 91, y = 95, inputs = 4, label = Map
+    // page group: line_to_plot
+    //
+main_Map_1_out_1 = 
+    Map(
+    main_Receiver_5_out_1,
+    main_Receiver_2_out_1,
+    main_Map_1_in_3,
+    main_Map_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[1]: x = 79, y = 168, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: line_to_plot
+    //
+main_Mark_1_out_1 = 
+    Mark(
+    main_Map_1_out_1,
+    main_Mark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 86, y = 244, inputs = 2, label = Compute--extract just the x component of the positions
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x"
+    // page group: line_to_plot
+    // expression: value = a.x
+    // name[2]: value = a
+    //
+main_Compute_1_out_1 = 
+    Compute(
+    main_Compute_1_in_1,
+    main_Mark_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Unmark[1]: x = 185, y = 271, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: line_to_plot
+    //
+main_Unmark_1_out_1 = 
+    Unmark(
+    main_Compute_1_out_1,
+    main_Unmark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[3]: x = 116, y = 346, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "medium turquoise"
+    // page group: line_to_plot
+    //
+main_Color_3_out_1 = 
+    Color(
+    main_Unmark_1_out_1,
+    main_Color_3_in_2,
+    main_Color_3_in_3,
+    main_Color_3_in_4,
+    main_Color_3_in_5
+    ) [instance: 3, cache: 1];
+    // 
+    // node Options[1]: x = 20, y = 461, inputs = 7, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "mark"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "triangle"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "mark every"
+    // input[5]: defaulting = 0, visible = 1, type = 29, value = 3
+    // input[6]: defaulting = 0, visible = 1, type = 32, value = "label"
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "electron density"
+    // page group: line_to_plot
+    //
+main_Options_1_out_1 = 
+    Options(
+    main_Color_3_out_1,
+    main_Options_1_in_2,
+    main_Options_1_in_3,
+    main_Options_1_in_4,
+    main_Options_1_in_5,
+    main_Options_1_in_6,
+    main_Options_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[6]: x = 20, y = 548, inputs = 1, label = line_to_plot
+    // page group: line_to_plot
+    //
+line_to_plot = main_Options_1_out_1;
+    // 
+    // node Receiver[6]: x = 63, y = 65, inputs = 1, label = line_to_plot
+    // page group: plot
+    //
+main_Receiver_6_out_1[cache: 0] = line_to_plot;
+    // 
+    // node Plot[1]: x = 51, y = 154, inputs = 24, label = Plot
+    // input[2]: defaulting = 0, visible = 1, type = 16777248, value = {"x position" "electron density"}
+    // input[4]: defaulting = 0, visible = 1, type = 16777224, value = {[-1, 0], [3, 10]}
+    // input[9]: defaulting = 0, visible = 1, type = 5, value = 1.00000
+    // input[10]: defaulting = 0, visible = 1, type = 16777248, value = {"red"}
+    // input[11]: defaulting = 0, visible = 1, type = 16777248, value = {"ticks" "axes"}
+    // input[13]: defaulting = 0, visible = 1, type = 32, value = "roman_dser"
+    // page group: plot
+    //
+main_Plot_1_out_1 = 
+    Plot(
+    main_Receiver_6_out_1,
+    main_Plot_1_in_2,
+    main_Plot_1_in_3,
+    main_Plot_1_in_4,
+    main_Plot_1_in_5,
+    main_Plot_1_in_6,
+    main_Plot_1_in_7,
+    main_Plot_1_in_8,
+    main_Plot_1_in_9,
+    main_Plot_1_in_10,
+    main_Plot_1_in_11,
+    main_Plot_1_in_12,
+    main_Plot_1_in_13,
+    main_Plot_1_in_14,
+    main_Plot_1_in_15,
+    main_Plot_1_in_16,
+    main_Plot_1_in_17,
+    main_Plot_1_in_18,
+    main_Plot_1_in_19,
+    main_Plot_1_in_20,
+    main_Plot_1_in_21,
+    main_Plot_1_in_22,
+    main_Plot_1_in_23,
+    main_Plot_1_in_24
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[2]: x = 123, y = 238, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 400
+    // input[5]: defaulting = 0, visible = 1, type = 5, value = 1.20000
+    // page group: plot
+    //
+main_AutoCamera_2_out_1 = 
+    AutoCamera(
+    main_Plot_1_out_1,
+    main_AutoCamera_2_in_2,
+    main_AutoCamera_2_in_3,
+    main_AutoCamera_2_in_4,
+    main_AutoCamera_2_in_5,
+    main_AutoCamera_2_in_6,
+    main_AutoCamera_2_in_7,
+    main_AutoCamera_2_in_8,
+    main_AutoCamera_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Render[2]: x = 71, y = 350, inputs = 3, label = Render
+    // page group: plot
+    //
+main_Render_2_out_1 = 
+    Render(
+    main_Plot_1_out_1,
+    main_AutoCamera_2_out_1,
+    main_Render_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[4]: x = 118, y = 456, inputs = 1, label = image2
+    // page group: plot
+    //
+image2 = main_Render_2_out_1;
+    // 
+    // node Receiver[4]: x = 132, y = 116, inputs = 1, label = image2
+    // page group: display
+    //
+main_Receiver_4_out_1[cache: 0] = image2;
+    // 
+    // node Collect[2]: x = 77, y = 193, inputs = 2, label = Collect
+    // page group: display
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_Receiver_3_out_1,
+    main_Receiver_4_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Arrange[1]: x = 94, y = 299, inputs = 5, label = Arrange
+    // page group: display
+    //
+main_Arrange_1_out_1 = 
+    Arrange(
+    main_Collect_2_out_1,
+    main_Arrange_1_in_2,
+    main_Arrange_1_in_3,
+    main_Arrange_1_in_4,
+    main_Arrange_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 103, y = 379, inputs = 4, label = Display
+    // page group: display
+    // depth: value = 24
+    // window: position = (0.2977,0.1309), size = 0.6359x0.5117
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Arrange_1_out_1,
+    main_Display_1_in_2,
+    main_Display_1_in_3,
+    main_Display_1_in_4
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(338,68) size=253x60 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 83
+    // annotation user: This page creates "image1", which 
+    // annotation user: shows an isosurface,
+    // annotation user: a bounding box, and a line.
+    // annotation user_end: <NULL>
+    // page group: image1
+    //
+    // decorator Annotate	pos=(176,86) size=175x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 24
+    // annotation user: This page creates a line
+    // annotation user_end: <NULL>
+    // page group: line
+    //
+    // decorator Annotate	pos=(223,90) size=375x76 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 212
+    // annotation user: This page creates the line to plot, by mapping the
+    // annotation user: data onto the line, extracting just the x positions
+    // annotation user: of the line (so the plot will be of data vs x-position),
+    // annotation user: then coloring the line and adding some plot options.
+    // annotation user_end: <NULL>
+    // page group: line_to_plot
+    //
+    // decorator Annotate	pos=(232,72) size=181x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 25
+    // annotation user: This page creates a plot.
+    // annotation user_end: <NULL>
+    // page group: plot
+    //
+    // decorator Annotate	pos=(271,157) size=307x44 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 61
+    // annotation user: This page collects the two images together
+    // annotation user: and displays them.
+    // annotation user_end: <NULL>
+    // page group: display
+// network: end of macro body
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Isosurface_1_in_2 = { 0.300000 };
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_Color_2_in_2 = "green";
+main_Color_2_in_3 = 0.400000;
+main_Color_2_in_4 = NULL;
+main_Color_2_in_5 = NULL;
+main_Color_2_out_1 = NULL;
+main_ShowBox_1_out_1 = NULL;
+main_Scalar_1_in_1 = "Scalar_1";
+main_Scalar_1_in_2 = NULL;
+main_Scalar_1_in_3 = 0.00000;
+main_Scalar_1_in_4 = NULL;
+main_Scalar_1_in_5 = NULL;
+main_Scalar_1_in_6 = NULL;
+main_Scalar_1_in_7 = NULL;
+main_Scalar_1_in_8 = NULL;
+main_Scalar_1_in_9 = NULL;
+main_Scalar_1_in_10 = NULL;
+main_Scalar_1_in_11 = NULL;
+main_Scalar_1_out_1 = 0.00000;
+main_Compute_2_in_1 = "[1.0, $0, -1.0]";
+main_Compute_2_out_1 = NULL;
+main_Grid_1_in_2 = "line";
+main_Grid_1_in_3 = {[1.5, 0, 0]};
+main_Grid_1_in_4 = {50};
+main_Grid_1_out_1 = NULL;
+main_ShowConnections_1_out_1 = NULL;
+main_Color_1_in_2 = "red";
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = "off-front";
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = 400;
+main_AutoCamera_1_in_5 = 1.20000;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Render_1_in_3 = NULL;
+main_Render_1_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_Map_1_in_3 = NULL;
+main_Map_1_in_4 = NULL;
+main_Map_1_out_1 = NULL;
+main_Mark_1_in_2 = "positions";
+main_Mark_1_out_1 = NULL;
+main_Compute_1_in_1 = "$0.x";
+main_Compute_1_out_1 = NULL;
+main_Unmark_1_in_2 = "positions";
+main_Unmark_1_out_1 = NULL;
+main_Color_3_in_2 = "medium turquoise";
+main_Color_3_in_3 = NULL;
+main_Color_3_in_4 = NULL;
+main_Color_3_in_5 = NULL;
+main_Color_3_out_1 = NULL;
+main_Options_1_in_2 = "mark";
+main_Options_1_in_3 = "triangle";
+main_Options_1_in_4 = "mark every";
+main_Options_1_in_5 = 3;
+main_Options_1_in_6 = "label";
+main_Options_1_in_7 = "electron density";
+main_Options_1_out_1 = NULL;
+main_Transmitter_6_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Plot_1_in_2 = {"x position" "electron density"};
+main_Plot_1_in_3 = NULL;
+main_Plot_1_in_4 = {[-1, 0], [3, 10]};
+main_Plot_1_in_5 = NULL;
+main_Plot_1_in_6 = NULL;
+main_Plot_1_in_7 = NULL;
+main_Plot_1_in_8 = NULL;
+main_Plot_1_in_9 = 1.00000;
+main_Plot_1_in_10 = {"red"};
+main_Plot_1_in_11 = {"ticks" "axes"};
+main_Plot_1_in_12 = NULL;
+main_Plot_1_in_13 = "roman_dser";
+main_Plot_1_in_14 = NULL;
+main_Plot_1_in_15 = NULL;
+main_Plot_1_in_16 = NULL;
+main_Plot_1_in_17 = NULL;
+main_Plot_1_in_18 = NULL;
+main_Plot_1_in_19 = NULL;
+main_Plot_1_in_20 = NULL;
+main_Plot_1_in_21 = NULL;
+main_Plot_1_in_22 = NULL;
+main_Plot_1_in_23 = NULL;
+main_Plot_1_in_24 = NULL;
+main_Plot_1_out_1 = NULL;
+main_AutoCamera_2_in_2 = NULL;
+main_AutoCamera_2_in_3 = NULL;
+main_AutoCamera_2_in_4 = 400;
+main_AutoCamera_2_in_5 = 1.20000;
+main_AutoCamera_2_in_6 = NULL;
+main_AutoCamera_2_in_7 = NULL;
+main_AutoCamera_2_in_8 = NULL;
+main_AutoCamera_2_in_9 = NULL;
+main_AutoCamera_2_out_1 = NULL;
+main_Render_2_in_3 = NULL;
+main_Render_2_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_Arrange_1_in_2 = NULL;
+main_Arrange_1_in_3 = NULL;
+main_Arrange_1_in_4 = NULL;
+main_Arrange_1_in_5 = NULL;
+main_Arrange_1_out_1 = NULL;
+main_Display_1_in_2 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

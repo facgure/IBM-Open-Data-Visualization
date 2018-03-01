@@ -1,0 +1,15 @@
+// Import the electron density data
+data = Import("watermolecule");
+
+// Change the dependency of the data from "positions" to "connections"
+data = Post(data,"connections");
+
+// Create the boundary of the data
+boundary = ShowBoundary(data);
+
+// Color the boundary
+boundary = AutoColor(boundary);
+
+// Display the boundary
+camera = AutoCamera(boundary,"off-front");
+Display(boundary,camera);

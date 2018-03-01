@@ -1,0 +1,29 @@
+// Create four fields using Construct, each with a different vector for
+// the data component
+
+// vector field mainly in the x direction
+field1 = Construct([0 0 0],[1 1 1],[10 10 10], [1.0 0.1 0.1]);
+
+// vector field mainly in the y direction
+field2 = Construct([0 0 0],[1 1 1],[10 10 10], [0.0 1.1 0.1]);
+
+// vector field mainly in the x direction
+field3 = Construct([0 0 0],[1 1 1],[10 10 10], [1.0 0.2 0.1]);
+
+// vector field mainly in the y direction
+field4 = Construct([0 0 0],[1 1 1],[10 10 10], [0.2 1.2 0.1]);
+
+// collect them together into a series field, with evenly spaced time tags
+series = CollectSeries(field1, 0.0, field2, 2.0, field3, 4.0, field4, 6.0);
+
+// sample one of the fields to get a set of sample points
+samples = Sample(field1, 50);
+
+// create streaklines and display
+streaklines = Streakline(NULL,series, samples);
+streaklines = Color(streaklines,"red");
+camera = AutoCamera(series,"off-diagonal");
+box = ShowBox(series);
+
+collected = Collect(box, streaklines);
+Display(collected,camera);

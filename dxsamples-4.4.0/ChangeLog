@@ -1,0 +1,20 @@
+4.x
+-----------------------
+Updated FormatListMacro to be able to use two lists
+for concatenation purposes. Also now defaults %f
+correctly.
+
+Added PlotColumn.net sample.
+
+4.3.2
+-----------------------
+Added Makefile for Linux for dxlink samples. Minor
+cleanup of all the Makefiles for dxlink.
+
+4.3
+-----------------------
+Added BioRad PIC format
+
+4.2
+============
+No notes.

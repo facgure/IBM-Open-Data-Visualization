@@ -1,0 +1,16 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera appropriate for the data
+camera = AutoCamera(electrondensity,"off-front",width=3); 
+    // Create an isosurface at a value of 0.3
+iso = Isosurface(electrondensity,0.3);
+    // Display the result
+Display(iso,camera);
+    // Clip the isosurface. Define the clipplane by the point
+    // [1 0 -1] and the perpendicular to the plane [1 1 0]
+clipped = ClipPlane(iso,[1 0 -1],[1 1 0]);
+Display(clipped,camera);
+

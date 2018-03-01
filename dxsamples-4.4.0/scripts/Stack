@@ -1,0 +1,13 @@
+// Import the electron density data
+electrondensity = Import("watermolecule");
+
+// Color the volume
+colored = AutoColor(electrondensity);
+
+// Slice the data in the z dimension
+slices = Slice(colored,2);
+
+// Stack the data in the x dimension and display
+stacked = Stack(slices,0);
+camera = AutoCamera(stacked,"off-front",width=7);
+Display(stacked,camera);

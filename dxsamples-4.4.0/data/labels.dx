@@ -1,0 +1,23 @@
+# This data file is intended to demonstrate the use of the Text module for
+# placing annotation labels.
+
+# the positions component
+object 1 class array type float rank 1 shape 2 items 4 data follows
+    0.0 5.0
+    5.0 5.0
+    0.0 0.0
+    5.0 0.0
+
+# the data component (type string). The shape is the length of the longest
+# string + 1.
+object 2 class array type string rank 1 shape 11 items 4 data follows
+    "this"
+    "is"
+    "annotation"
+    "text"
+attribute "dep" string "positions"
+
+# create the field
+object 3 class field 
+   component "positions" value 1
+   component "data" value 2

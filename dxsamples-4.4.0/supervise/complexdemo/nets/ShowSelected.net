@@ -1,0 +1,297 @@
+//
+// time: Tue Jan 28 16:11:00 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+//
+// macro reference (direct): HiliteObject /a/alfa/homes/alfa/gda/peru/release/nets/hiliteObject.net
+include "nets/hiliteObject.net"
+//
+// Begin MDF
+// MODULE ShowSelected
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT input_1; object; (no default);  
+// INPUT input_2; value list or field or string or string list; (no default);  
+// OUTPUT output_1; object;  
+// End MDF
+// page assignment: body	order=4, windowed=0, showing=0
+// page assignment: bottom	order=3, windowed=0, showing=0
+// page assignment: top	order=2, windowed=0, showing=1
+// workspace: width = 547, height = 471
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro ShowSelected(
+ input_1
+,input_2
+) -> (
+ output_1
+) {
+    // 
+    // node Collect[2]: x = 309, y = 10, inputs = 0, label = Collect
+    // page group: bottom
+    //
+ShowSelected_Collect_2_out_1 = 
+    Collect(
+
+    ) [instance: 2, cache: 1];
+    // 
+    // node GetLocal[1]: x = 314, y = 111, inputs = 3, label = GetLocal
+    // page group: bottom
+    //
+ShowSelected_GetLocal_1_out_1,
+ShowSelected_GetLocal_1_out_2 = 
+    GetLocal(
+    ShowSelected_Collect_2_out_1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[1]: x = 294, y = 17, inputs = 0, label = Input
+    // page group: top
+    // parameter: position = 1, name = 'input_1', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ShowSelected_Input_1_out_1 = input_1;
+    // 
+    // node ForEachMember[1]: x = 106, y = 96, inputs = 1, label = ForEachMember
+    // page group: top
+    //
+ShowSelected_ForEachMember_1_out_1,
+ShowSelected_ForEachMember_1_out_2,
+ShowSelected_ForEachMember_1_out_3 = 
+    ForEachMember(
+    ShowSelected_Input_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[51]: x = 0, y = 150, inputs = 1, label = member
+    // page group: top
+    //
+member = ShowSelected_ForEachMember_1_out_1;
+    // 
+    // node Receiver[75]: x = 7, y = 24, inputs = 1, label = member
+    // page group: body
+    //
+ShowSelected_Receiver_75_out_1[cache: 0] = member;
+    // 
+    // node Input[2]: x = 25, y = 227, inputs = 0, label = Input
+    // page group: top
+    // parameter: position = 2, name = 'input_2', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ShowSelected_Input_2_out_1 = input_2;
+    // 
+    // node Compute[6]: x = 96, y = 312, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == $1 ? 1 : 0"
+    // page group: top
+    // expression: value = a == b ? 1 : 0
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+ShowSelected_Compute_6_out_1 = 
+    Compute(
+    "$0 == $1 ? 1 : 0",
+    ShowSelected_Input_2_out_1,
+    ShowSelected_ForEachMember_1_out_2
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[45]: x = 121, y = 409, inputs = 1, label = hilite
+    // page group: top
+    //
+hilite = ShowSelected_Compute_6_out_1;
+    // 
+    // node Receiver[69]: x = 99, y = 23, inputs = 1, label = hilite
+    // page group: body
+    //
+ShowSelected_Receiver_69_out_1[cache: 0] = hilite;
+    // 
+    // node HiliteObject[2]: x = 27, y = 124, inputs = 2, label = HiliteObject
+    // page group: body
+    //
+ShowSelected_HiliteObject_2_out_1 = 
+    HiliteObject(
+    ShowSelected_Receiver_75_out_1,
+    ShowSelected_Receiver_69_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[52]: x = 24, y = 223, inputs = 1, label = newMember
+    // page group: body
+    //
+newMember = ShowSelected_HiliteObject_2_out_1;
+    // 
+    // node Receiver[77]: x = 169, y = 211, inputs = 1, label = newMember
+    // page group: bottom
+    //
+ShowSelected_Receiver_77_out_1[cache: 0] = newMember;
+    // 
+    // node Inquire[12]: x = 314, y = 120, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "member names"
+    // page group: top
+    //
+ShowSelected_Inquire_12_out_1 = 
+    Inquire(
+    ShowSelected_Input_1_out_1,
+    "member names",
+    NULL
+    ) [instance: 12, cache: 1];
+    // 
+    // node Transmitter[49]: x = 322, y = 191, inputs = 1, label = nameList
+    // page group: top
+    //
+nameList = ShowSelected_Inquire_12_out_1;
+    // 
+    // node Receiver[72]: x = 166, y = 226, inputs = 1, label = nameList
+    // page group: top
+    //
+ShowSelected_Receiver_72_out_1[cache: 0] = nameList;
+    // 
+    // node Select[6]: x = 210, y = 310, inputs = 3, label = Select
+    // page group: top
+    //
+ShowSelected_Select_6_out_1 = 
+    Select(
+    ShowSelected_Receiver_72_out_1,
+    ShowSelected_ForEachMember_1_out_2,
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[46]: x = 208, y = 389, inputs = 1, label = name
+    // page group: top
+    //
+name = ShowSelected_Select_6_out_1;
+    // 
+    // node Receiver[68]: x = 286, y = 252, inputs = 1, label = name
+    // page group: bottom
+    //
+ShowSelected_Receiver_68_out_1[cache: 0] = name;
+    // 
+    // node Append[1]: x = 143, y = 300, inputs = 3, label = Append
+    // page group: bottom
+    //
+ShowSelected_Append_1_out_1 = 
+    Append(
+    ShowSelected_GetLocal_1_out_1,
+    ShowSelected_Receiver_77_out_1,
+    ShowSelected_Receiver_68_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Attribute[3]: x = 479, y = 107, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "interaction mode"
+    // page group: top
+    //
+ShowSelected_Attribute_3_out_1 = 
+    Attribute(
+    ShowSelected_Input_1_out_1,
+    "interaction mode"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[48]: x = 253, y = 173, inputs = 1, label = last
+    // page group: top
+    //
+last = ShowSelected_ForEachMember_1_out_3;
+    // 
+    // node Receiver[73]: x = 70, y = 273, inputs = 1, label = last
+    // page group: bottom
+    //
+ShowSelected_Receiver_73_out_1[cache: 0] = last;
+    // 
+    // node Route[4]: x = 136, y = 374, inputs = 2, outputs = 2, label = Route
+    // page group: bottom
+    //
+ShowSelected_Route_4_out_1,
+ShowSelected_Route_4_out_2 = 
+    Route(
+    ShowSelected_Receiver_73_out_1,
+    ShowSelected_Append_1_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Transmitter[53]: x = 502, y = 190, inputs = 1, label = imode
+    // page group: top
+    //
+imode = ShowSelected_Attribute_3_out_1;
+    // 
+    // node Receiver[78]: x = 275, y = 438, inputs = 1, label = imode
+    // page group: bottom
+    //
+ShowSelected_Receiver_78_out_1[cache: 0] = imode;
+    // 
+    // node Options[8]: x = 142, y = 484, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "interaction mode"
+    // page group: bottom
+    //
+ShowSelected_Options_8_out_1 = 
+    Options(
+    ShowSelected_Route_4_out_1,
+    "interaction mode",
+    ShowSelected_Receiver_78_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Output[1]: x = 54, y = 514, inputs = 1, label = Output
+    // page group: bottom
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = ShowSelected_Options_8_out_1;
+    // 
+    // node SetLocal[5]: x = 277, y = 361, inputs = 3, label = SetLocal
+    // page group: bottom
+    //
+    SetLocal(
+    ShowSelected_Append_1_out_1,
+    ShowSelected_GetLocal_1_out_2,
+    NULL
+    ) [instance: 5, cache: 1];
+    //
+    // decorator Annotate	pos=(143,124) size=191x40 style(Label), value = <NULL>
+    // annotation user_begin: 60
+    // annotation user: Call a macro to either hilite
+    // annotation user: or not hilite the group member
+    // annotation user_end: <NULL>
+    // page group: body
+    //
+    // decorator Annotate	pos=(0,18) size=274x54 style(Label), value = <NULL>
+    // annotation user_begin: 123
+    // annotation user: Loop through the members of the group
+    // annotation user: scene, creating a new group in which the 
+    // annotation user: requested member (by index) is highlighted.
+    // annotation user_end: <NULL>
+    // page group: top
+    //
+    // decorator Annotate	pos=(8,34) size=281x68 style(Label), value = <NULL>
+    // annotation user_begin: 161
+    // annotation user: Here we accumulate members into the 
+    // annotation user: output group.  Note the use of Get/Set Local.
+    // annotation user: This initializes the output to an empty
+    // annotation user: group each time the macro is executed.
+    // annotation user_end: <NULL>
+    // page group: bottom
+// network: end of macro body
+}
+ShowSelected_Collect_2_out_1 = NULL;
+ShowSelected_GetLocal_1_out_1 = NULL;
+ShowSelected_GetLocal_1_out_2 = NULL;
+ShowSelected_Input_1_out_1 = NULL;
+ShowSelected_ForEachMember_1_out_1 = NULL;
+ShowSelected_ForEachMember_1_out_2 = NULL;
+ShowSelected_ForEachMember_1_out_3 = NULL;
+ShowSelected_Transmitter_51_out_1 = NULL;
+ShowSelected_Receiver_75_out_1 = NULL;
+ShowSelected_Input_2_out_1 = NULL;
+ShowSelected_Compute_6_out_1 = NULL;
+ShowSelected_Transmitter_45_out_1 = NULL;
+ShowSelected_Receiver_69_out_1 = NULL;
+ShowSelected_HiliteObject_2_out_1 = NULL;
+ShowSelected_Transmitter_52_out_1 = NULL;
+ShowSelected_Receiver_77_out_1 = NULL;
+ShowSelected_Inquire_12_out_1 = NULL;
+ShowSelected_Transmitter_49_out_1 = NULL;
+ShowSelected_Receiver_72_out_1 = NULL;
+ShowSelected_Select_6_out_1 = NULL;
+ShowSelected_Transmitter_46_out_1 = NULL;
+ShowSelected_Receiver_68_out_1 = NULL;
+ShowSelected_Append_1_out_1 = NULL;
+ShowSelected_Attribute_3_out_1 = NULL;
+ShowSelected_Transmitter_48_out_1 = NULL;
+ShowSelected_Receiver_73_out_1 = NULL;
+ShowSelected_Route_4_out_1 = NULL;
+ShowSelected_Transmitter_53_out_1 = NULL;
+ShowSelected_Receiver_78_out_1 = NULL;
+ShowSelected_Options_8_out_1 = NULL;

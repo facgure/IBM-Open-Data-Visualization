@@ -1,0 +1,86 @@
+//
+// time: Fri Nov 13 21:21:54 1998
+//
+// version: 3.1.2 (format), 3.1.4 (DX)
+//
+//
+// Begin MDF
+// MODULE logn
+// CATEGORY Options
+// DESCRIPTION Log of Stock Value
+// INPUT S; value list or field or string or string list; (none); Stock Price
+// INPUT sdev; value list or field or string or string list; (none); Std Dev of Stock Price
+// INPUT t; value list or field or string or string list; (none); Time to Maturity
+// INPUT r; value list or field or string or string list; (none); Interest Rate (1+r)
+// INPUT K; value list or field or string or string list; (none); Strike Price
+// OUTPUT output_1; value or value list or field;  
+// End MDF
+// workspace: width = 472, height = 257
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro logn(
+ S
+,sdev
+,t
+,r
+,K
+) -> (
+ output_1
+) {
+    // 
+    // node Input[14]: x = 182, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'S', value = '(none)', descriptive = 1, description = 'Stock Price', required = 1, visible = 1
+    //
+logn_Input_14_out_1 = S;
+    // 
+    // node Input[15]: x = 430, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'sdev', value = '(none)', descriptive = 1, description = 'Std Dev of Stock Price', required = 1, visible = 1
+    //
+logn_Input_15_out_1 = sdev;
+    // 
+    // node Input[16]: x = 368, y = 0, inputs = 0, label = Input
+    // parameter: position = 3, name = 't', value = '(none)', descriptive = 1, description = 'Time to Maturity', required = 1, visible = 1
+    //
+logn_Input_16_out_1 = t;
+    // 
+    // node Input[17]: x = 306, y = 0, inputs = 0, label = Input
+    // parameter: position = 4, name = 'r', value = '(none)', descriptive = 1, description = 'Interest Rate (1+r)', required = 1, visible = 1
+    //
+logn_Input_17_out_1 = r;
+    // 
+    // node Input[18]: x = 244, y = 0, inputs = 0, label = Input
+    // parameter: position = 5, name = 'K', value = '(none)', descriptive = 1, description = 'Strike Price', required = 1, visible = 1
+    //
+logn_Input_18_out_1 = K;
+    // 
+    // node Compute[9]: x = 265, y = 92, inputs = 6, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "(log10($0/($4*pow($3, -$2))) / ($1 * pow($2,0.5))) + (0.5*$1*pow($2,0.5))"
+    // expression: value = (log10(S/(K*pow(r, -t))) / (sdev * pow(t,0.5))) + (0.5*sdev*pow(t,0.5))
+    // name[2]: value = S
+    // name[3]: value = sdev
+    // name[4]: value = t
+    // name[5]: value = r
+    // name[6]: value = K
+    //
+logn_Compute_9_out_1 = 
+    Compute(
+    "(log10($0/($4*pow($3, -$2))) / ($1 * pow($2,0.5))) + (0.5*$1*pow($2,0.5))",
+    logn_Input_14_out_1,
+    logn_Input_15_out_1,
+    logn_Input_16_out_1,
+    logn_Input_17_out_1,
+    logn_Input_18_out_1
+    ) [instance: 9, cache: 1];
+    // 
+    // node Output[7]: x = 306, y = 195, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = logn_Compute_9_out_1;
+// network: end of macro body
+}
+logn_Input_14_out_1 = NULL;
+logn_Input_15_out_1 = NULL;
+logn_Input_16_out_1 = NULL;
+logn_Input_17_out_1 = NULL;
+logn_Input_18_out_1 = NULL;
+logn_Compute_9_out_1 = NULL;

@@ -1,0 +1,15 @@
+# The importer disregards this line, since it is a comment line
+grid = 5x4
+dependency = connections
+type = byte
+structure = scalar
+format = ascii
+header = marker "Start data\n"
+end
+There may be some comments about the data here. For example,
+who created it and when. This will be skipped because of the
+use of a marker
+
+Start data
+17  8 11  4 12 18  3  9
+10  2 19 13  1  7 14 20

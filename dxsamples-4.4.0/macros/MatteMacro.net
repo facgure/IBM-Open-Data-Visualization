@@ -1,0 +1,87 @@
+//
+// time: Wed Feb 12 11:24:46 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE Matte
+// CATEGORY Macros
+// INPUT foreground; image; (no default);  
+// INPUT background; field; (no default);  
+// INPUT blend; scalar or vector or string or field; (no default);  
+// OUTPUT result; image;  
+// End MDF
+//
+// comment: This macro is intended to be used with the "Bounce.net" visual program. It takes as input two images and a blend factor, and mattes the images together. The first Overlay module blends the background with an all-black image by the blend factor, dimming it slightly. The second overlay blends the dimmed image with the foreground. Where the foreground is non-zero, the foreground is output; where the foreground is zero, the dimmed background is output.
+// comment: 
+// comment: For efficiency of the Bounce visual program, all of the modules in this macro have been set to cache no results. This is because intermediate results of this macro will not be reused in the running of the visual program.
+// workspace: width = 465, height = 570
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro Matte(
+ foreground
+,background
+,blend
+) -> (
+ result
+) {
+    // 
+    // node Input[3]: x = 133, y = 31, inputs = 0, label = Input
+    // parameter: position = 1, name = 'foreground', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+Matte_Input_3_out_1 = foreground;
+    // 
+    // node Input[4]: x = 254, y = 24, inputs = 0, label = Input
+    // parameter: position = 2, name = 'background', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+Matte_Input_4_out_1 = background;
+    // 
+    // node Input[5]: x = 423, y = 21, inputs = 0, label = Input
+    // parameter: position = 3, name = 'blend', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+Matte_Input_5_out_1 = blend;
+    // 
+    // node Map[1]: x = 343, y = 151, inputs = 4, label = Map
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [0.0 0 0]
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "colors"
+    //
+Matte_Map_1_out_1[cache: 0] = 
+    Map(
+    Matte_Input_4_out_1,
+    [0.0 0 0],
+    NULL,
+    "colors"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Overlay[2]: x = 280, y = 284, inputs = 3, label = Overlay
+    //
+Matte_Overlay_2_out_1[cache: 0] = 
+    Overlay(
+    Matte_Input_4_out_1,
+    Matte_Map_1_out_1,
+    Matte_Input_5_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Overlay[1]: x = 195, y = 386, inputs = 3, label = Overlay
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "black"
+    //
+Matte_Overlay_1_out_1[cache: 0] = 
+    Overlay(
+    Matte_Overlay_2_out_1,
+    Matte_Input_3_out_1,
+    "black"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[2]: x = 222, y = 508, inputs = 1, label = Output
+    // parameter: position = 1, name = 'result', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+result = Matte_Overlay_1_out_1;
+// network: end of macro body
+}
+Matte_Input_3_out_1 = NULL;
+Matte_Input_4_out_1 = NULL;
+Matte_Input_5_out_1 = NULL;
+Matte_Map_1_out_1 = NULL;
+Matte_Overlay_2_out_1 = NULL;
+Matte_Overlay_1_out_1 = NULL;

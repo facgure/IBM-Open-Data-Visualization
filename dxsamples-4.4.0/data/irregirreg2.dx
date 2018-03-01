@@ -1,0 +1,23 @@
+# This example is a header file which contains no data. Instead, it
+# refers to another file, irregirreg2.bin, which contains the data in
+# binary format. This example contains the same information as 
+# irregular.dx.
+object 1 class array type float rank 1 shape 3 items 24 msb binary 
+data file irregirreg2.bin,0
+attribute "dep" string "positions"
+#
+object 2 class array type int rank 1 shape 4 items 30 msb binary 
+data file irregirreg2.bin,288
+attribute "element type" string "tetrahedra"
+attribute "ref" string "positions"
+#
+object 3 class array type float rank 0 items 24 msb binary 
+data file irregirreg2.bin,768
+attribute "dep" string "positions"
+#
+object "irreg positions irreg connections binary file" class field
+component "positions" value 1
+component "connections" value 2
+component "data" value 3
+#
+end

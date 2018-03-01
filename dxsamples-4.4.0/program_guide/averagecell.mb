@@ -1,0 +1,30 @@
+MODULE_NAME = AverageCell
+CATEGORY = Transformation
+MODULE_DESCRIPTION = computes the average of all the neighboring data values
+ASYNCHRONOUS = FALSE
+PINNED = FALSE
+SIDE_EFFECT = FALSE
+
+INPUT = input
+DESCRIPTION = input field
+REQUIRED = TRUE
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Regular
+ELEMENT_TYPE = Quads
+DEPENDENCY = Connections only
+
+OUTPUT = output
+DESCRIPTION = averaged field
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Connections only
+

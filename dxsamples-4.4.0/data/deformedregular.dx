@@ -1,0 +1,57 @@
+# The following shows how to define a deformed regular grid.  Note that
+# the positions are irregular, and so must be ennumerated. The connections
+# are regular, and are represented compactly, just as in the examples
+# regular.dx and regularskewed.dx
+#
+# The irregular, 3 dimensional positions
+object 1 class array type float rank 1 shape 3 items 24 data follows
+           0            0            0
+           0            0            1
+           0            0            2
+           0            2            0
+           0            2            1
+           0            2            2
+           1     0.841471            0
+           1     0.841471            1
+           1     0.841471            2
+           1     2.841471            0
+           1     2.841471            1
+           1     2.841471            2
+           2    0.9092974            0
+           2    0.9092974            1
+           2    0.9092974            2
+           2     2.909297            0
+           2     2.909297            1
+           2     2.909297            2
+           3      0.14112            0
+           3      0.14112            1
+           3      0.14112            2
+           3      2.14112            0
+           3      2.14112            1
+           3      2.14112            2
+# The regular connections
+#
+object 2 class gridconnections counts 4 2 3
+#
+# The data, in a one-to-one correspondence with the positions
+#
+object 3 class array type float rank 0 items 24 data follows
+           1          3.4            5            
+           2          3.4          5.1
+         0.3          4.5            1          
+         2.3          4.1          2.1
+           6            8          9.1          
+         2.3          4.5            5
+           3          4.3          1.2
+         1.2            3          3.2
+attribute "dep" string "positions"
+#
+# The field, with three components: "positions", "connections", and
+# "data".  The field is given the name "irreg positions regular connections". 
+#
+object "irreg positions regular connections" class field
+component "positions" value 1
+component "connections" value 2
+component "data" value 3
+#
+end

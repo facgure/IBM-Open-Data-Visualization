@@ -1,0 +1,12 @@
+data = Import("watermolecule");
+isosurface = Isosurface(data);
+camera = AutoCamera(isosurface,width=10);
+Display(isosurface,camera);
+
+// We scale the object by a factor of 2 in the y direction, and translate by
+// 1 in each dimension
+//
+matrix = [[1 0 0][0 2 0][0 0 1][1 1 1]];
+isosurface = Transform(isosurface, matrix);
+Display(isosurface,camera);
+

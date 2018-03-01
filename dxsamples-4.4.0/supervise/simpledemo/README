@@ -1,0 +1,31 @@
+This directory contains a simple preliminary demonstration of DX User
+Interactors.  The demo allows you interactively zoom the camera
+in and out on an object. The demonstration in this directory is intended
+to be very simple, to show the basic mechanism of creating a user
+interactor. For a more complex demonstation, showing more of the
+capabilities of user interactors, see the demonstration in ../complexdemo.
+
+First copy this directory to someplace where you can modify it. 
+To run the demo, you must first create the run-time loadable
+interactor file.  This is done by first going to the interactor 
+subdirectory and typing:
+
+make -f Makefile_arch interactors
+
+where arch is one of ibm6000, sgi, alphax, hp700 and solaris.  
+Once the interactors file has been created,
+you can return to this directory and execute the 'demo' script that
+you'll find here.  Run 'demo', and when DX comes up, put it in 
+execute-on-change mode.  
+
+You will see an isosurface appear. Press the left mouse button down and
+drag to the right. You will zoom in on the isosurface. Now drag in a
+vertical direction. You will zoom out.
+
+
+Note: Two platforms (sun4 and aviion) do not support runtime
+loadable modules. For these, you will need to create a separate
+dxexec executable incorporating your custom interactors. For
+an example, see samples/supervise/interactors.
+
+

@@ -1,0 +1,13 @@
+file = CO2.lis
+points = 21
+format = text
+interleaving = field
+header = marker "CO2_CONC   \n"
+series = 60, 1, 1
+field = locations, CO2_concentration
+structure = 2-vector, scalar
+type = float, float
+dependency = positions, positions
+layout = 33, 12, 0, 10
+
+end

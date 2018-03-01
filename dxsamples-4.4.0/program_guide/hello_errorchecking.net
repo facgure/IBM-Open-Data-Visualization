@@ -1,0 +1,35 @@
+//
+// time: Tue Sep  5 07:51:18 1995
+//
+// version: 3.0.0 (format), 3.1.0 (DX)
+//
+//
+// MODULE main
+// CATEGORY Macros
+// workspace: width = 243, height = 335
+// layout: snap = 0, width = 50, height = 50, align = CC
+//
+macro main(
+) -> (
+) {
+    // 
+    // node HelloErrorChecking[1]: x = 99, y = 182, inputs = 1, label = HelloErrorChecking
+    // input[1]: defaulting = 1, visible = 1, type = 32, value = "5"
+    //
+main_HelloErrorChecking_1_out_1 = 
+    HelloErrorChecking(
+    main_HelloErrorChecking_1_in_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Echo[1]: x = 134, y = 272, inputs = 1, label = Echo
+    //
+    Echo(
+    main_HelloErrorChecking_1_out_1
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_HelloErrorChecking_1_in_1 = NULL;
+main_HelloErrorChecking_1_out_1 = NULL;
+Executive("product version 3 1 0");
+$sync
+main();

@@ -1,0 +1,14 @@
+file = block_example.data
+grid = 5 x 5
+format = text
+interleaving = record
+majority = row
+header = lines 1
+field = field0
+structure = scalar
+type = float
+dependency = positions
+block = 17, 5, 3
+positions = regular, regular, 0, 1, 0, 1
+
+end

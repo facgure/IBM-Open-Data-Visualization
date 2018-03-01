@@ -1,0 +1,102 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Finance</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Weighted Average Cost of Capital</h2>
+		<h3>...about the visualization</h3>
+A fundamental decision facing financial managers is the 
+financing of a firm's activities.  There are 2 sources
+of funds:  debt financing or selling
+bonds, and equity financing or selling stock.  
+Two important considerations face the manager:
+<ul>
+<li>Financial decisions have tax implications.  Payments
+made to bondholders to service the firm's debt are made
+with pre-tax dollars.   Stock dividends are paid from after-tax
+income.  
+<li>The amount of debt versus equity financing may
+influence the investors' desire to buy the firm's
+securities.  As leverage increases, the expected risk and
+return of the firm's stick will increase as
+will the expected loss due to bankruptcy.
+</ul>
+Since the manager's job is to maximize the value of the firm
+we expect her to finance the firm's activities using the
+mix of debt and equity financing which results in the lowest
+cost of capital to the firm.   Other things being equal,
+we expect debt financing to be less
+expensive than equity financing
+because of the tax implications.  We also expect 
+an increase in in debt financing to increase the cost
+of equity financing because of the effect of financial
+leverage on the risk of the firm's stock.
+<p>
+<table border = 0>
+<tr>
+<td>
+<h3>...about the visual program</h3>
+The axes' labels:
+<ul>
+<li>rE....The return on the firm's equity.  In other words, the price
+the firm pays to attract investors to purchase its stock.
+<li>rD....The return on the firm's debt.  In other words, the price
+paid to bondholders.
+<li>r*....The <i>Weighted Average Cost of Capital</i>
+</ul>
+You can vary the corporate tax rate and debt:equity ratio in order
+see how taxes and changes in financing strategy will affect the
+cost of capital and thus, the decisions made by managers.  As
+the corporate tax rate increases, managers will be more likely
+to use debt financing other things being equal.  The plane
+represents the set of points we might expect to occur.  Note that in
+the real world, a firm's bonds almost always pay less
+than its stock.  Therefore the visual program removes situations
+in which rD > rE by marking them invalid.
+</td>
+<td>
+<APPLET
+	CODE="wacc.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="wacc">
+	<PARAM NAME=NETNAME VALUE="wacc.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+</APPLET>
+</td>
+</tr>
+</table>
+<h3>...about the conversion to web page</h3>
+Select <i>Pick</i> mode in the Execution panel.  Then by clicking on 
+the cost-of-capital plane, you will see values at that point on the plane.
+<br>
+
+<table border=2>
+<tr bgcolor=black>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 606 HEIGHT = 507
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/wacc1.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

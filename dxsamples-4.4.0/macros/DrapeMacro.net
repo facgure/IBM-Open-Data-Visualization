@@ -1,0 +1,311 @@
+//
+// time: Tue Apr  8 15:21:24 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE Drape
+// CATEGORY Macros
+// DESCRIPTION drapes a data set over elevation data (rubbersheeted)
+// INPUT elevation; object; (none); elevation data
+// INPUT data; object; (none); data to drape 
+// INPUT scale; object; (no default); rubbersheet scale
+// INPUT grid; object; 1; objects are on same grid (1) or different grids in same coordinate space (2)
+// INPUT component; object; "data"; component "data" field should be placed in (typically either "data" or "colors")
+// OUTPUT output_1; field;  
+// End MDF
+//
+// comment: drapes one two dimensional field onto another. One of the fields is used to deform the surface.
+// page assignment: diff_grids	order=4, windowed=0, showing=0
+// page assignment: inputs	order=2, windowed=0, showing=1
+// page assignment: same_grid	order=3, windowed=0, showing=0
+// page assignment: switch	order=5, windowed=0, showing=0
+// workspace: width = 543, height = 260
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro Drape(
+ elevation
+,data
+,scale
+,grid = 1
+,component = "data"
+) -> (
+ output_1
+) {
+    // 
+    // node Input[5]: x = 445, y = 36, inputs = 0, label = Input
+    // page group: inputs
+    // parameter: position = 5, name = 'component', value = '"data"', descriptive = 0, description = 'component "data" field should be placed in (typically either "data" or "colors")', required = 0, visible = 1
+    //
+Drape_Input_5_out_1 = component;
+    // 
+    // node Input[6]: x = 35, y = 26, inputs = 0, label = Input
+    // page group: inputs
+    // parameter: position = 1, name = 'elevation', value = ' ', descriptive = 0, description = 'elevation data', required = 1, visible = 1
+    //
+Drape_Input_6_out_1 = elevation;
+    // 
+    // node Input[7]: x = 140, y = 28, inputs = 0, label = Input
+    // page group: inputs
+    // parameter: position = 2, name = 'data', value = ' ', descriptive = 0, description = 'data to drape ', required = 1, visible = 1
+    //
+Drape_Input_7_out_1 = data;
+    // 
+    // node Input[8]: x = 233, y = 28, inputs = 0, label = Input
+    // page group: inputs
+    // parameter: position = 3, name = 'scale', value = '(no default)', descriptive = 1, description = 'rubbersheet scale', required = 0, visible = 1
+    //
+Drape_Input_8_out_1 = scale;
+    // 
+    // node Input[10]: x = 335, y = 37, inputs = 0, label = Input
+    // page group: inputs
+    // parameter: position = 4, name = 'grid', value = '1', descriptive = 0, description = 'objects are on same grid (1) or different grids in same coordinate space (2)', required = 0, visible = 1
+    //
+Drape_Input_10_out_1 = grid;
+    // 
+    // node Transmitter[7]: x = 117, y = 191, inputs = 1, label = data_xcvr
+    // page group: inputs
+    //
+data_xcvr = Drape_Input_7_out_1;
+    // 
+    // node Receiver[4]: x = 110, y = 19, inputs = 1, label = data_xcvr
+    // page group: diff_grids
+    //
+Drape_Receiver_4_out_1[cache: 0] = data_xcvr;
+    // 
+    // node Transmitter[6]: x = 0, y = 192, inputs = 1, label = elevation_xcvr
+    // page group: inputs
+    //
+elevation_xcvr = Drape_Input_6_out_1;
+    // 
+    // node Receiver[2]: x = 231, y = 22, inputs = 1, label = elevation_xcvr
+    // page group: diff_grids
+    //
+Drape_Receiver_2_out_1[cache: 0] = elevation_xcvr;
+    // 
+    // node Map[1]: x = 154, y = 125, inputs = 4, label = Map
+    // page group: diff_grids
+    //
+Drape_Map_1_out_1 = 
+    Map(
+    Drape_Receiver_4_out_1,
+    Drape_Receiver_2_out_1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[10]: x = 341, y = 198, inputs = 1, label = grid_switch
+    // page group: inputs
+    //
+grid_switch = Drape_Input_10_out_1;
+    // 
+    // node Receiver[7]: x = 48, y = 14, inputs = 1, label = grid_switch
+    // page group: switch
+    //
+Drape_Receiver_7_out_1[cache: 0] = grid_switch;
+    // 
+    // node Receiver[5]: x = 11, y = 42, inputs = 1, label = data_xcvr
+    // page group: same_grid
+    //
+Drape_Receiver_5_out_1[cache: 0] = data_xcvr;
+    // 
+    // node Receiver[1]: x = 109, y = 38, inputs = 1, label = elevation_xcvr
+    // page group: same_grid
+    //
+Drape_Receiver_1_out_1[cache: 0] = elevation_xcvr;
+    // 
+    // node Transmitter[8]: x = 198, y = 193, inputs = 1, label = rubbersheet_scale
+    // page group: inputs
+    //
+rubbersheet_scale = Drape_Input_8_out_1;
+    // 
+    // node Receiver[9]: x = 251, y = 37, inputs = 1, label = rubbersheet_scale
+    // page group: same_grid
+    //
+Drape_Receiver_9_out_1[cache: 0] = rubbersheet_scale;
+    // 
+    // node RubberSheet[1]: x = 109, y = 129, inputs = 4, label = RubberSheet
+    // page group: same_grid
+    //
+Drape_RubberSheet_1_out_1 = 
+    RubberSheet(
+    Drape_Receiver_1_out_1,
+    Drape_Receiver_9_out_1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[11]: x = 432, y = 197, inputs = 1, label = component_xcvr
+    // page group: inputs
+    //
+component_xcvr = Drape_Input_5_out_1;
+    // 
+    // node Receiver[13]: x = 408, y = 45, inputs = 1, label = component_xcvr
+    // page group: same_grid
+    //
+Drape_Receiver_13_out_1[cache: 0] = component_xcvr;
+    // 
+    // node Replace[1]: x = 123, y = 366, inputs = 4, label = Replace
+    // page group: same_grid
+    //
+Drape_Replace_1_out_1 = 
+    Replace(
+    Drape_Receiver_5_out_1,
+    Drape_RubberSheet_1_out_1,
+    Drape_Receiver_13_out_1,
+    Drape_Receiver_13_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[12]: x = 134, y = 478, inputs = 1, label = same_grid
+    // page group: same_grid
+    //
+same_grid = Drape_Replace_1_out_1;
+    // 
+    // node Receiver[11]: x = 140, y = 10, inputs = 1, label = same_grid
+    // page group: switch
+    //
+Drape_Receiver_11_out_1[cache: 0] = same_grid;
+    // 
+    // node Receiver[6]: x = 49, y = 173, inputs = 1, label = data_xcvr
+    // page group: diff_grids
+    //
+Drape_Receiver_6_out_1[cache: 0] = data_xcvr;
+    // 
+    // node Receiver[8]: x = 348, y = 28, inputs = 1, label = rubbersheet_scale
+    // page group: diff_grids
+    //
+Drape_Receiver_8_out_1[cache: 0] = rubbersheet_scale;
+    // 
+    // node RubberSheet[2]: x = 148, y = 210, inputs = 4, label = RubberSheet
+    // page group: diff_grids
+    //
+Drape_RubberSheet_2_out_1 = 
+    RubberSheet(
+    Drape_Map_1_out_1,
+    Drape_Receiver_8_out_1,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[10]: x = 495, y = 24, inputs = 1, label = component_xcvr
+    // page group: diff_grids
+    //
+Drape_Receiver_10_out_1[cache: 0] = component_xcvr;
+    // 
+    // node Replace[2]: x = 134, y = 385, inputs = 4, label = Replace
+    // page group: diff_grids
+    //
+Drape_Replace_2_out_1 = 
+    Replace(
+    Drape_Receiver_6_out_1,
+    Drape_RubberSheet_2_out_1,
+    Drape_Receiver_10_out_1,
+    Drape_Receiver_10_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[13]: x = 74, y = 520, inputs = 1, label = diff_grids
+    // page group: diff_grids
+    //
+diff_grids = Drape_Replace_2_out_1;
+    // 
+    // node Receiver[12]: x = 247, y = 10, inputs = 1, label = diff_grids
+    // page group: switch
+    //
+Drape_Receiver_12_out_1[cache: 0] = diff_grids;
+    // 
+    // node Switch[1]: x = 121, y = 260, inputs = 3, label = Switch
+    // page group: switch
+    //
+Drape_Switch_1_out_1 = 
+    Switch(
+    Drape_Receiver_7_out_1,
+    Drape_Receiver_11_out_1,
+    Drape_Receiver_12_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Shade[1]: x = 104, y = 357, inputs = 7, label = Shade
+    // input[2]: defaulting = 0, visible = 1, type = 3, value = 0
+    // page group: switch
+    //
+Drape_Shade_1_out_1 = 
+    Shade(
+    Drape_Switch_1_out_1,
+    0,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 133, y = 459, inputs = 1, label = Output
+    // page group: switch
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = Drape_Shade_1_out_1;
+    //
+    // decorator Annotate	pos=(237,282) size=382x60 style(Label), value = <NULL>
+    // annotation user_begin: 112
+    // annotation user: In this case the data are on the same grid, so the data
+    // annotation user: are simply replaced into the rubbersheet'd height
+    // annotation user: field.
+    // annotation user_end: <NULL>
+    // page group: same_grid
+    //
+    // decorator Annotate	pos=(235,315) size=396x76 style(Label), value = <NULL>
+    // annotation user_begin: 202
+    // annotation user: In this case the data are on different grids, but in the
+    // annotation user: same coordinate space, so the elevation grid is
+    // annotation user: mapped onto the data grid before rubbersheeting. Then
+    // annotation user: the data are replaced into the rubbersheet.
+    // annotation user_end: <NULL>
+    // page group: diff_grids
+    //
+    // decorator Annotate	pos=(215,275) size=368x44 style(Label), value = <NULL>
+    // annotation user_begin: 68
+    // annotation user: Depending on the setting of grid_switch the draped
+    // annotation user: field is created.
+    // annotation user_end: <NULL>
+    // page group: switch
+    //
+    // decorator Annotate	pos=(189,373) size=425x60 style(Label), value = <NULL>
+    // annotation user_begin: 144
+    // annotation user: Shading is turned off, since in many cases the shading will
+    // annotation user: be provided by an image (photograph). The user can always
+    // annotation user: put shading on if desired.
+    // annotation user_end: <NULL>
+    // page group: switch
+// network: end of macro body
+}
+Drape_Input_5_out_1 = NULL;
+Drape_Input_6_out_1 = NULL;
+Drape_Input_7_out_1 = NULL;
+Drape_Input_8_out_1 = NULL;
+Drape_Input_10_out_1 = NULL;
+Drape_Transmitter_7_out_1 = NULL;
+Drape_Receiver_4_out_1 = NULL;
+Drape_Transmitter_6_out_1 = NULL;
+Drape_Receiver_2_out_1 = NULL;
+Drape_Map_1_out_1 = NULL;
+Drape_Transmitter_10_out_1 = NULL;
+Drape_Receiver_7_out_1 = NULL;
+Drape_Receiver_5_out_1 = NULL;
+Drape_Receiver_1_out_1 = NULL;
+Drape_Transmitter_8_out_1 = NULL;
+Drape_Receiver_9_out_1 = NULL;
+Drape_RubberSheet_1_out_1 = NULL;
+Drape_Transmitter_11_out_1 = NULL;
+Drape_Receiver_13_out_1 = NULL;
+Drape_Replace_1_out_1 = NULL;
+Drape_Transmitter_12_out_1 = NULL;
+Drape_Receiver_11_out_1 = NULL;
+Drape_Receiver_6_out_1 = NULL;
+Drape_Receiver_8_out_1 = NULL;
+Drape_RubberSheet_2_out_1 = NULL;
+Drape_Receiver_10_out_1 = NULL;
+Drape_Replace_2_out_1 = NULL;
+Drape_Transmitter_13_out_1 = NULL;
+Drape_Receiver_12_out_1 = NULL;
+Drape_Switch_1_out_1 = NULL;
+Drape_Shade_1_out_1 = NULL;

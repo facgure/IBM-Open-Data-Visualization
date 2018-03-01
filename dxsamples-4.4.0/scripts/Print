@@ -1,0 +1,22 @@
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Create two isosurfaces
+iso1 = Isosurface(electrondensity,0.1);
+iso2 = Isosurface(electrondensity,0.3);
+   // Collect the isosurfaces into a group
+both = Collect(iso1,iso2);
+
+
+   // Print the group. It will give only summary information
+Print(both);
+  // Recurse through the object
+Print(both,"r");
+   // Recurse, and print out the first and last 25 items in the "positions"
+   // component
+Print(both,"d", "positions");
+   // Recurse, and print out all the items in the "data" and "box"
+   // components
+Print(both,"D", {"data", "box"});
+
+
+

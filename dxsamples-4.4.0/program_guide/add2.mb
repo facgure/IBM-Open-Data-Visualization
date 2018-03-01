@@ -1,0 +1,42 @@
+MODULE_NAME = Add2
+CATEGORY = User
+MODULE_DESCRIPTION = Adds two fields
+ASYNCHRONOUS = FALSE
+PINNED = FALSE
+SIDE_EFFECT = FALSE
+
+INPUT = field1
+DESCRIPTION = first field
+REQUIRED = TRUE
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+
+INPUT = field2
+DESCRIPTION = second field
+REQUIRED = TRUE
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+
+OUTPUT = result
+DESCRIPTION = result of adding two fields together
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+

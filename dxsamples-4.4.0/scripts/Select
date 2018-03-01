@@ -1,0 +1,46 @@
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Construct a camera
+camera = AutoCamera(electrondensity,width=3);
+    // Reduce the data by a factor of two and by a factor of 3
+reduced = Reduce(electrondensity,{2 3});
+    // Select the first field from the group (reduced by a factor of 2)
+selected = Select(reduced,0);
+    // Create an isosurface and display
+isosurface = Isosurface(selected,0.2);
+Display(isosurface,camera);
+    // Select the second field from the group (reduced by a factor of 3)
+selected = Select(reduced,1);
+     // Create an isosurface and display
+isosurface = Isosurface(selected,0.2);
+Display(isosurface,camera);
+
+
+     //In this second example, individual 
+     //positions are selected in turn from a field. These
+     //positions are marked with a text glyph indicating their indices.
+
+field = Import("CO2.general", format="general");
+frame17 = Select(field,17);
+positions = Extract(frame17,"positions");
+glyphs = AutoGlyph(frame17);
+glyphs = AutoColor(glyphs);
+
+macro dosequence(frame)
+{
+  currentposition = Select(positions,frame);
+  marker = Construct(currentposition, data = frame);
+  textglyph = Glyph(marker,"text", scale=2);
+  camera = AutoCamera(field);
+  collected = Collect(textglyph, glyphs);
+  Display(collected,camera, throttle=1);
+}
+
+dosequence(0);
+dosequence(1);
+dosequence(2);
+dosequence(3);
+dosequence(4);
+dosequence(5);
+dosequence(6);
+dosequence(7);

@@ -1,0 +1,30 @@
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Create a camera appropriate for the isosurface
+camera = AutoCamera(isosurface);
+    // Render the isosurface using the camera and create an image
+image = Render(isosurface,camera);
+    // Display the image. Note that normally, you would use Display to both
+    // render and display; in this case however, we want to operate on the
+    // image itself using the Filter module
+Display(image);
+    // Filter the image using the laplacian filter. Operate on the "colors"
+    // component
+filtered = Filter(image,"laplacian","colors");
+    // Display the filetered image
+Display(filtered);
+
+
+    // Create an explicit box filter
+filter = [[0.1111 0.1111 0.1111][0.1111 0.1111 0.1111]
+          [0.1111 0.1111 0.1111]];
+    // Filter the image using the box filter
+filtered = Filter(image,filter,"colors");
+    // Display the filtered image
+Display(filtered);
+
+

@@ -1,0 +1,628 @@
+//
+// time: Wed Feb 27 21:04:41 2002
+//
+// version: 3.1.2 (format), 4.1.3 (DX)
+//
+//
+// MODULE main
+//
+// comment: This visual program illustrates the use of Texture Mapping. 
+// comment: 
+// comment: IMPORTANT: Texture mapping is available only with a hardware card which supports it. OpenGL and some versions of GL support texture mapping. (If you are using an ibm risc system/6000 machine, you may want to check README_ibm6000 to ensure that OpenGL is enabled, if available.) This visual program is set to use hardware rendering by default.  Depending on your machine, if you run this visual program and *do not* have a hardware card, DX may abruptly terminate.
+// comment: 
+// comment: An image (in this example, the DX logo) is texture mapped onto a much lower resolution height map. To the height map is added a "uv" component, which specifies how the image should be mapped to the geometry. Each component of uv goes from 0 to 1.
+// comment: 
+// comment: Go into execute-on-change mode and rotate the object to see the effect of the texture mapped height field.
+// workspace: width = 453, height = 615
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Construct[1]: x = 5, y = 9, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[-5 -5]}
+    // input[2]: defaulting = 0, visible = 1, type = 16777224, value = {[.5 .5]}
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [21 21]
+    //
+main_Construct_1_out_1 = 
+    Construct(
+    main_Construct_1_in_1,
+    main_Construct_1_in_2,
+    main_Construct_1_in_3,
+    main_Construct_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[1]: x = 23, y = 79, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+main_Mark_1_out_1 = 
+    Mark(
+    main_Construct_1_out_1,
+    main_Mark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 39, y = 158, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "-cos(1.5*mag($0))"
+    // expression: value = -cos(1.5*mag(a))
+    // name[2]: value = a
+    //
+main_Compute_1_out_1 = 
+    Compute(
+    main_Compute_1_in_1,
+    main_Mark_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[2]: x = 135, y = 210, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+main_Mark_2_out_1 = 
+    Mark(
+    main_Compute_1_out_1,
+    main_Mark_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[2]: x = 58, y = 270, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[($0.x+5)/10.0, ($0.y+5)/10.0]"
+    // expression: value = [(a.x+5)/10.0, (a.y+5)/10.0]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_2_out_1 = 
+    Compute(
+    main_Compute_2_in_1,
+    main_Mark_2_out_1,
+    main_Compute_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Replace[1]: x = 142, y = 295, inputs = 4, label = Replace
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "uv"
+    //
+main_Replace_1_out_1 = 
+    Replace(
+    main_Compute_2_out_1,
+    main_Compute_1_out_1,
+    main_Replace_1_in_3,
+    main_Replace_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node RubberSheet[1]: x = 127, y = 373, inputs = 4, label = RubberSheet
+    //
+main_RubberSheet_1_out_1 = 
+    RubberSheet(
+    main_Replace_1_out_1,
+    main_RubberSheet_1_in_2,
+    main_RubberSheet_1_in_3,
+    main_RubberSheet_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 134, y = 448, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "white"
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_RubberSheet_1_out_1,
+    main_Color_1_in_2,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node ReadImage[2]: x = 342, y = 32, inputs = 9, label = ReadImage
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "dx_logo2.tif"
+    //
+main_ReadImage_2_out_1 = 
+    ReadImage(
+    main_ReadImage_2_in_1,
+    main_ReadImage_2_in_2,
+    main_ReadImage_2_in_3,
+    main_ReadImage_2_in_4,
+    main_ReadImage_2_in_5,
+    main_ReadImage_2_in_6,
+    main_ReadImage_2_in_7,
+    main_ReadImage_2_in_8,
+    main_ReadImage_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Options[1]: x = 285, y = 471, inputs = 7, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "texture"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "texture min filter"
+    // input[5]: defaulting = 0, visible = 1, type = 32, value = "linear_mipmap_linear"
+    // input[6]: defaulting = 0, visible = 1, type = 32, value = "texture mag filter"
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "linear"
+    //
+main_Options_1_out_1 = 
+    Options(
+    main_Color_1_out_1,
+    main_Options_1_in_2,
+    main_ReadImage_2_out_1,
+    main_Options_1_in_4,
+    main_Options_1_in_5,
+    main_Options_1_in_6,
+    main_Options_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[2]: x = 297, y = 553, inputs = 49, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_2"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [0 0 -0.000288427]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [24.2436 -3.51258 25.2423]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 18.8502
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 803
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.761519
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [-0.696777 0.180218 0.694279]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[41]: defaulting = 0, visible = 0, type = 32, value = "rotate"
+    // depth: value = 16
+    // window: position = (0.3463,0.0672), size = 0.5106x0.5117
+    // internal caching: 1
+    //
+main_Image_2_out_1,
+main_Image_2_out_2,
+main_Image_2_out_3 = 
+    Image(
+    main_Image_2_in_1,
+    main_Options_1_out_1,
+    main_Image_2_in_3,
+    main_Image_2_in_4,
+    main_Image_2_in_5,
+    main_Image_2_in_6,
+    main_Image_2_in_7,
+    main_Image_2_in_8,
+    main_Image_2_in_9,
+    main_Image_2_in_10,
+    main_Image_2_in_11,
+    main_Image_2_in_12,
+    main_Image_2_in_13,
+    main_Image_2_in_14,
+    main_Image_2_in_15,
+    main_Image_2_in_16,
+    main_Image_2_in_17,
+    main_Image_2_in_18,
+    main_Image_2_in_19,
+    main_Image_2_in_20,
+    main_Image_2_in_21,
+    main_Image_2_in_22,
+    main_Image_2_in_23,
+    main_Image_2_in_24,
+    main_Image_2_in_25,
+    main_Image_2_in_26,
+    main_Image_2_in_27,
+    main_Image_2_in_28,
+    main_Image_2_in_29,
+    main_Image_2_in_30,
+    main_Image_2_in_31,
+    main_Image_2_in_32,
+    main_Image_2_in_33,
+    main_Image_2_in_34,
+    main_Image_2_in_35,
+    main_Image_2_in_36,
+    main_Image_2_in_37,
+    main_Image_2_in_38,
+    main_Image_2_in_39,
+    main_Image_2_in_40,
+    main_Image_2_in_41,
+    main_Image_2_in_42,
+    main_Image_2_in_43,
+    main_Image_2_in_44,
+    main_Image_2_in_45,
+    main_Image_2_in_46,
+    main_Image_2_in_47,
+    main_Image_2_in_48,
+    main_Image_2_in_49
+    ) [instance: 2, cache: 1];
+// network: end of macro body
+CacheScene(main_Image_2_in_1, main_Image_2_out_1, main_Image_2_out_2);
+}
+main_Construct_1_in_1 = {[-5 -5]};
+main_Construct_1_in_2 = {[.5 .5]};
+main_Construct_1_in_3 = [21 21];
+main_Construct_1_in_4 = NULL;
+main_Construct_1_out_1 = NULL;
+main_Mark_1_in_2 = "positions";
+main_Mark_1_out_1 = NULL;
+main_Compute_1_in_1 = "-cos(1.5*mag($0))";
+main_Compute_1_out_1 = NULL;
+main_Mark_2_in_2 = "positions";
+main_Mark_2_out_1 = NULL;
+main_Compute_2_in_1 = "[($0.x+5)/10.0, ($0.y+5)/10.0]";
+main_Compute_2_in_3 = NULL;
+main_Compute_2_out_1 = NULL;
+main_Replace_1_in_3 = NULL;
+main_Replace_1_in_4 = "uv";
+main_Replace_1_out_1 = NULL;
+main_RubberSheet_1_in_2 = NULL;
+main_RubberSheet_1_in_3 = NULL;
+main_RubberSheet_1_in_4 = NULL;
+main_RubberSheet_1_out_1 = NULL;
+main_Color_1_in_2 = "white";
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_ReadImage_2_in_1 = "dx_logo2.tif";
+main_ReadImage_2_in_2 = NULL;
+main_ReadImage_2_in_3 = NULL;
+main_ReadImage_2_in_4 = NULL;
+main_ReadImage_2_in_5 = NULL;
+main_ReadImage_2_in_6 = NULL;
+main_ReadImage_2_in_7 = NULL;
+main_ReadImage_2_in_8 = NULL;
+main_ReadImage_2_in_9 = NULL;
+main_ReadImage_2_out_1 = NULL;
+main_Options_1_in_2 = "texture";
+main_Options_1_in_4 = "texture min filter";
+main_Options_1_in_5 = "linear_mipmap_linear";
+main_Options_1_in_6 = "texture mag filter";
+main_Options_1_in_7 = "linear";
+main_Options_1_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        webOptions) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_2_in_1 = "Image_2";
+main_Image_2_in_3 = "X16,,";
+main_Image_2_in_4 = 1;
+main_Image_2_in_5 = [0 0 -0.000288427];
+main_Image_2_in_6 = [24.2436 -3.51258 25.2423];
+main_Image_2_in_7 = 18.8502;
+main_Image_2_in_8 = 803;
+main_Image_2_in_9 = 0.761519;
+main_Image_2_in_10 = [-0.696777 0.180218 0.694279];
+main_Image_2_in_11 = NULL;
+main_Image_2_in_12 = 0;
+main_Image_2_in_13 = NULL;
+main_Image_2_in_14 = 1;
+main_Image_2_in_15 = NULL;
+main_Image_2_in_16 = NULL;
+main_Image_2_in_17 = 1;
+main_Image_2_in_18 = 1;
+main_Image_2_in_19 = 1;
+main_Image_2_in_20 = NULL;
+main_Image_2_in_21 = NULL;
+main_Image_2_in_22 = NULL;
+main_Image_2_in_23 = NULL;
+main_Image_2_in_25 = NULL;
+main_Image_2_in_26 = NULL;
+main_Image_2_in_27 = NULL;
+main_Image_2_in_28 = NULL;
+main_Image_2_in_29 = NULL;
+main_Image_2_in_30 = NULL;
+main_Image_2_in_31 = NULL;
+main_Image_2_in_32 = NULL;
+main_Image_2_in_33 = NULL;
+main_Image_2_in_34 = NULL;
+main_Image_2_in_35 = NULL;
+main_Image_2_in_36 = NULL;
+main_Image_2_in_37 = NULL;
+main_Image_2_in_38 = NULL;
+main_Image_2_in_39 = NULL;
+main_Image_2_in_40 = NULL;
+main_Image_2_in_41 = "rotate";
+main_Image_2_in_42 = NULL;
+main_Image_2_in_43 = NULL;
+main_Image_2_in_44 = NULL;
+main_Image_2_in_45 = NULL;
+main_Image_2_in_46 = NULL;
+main_Image_2_in_47 = NULL;
+main_Image_2_in_48 = NULL;
+main_Image_2_in_49 = NULL;
+Executive("product version 4 1 3");
+$sync
+main();

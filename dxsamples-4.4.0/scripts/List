@@ -1,0 +1,27 @@
+// Import the data file, in which the field has 2 attributes attached to it.
+
+data = Import("datawithattribute.dx");
+// Show the connections of the field and autocolor them
+connections = ShowConnections(data);
+colored = AutoColor(connections);
+// Create a camera
+camera = AutoCamera(colored,"off-front");
+
+// extract the attributes.  "date" was the user-defined name for the date
+// attribute in the data file, and "source" was the user-defined name for
+// the source of the data. The returned values in attrdate and attrsource
+// are strings. 
+//
+// The attributes can be used to caption the image.
+attrdate = Attribute(data,"date");
+attrsource = Attribute(data,"source");
+
+attrsource = Format("data source: %s", attrsource);
+
+attributelist = List(attrdate, attrsource);
+caption = Caption(attributelist);
+
+// Collect the caption with the image and Display.
+colored = AutoAxes(colored,camera);
+collected = Collect(caption,colored);
+Display(collected,camera);

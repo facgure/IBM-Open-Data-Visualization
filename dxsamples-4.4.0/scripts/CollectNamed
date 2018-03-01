@@ -1,0 +1,8 @@
+electrondensity = Import("watermolecule");
+electrondensity = Partition(electrondensity);
+camera = AutoCamera(electrondensity);
+iso1 = Isosurface(electrondensity,0.2);
+iso2 = Isosurface(electrondensity,0.3);
+collected = CollectNamed(iso1,"first isosurface",iso2, "second isosurface");
+selected = Select(collected,"second isosurface");
+Display(selected,camera);

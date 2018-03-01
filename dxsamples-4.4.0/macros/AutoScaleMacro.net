@@ -1,0 +1,264 @@
+//
+// time: Wed Feb 12 11:22:37 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE AutoScale
+// CATEGORY Macros
+// DESCRIPTION automatically scales an object to a user-given aspect ratio
+// INPUT object; field; (none); object to be scaled
+// INPUT aspect; object; (none); aspect ratio
+// OUTPUT output_1; object;  
+// OUTPUT scale_factor; object; scale factor applied to the object
+// End MDF
+//
+// comment: This visual program will automatically scale an object to a user-given aspect ratio. Works for both 2D and 3D (if 2D the aspect ratio must be a two vector; if 3D a three vector).
+// comment: 
+// comment: The first input, object, is the object to be scaled.
+// comment: 
+// comment: The second input, aspect, is the aspect ratio. It should be either a two vector or a three vector, depending on the dimensionality of "object".
+// page assignment: aspect	order=2, windowed=0, showing=0
+// page assignment: input	order=1, windowed=0, showing=1
+// page assignment: scale	order=3, windowed=0, showing=0
+// workspace: width = 607, height = 608
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro AutoScale(
+ object
+,aspect
+) -> (
+ output_1
+,scale_factor
+) {
+    // 
+    // node Input[1]: x = 37, y = 20, inputs = 0, label = Input
+    // page group: input
+    // parameter: position = 1, name = 'object', value = '(none)', descriptive = 1, description = 'object to be scaled', required = 1, visible = 1
+    //
+AutoScale_Input_1_out_1 = object;
+    // 
+    // node ShowBox[1]: x = 36, y = 133, inputs = 1, label = ShowBox
+    // page group: input
+    //
+AutoScale_ShowBox_1_out_1,
+AutoScale_ShowBox_1_out_2 = 
+    ShowBox(
+    AutoScale_Input_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 63, y = 380, inputs = 1, label = box
+    // page group: input
+    //
+box = AutoScale_ShowBox_1_out_1;
+    // 
+    // node Receiver[5]: x = 283, y = 16, inputs = 1, label = box
+    // page group: scale
+    //
+AutoScale_Receiver_5_out_1[cache: 0] = box;
+    // 
+    // node Extract[1]: x = 251, y = 86, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "box"
+    // page group: scale
+    //
+AutoScale_Extract_1_out_1 = 
+    Extract(
+    AutoScale_Receiver_5_out_1,
+    "box"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[1]: x = 200, y = 172, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: scale
+    //
+AutoScale_Select_1_out_1 = 
+    Select(
+    AutoScale_Extract_1_out_1,
+    0,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[2]: x = 263, y = 169, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 7
+    // page group: scale
+    //
+AutoScale_Select_2_out_1 = 
+    Select(
+    AutoScale_Extract_1_out_1,
+    7,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[2]: x = 20, y = 20, inputs = 0, label = Input
+    // page group: aspect
+    // parameter: position = 2, name = 'aspect', value = '(none)', descriptive = 1, description = 'aspect ratio', required = 1, visible = 1
+    //
+AutoScale_Input_2_out_1 = aspect;
+    // 
+    // node Transmitter[4]: x = 38, y = 107, inputs = 1, label = aspect_xcvr
+    // page group: aspect
+    //
+aspect_xcvr = AutoScale_Input_2_out_1;
+    // 
+    // node Receiver[6]: x = 492, y = 34, inputs = 1, label = aspect_xcvr
+    // page group: scale
+    //
+AutoScale_Receiver_6_out_1[cache: 0] = aspect_xcvr;
+    // 
+    // node Compute[2]: x = 208, y = 282, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[(1.0/($1.x - $0.x))*$2.x, (1.0/($1.y - $0.y))*$2.y, (1.0/($1.z - $0.z))*$2.z]"
+    // page group: scale
+    // expression: value = [(1.0/(b.x - a.x))*aspect.x, (1.0/(b.y - a.y))*aspect.y, (1.0/(b.z - a.z))*aspect.z]
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = aspect
+    //
+AutoScale_Compute_2_out_1 = 
+    Compute(
+    "[(1.0/($1.x - $0.x))*$2.x, (1.0/($1.y - $0.y))*$2.y, (1.0/($1.z - $0.z))*$2.z]",
+    AutoScale_Select_1_out_1,
+    AutoScale_Select_2_out_1,
+    AutoScale_Receiver_6_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Select[4]: x = 340, y = 172, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 7
+    // page group: scale
+    //
+AutoScale_Select_4_out_1 = 
+    Select(
+    AutoScale_Extract_1_out_1,
+    7,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Select[3]: x = 410, y = 169, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: scale
+    //
+AutoScale_Select_3_out_1 = 
+    Select(
+    AutoScale_Extract_1_out_1,
+    0,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[3]: x = 349, y = 276, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[(1.0/($1.x - $0.x))*$2.x, (1.0/($1.y - $0.y))*$2.y,1]"
+    // page group: scale
+    // expression: value = [(1.0/(b.x - a.x))*aspect.x, (1.0/(b.y - a.y))*aspect.y,1]
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = aspect
+    //
+AutoScale_Compute_3_out_1 = 
+    Compute(
+    "[(1.0/($1.x - $0.x))*$2.x, (1.0/($1.y - $0.y))*$2.y,1]",
+    AutoScale_Select_4_out_1,
+    AutoScale_Select_3_out_1,
+    AutoScale_Receiver_6_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Inquire[1]: x = 133, y = 179, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is 2D positions +1"
+    // page group: input
+    //
+AutoScale_Inquire_1_out_1 = 
+    Inquire(
+    AutoScale_Input_1_out_1,
+    "is 2D positions +1",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 286, y = 385, inputs = 1, label = input_data
+    // page group: input
+    //
+input_data = AutoScale_Input_1_out_1;
+    // 
+    // node Receiver[2]: x = 16, y = 13, inputs = 1, label = input_data
+    // page group: scale
+    //
+AutoScale_Receiver_2_out_1[cache: 0] = input_data;
+    // 
+    // node Transmitter[5]: x = 181, y = 376, inputs = 1, label = TwoD
+    // page group: input
+    //
+TwoD = AutoScale_Inquire_1_out_1;
+    // 
+    // node Receiver[8]: x = 131, y = 15, inputs = 1, label = TwoD
+    // page group: scale
+    //
+AutoScale_Receiver_8_out_1[cache: 0] = TwoD;
+    // 
+    // node Switch[1]: x = 201, y = 446, inputs = 3, label = Switch
+    // page group: scale
+    //
+AutoScale_Switch_1_out_1 = 
+    Switch(
+    AutoScale_Receiver_8_out_1,
+    AutoScale_Compute_2_out_1,
+    AutoScale_Compute_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scale[1]: x = 104, y = 455, inputs = 2, label = Scale
+    // page group: scale
+    //
+AutoScale_Scale_1_out_1 = 
+    Scale(
+    AutoScale_Receiver_2_out_1,
+    AutoScale_Switch_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 80, y = 541, inputs = 1, label = Output
+    // page group: scale
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = AutoScale_Scale_1_out_1;
+    // 
+    // node Output[2]: x = 259, y = 546, inputs = 1, label = Output
+    // page group: scale
+    // parameter: position = 2, name = 'scale_factor', value = ' ', descriptive = 0, description = 'scale factor applied to the object', required = 0, visible = 1
+    //
+scale_factor = AutoScale_Switch_1_out_1;
+    //
+    // decorator Annotate	pos=(316,41) size=128x28 style(Label), value = <NULL>
+    // annotation user_begin: 17
+    // annotation user: the "input" input
+    // annotation user_end: <NULL>
+    // page group: input
+    //
+    // decorator Annotate	pos=(188,43) size=138x28 style(Label), value = <NULL>
+    // annotation user_begin: 18
+    // annotation user: the "aspect" input
+    // annotation user_end: <NULL>
+    // page group: aspect
+    //
+    // decorator Annotate	pos=(290,416) size=317x28 style(Label), value = <NULL>
+    // annotation user_begin: 46
+    // annotation user: scale the object to the specified aspect ratio
+    // annotation user_end: <NULL>
+    // page group: scale
+// network: end of macro body
+}
+AutoScale_Input_1_out_1 = NULL;
+AutoScale_ShowBox_1_out_1 = NULL;
+AutoScale_Transmitter_3_out_1 = NULL;
+AutoScale_Receiver_5_out_1 = NULL;
+AutoScale_Extract_1_out_1 = NULL;
+AutoScale_Select_1_out_1 = NULL;
+AutoScale_Select_2_out_1 = NULL;
+AutoScale_Input_2_out_1 = NULL;
+AutoScale_Transmitter_4_out_1 = NULL;
+AutoScale_Receiver_6_out_1 = NULL;
+AutoScale_Compute_2_out_1 = NULL;
+AutoScale_Select_4_out_1 = NULL;
+AutoScale_Select_3_out_1 = NULL;
+AutoScale_Compute_3_out_1 = NULL;
+AutoScale_Inquire_1_out_1 = NULL;
+AutoScale_Transmitter_2_out_1 = NULL;
+AutoScale_Receiver_2_out_1 = NULL;
+AutoScale_Transmitter_5_out_1 = NULL;
+AutoScale_Receiver_8_out_1 = NULL;
+AutoScale_Switch_1_out_1 = NULL;
+AutoScale_Scale_1_out_1 = NULL;

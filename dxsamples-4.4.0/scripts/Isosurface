@@ -1,0 +1,49 @@
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Create a camera and display
+camera = AutoCamera(isosurface);
+Display(isosurface,camera);
+
+    // Create three isosurfaces
+isosurfaces = Isosurface(electrondensity,{0.3,0.5,0.7});
+    // Make the isosurfaces translucent
+isosurfaces = Color(isosurfaces,opacity=0.3);
+camera = AutoCamera(isosurfaces);
+Display(isosurfaces,camera);
+
+    // Create a cutting plane using the MapToPlane module
+maptoplane = MapToPlane(electrondensity);
+    // Create 5 contour lines, evenly spaced between the min and max data
+    // values. Color them.
+contours = Isosurface(maptoplane,number=5);
+contours = AutoColor(contours);
+Display(contours,camera);
+
+    // Create 5 contour lines, of our own choosing
+contours = Isosurface(maptoplane,{0.2,0.3,0.34,0.4,0.5});
+contours = AutoColor(contours);
+Display(contours,camera);
+
+
+    //  Take the gradient of the data
+gradientdensity = Gradient(electrondensity);
+    // Compute the magnitude of the gradient
+maggradient = Compute("mag($0)",gradientdensity);
+    // Map the gradient onto the isosurface
+mapped = Map(isosurface,maggradient);
+    // Now create contour lines on the isosurface, and color them
+contours = Isosurface(mapped,number=5);
+contours = AutoColor(contours);
+    // Give the isosurface an opacity of 0.2
+isosurface = Color(isosurface,opacity=0.2);
+    // Collect the contours with the isosurface and display
+collected = Collect(isosurface,contours);
+Display(collected,camera);
+
+
+
+

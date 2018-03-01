@@ -1,0 +1,31 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create an isosurface
+isosurface = Isosurface(electrondensity,0.3);
+   // Create a camera
+camera = AutoCamera(isosurface,"off-diagonal",resolution = 300, aspect = 1);
+
+   // The macro will take as input a saturation; the color will be gree
+macro makecolor(saturation)
+{
+   huesatval = Compute("[0.3333, $0, 1.0]",saturation); 
+   caption = Format("saturation = %f",saturation);
+   caption = Caption(caption);
+   green = Convert(huesatval);
+   collected = Collect(caption,isosurface);
+   colored = Color(collected,green);
+   Display(colored,camera);
+}
+
+makecolor(1.0);
+makecolor(0.90);
+makecolor(0.80);
+makecolor(0.70);
+makecolor(0.60);
+makecolor(0.50);
+makecolor(0.40);
+makecolor(0.30);
+makecolor(0.20);

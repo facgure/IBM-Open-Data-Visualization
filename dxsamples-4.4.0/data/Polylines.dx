@@ -1,0 +1,56 @@
+#
+# Example of polylines and edges components.
+#
+
+#
+# Positions array.  These are a list of all the verticies of the object;
+#   no particular order is required here.
+#
+object "position list" class array type float rank 1 shape 2 items 11 
+data follows
+    0.333985     0.812452    # point number 0
+    0.300626     0.727407    # point number 1 
+    0.532733     0.076484    # point number 2 
+    0.823806    -0.404777    # point number 3 
+    0.475019     0.496258    # point number 4 
+    0.345888     0.328927    # point number 5 
+    0.415428     0.758889    # point number 6 
+    0.68152     -0.851137    # point number 7
+    0.44636      0.652248    # point number 8 
+    0.729132     0.416679    # point number 9 
+    0.935709     0.190524    # point number 10 
+#
+#  Edges array.  This is a list of connected points, by point number.  All
+#  the edges associated with a particular polyline need to be listed together.
+object "edge list" class array type int rank 0 items 11 data follows
+  0   4   2   3                # edge point index 0
+  1   5   7                    # edge point index 4
+  6   8   9  10                # edge point index 7
+attribute "ref" string "positions"
+
+#
+#  polylines array.  This is a list of connected edges, by edge number.  Each
+#  number is the edge index of where the next polyline starts.
+object "polyline list" class array type int rank 0 items 3 data follows
+  0     # polyline index 0
+  4     #  1
+  7     #  2
+attribute "ref" string "edges"
+
+#
+#  data array. Dependent on polylines 
+#
+object "data" class array type float rank 0 items 3 data follows
+  0 2.5 1.2 
+attribute "dep" string "polylines"
+
+#
+#
+#  Field definition to put the arrays together.
+#
+object "map" class field
+   component "positions"    "position list"
+   component "edges"        "edge list"
+   component "polylines"    "polyline list"
+   component "data"         "data"
+end

@@ -1,0 +1,170 @@
+//
+// time: Fri Oct 23 15:23:41 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE Legend2
+// CATEGORY Annotation
+// DESCRIPTION Legend with scaling
+// INPUT stringlist; string list; (no default);  string list for legend
+// INPUT colorlist; field or vector list or string list; (no default);  color list for legend
+// INPUT labelscale; value list or field or string or string list; 1;  
+// INPUT label; string or string list; (no default); label for legend 
+// INPUT position; vector; [0 1]; position of upper left
+// OUTPUT output_1; group;  
+// End MDF
+// workspace: width = 445, height = 564
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro Legend2(
+ stringlist
+,colorlist
+,labelscale = 1
+,label
+,position = [0 1]
+) -> (
+ output_1
+) {
+    // 
+    // node Input[3]: x = 309, y = 54, inputs = 0, label = Input
+    // parameter: position = 4, name = 'label', value = '(no default)', descriptive = 1, description = 'label for legend ', required = 0, visible = 1
+    //
+Legend2_Input_3_out_1 = label;
+    // 
+    // node Input[6]: x = 399, y = 63, inputs = 0, label = Input
+    // parameter: position = 5, name = 'position', value = '[0 1]', descriptive = 0, description = 'position of upper left', required = 0, visible = 1
+    //
+Legend2_Input_6_out_1 = position;
+    // 
+    // node Caption[4]: x = 263, y = 265, inputs = 9, label = Caption
+    // input[2]: defaulting = 1, visible = 1, type = 8, value = [0.1 1]
+    // input[5]: defaulting = 0, visible = 0, type = 5, value = 0.0
+    // input[6]: defaulting = 0, visible = 0, type = 1, value = 15
+    // input[7]: defaulting = 0, visible = 0, type = 32, value = "area"
+    //
+Legend2_Caption_4_out_1[cache: 0] = 
+    Caption(
+    Legend2_Input_3_out_1,
+    Legend2_Input_6_out_1,
+    NULL,
+    NULL,
+    0.0,
+    15,
+    "area",
+    NULL,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Input[4]: x = 33, y = 18, inputs = 0, label = Input
+    // parameter: position = 1, name = 'stringlist', value = '(no default)', descriptive = 1, description = ' string list for legend', required = 0, visible = 1
+    //
+Legend2_Input_4_out_1 = stringlist;
+    // 
+    // node Input[5]: x = 114, y = 6, inputs = 0, label = Input
+    // parameter: position = 2, name = 'colorlist', value = '(no default)', descriptive = 1, description = ' color list for legend', required = 0, visible = 1
+    //
+Legend2_Input_5_out_1 = colorlist;
+    // 
+    // node Compute[26]: x = 387, y = 226, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0-[0, 0.06]"
+    // expression: value = a-[0, 0.06]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+Legend2_Compute_26_out_1[cache: 2] = 
+    Compute(
+    "$0-[0, 0.06]",
+    Legend2_Input_6_out_1,
+    NULL
+    ) [instance: 26, cache: 1];
+    // 
+    // node Inquire[7]: x = 152, y = 92, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "items"
+    //
+Legend2_Inquire_7_out_1[cache: 2] = 
+    Inquire(
+    Legend2_Input_4_out_1,
+    "items",
+    NULL
+    ) [instance: 7, cache: 1];
+    // 
+    // node Input[7]: x = 251, y = 41, inputs = 0, label = Input
+    // parameter: position = 3, name = 'labelscale', value = '1', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+Legend2_Input_7_out_1 = labelscale;
+    // 
+    // node Compute[25]: x = 156, y = 168, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "0.25*$0*$1"
+    // expression: value = 0.25*a*b
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+Legend2_Compute_25_out_1[cache: 2] = 
+    Compute(
+    "0.25*$0*$1",
+    Legend2_Inquire_7_out_1,
+    Legend2_Input_7_out_1
+    ) [instance: 25, cache: 1];
+    // 
+    // node Legend[1]: x = 19, y = 263, inputs = 10, label = Legend
+    // input[3]: defaulting = 1, visible = 1, type = 8, value = [0.02 0.94]
+    // input[4]: defaulting = 0, visible = 1, type = 8, value = [420 15]
+    // input[5]: defaulting = 0, visible = 1, type = 3, value = 0
+    // input[7]: defaulting = 0, visible = 0, type = 16777248, value = {"black"}
+    // input[9]: defaulting = 1, visible = 1, type = 5, value = 0.7
+    // input[10]: defaulting = 0, visible = 0, type = 32, value = "area"
+    //
+Legend2_Legend_1_out_1[cache: 2] = 
+    Legend(
+    Legend2_Input_4_out_1,
+    Legend2_Input_5_out_1,
+    Legend2_Compute_26_out_1,
+    [420 15],
+    0,
+    NULL,
+    {"black"},
+    NULL,
+    Legend2_Compute_25_out_1,
+    "area"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[9]: x = 268, y = 376, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "black"
+    //
+Legend2_Color_9_out_1[cache: 2] = 
+    Color(
+    Legend2_Caption_4_out_1,
+    "black",
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 9, cache: 1];
+    // 
+    // node Collect[5]: x = 152, y = 405, inputs = 2, label = Collect
+    //
+Legend2_Collect_5_out_1[cache: 2] = 
+    Collect(
+    Legend2_Legend_1_out_1,
+    Legend2_Color_9_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Output[3]: x = 165, y = 504, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = Legend2_Collect_5_out_1;
+// network: end of macro body
+}
+Legend2_Input_3_out_1 = NULL;
+Legend2_Input_6_out_1 = NULL;
+Legend2_Caption_4_out_1 = NULL;
+Legend2_Input_4_out_1 = NULL;
+Legend2_Input_5_out_1 = NULL;
+Legend2_Compute_26_out_1 = NULL;
+Legend2_Inquire_7_out_1 = NULL;
+Legend2_Input_7_out_1 = NULL;
+Legend2_Compute_25_out_1 = NULL;
+Legend2_Legend_1_out_1 = NULL;
+Legend2_Color_9_out_1 = NULL;
+Legend2_Collect_5_out_1 = NULL;

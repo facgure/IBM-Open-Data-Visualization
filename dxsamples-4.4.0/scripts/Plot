@@ -1,0 +1,72 @@
+// Construct a line with positions (x values) and data (y values)
+line1 = Construct({[0.0][1.0][2.0][3.0]}, data = {0, 1, 4, 9});
+// Color the line yellow
+line1 = Color(line1, "yellow");
+// Give the line a label attribute for the legend
+line1 = Options(line1,"label", "x squared");
+
+// Construct a line with positions (x values) and data (y values)
+line2 = Construct({[0.0][1.0][2.0][3.0]}, data = {0, 1, 8, 27});
+// Color the line red
+line2 = Color(line2,"red");
+// Give the line a label attribute for the legend
+line2 = Options(line2,"label", "x cubed");
+
+// Collect the lines together and scale them in the y dimension
+lines = Collect(line1, line2);
+lines = Scale(lines,[1.0 0.1 1.0]);
+// Create the plot
+plot = Plot(lines, adjust = 1, ticks = 15);
+// Create a camera and display the plot
+camera = AutoCamera(plot);
+Display(plot,camera);
+
+
+
+
+
+// Construct a line with positions
+line = Construct({[0.0][1.0][2.0][3.0][4.0][5.0][6.0][7.0][8.0][9.0]});
+// Refine the line by a factor of 8 (2 to the third power)
+line = Refine(line,3);
+// copy the positions into the data component
+line = Replace(line,line,"positions","data");
+// let the data component be x * sin(x)
+line = Compute("$0 * sin($0)", line);
+// color the line
+line = AutoColor(line);
+// plot the result and display
+plot = Plot(line);
+caption = Caption("x times sin(x)");
+collected = Collect(caption,plot);
+camera = AutoCamera(plot);
+Display(collected,camera);
+
+
+
+
+// post the data so that the data values and colors 
+// are dependent on connections rather than positions.
+line = Post(line,"connections");
+// plot the result and display
+plot = Plot(line);
+caption = Caption("x times sin(x), with data dependent on connections");
+collected = Collect(caption,plot);
+camera = AutoCamera(plot);
+Display(collected,camera);
+
+
+
+// create a histogram of a data set. "function" is the first of 
+// two data fields in the file.  Plot the histogram.
+data = Import("hyper");
+data = Select(data,0);
+hist = Histogram (data);
+// There are many samples per bin. Use Scale to change the aspect ratio
+// of the plot.
+hist = Scale(hist,[100, 1, 1]);
+plot = Plot(hist, ticks = {5 10});
+caption = Caption("histogram of hyper data field");
+collected = Collect(plot, caption);
+camera = AutoCamera(plot);
+Display(collected,camera);

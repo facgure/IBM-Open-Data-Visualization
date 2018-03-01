@@ -1,0 +1,371 @@
+//
+// time: Wed Jun 11 14:07:40 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// Begin MDF
+// MODULE BarChart
+// CATEGORY Annotation
+// DESCRIPTION creates a barchart
+// INPUT data; value list or string list; (none); bar chart data
+// INPUT barlabels; string list; (no default); label list for bar chart
+// INPUT labels; string list; (no default); horizontal and vertical labels for chart
+// INPUT corners; vector list or object; (automatic); [xmin, ymin], [xmax, ymax] limits
+// INPUT aspect[visible:0]; scalar or string; 1; aspect ratio
+// INPUT adjust[visible:0]; flag; (no default); adjust endpoints to tic locations
+// INPUT frame[visible:0]; integer; 0; framing for plot
+// INPUT grid[visible:0]; integer; 0; place grid on plot (0, 1, 2, 3)
+// INPUT axes_color[visible:0]; value or value list or string list; {"white"}; colors for axes
+// INPUT color_background[visible:0]; value or value list or string list; {"clear"}; color of background
+// INPUT color_grid[visible:0]; value or value list or string list; {"grey"}; color of grid (if drawn)
+// INPUT color_labels[visible:0]; value or value list or string list; {"white"}; color of labels
+// INPUT color_ticks[visible:0]; value or value list or string list; {"white"}; color of ticks
+// INPUT label_scale[visible:0]; scalar; 1; scale factor for labels
+// INPUT font[visible:0]; string; (no default); font for labels
+// OUTPUT plot; field; the bar chart
+// End MDF
+//
+// comment: This sample macro takes a list of values and a list of strings and uses the Plot module to make a bar chart.
+// page assignment: annotation	order=2, windowed=0, showing=0
+// page assignment: dep_conn	order=3, windowed=0, showing=1
+// page assignment: make bar	order=4, windowed=0, showing=0
+// workspace: width = 560, height = 580
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro BarChart(
+ data
+,barlabels
+,labels
+,corners
+,aspect = 1
+,adjust
+,frame = 0
+,grid = 0
+,axes_color = {"white"}
+,color_background = {"clear"}
+,color_grid = {"grey"}
+,color_labels = {"white"}
+,color_ticks = {"white"}
+,label_scale = 1
+,font
+) -> (
+ plot
+) {
+    // 
+    // node Input[1]: x = 20, y = 20, inputs = 0, label = Input
+    // page group: dep_conn
+    // parameter: position = 1, name = 'data', value = '(none)', descriptive = 1, description = 'bar chart data', required = 1, visible = 1
+    //
+BarChart_Input_1_out_1 = data;
+    // 
+    // node Inquire[1]: x = 38, y = 111, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "items"
+    // page group: dep_conn
+    //
+BarChart_Inquire_1_out_1 = 
+    Inquire(
+    BarChart_Input_1_out_1,
+    "items",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 61, y = 190, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 + 1"
+    // page group: dep_conn
+    // expression: value = items + 1
+    // name[2]: value = items
+    //
+BarChart_Compute_1_out_1 = 
+    Compute(
+    "$0 + 1",
+    BarChart_Inquire_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Enumerate[1]: x = 70, y = 286, inputs = 5, label = Enumerate
+    // input[1]: defaulting = 0, visible = 1, type = 29, value = [0]
+    // input[4]: defaulting = 0, visible = 1, type = 29, value = [1]
+    // page group: dep_conn
+    //
+BarChart_Enumerate_1_out_1 = 
+    Enumerate(
+    [0],
+    NULL,
+    BarChart_Compute_1_out_1,
+    [1],
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Construct[1]: x = 120, y = 376, inputs = 4, label = Construct
+    // page group: dep_conn
+    //
+BarChart_Construct_1_out_1 = 
+    Construct(
+    BarChart_Enumerate_1_out_1,
+    NULL,
+    NULL,
+    BarChart_Input_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[1]: x = 346, y = 384, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "connections"
+    // page group: dep_conn
+    //
+BarChart_Mark_1_out_1 = 
+    Mark(
+    BarChart_Construct_1_out_1,
+    "connections"
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 244, y = 398, inputs = 10, label = AutoColor
+    // page group: dep_conn
+    //
+BarChart_AutoColor_1_out_1,
+BarChart_AutoColor_1_out_2 = 
+    AutoColor(
+    BarChart_Mark_1_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 270, y = 194, inputs = 1, label = counts
+    // page group: dep_conn
+    //
+counts = BarChart_Inquire_1_out_1;
+    // 
+    // node Receiver[3]: x = 631, y = 195, inputs = 1, label = counts
+    // page group: make bar
+    //
+BarChart_Receiver_3_out_1[cache: 0] = counts;
+    // 
+    // node Enumerate[2]: x = 570, y = 276, inputs = 5, label = Enumerate
+    // input[1]: defaulting = 0, visible = 1, type = 29, value = [.5]
+    // input[4]: defaulting = 0, visible = 1, type = 29, value = [1]
+    // page group: make bar
+    //
+BarChart_Enumerate_2_out_1 = 
+    Enumerate(
+    [.5],
+    NULL,
+    BarChart_Receiver_3_out_1,
+    [1],
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[2]: x = 96, y = 14, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 2, name = 'barlabels', value = '(no default)', descriptive = 1, description = 'label list for bar chart', required = 0, visible = 1
+    //
+BarChart_Input_2_out_1 = barlabels;
+    // 
+    // node Input[3]: x = 258, y = 100, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 3, name = 'labels', value = '(no default)', descriptive = 1, description = 'horizontal and vertical labels for chart', required = 0, visible = 1
+    //
+BarChart_Input_3_out_1 = labels;
+    // 
+    // node Input[4]: x = 319, y = 102, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 4, name = 'corners', value = '(automatic)', descriptive = 1, description = '[xmin, ymin], [xmax, ymax] limits', required = 0, visible = 1
+    //
+BarChart_Input_4_out_1 = corners;
+    // 
+    // node Input[5]: x = 374, y = 107, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 5, name = 'aspect', value = '1', descriptive = 0, description = 'aspect ratio', required = 0, visible = 0
+    //
+BarChart_Input_5_out_1 = aspect;
+    // 
+    // node Input[6]: x = 428, y = 121, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 6, name = 'adjust', value = '(no default)', descriptive = 1, description = 'adjust endpoints to tic locations', required = 0, visible = 0
+    //
+BarChart_Input_6_out_1 = adjust;
+    // 
+    // node Input[7]: x = 485, y = 114, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 7, name = 'frame', value = '0', descriptive = 0, description = 'framing for plot', required = 0, visible = 0
+    //
+BarChart_Input_7_out_1 = frame;
+    // 
+    // node Input[8]: x = 536, y = 115, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 8, name = 'grid', value = '0', descriptive = 0, description = 'place grid on plot (0, 1, 2, 3)', required = 0, visible = 0
+    //
+BarChart_Input_8_out_1 = grid;
+    // 
+    // node Input[9]: x = 42, y = 47, inputs = 0, label = Input
+    // page group: annotation
+    // parameter: position = 9, name = 'axes_color', value = '{"white"}', descriptive = 0, description = 'colors for axes', required = 0, visible = 0
+    //
+BarChart_Input_9_out_1 = axes_color;
+    // 
+    // node Input[11]: x = 94, y = 52, inputs = 0, label = Input
+    // page group: annotation
+    // parameter: position = 10, name = 'color_background', value = '{"clear"}', descriptive = 0, description = 'color of background', required = 0, visible = 0
+    //
+BarChart_Input_11_out_1 = color_background;
+    // 
+    // node Input[12]: x = 149, y = 57, inputs = 0, label = Input
+    // page group: annotation
+    // parameter: position = 11, name = 'color_grid', value = '{"grey"}', descriptive = 0, description = 'color of grid (if drawn)', required = 0, visible = 0
+    //
+BarChart_Input_12_out_1 = color_grid;
+    // 
+    // node Input[13]: x = 202, y = 60, inputs = 0, label = Input
+    // page group: annotation
+    // parameter: position = 12, name = 'color_labels', value = '{"white"}', descriptive = 0, description = 'color of labels', required = 0, visible = 0
+    //
+BarChart_Input_13_out_1 = color_labels;
+    // 
+    // node Input[14]: x = 264, y = 59, inputs = 0, label = Input
+    // page group: annotation
+    // parameter: position = 13, name = 'color_ticks', value = '{"white"}', descriptive = 0, description = 'color of ticks', required = 0, visible = 0
+    //
+BarChart_Input_14_out_1 = color_ticks;
+    // 
+    // node Input[15]: x = 592, y = 125, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 14, name = 'label_scale', value = '1', descriptive = 0, description = 'scale factor for labels', required = 0, visible = 0
+    //
+BarChart_Input_15_out_1 = label_scale;
+    // 
+    // node Input[16]: x = 543, y = 365, inputs = 0, label = Input
+    // page group: make bar
+    // parameter: position = 15, name = 'font', value = '(no default)', descriptive = 1, description = 'font for labels', required = 0, visible = 0
+    //
+BarChart_Input_16_out_1 = font;
+    // 
+    // node List[1]: x = 109, y = 191, inputs = 5, label = List
+    // page group: annotation
+    //
+BarChart_List_1_out_1 = 
+    List(
+    BarChart_Input_9_out_1,
+    BarChart_Input_11_out_1,
+    BarChart_Input_12_out_1,
+    BarChart_Input_13_out_1,
+    BarChart_Input_14_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Unmark[1]: x = 369, y = 480, inputs = 2, label = Unmark
+    // page group: dep_conn
+    //
+BarChart_Unmark_1_out_1 = 
+    Unmark(
+    BarChart_AutoColor_1_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 165, y = 518, inputs = 1, label = data_dep_conn
+    // page group: dep_conn
+    //
+data_dep_conn = BarChart_Unmark_1_out_1;
+    // 
+    // node Receiver[2]: x = 18, y = 359, inputs = 1, label = data_dep_conn
+    // page group: make bar
+    //
+BarChart_Receiver_2_out_1[cache: 0] = data_dep_conn;
+    // 
+    // node Transmitter[1]: x = 154, y = 261, inputs = 1, label = annotation_colors
+    // page group: annotation
+    //
+annotation_colors = BarChart_List_1_out_1;
+    // 
+    // node Receiver[1]: x = 394, y = 360, inputs = 1, label = annotation_colors
+    // page group: make bar
+    //
+BarChart_Receiver_1_out_1[cache: 0] = annotation_colors;
+    // 
+    // node Plot[1]: x = 192, y = 461, inputs = 24, label = Plot
+    // input[5]: visible = 1
+    // input[6]: visible = 1
+    // input[8]: visible = 1
+    // input[10]: visible = 1
+    // input[11]: defaulting = 0, visible = 1, type = 16777248, value = {"axes" "background" "grid" "labels" "ticks"}
+    // input[12]: visible = 1
+    // input[13]: visible = 1
+    // input[19]: visible = 1
+    // input[22]: visible = 1
+    // page group: make bar
+    //
+BarChart_Plot_1_out_1 = 
+    Plot(
+    BarChart_Receiver_2_out_1,
+    BarChart_Input_3_out_1,
+    NULL,
+    BarChart_Input_4_out_1,
+    BarChart_Input_6_out_1,
+    BarChart_Input_7_out_1,
+    NULL,
+    BarChart_Input_8_out_1,
+    BarChart_Input_5_out_1,
+    BarChart_Receiver_1_out_1,
+    {"axes" "background" "grid" "labels" "ticks"},
+    BarChart_Input_15_out_1,
+    BarChart_Input_16_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    BarChart_Enumerate_2_out_1,
+    NULL,
+    NULL,
+    BarChart_Input_2_out_1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 309, y = 541, inputs = 1, label = Output
+    // page group: make bar
+    // parameter: position = 1, name = 'plot', value = ' ', descriptive = 0, description = 'the bar chart', required = 0, visible = 1
+    //
+plot = BarChart_Plot_1_out_1;
+    //
+    // decorator Annotate	pos=(212,284) size=348x44 style(Label), value = <NULL>
+    // annotation user_begin: 68
+    // annotation user: This section makes a field with the bar chart data
+    // annotation user: dep "connections"
+    // annotation user_end: <NULL>
+    // page group: dep_conn
+// network: end of macro body
+}
+BarChart_Input_1_out_1 = NULL;
+BarChart_Inquire_1_out_1 = NULL;
+BarChart_Compute_1_out_1 = NULL;
+BarChart_Enumerate_1_out_1 = NULL;
+BarChart_Construct_1_out_1 = NULL;
+BarChart_Mark_1_out_1 = NULL;
+BarChart_AutoColor_1_out_1 = NULL;
+BarChart_Transmitter_3_out_1 = NULL;
+BarChart_Receiver_3_out_1 = NULL;
+BarChart_Enumerate_2_out_1 = NULL;
+BarChart_Input_2_out_1 = NULL;
+BarChart_Input_3_out_1 = NULL;
+BarChart_Input_4_out_1 = NULL;
+BarChart_Input_5_out_1 = NULL;
+BarChart_Input_6_out_1 = NULL;
+BarChart_Input_7_out_1 = NULL;
+BarChart_Input_8_out_1 = NULL;
+BarChart_Input_9_out_1 = NULL;
+BarChart_Input_11_out_1 = NULL;
+BarChart_Input_12_out_1 = NULL;
+BarChart_Input_13_out_1 = NULL;
+BarChart_Input_14_out_1 = NULL;
+BarChart_Input_15_out_1 = NULL;
+BarChart_Input_16_out_1 = NULL;
+BarChart_List_1_out_1 = NULL;
+BarChart_Unmark_1_out_1 = NULL;
+BarChart_Transmitter_2_out_1 = NULL;
+BarChart_Receiver_2_out_1 = NULL;
+BarChart_Transmitter_1_out_1 = NULL;
+BarChart_Receiver_1_out_1 = NULL;
+BarChart_Plot_1_out_1 = NULL;

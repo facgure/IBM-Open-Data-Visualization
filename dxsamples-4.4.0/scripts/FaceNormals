@@ -1,0 +1,14 @@
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera for the data
+camera = AutoCamera(electrondensity,"off-front",width=2.5);
+    // Create an isosurface at a value of 0.2
+iso = Isosurface(electrondensity,0.2);
+    // Put face normals (facets) on the isosurface
+isofacenormals = FaceNormals(iso);
+    // Display the result
+Display(isofacenormals,camera);
+
+

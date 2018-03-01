@@ -1,0 +1,40 @@
+MODULE_NAME = Add
+CATEGORY = User
+MODULE_DESCRIPTION = Adds a number to a field
+ASYNCHRONOUS = FALSE
+PINNED = FALSE
+SIDE_EFFECT = FALSE
+
+INPUT = data
+DESCRIPTION = field to add to
+REQUIRED = TRUE
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+
+INPUT = addend
+DESCRIPTION = value to add to field
+REQUIRED = FALSE
+DEFAULT_VALUE = 0
+DESCRIPTIVE = FALSE
+TYPES = scalar
+STRUCTURE = Value
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+
+OUTPUT = result
+DESCRIPTION = result of adding addend to field
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+

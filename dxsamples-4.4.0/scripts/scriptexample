@@ -1,0 +1,39 @@
+// Import the data, and place it in a field named "electrondensity"
+electrondensity = Import("watermolecule");
+// Partition the data to take advantage of parallelism
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface of the data at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// Set the look-from elevation and distance
+elevation = 10.0;
+distance = 10.0;
+
+// define a macro which displays an image of the isosurface viewed from
+// a particular azimuth
+macro displayobject(azimuth)
+{
+   // Convert azimuth, elevation, and distance to an x,y,z point.
+   // Elevation and distance are found in the environment external to
+   // the macro.
+   lookfrom = Direction(azimuth, elevation, distance);
+   // Create a camera looking at the isosurface from a particular azimuth.
+   camera = AutoCamera(isosurface, lookfrom);
+   // Display the isosurface using the created camera.
+   Display(isosurface,camera);
+}
+
+// Set the start, end and starting frame for the sequencer
+@startframe = 0;
+@endframe = 10;
+@nextframe = 0;
+
+// Set up the sequencer to produce values for azimuth from 0 to
+// 200 in increments of 20.
+sequence displayobject(20*@frame);
+
+// Run the sequence
+play;
+
+

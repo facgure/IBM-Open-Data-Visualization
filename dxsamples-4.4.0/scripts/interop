@@ -1,0 +1,36 @@
+
+   // Import two fields, a scalar field and a vector field
+group = Import("hyper");
+scalarfield = Select(group,0);
+vectorfield = Select(group,1);
+   // Create a camera
+camera = AutoCamera(scalarfield,"off-left",width=10,resolution=400);
+
+   // Create a streamline based on the starting point [3,3,0.1]
+streamline = Streamline(vectorfield,[3,3,0.1]);
+
+   // Map the scalar data onto the streamline
+mappedline = Map(streamline,scalarfield);
+   // Color the line based on the data values. Set range=1 for one
+   // complete trip around the color wheel
+coloredline = AutoColor(mappedline,range=1);
+   // Turn the colored line into a tube
+tube = Tube(coloredline,diameter=1.5,ngon=15);
+   // Create an image
+image1 = Render(tube,camera);
+
+
+   // This time create a tube directly from the streamline
+tube = Tube(streamline,diameter=1.5,ngon=15);
+   // Map the data onto the tube
+mappedtube = Map(tube,scalarfield);
+   // Color the tube
+coloredtube = AutoColor(mappedtube,range=1);
+   // Create another image
+image2 = Render(coloredtube,camera);
+
+   // Collect the images together and arrange them one over the other
+combined = Collect(image1,image2);
+combined = Arrange(combined,1);
+   // Display
+Display(combined);

@@ -1,0 +1,23 @@
+    // Construct a simple 3x3x3 field for illustrative purposes
+basefield = Construct([0 0 0],[1 1 1],[3 3 3]);
+    // Make a camera for this field
+camera = AutoCamera(basefield,"off-diagonal");
+
+    // Show the connections of the field
+conn = ShowConnections(basefield);
+Display(conn,camera);
+
+
+    // Refine the connections 1 level. Since they are cubic connections, this
+    // increases the number of connections by a factor of 8
+refined = Refine(basefield,1);
+conn = ShowConnections(refined);
+Display(conn,camera);
+
+    // Refine the cubes into tetras
+refined = Refine(basefield,"tetrahedra");
+conn = ShowConnections(refined);
+Display(conn,camera);
+
+
+

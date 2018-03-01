@@ -1,0 +1,17 @@
+FILES = myinteractors.o
+
+BASE = /usr/lpp/dx
+
+LDFLAGS=-bE:$(BASE)/lib_ibm6000/dxexec.exp \
+	-L$(BASE)/lib_ibm6000
+
+CFLAGS = -O -Dibm6000 -I$(BASE)/include
+
+LIBS     = -lDX -ly -ll -lX11 -lm
+LITELIBS = -L$(BASE)/lib_ibm6000 -lDXlite -lm
+EXP      = $(BASE)/lib_ibm6000/dxexec.exp
+
+
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+

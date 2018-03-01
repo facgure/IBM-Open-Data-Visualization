@@ -1,0 +1,5 @@
+MODULE AverageCell 
+CATEGORY Transformation 
+DESCRIPTION computes the average of all the neighboring data values 
+INPUT input;  field;  (none); input field 
+OUTPUT output;  field; averaged field 

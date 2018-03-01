@@ -1,0 +1,22 @@
+FILES = user.o add.o makex.o hello.o
+
+BASE = /usr/lpp/dx
+
+# The -Aa (ANSI mode) option is only supported by the C compiler sold
+# as an optional separate product.
+CFLAGS=-O -Dhp700 -I$(BASE)/include -Aa -D_HPUX_SOURCE
+
+LDFLAGS = -L$(BASE)/lib_hp700 -L/usr/lib/X11R5  -Wl,-E
+LIBS = -lDX -ly -ll -lm -lX11 -ldld
+
+
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user.c:		user_inboard.mdf
+		mdf2c user_inboard.mdf > user.c
+

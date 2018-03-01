@@ -1,0 +1,17 @@
+FILES = outboard.o hello.o 
+
+BASE = @prefix@/dx
+include $(BASE)/lib_$(DXARCH)/arch.mak
+
+CC = @CC@
+
+CFLAGS   = -O -D@ARCH@ -I. -I$(BASE)/include @CFLAGS@
+
+LITELIBS = -L$(BASE)/lib_@ARCH@ -lDXlite -lm -ldl -lnsl -lsocket -lthread
+
+hello:	hello.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES) $(LITELIBS) -o hello
+	rm outboard.o
+
+

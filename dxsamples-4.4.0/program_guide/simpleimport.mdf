@@ -1,0 +1,5 @@
+MODULE SimpleImport 
+CATEGORY Import and Export 
+DESCRIPTION Imports a simple hdf format file
+INPUT name; string; (none); file name
+OUTPUT result; field; imported field 

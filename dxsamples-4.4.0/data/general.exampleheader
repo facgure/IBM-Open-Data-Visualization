@@ -1,0 +1,20 @@
+# this general import format header describes the data which may be found
+# in general.exampledata.  It is a deformed regular
+# grid (with irregular positions and regular connections).  The first two
+# numbers specify the x,y positions, and then there are two data fields 
+# associated with those positions. They have been named "data1" and "data2".
+# data1 consists of scalar values, and data2 consists of 2-vectors.
+# The importer has been instructed to skip one line before beginning
+# to read the data. The "locations" keyword is used as the field name for
+# the x,y positions. This instructs the importer to use these values to
+# to create a "positions" component in the output fields.
+#
+#
+file = general.exampledata
+grid = 4 4 
+structure = 2-vector, scalar, 2-vector 
+format = ascii
+field = locations, data1, data2 
+type = float, float, float
+interleaving = field
+header = lines 1

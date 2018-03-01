@@ -1,0 +1,6 @@
+MODULE Add2Invalid
+CATEGORY User
+DESCRIPTION Adds two fields
+INPUT field1; field;  (none); first field
+INPUT field2; field;  (none); second field
+OUTPUT result; field;  result of adding addend to field

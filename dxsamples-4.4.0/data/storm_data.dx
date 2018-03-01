@@ -1,0 +1,5 @@
+object "group" class group 
+   member "cloudwater" 
+           value file "cloudwater.dx","cloudwater" 
+   member "rainwater" 
+           value file "rainwater.dx","rainwater" 

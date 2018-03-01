@@ -1,0 +1,41 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// Partition for parallelism
+electrondensity = Partition(electrondensity);
+
+// Compute the gradient of the electron density field
+gradient = Gradient(electrondensity);
+
+// Create a camera
+camera = AutoCamera(electrondensity,"off-front");
+
+// Create approximately 10 starting points, scattered through the data 
+starts = Sample(electrondensity, 10);
+
+// Compute the divergence and curl of the gradient field. We will use the
+// curl to put twist on the streamlines
+div, curl = DivCurl(gradient);
+
+// Create streamlines from each of the starting points created by Sample.
+// The curl is used to give a twist component to the lines, based on the
+// vorticity of the vector field.
+lines = Streamline(gradient, starts,curl=curl);
+
+// Map the original electron density onto the lines, and color using 
+// AutoColor
+streamlinesmapped = Map(lines,electrondensity);
+colored = AutoColor(streamlinesmapped);
+
+// Create ribbons of width 0.2 in user units.
+ribbons = Ribbon(colored,width=0.2);
+
+// Display the ribbons
+Display(ribbons,camera);
+
+
+
+
+
+
+

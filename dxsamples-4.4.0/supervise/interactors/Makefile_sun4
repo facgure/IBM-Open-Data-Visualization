@@ -1,0 +1,12 @@
+FILES = myinteractors.o
+
+BASE = /usr/lpp/dx
+
+CC = acc
+
+CFLAGS = -O -Dsun4 -I$(BASE)/include
+LIBS       = -L$(BASE)/lib_sun4 -lDX -ly -ll -lX11 -lm -lansi
+LITELIBS   = -L$(BASE)/lib_sun4 -lDXlite -lm -lansi
+
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec

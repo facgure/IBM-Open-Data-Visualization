@@ -1,0 +1,28 @@
+BASE = /usr/local/dx
+
+LIBDXL=$(BASE)/lib_hp700/libDXL.a
+
+# The -Aa (ANSI mode) option is only supported by the C compiler sold
+# as an optional separate product.
+
+CFLAGS   = -O -Dhp700 -DBASE=\"$(BASE)\" -Aa -I$(BASE)/include
+
+LIBS = -L$(BASE)/lib_hp700 $(LIBDXL) -lm
+XLIBS   = -L/usr/lib/X11R5 -L/usr/lib/Motif1.2 -lXm -lXt -lX11 -lPW 
+
+all: sealevel maptoplane xapp xapp_supervise demoapp
+
+sealevel: sealevel.o
+	$(CC) sealevel.o $(LIBS) -o sealevel
+
+maptoplane: maptoplane.o
+	$(CC) maptoplane.o $(LIBS) -o maptoplane
+
+xapp:  xapp.o
+	$(CC) xapp.o $(LIBS) $(XLIBS) -o xapp
+
+xapp_supervise:  xapp_supervise.o
+	$(CC) xapp_supervise.o $(LIBS) $(XLIBS) -o xapp_supervise
+
+demoapp:  demoapp.o
+	$(CC) demoapp.o $(LIBS) $(XLIBS) -o demoapp 

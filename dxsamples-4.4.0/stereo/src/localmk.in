@@ -1,0 +1,15 @@
+BASE = @DXINST@
+include $(BASE)/lib_$(ARCH)/arch.mak
+
+INCLUDES  = -I$(BASE)/include
+DXLIB     = -L$(BASE)/lib_$(ARCH) -lDX
+DXLIBLITE = -L$(BASE)/lib_$(ARCH) -lDXlite
+
+mymodes: mymodes.c
+		$(DXCC) $(INCLUDES) $(DXCFLAGS) @C_LDARGS@ -c mymodes.c
+		$(DXCC) $(INCLUDES) mymodes.o -o mymodes @DXEXEC_IMP@ @RTL_LIBS@
+
+mycams:	mycams.c
+		$(DXCC) $(INCLUDES) $(DXCFLAGS) @C_LDARGS@ -c mycams.c
+		$(DXCC) $(INCLUDES) mycams.o -o mymodes @DXEXEC_IMP@ @RTL_LIBS@
+

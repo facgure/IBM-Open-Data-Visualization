@@ -1,0 +1,157 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Northeast IFR</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>The U.S. IFR System</h2>
+		<table>
+<tr>
+<td>
+<table border = 1>
+<tr bgcolor=black>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 301 HEIGHT = 382
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Navigation1.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+</td>
+<td>
+<h3>...about the visualization</h3>
+<b>The Digital Aerontautical Chart Supplement</b>(DACS) is a subset 
+of the positional data used by the
+<a href="http://www.faa.gov" TARGET="_parent">
+Federal Aviation Administration</a> and the
+<a href="http://www.noaa.gov" TARGET="_parent">
+National Oceanic and Atomspheric Administration</a>
+to manage the National Airspace System. DACS is updated every 56 days.
+<p>
+Shown here is a visualization of DACS using data from the
+Northeast superimposed on the outlines of the states.
+<p>
+The yellow lines represent <i>victor</i> airways.  These are flightpaths
+used by aircraft operating in the IFR system below 18,000 feet above
+sea level.  A pilot must file a flight plan based on these routes
+(or the on the jet routes for the portion of her flight above 18,000
+feet).  Just prior to takeoff, she would receive a clearance from air traffic
+control specifying which of these flightpaths to follow.
+<p>
+You can try zooming into a depiction of the airways and then turning
+on the display of intersection names.  Every intersection is given
+a 5 letter name.  Look for <fixed>BOSOX</fixed> intersection southwest
+of Boston or <fixed>LBSTA</fixed> which is northeast of Boston.
+The instrument approach into Pease International in Portsmouth, NH
+is well known for a sequence of intersection names: 
+<fixed>ITAWT, ITAWA, PUDYE, TAAHT, IDEED</fixed>
+</td>
+</tr>
+</table>
+
+<blockquote>
+<table>
+<tr>
+<td>
+Jet routes are used between 18,000 and 60,000 feet above sea level.
+If you're above 60,000 feet you're own your own.  Just don't forget
+your oxygen bottle.
+</td>
+<td>
+The green balls are airports equipped to provide a surveillance
+radar approach - a procedure normally used to assist a pilot who
+has lost navigational capability.  The silver balls represent the
+locations of long range radar facilities.  The orange circles are
+selected airports sized according the length of the longest runway.
+</td>
+</tr>
+<tr>
+<td>
+<table border =1>
+<tr bgcolor=black>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 301 HEIGHT = 382
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_6">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Navigation6.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+</td>
+<td>
+
+<table border =1>
+<tr bgcolor=black>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 301 HEIGHT = 382
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_7">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Navigation7.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</blockquote>
+<table>
+<tr>
+<td>
+<h3>...about the visual program</h3>
+This visual program reads connectionless data.  Since each data point
+represents an intersection, consequtive points in the data set are
+connected using a combination of a special import filter
+which detects begin and end points of airways, <i>Compute</i>, <i>Mark</i>,
+and <i>Replace</i>.
+<h3>...about the conversion to web page</h3>
+The original net has 4 image tools.  Three of these tools provide the images
+you see here.  The fourth is routed off unless you select the vrml option 
+in the control panel.  The subsequent execution would cause an additional
+browser window to open showing the vrml world.  This doesn't work with
+Internet Explorer 4.0 or Netscape 4.05.
+</td>
+<td>
+<APPLET
+	CODE="Navigation.class" width = 330 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="Navigation">
+	<PARAM NAME=NETNAME VALUE="Navigation.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+</td>
+</tr>
+</table>
+<p>
+
+<p>
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>
+

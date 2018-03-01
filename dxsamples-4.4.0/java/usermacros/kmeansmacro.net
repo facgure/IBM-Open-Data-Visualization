@@ -1,0 +1,472 @@
+//
+// time: Fri Oct 23 15:24:00 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+//
+// macro reference (direct): Classify /u/c1tignor/ibm6000/java/server/usermacros/ClassifyMacro.net
+include "ClassifyMacro.net"
+//
+// Begin MDF
+// MODULE KMeans
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT NClusters; integer; (no default);  Number of clusters to find
+// INPUT Field; field; (no default);  Field to cluster based on positions
+// INPUT NIterations; integer; 10; Number of times to iterate 
+// OUTPUT output_1; field;  
+// End MDF
+// workspace: width = 823, height = 830
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro KMeans(
+ NClusters
+,Field
+,NIterations = 10
+) -> (
+ output_1
+) {
+    // 
+    // node Input[8]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'Field', value = '(no default)', descriptive = 1, description = ' Field to cluster based on positions', required = 0, visible = 1
+    //
+KMeans_Input_8_out_1 = Field;
+    // 
+    // node Input[7]: x = 127, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'NClusters', value = '(no default)', descriptive = 1, description = ' Number of clusters to find', required = 0, visible = 1
+    //
+KMeans_Input_7_out_1 = NClusters;
+    // 
+    // node Enumerate[5]: x = 563, y = 198, inputs = 5, label = Enumerate
+    // input[1]: defaulting = 0, visible = 1, type = 29, value = 0
+    // input[4]: defaulting = 0, visible = 1, type = 29, value = 1
+    //
+KMeans_Enumerate_5_out_1[cache: 2] = 
+    Enumerate(
+    0,
+    NULL,
+    KMeans_Input_7_out_1,
+    1,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node ShowBox[1]: x = 259, y = 39, inputs = 1, label = ShowBox
+    //
+KMeans_ShowBox_1_out_1[cache: 0],
+KMeans_ShowBox_1_out_2[cache: 0] = 
+    ShowBox(
+    KMeans_Input_8_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Refine[1]: x = 559, y = 60, inputs = 2, label = Refine
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 4
+    //
+KMeans_Refine_1_out_1[cache: 2] = 
+    Refine(
+    KMeans_ShowBox_1_out_1,
+    4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Sample[1]: x = 486, y = 158, inputs = 2, label = Sample
+    // input[2]: defaulting = 1, visible = 1, type = 1, value = 5
+    //
+KMeans_Sample_1_out_1[cache: 0] = 
+    Sample(
+    KMeans_Refine_1_out_1,
+    KMeans_Input_7_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[5]: x = 479, y = 228, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+KMeans_Mark_5_out_1[cache: 0] = 
+    Mark(
+    KMeans_Sample_1_out_1,
+    "positions"
+    ) [instance: 5, cache: 1];
+    // 
+    // node Compute[17]: x = 473, y = 302, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0.x, $0.y]"
+    // expression: value = [a.x, a.y]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_17_out_1[cache: 0] = 
+    Compute(
+    "[$0.x, $0.y]",
+    KMeans_Mark_5_out_1,
+    NULL
+    ) [instance: 17, cache: 1];
+    // 
+    // node Unmark[1]: x = 496, y = 380, inputs = 2, label = Unmark
+    //
+KMeans_Unmark_1_out_1[cache: 2] = 
+    Unmark(
+    KMeans_Compute_17_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Replace[5]: x = 451, y = 484, inputs = 4, label = Replace
+    //
+KMeans_Replace_5_out_1[cache: 2] = 
+    Replace(
+    KMeans_Enumerate_5_out_1,
+    KMeans_Unmark_1_out_1,
+    NULL,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Input[9]: x = 63, y = 0, inputs = 0, label = Input
+    // parameter: position = 3, name = 'NIterations', value = '10', descriptive = 0, description = 'Number of times to iterate ', required = 0, visible = 1
+    //
+KMeans_Input_9_out_1 = NIterations;
+    // 
+    // node ForEachN[2]: x = 648, y = 438, inputs = 3, label = ForEachN
+    // input[1]: defaulting = 0, visible = 1, type = 1, value = 1
+    //
+KMeans_ForEachN_2_out_1[cache: 2],
+KMeans_ForEachN_2_out_2[cache: 2] = 
+    ForEachN(
+    1,
+    KMeans_Input_9_out_1,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[11]: x = 621, y = 525, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 || $0 == 0 ? 1 : 0"
+    // expression: value = a == 1 || a == 0 ? 1 : 0
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_11_out_1[cache: 2] = 
+    Compute(
+    "$0 == 1 || $0 == 0 ? 1 : 0",
+    KMeans_ForEachN_2_out_1,
+    NULL
+    ) [instance: 11, cache: 1];
+    // 
+    // node GetLocal[3]: x = 534, y = 585, inputs = 3, label = GetLocal
+    //
+KMeans_GetLocal_3_out_1[cache: 2],
+KMeans_GetLocal_3_out_2[cache: 2] = 
+    GetLocal(
+    KMeans_Replace_5_out_1,
+    KMeans_Compute_11_out_1,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Classify[1]: x = 298, y = 196, inputs = 3, label = Classify
+    //
+KMeans_Classify_1_out_1[cache: 2] = 
+    Classify(
+    KMeans_Input_8_out_1,
+    KMeans_GetLocal_3_out_1,
+    KMeans_Input_7_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[3]: x = 51, y = 223, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+KMeans_Mark_3_out_1[cache: 0] = 
+    Mark(
+    KMeans_Classify_1_out_1,
+    "positions"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[9]: x = 0, y = 380, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.y"
+    // expression: value = a.y
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_9_out_1[cache: 2] = 
+    Compute(
+    "$0.y",
+    KMeans_Mark_3_out_1,
+    NULL
+    ) [instance: 9, cache: 1];
+    // 
+    // node Compute[8]: x = 50, y = 305, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x"
+    // expression: value = a.x
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_8_out_1[cache: 2] = 
+    Compute(
+    "$0.x",
+    KMeans_Mark_3_out_1,
+    NULL
+    ) [instance: 8, cache: 1];
+    // 
+    // node Replace[3]: x = 100, y = 381, inputs = 4, label = Replace
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "x"
+    //
+KMeans_Replace_3_out_1[cache: 2] = 
+    Replace(
+    KMeans_Compute_8_out_1,
+    KMeans_Classify_1_out_1,
+    NULL,
+    "x"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Replace[4]: x = 88, y = 474, inputs = 4, label = Replace
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "y"
+    //
+KMeans_Replace_4_out_1[cache: 2] = 
+    Replace(
+    KMeans_Compute_9_out_1,
+    KMeans_Replace_3_out_1,
+    NULL,
+    "y"
+    ) [instance: 4, cache: 1];
+    // 
+    // node CategoryStatistics[1]: x = 26, y = 556, inputs = 5, label = CategoryStatistics
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "mean"
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "x"
+    // input[5]: defaulting = 1, visible = 1, type = 1, value = 4
+    //
+KMeans_CategoryStatistics_1_out_1[cache: 2] = 
+    CategoryStatistics(
+    KMeans_Replace_4_out_1,
+    "mean",
+    NULL,
+    "x",
+    KMeans_Input_7_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node CategoryStatistics[2]: x = 379, y = 561, inputs = 5, label = CategoryStatistics
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "mean"
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "y"
+    // input[5]: defaulting = 1, visible = 1, type = 1, value = 4
+    //
+KMeans_CategoryStatistics_2_out_1[cache: 2] = 
+    CategoryStatistics(
+    KMeans_Replace_4_out_1,
+    "mean",
+    NULL,
+    "y",
+    KMeans_Input_7_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node CategoryStatistics[10]: x = 232, y = 451, inputs = 5, label = CategoryStatistics
+    // input[2]: defaulting = 1, visible = 1, type = 32, value = "count"
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "x"
+    // input[5]: defaulting = 1, visible = 1, type = 1, value = 4
+    //
+KMeans_CategoryStatistics_10_out_1[cache: 2] = 
+    CategoryStatistics(
+    KMeans_Replace_4_out_1,
+    NULL,
+    NULL,
+    "x",
+    KMeans_Input_7_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Compute[26]: x = 678, y = 616, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "random($0.x, $1)*2.0*6.28"
+    // expression: value = random(a.x, b)*2.0*6.28
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_26_out_1[cache: 2] = 
+    Compute(
+    "random($0.x, $1)*2.0*6.28",
+    KMeans_CategoryStatistics_2_out_1,
+    KMeans_ForEachN_2_out_1
+    ) [instance: 26, cache: 1];
+    // 
+    // node Compute[27]: x = 765, y = 580, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "random($0.x, $1+10000)"
+    // expression: value = random(a.x, b+10000)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_27_out_1[cache: 2] = 
+    Compute(
+    "random($0.x, $1+10000)",
+    KMeans_CategoryStatistics_2_out_1,
+    KMeans_ForEachN_2_out_1
+    ) [instance: 27, cache: 1];
+    // 
+    // node Compute[25]: x = 470, y = 15, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$0.x, $0.y]"
+    // expression: value = [a.x, a.y]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_25_out_1[cache: 2] = 
+    Compute(
+    "[$0.x, $0.y]",
+    KMeans_ShowBox_1_out_2,
+    NULL
+    ) [instance: 25, cache: 1];
+    // 
+    // node Transmitter[21]: x = 368, y = 72, inputs = 1, label = center
+    //
+center = KMeans_Compute_25_out_1;
+    // 
+    // node Receiver[30]: x = 263, y = 575, inputs = 1, label = center
+    //
+KMeans_Receiver_30_out_1[cache: 0] = center;
+    // 
+    // node Extract[9]: x = 629, y = 22, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+KMeans_Extract_9_out_1[cache: 0] = 
+    Extract(
+    KMeans_ShowBox_1_out_1,
+    "positions"
+    ) [instance: 9, cache: 1];
+    // 
+    // node Select[2]: x = 703, y = 73, inputs = 3, label = Select
+    //
+KMeans_Select_2_out_1[cache: 2] = 
+    Select(
+    KMeans_Extract_9_out_1,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Select[3]: x = 772, y = 104, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 7
+    //
+KMeans_Select_3_out_1[cache: 2] = 
+    Select(
+    KMeans_Extract_9_out_1,
+    7,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[24]: x = 727, y = 275, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "mag($1-$0)/2.0"
+    // expression: value = mag(b-a)/2.0
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+KMeans_Compute_24_out_1[cache: 2] = 
+    Compute(
+    "mag($1-$0)/2.0",
+    KMeans_Select_2_out_1,
+    KMeans_Select_3_out_1
+    ) [instance: 24, cache: 1];
+    // 
+    // node Transmitter[20]: x = 751, y = 362, inputs = 1, label = radius
+    //
+radius = KMeans_Compute_24_out_1;
+    // 
+    // node Receiver[31]: x = 338, y = 637, inputs = 1, label = radius
+    //
+KMeans_Receiver_31_out_1[cache: 0] = radius;
+    // 
+    // node Compute[10]: x = 150, y = 642, inputs = 8, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$2 > 0 ? [$0.x, $1.x] : $5+$4*$6*[cos($3), sin($3)]"
+    // expression: value = c > 0 ? [a.x, b.x] : f+e*g*[cos(d), sin(d)]
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+    // name[6]: value = e
+    // name[7]: value = f
+    // name[8]: value = g
+    //
+KMeans_Compute_10_out_1[cache: 0] = 
+    Compute(
+    "$2 > 0 ? [$0.x, $1.x] : $5+$4*$6*[cos($3), sin($3)]",
+    KMeans_CategoryStatistics_1_out_1,
+    KMeans_CategoryStatistics_2_out_1,
+    KMeans_CategoryStatistics_10_out_1,
+    KMeans_Compute_26_out_1,
+    KMeans_Compute_27_out_1,
+    KMeans_Receiver_30_out_1,
+    KMeans_Receiver_31_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Extract[3]: x = 133, y = 732, inputs = 2, label = Extract
+    //
+KMeans_Extract_3_out_1[cache: 2] = 
+    Extract(
+    KMeans_Compute_10_out_1,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Enumerate[6]: x = 404, y = 651, inputs = 5, label = Enumerate
+    // input[1]: defaulting = 0, visible = 1, type = 29, value = 0
+    // input[4]: defaulting = 0, visible = 1, type = 29, value = 1
+    //
+KMeans_Enumerate_6_out_1[cache: 2] = 
+    Enumerate(
+    0,
+    NULL,
+    KMeans_Input_7_out_1,
+    1,
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Construct[3]: x = 256, y = 752, inputs = 4, label = Construct
+    // input[1]: defaulting = 1, visible = 1, type = 16777224, value = {[0.1 0.1] [0.7 0.2] [0.2 0.65] [0.65 0.8]}
+    // input[4]: defaulting = 1, visible = 1, type = 16777245, value = {0 .. 3}
+    //
+KMeans_Construct_3_out_1[cache: 2] = 
+    Construct(
+    KMeans_Extract_3_out_1,
+    NULL,
+    NULL,
+    KMeans_Enumerate_6_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Output[3]: x = 0, y = 770, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = KMeans_Classify_1_out_1;
+    // 
+    // node SetLocal[3]: x = 478, y = 719, inputs = 3, label = SetLocal
+    //
+    SetLocal(
+    KMeans_Construct_3_out_1,
+    KMeans_GetLocal_3_out_2,
+    NULL
+    ) [instance: 3, cache: 1];
+// network: end of macro body
+}
+KMeans_Input_8_out_1 = NULL;
+KMeans_Input_7_out_1 = NULL;
+KMeans_Enumerate_5_out_1 = NULL;
+KMeans_ShowBox_1_out_1 = NULL;
+KMeans_ShowBox_1_out_2 = NULL;
+KMeans_Refine_1_out_1 = NULL;
+KMeans_Sample_1_out_1 = NULL;
+KMeans_Mark_5_out_1 = NULL;
+KMeans_Compute_17_out_1 = NULL;
+KMeans_Unmark_1_out_1 = NULL;
+KMeans_Replace_5_out_1 = NULL;
+KMeans_Input_9_out_1 = NULL;
+KMeans_ForEachN_2_out_1 = NULL;
+KMeans_Compute_11_out_1 = NULL;
+KMeans_GetLocal_3_out_1 = NULL;
+KMeans_GetLocal_3_out_2 = NULL;
+KMeans_Classify_1_out_1 = NULL;
+KMeans_Mark_3_out_1 = NULL;
+KMeans_Compute_9_out_1 = NULL;
+KMeans_Compute_8_out_1 = NULL;
+KMeans_Replace_3_out_1 = NULL;
+KMeans_Replace_4_out_1 = NULL;
+KMeans_CategoryStatistics_1_out_1 = NULL;
+KMeans_CategoryStatistics_2_out_1 = NULL;
+KMeans_CategoryStatistics_10_out_1 = NULL;
+KMeans_Compute_26_out_1 = NULL;
+KMeans_Compute_27_out_1 = NULL;
+KMeans_Compute_25_out_1 = NULL;
+KMeans_Transmitter_21_out_1 = NULL;
+KMeans_Receiver_30_out_1 = NULL;
+KMeans_Extract_9_out_1 = NULL;
+KMeans_Select_2_out_1 = NULL;
+KMeans_Select_3_out_1 = NULL;
+KMeans_Compute_24_out_1 = NULL;
+KMeans_Transmitter_20_out_1 = NULL;
+KMeans_Receiver_31_out_1 = NULL;
+KMeans_Compute_10_out_1 = NULL;
+KMeans_Extract_3_out_1 = NULL;
+KMeans_Enumerate_6_out_1 = NULL;
+KMeans_Construct_3_out_1 = NULL;

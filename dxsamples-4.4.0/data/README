@@ -1,0 +1,163 @@
+This directory contains some example data files.
+
+CO2.header, CO2.lis:          CO2.lis is a data file which may be imported 
+                              using the general array importer. The general
+                              array import header is CO2.header. This header
+                              describes the structure of the data contained in
+                              CO2.lis.  This data set is a time series of 
+                              unconnected positions. The data may be viewed
+                              using the sample visual program
+                              GeneralImport1.net.
+                              This data set is provided courtesy of the 
+                              National Space Science Data Center, 
+                              NASA/Goddard Space Flight Center, Greenbelt,
+                              MD.
+
+cloudwater.dx, rainwater.dx, temperature.dx, wind.dx:  These four data
+                              files are courtesy of NCSA, University of 
+                              Illinois at Urbana-Champaign. They contain a
+                              single time step in a simulation of a severe
+                              storm. The cloudwater, rainwater, and temperature
+                              data sets are scalar data, while wind is a 
+                              vector field. These data sets are a reduced
+                              resolution version of the original data supplied
+                              by NCSA. The reduction was performed within
+                              Data Explorer using the Reduce module. 
+
+cylinder.rgb, cylinder.size:  These are two files which describe an image
+                              (interleaved red, green, and blue bytes).
+                              They may be imported using the data explorer
+                              header file "image.dx", using the general
+                              import header file "image.general", or by using
+                              the ReadImage module. An example visual program
+                              using all three of these methods may be found 
+                              in ReadImage.net.
+
+datadepconnections.dx:        This is a Data Explorer format file which 
+                              defines a data set in which the data values are
+                              dependent on the connections. This means that
+                              each connection element has one data value 
+                              associated with it, and that data value is
+                              assumed to be constant throughout that element.
+                              This is in contrast to the case in which data
+                              is dependent on the positions.
+
+datawithattribute.dx:         This is a Data Explorer format file which shows
+                              you how to attach attributes to your data. One
+                              way in which these attributes might be used may
+                              be found in the example script 
+                              samples/scripts/Attribute or in the
+                              example visual program
+                              UsingAttributes.
+
+deformedregular.dx:           This is a Data Explorer format file which 
+                              describes a field with regular connections, and
+                              irregular (explicitly specified) positions.
+
+external.data:                This is an example of a file formatted in a
+                              non-Data Explorer format, but which may be
+                              read as a Data Explorer formatted file through
+                              the use of a simple filter program. The source
+                              code for the filter program may be found as 
+                              externalfilter.c; the
+                              IBM Risc System/6000 executable program may be 
+                              found as externalfilter.
+                              An example visual program which uses the external
+                              filter syntax may be found in 
+                              
+                                 ImportExternalFilter.net.
+
+externalfilter:               This executable file may be used to read the
+                              non-Data Explorer formatted file external.data.
+
+externalfilter.c:             This is the c language source code for the
+                              program externalfilter. 
+
+hyper.dx:                     This sample data is on a tetrahedral mesh, 
+                              and contains both a vector field and a scalar
+                              field. This data may be viewed using the visual
+                              program interop.net.
+
+image.dx:                     This Data Explorer header file reads the image 
+                              file cylinder.rgb. An visual program using this
+                              data is 
+                              ReadImage.net.
+
+image.general:                This general format header file reads the image 
+                              file cylinder.rgb. An visual program using this
+                              data is 
+                              ReadImage.net.
+
+imide.rgb, imide.size:        This is an rgb image which is used by the
+                              visual program 
+                              UsingFilter.net.
+                              It is a colored slice from the data set
+                              imide_potential.dx.
+
+imide_potential.dx, npp.dx:   These two data files are used by the visual
+                              program 
+                              Imide_potential.net.
+                              The first data file is the potential field
+                              surrounding an imide molecule. The second data
+                              file is a ball and stick model of the molecule.
+
+irregirreg2.dx:               This Data Explorer header points to data 
+                              contained in the binary file irregirreg2.bin. 
+                              It describes data with irregular positions 
+                              and irregular connections.
+
+irregular.dx:                 This Data Explorer format file describes data 
+                              with irregular positions and irregular 
+                              connections.
+
+pos_conn.data:                This file describes positions and connections
+                              which are used in the data set described in
+                              regseries.dx.
+
+product1.dx, product2.dx:     These Data Explorer format files describe data
+                              which have mixed regular and irregular positions.
+
+regseries.dx:                 This Data Explorer format file describes a series
+                              composed of three fields. They share the same
+                              positions and connections (described in the data
+                              file pos_conn.data), but have different data
+                              values.
+
+regular.dx:                   This Data Explorer format file describes a field
+                              with regular positions and regular connections.
+
+regularskewed.dx:             This Data Explorer format file describes a field
+                              with regular positions and regular connections.
+                              The three axes of the grid are non-orthogonal.
+
+seriesdata.dx:                This Data Explorer file describes a series. The
+                              data is used in the example scripts for Grid,
+                              Streamline, and Streakline, found in the 
+                              directory samples/scripts.
+
+solid.dx:                     This Data Explorer format file describes an 
+                              object using faces, loops, and edges.
+
+temp_wind.header, temp_wind.lis:  The data file temp_wind.lis is a non-dx
+                              format file which can be imported using the 
+                              general array importer. The general array
+                              importer header is temp_wind.header. This file
+                              describes the data.  A visual program which
+                              visualizes this data may be found in
+                              GeneralImport2.net.
+                              This data set is provided courtesy of the 
+                              National Space Science Data Center, 
+                              NASA/Goddard Space Flight Center, Greenbelt,
+                              MD.
+
+velocity.dx:                  This Data Explorer format file describes a 
+                              velocity field on a regular grid. It is used
+                              by the example visual program found in 
+                              Streamline.net.
+
+watermolecule.dx:             This Data Explorer format file contains a field
+                              describing the electron density in the vicinity
+                              of a water molecule. Most of the example visual
+                              programs and scripts found in the directories
+                              samples/programs and 
+                              samples/scripts use this data.     

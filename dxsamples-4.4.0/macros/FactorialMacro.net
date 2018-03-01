@@ -1,0 +1,86 @@
+//
+// time: Wed Feb 12 11:23:22 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE Factorial
+// CATEGORY Macros
+// DESCRIPTION Computes a factorial
+// INPUT input_1; integer; (no default);  
+// OUTPUT output_1; value or value list or field;  
+// End MDF
+//
+// comment: This macro computes a factorial, given the number N. A loop is executed over the numbers 1 to N, mutiplying each number in that list by the product so far. GetLocal and SetLocal are used to cache the accumulated product.
+// comment: 
+// comment: Because we are using GetLocal and SetLocal instead of GetGlobal and SetGlobal, it is not necessary to reset the cache (to the value 1) whenever the loop is re-run; this happens automatically.
+// workspace: width = 379, height = 369
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro Factorial(
+ input_1
+) -> (
+ output_1
+) {
+    // 
+    // node GetLocal[1]: x = 173, y = 137, inputs = 3, label = GetLocal
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = 1
+    //
+Factorial_GetLocal_1_out_1,
+Factorial_GetLocal_1_out_2 = 
+    GetLocal(
+    1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[1]: x = 278, y = 15, inputs = 0, label = Input
+    // parameter: position = 1, name = 'input_1', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+Factorial_Input_1_out_1 = input_1;
+    // 
+    // node ForEachN[1]: x = 271, y = 83, inputs = 3, label = ForEachN
+    // input[1]: defaulting = 0, visible = 1, type = 1, value = 1
+    // input[3]: defaulting = 0, visible = 1, type = 1, value = 1
+    //
+Factorial_ForEachN_1_out_1,
+Factorial_ForEachN_1_out_2 = 
+    ForEachN(
+    1,
+    Factorial_Input_1_out_1,
+    1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 271, y = 197, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0*$1"
+    // expression: value = product*current
+    // name[2]: value = product
+    // name[3]: value = current
+    //
+Factorial_Compute_1_out_1 = 
+    Compute(
+    "$0*$1",
+    Factorial_GetLocal_1_out_1,
+    Factorial_ForEachN_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 324, y = 304, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = Factorial_Compute_1_out_1;
+    // 
+    // node SetLocal[1]: x = 204, y = 307, inputs = 3, label = SetLocal
+    //
+    SetLocal(
+    Factorial_Compute_1_out_1,
+    Factorial_GetLocal_1_out_2,
+    NULL
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+Factorial_GetLocal_1_out_1 = NULL;
+Factorial_GetLocal_1_out_2 = NULL;
+Factorial_Input_1_out_1 = NULL;
+Factorial_ForEachN_1_out_1 = NULL;
+Factorial_Compute_1_out_1 = NULL;

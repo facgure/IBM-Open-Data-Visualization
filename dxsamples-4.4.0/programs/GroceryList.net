@@ -1,0 +1,1525 @@
+//
+// time: Tue Apr 22 13:57:06 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+//
+// macro reference (direct): PickPlot PickPlotMacro.net
+include "PickPlotMacro.net"
+//
+// MODULE main
+//
+// comment: This visual program shows the application of categorical tools to the visualization of a grocery list.  The plot on the left is a view of spending in the grocery list according to one of the 3 categorical variables:  food group, item, and unit.  If you use the cursor to pick on the plot (to go into pick mode, choose View Control from the Options menu of the Image window, then choose Pick from the Mode option menu), the items contributing to the picked category will appear in the plot on the right.  If you select 3D view (in the control panel) you will see a scatter plot of the entire grocery list plotted with axes corresponding to the 3 categorical variables and the size/color of the glyph set by the total amount spent.
+// page assignment: 3DView	order=3, windowed=0, showing=0
+// page assignment: DoPick	order=2, windowed=0, showing=0
+// page assignment: Import	order=4, windowed=0, showing=1
+// workspace: width = 663, height = 626
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node ImportSpreadsheet[1]: x = 77, y = 36, inputs = 10, label = ImportSpreadsheet
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "grocery.txt"
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "\t"
+    // input[5]: defaulting = 0, visible = 0, type = 16777248, value = {"allstring"}
+    // page group: Import
+    //
+main_ImportSpreadsheet_1_out_1,
+main_ImportSpreadsheet_1_out_2[cache: 0] = 
+    ImportSpreadsheet(
+    main_ImportSpreadsheet_1_in_1,
+    main_ImportSpreadsheet_1_in_2,
+    main_ImportSpreadsheet_1_in_3,
+    main_ImportSpreadsheet_1_in_4,
+    main_ImportSpreadsheet_1_in_5,
+    main_ImportSpreadsheet_1_in_6,
+    main_ImportSpreadsheet_1_in_7,
+    main_ImportSpreadsheet_1_in_8,
+    main_ImportSpreadsheet_1_in_9,
+    main_ImportSpreadsheet_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 32, y = 142, inputs = 1, label = grocery_list
+    // page group: Import
+    //
+grocery_list = main_ImportSpreadsheet_1_out_1;
+    // 
+    // node Receiver[4]: x = 83, y = 37, inputs = 1, label = grocery_list
+    // page group: 3DView
+    //
+main_Receiver_4_out_1[cache: 0] = grocery_list;
+    // 
+    // node Mark[3]: x = 63, y = 155, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "food group"
+    // page group: 3DView
+    //
+main_Mark_3_out_1 = 
+    Mark(
+    main_Receiver_4_out_1,
+    main_Mark_3_in_2
+    ) [instance: 3, cache: 1];
+    // 
+    // node Mark[4]: x = 139, y = 153, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "item"
+    // page group: 3DView
+    //
+main_Mark_4_out_1 = 
+    Mark(
+    main_Receiver_4_out_1,
+    main_Mark_4_in_2
+    ) [instance: 4, cache: 1];
+    // 
+    // node Mark[5]: x = 213, y = 147, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "unit"
+    // page group: 3DView
+    //
+main_Mark_5_out_1 = 
+    Mark(
+    main_Receiver_4_out_1,
+    main_Mark_5_in_2
+    ) [instance: 5, cache: 1];
+    // 
+    // node Compute[5]: x = 130, y = 225, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float([$0.x, $1.x, $2.x])"
+    // page group: 3DView
+    // expression: value = float([a.x, b.x, c.x])
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    //
+main_Compute_5_out_1[cache: 0] = 
+    Compute(
+    main_Compute_5_in_1,
+    main_Mark_3_out_1,
+    main_Mark_4_out_1,
+    main_Mark_5_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Categorize[1]: x = 125, y = 299, inputs = 2, label = Categorize
+    // page group: 3DView
+    //
+main_Categorize_1_out_1 = 
+    Categorize(
+    main_Compute_5_out_1,
+    main_Categorize_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Toggle[1]: x = 231, y = 230, inputs = 6, label = Toggle
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Toggle_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "accum"
+    // input[3]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[4]: defaulting = 1, visible = 1, type = 32, value = "count"
+    // input[5]: defaulting = 1, visible = 1, type = 32, value = "accum"
+    // output[1]: visible = 1, type = 32, value = "accum"
+    // page group: 3DView
+    // toggle : 0
+    //
+    // 
+    // node CategoryStatistics[5]: x = 129, y = 374, inputs = 5, label = CategoryStatistics
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "price"
+    // page group: 3DView
+    //
+main_CategoryStatistics_5_out_1[cache: 0] = 
+    CategoryStatistics(
+    main_Categorize_1_out_1,
+    main_Toggle_1_out_1,
+    main_CategoryStatistics_5_in_3,
+    main_CategoryStatistics_5_in_4,
+    main_CategoryStatistics_5_in_5
+    ) [instance: 5, cache: 1];
+    // 
+    // node Lookup[1]: x = 345, y = 242, inputs = 7, label = Lookup
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "data lookup"
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "positions"
+    // input[6]: defaulting = 0, visible = 0, type = 32, value = "positions"
+    // page group: 3DView
+    //
+main_Lookup_1_out_1[cache: 0] = 
+    Lookup(
+    main_CategoryStatistics_5_out_1,
+    main_Lookup_1_in_2,
+    main_Lookup_1_in_3,
+    main_Lookup_1_in_4,
+    main_Lookup_1_in_5,
+    main_Lookup_1_in_6,
+    main_Lookup_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 325, y = 328, inputs = 10, label = AutoColor
+    // page group: 3DView
+    //
+main_AutoColor_1_out_1[cache: 0],
+main_AutoColor_1_out_2[cache: 0] = 
+    AutoColor(
+    main_Lookup_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoGlyph[1]: x = 297, y = 423, inputs = 7, label = AutoGlyph
+    // input[6]: defaulting = 0, visible = 0, type = 5, value = 0.0
+    // page group: 3DView
+    //
+main_AutoGlyph_1_out_1 = 
+    AutoGlyph(
+    main_AutoColor_1_out_1,
+    main_AutoGlyph_1_in_2,
+    main_AutoGlyph_1_in_3,
+    main_AutoGlyph_1_in_4,
+    main_AutoGlyph_1_in_5,
+    main_AutoGlyph_1_in_6,
+    main_AutoGlyph_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[1]: x = 295, y = 113, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "food group" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "food group" "item" "unit" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 0 1 3 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "food group" 
+    // page group: Import
+    //
+    // 
+    // node Format[2]: x = 448, y = 226, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "All groceries plotted by %s category"
+    // page group: Import
+    //
+main_Format_2_out_1[cache: 0] = 
+    Format(
+    main_Format_2_in_1,
+    main_Selector_1_out_2,
+    main_Format_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Caption[1]: x = 471, y = 386, inputs = 9, label = Caption
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [.5 .95]
+    // input[7]: defaulting = 0, visible = 0, type = 32, value = "area"
+    // page group: Import
+    //
+main_Caption_1_out_1 = 
+    Caption(
+    main_Format_2_out_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node CategoryStatistics[2]: x = 134, y = 212, inputs = 5, label = CategoryStatistics
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "accum"
+    // input[3]: defaulting = 1, visible = 1, type = 32, value = NULL
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "price"
+    // page group: Import
+    //
+main_CategoryStatistics_2_out_1 = 
+    CategoryStatistics(
+    main_ImportSpreadsheet_1_out_1,
+    main_CategoryStatistics_2_in_2,
+    main_Selector_1_out_2,
+    main_CategoryStatistics_2_in_4,
+    main_CategoryStatistics_2_in_5
+    ) [instance: 2, cache: 1];
+    // 
+    // node Format[1]: x = 313, y = 222, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "%s lookup"
+    // page group: Import
+    //
+main_Format_1_out_1 = 
+    Format(
+    main_Format_1_in_1,
+    main_Selector_1_out_2,
+    main_Format_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Extract[2]: x = 288, y = 312, inputs = 2, label = Extract
+    // page group: Import
+    //
+main_Extract_2_out_1 = 
+    Extract(
+    main_CategoryStatistics_2_out_1,
+    main_Format_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[4]: x = 360, y = 357, inputs = 1, label = plotted_lookup
+    // page group: Import
+    //
+plotted_lookup = main_Extract_2_out_1;
+    // 
+    // node Receiver[5]: x = 348, y = 18, inputs = 1, label = plotted_lookup
+    // page group: DoPick
+    //
+main_Receiver_5_out_1[cache: 0] = plotted_lookup;
+    // 
+    // node Pick[1]: x = 268, y = 24, inputs = 9, label = Pick_1
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Pick_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Image_2"
+    // input[3]: defaulting = 0, visible = 0, type = 16777224, value = NULL
+    // input[4]: defaulting = 0, visible = 0, type = 3, value = 103
+    // input[7]: defaulting = 0, visible = 0, type = 3, value = 1
+    // page group: DoPick
+    //
+main_Pick_1_out_1 = 
+    Pick(
+    main_Pick_1_in_1,
+    main_Pick_1_in_2,
+    main_Pick_1_in_3,
+    main_Pick_1_in_4,
+    main_Pick_1_in_5,
+    main_Pick_1_in_6,
+    main_Pick_1_in_7,
+    main_Pick_1_in_8,
+    main_Pick_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[2]: x = 174, y = 182, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is empty + 1"
+    // page group: DoPick
+    //
+main_Inquire_2_out_1 = 
+    Inquire(
+    main_Pick_1_out_1,
+    main_Inquire_2_in_2,
+    main_Inquire_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Plot[1]: x = 197, y = 392, inputs = 24, label = Plot
+    // input[2]: defaulting = 0, visible = 1, type = 16777248, value = {"" "cost"}
+    // input[5]: defaulting = 0, visible = 0, type = 3, value = 1
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 3
+    // input[9]: defaulting = 0, visible = 1, type = 5, value = .75
+    // input[10]: defaulting = 0, visible = 0, type = 16777248, value = {"blue"}
+    // input[11]: defaulting = 0, visible = 0, type = 16777248, value = {"background"}
+    // input[12]: defaulting = 0, visible = 0, type = 5, value = 2.0
+    // input[22]: visible = 1
+    // page group: Import
+    //
+main_Plot_1_out_1 = 
+    Plot(
+    main_CategoryStatistics_2_out_1,
+    main_Plot_1_in_2,
+    main_Plot_1_in_3,
+    main_Plot_1_in_4,
+    main_Plot_1_in_5,
+    main_Plot_1_in_6,
+    main_Plot_1_in_7,
+    main_Plot_1_in_8,
+    main_Plot_1_in_9,
+    main_Plot_1_in_10,
+    main_Plot_1_in_11,
+    main_Plot_1_in_12,
+    main_Plot_1_in_13,
+    main_Plot_1_in_14,
+    main_Plot_1_in_15,
+    main_Plot_1_in_16,
+    main_Plot_1_in_17,
+    main_Plot_1_in_18,
+    main_Plot_1_in_19,
+    main_Plot_1_in_20,
+    main_Plot_1_in_21,
+    main_Extract_2_out_1,
+    main_Plot_1_in_23,
+    main_Plot_1_in_24
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 215, y = 472, inputs = 1, label = plot
+    // page group: Import
+    //
+plot = main_Plot_1_out_1;
+    // 
+    // node Receiver[1]: x = 243, y = 112, inputs = 1, label = plot
+    // page group: DoPick
+    //
+main_Receiver_1_out_1[cache: 0] = plot;
+    // 
+    // node PickPlot[1]: x = 261, y = 180, inputs = 2, label = PickPlot
+    // page group: DoPick
+    //
+main_PickPlot_1_out_1[cache: 0] = 
+    PickPlot(
+    main_Receiver_1_out_1,
+    main_Pick_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Extract[3]: x = 257, y = 287, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: DoPick
+    //
+main_Extract_3_out_1[cache: 0] = 
+    Extract(
+    main_PickPlot_1_out_1,
+    main_Extract_3_in_2
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[4]: x = 248, y = 378, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x<0?0: $0.x>6 ? 6 : int($0.x+0.5)"
+    // page group: DoPick
+    // expression: value = a.x<0?0: a.x>6 ? 6 : int(a.x+0.5)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_4_out_1 = 
+    Compute(
+    main_Compute_4_in_1,
+    main_Extract_3_out_1,
+    main_Compute_4_in_3
+    ) [instance: 4, cache: 1];
+    // 
+    // node Switch[1]: x = 226, y = 465, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: DoPick
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Inquire_2_out_1,
+    main_Compute_4_out_1,
+    main_Switch_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[3]: x = 492, y = 133, inputs = 3, label = Select
+    // page group: DoPick
+    //
+main_Select_3_out_1[cache: 0] = 
+    Select(
+    main_Receiver_5_out_1,
+    main_Switch_1_out_1,
+    main_Select_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node Format[3]: x = 496, y = 219, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Items within picked category %s"
+    // page group: DoPick
+    //
+main_Format_3_out_1[cache: 0] = 
+    Format(
+    main_Format_3_in_1,
+    main_Select_3_out_1,
+    main_Format_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node Caption[2]: x = 534, y = 347, inputs = 9, label = Caption
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [.5 .95]
+    // input[7]: defaulting = 0, visible = 0, type = 32, value = "area"
+    // page group: DoPick
+    //
+main_Caption_2_out_1 = 
+    Caption(
+    main_Format_3_out_1,
+    main_Caption_2_in_2,
+    main_Caption_2_in_3,
+    main_Caption_2_in_4,
+    main_Caption_2_in_5,
+    main_Caption_2_in_6,
+    main_Caption_2_in_7,
+    main_Caption_2_in_8,
+    main_Caption_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[3]: x = 9, y = 347, inputs = 1, label = grocery_list
+    // page group: DoPick
+    //
+main_Receiver_3_out_1[cache: 0] = grocery_list;
+    // 
+    // node Transmitter[3]: x = 569, y = 184, inputs = 1, label = plotted_group
+    // page group: Import
+    //
+plotted_group = main_Selector_1_out_2;
+    // 
+    // node Receiver[2]: x = 100, y = 286, inputs = 1, label = plotted_group
+    // page group: DoPick
+    //
+main_Receiver_2_out_1[cache: 0] = plotted_group;
+    // 
+    // node Mark[2]: x = 91, y = 451, inputs = 2, label = Mark
+    // page group: DoPick
+    //
+main_Mark_2_out_1 = 
+    Mark(
+    main_Receiver_3_out_1,
+    main_Receiver_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Include[1]: x = 118, y = 558, inputs = 6, label = Include
+    // input[5]: defaulting = 0, visible = 1, type = 3, value = 1
+    // input[6]: defaulting = 0, visible = 1, type = 3, value = 1
+    // page group: DoPick
+    //
+main_Include_1_out_1[cache: 0] = 
+    Include(
+    main_Mark_2_out_1,
+    main_Switch_1_out_1,
+    main_Switch_1_out_1,
+    main_Include_1_in_4,
+    main_Include_1_in_5,
+    main_Include_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Unmark[1]: x = 396, y = 282, inputs = 2, label = Unmark
+    // page group: DoPick
+    //
+main_Unmark_1_out_1[cache: 0] = 
+    Unmark(
+    main_Include_1_out_1,
+    main_Unmark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node CategoryStatistics[3]: x = 364, y = 357, inputs = 5, label = CategoryStatistics
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "accum"
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "item"
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "price"
+    // page group: DoPick
+    //
+main_CategoryStatistics_3_out_1 = 
+    CategoryStatistics(
+    main_Unmark_1_out_1,
+    main_CategoryStatistics_3_in_2,
+    main_CategoryStatistics_3_in_3,
+    main_CategoryStatistics_3_in_4,
+    main_CategoryStatistics_3_in_5
+    ) [instance: 3, cache: 1];
+    // 
+    // node Collect[1]: x = 300, y = 482, inputs = 2, label = Collect
+    // page group: Import
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Plot_1_out_1,
+    main_Caption_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Extract[4]: x = 436, y = 444, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "item lookup"
+    // page group: DoPick
+    //
+main_Extract_4_out_1 = 
+    Extract(
+    main_CategoryStatistics_3_out_1,
+    main_Extract_4_in_2
+    ) [instance: 4, cache: 1];
+    // 
+    // node Plot[2]: x = 390, y = 528, inputs = 24, label = Plot
+    // input[2]: defaulting = 0, visible = 1, type = 16777248, value = {"" "cost"}
+    // input[5]: defaulting = 0, visible = 0, type = 3, value = 1
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 3
+    // input[9]: defaulting = 0, visible = 1, type = 5, value = .75
+    // input[10]: defaulting = 0, visible = 0, type = 16777248, value = {"blue"}
+    // input[11]: defaulting = 0, visible = 0, type = 16777248, value = {"background"}
+    // input[12]: defaulting = 0, visible = 0, type = 5, value = 2.0
+    // input[22]: visible = 1
+    // page group: DoPick
+    //
+main_Plot_2_out_1 = 
+    Plot(
+    main_CategoryStatistics_3_out_1,
+    main_Plot_2_in_2,
+    main_Plot_2_in_3,
+    main_Plot_2_in_4,
+    main_Plot_2_in_5,
+    main_Plot_2_in_6,
+    main_Plot_2_in_7,
+    main_Plot_2_in_8,
+    main_Plot_2_in_9,
+    main_Plot_2_in_10,
+    main_Plot_2_in_11,
+    main_Plot_2_in_12,
+    main_Plot_2_in_13,
+    main_Plot_2_in_14,
+    main_Plot_2_in_15,
+    main_Plot_2_in_16,
+    main_Plot_2_in_17,
+    main_Plot_2_in_18,
+    main_Plot_2_in_19,
+    main_Plot_2_in_20,
+    main_Plot_2_in_21,
+    main_Extract_4_out_1,
+    main_Plot_2_in_23,
+    main_Plot_2_in_24
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[2]: x = 554, y = 577, inputs = 2, label = Collect
+    // page group: DoPick
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_Plot_2_out_1,
+    main_Caption_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Extract[5]: x = 447, y = 291, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "food group lookup"
+    // page group: 3DView
+    //
+main_Extract_5_out_1 = 
+    Extract(
+    main_Receiver_4_out_1,
+    main_Extract_5_in_2
+    ) [instance: 5, cache: 1];
+    // 
+    // node Extract[6]: x = 521, y = 272, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "item lookup"
+    // page group: 3DView
+    //
+main_Extract_6_out_1 = 
+    Extract(
+    main_Receiver_4_out_1,
+    main_Extract_6_in_2
+    ) [instance: 6, cache: 1];
+    // 
+    // node Extract[7]: x = 595, y = 263, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "unit lookup"
+    // page group: 3DView
+    //
+main_Extract_7_out_1 = 
+    Extract(
+    main_Receiver_4_out_1,
+    main_Extract_7_in_2
+    ) [instance: 7, cache: 1];
+    // 
+    // node Image[2]: x = 303, y = 564, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_2"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [1.84023 1.8494 0]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [1.84023 1.8494 24.5627]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 13.1631
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 373
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.924
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[21]: defaulting = 0, visible = 0, type = 3, value = 1
+    // input[22]: defaulting = 0, visible = 0, type = 32, value = "gray20"
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[41]: defaulting = 0, visible = 0, type = 32, value = "pick"
+    // page group: Import
+    // depth: value = 24
+    // window: position = (0.0023,0.0068), size = 0.3023x0.4043
+    // internal caching: 1
+    //
+main_Image_2_out_1[cache: 0],
+main_Image_2_out_2[cache: 0],
+main_Image_2_out_3[cache: 0] = 
+    Image(
+    main_Image_2_in_1,
+    main_Collect_1_out_1,
+    main_Image_2_in_3,
+    main_Image_2_in_4,
+    main_Image_2_in_5,
+    main_Image_2_in_6,
+    main_Image_2_in_7,
+    main_Image_2_in_8,
+    main_Image_2_in_9,
+    main_Image_2_in_10,
+    main_Image_2_in_11,
+    main_Image_2_in_12,
+    main_Image_2_in_13,
+    main_Image_2_in_14,
+    main_Image_2_in_15,
+    main_Image_2_in_16,
+    main_Image_2_in_17,
+    main_Image_2_in_18,
+    main_Image_2_in_19,
+    main_Image_2_in_20,
+    main_Image_2_in_21,
+    main_Image_2_in_22,
+    main_Image_2_in_23,
+    main_Image_2_in_24,
+    main_Image_2_in_25,
+    main_Image_2_in_26,
+    main_Image_2_in_27,
+    main_Image_2_in_28,
+    main_Image_2_in_29,
+    main_Image_2_in_30,
+    main_Image_2_in_31,
+    main_Image_2_in_32,
+    main_Image_2_in_33,
+    main_Image_2_in_34,
+    main_Image_2_in_35,
+    main_Image_2_in_36,
+    main_Image_2_in_37,
+    main_Image_2_in_38,
+    main_Image_2_in_39,
+    main_Image_2_in_40,
+    main_Image_2_in_41,
+    main_Image_2_in_42,
+    main_Image_2_in_43,
+    main_Image_2_in_44,
+    main_Image_2_in_45,
+    main_Image_2_in_46,
+    main_Image_2_in_47,
+    main_Image_2_in_48
+    ) [instance: 2, cache: 1];
+    // 
+    // node Image[3]: x = 550, y = 646, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_3"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [6.76782 4.87035 0]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [6.76782 4.87035 66.4097]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 35.589
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 604
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.771
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0001
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[21]: defaulting = 0, visible = 0, type = 3, value = 1
+    // input[22]: defaulting = 0, visible = 0, type = 32, value = "gray20"
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[41]: defaulting = 0, visible = 0, type = 32, value = "none"
+    // page group: DoPick
+    // depth: value = 24
+    // window: position = (0.3133,0.0078), size = 0.4828x0.4971
+    // internal caching: 1
+    //
+main_Image_3_out_1[cache: 0],
+main_Image_3_out_2[cache: 0],
+main_Image_3_out_3[cache: 0] = 
+    Image(
+    main_Image_3_in_1,
+    main_Collect_2_out_1,
+    main_Image_3_in_3,
+    main_Image_3_in_4,
+    main_Image_3_in_5,
+    main_Image_3_in_6,
+    main_Image_3_in_7,
+    main_Image_3_in_8,
+    main_Image_3_in_9,
+    main_Image_3_in_10,
+    main_Image_3_in_11,
+    main_Image_3_in_12,
+    main_Image_3_in_13,
+    main_Image_3_in_14,
+    main_Image_3_in_15,
+    main_Image_3_in_16,
+    main_Image_3_in_17,
+    main_Image_3_in_18,
+    main_Image_3_in_19,
+    main_Image_3_in_20,
+    main_Image_3_in_21,
+    main_Image_3_in_22,
+    main_Image_3_in_23,
+    main_Image_3_in_24,
+    main_Image_3_in_25,
+    main_Image_3_in_26,
+    main_Image_3_in_27,
+    main_Image_3_in_28,
+    main_Image_3_in_29,
+    main_Image_3_in_30,
+    main_Image_3_in_31,
+    main_Image_3_in_32,
+    main_Image_3_in_33,
+    main_Image_3_in_34,
+    main_Image_3_in_35,
+    main_Image_3_in_36,
+    main_Image_3_in_37,
+    main_Image_3_in_38,
+    main_Image_3_in_39,
+    main_Image_3_in_40,
+    main_Image_3_in_41,
+    main_Image_3_in_42,
+    main_Image_3_in_43,
+    main_Image_3_in_44,
+    main_Image_3_in_45,
+    main_Image_3_in_46,
+    main_Image_3_in_47,
+    main_Image_3_in_48
+    ) [instance: 3, cache: 1];
+    // 
+    // node Toggle[2]: x = 53, y = 411, inputs = 6, label = Toggle
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Toggle_2"
+    // input[2]: defaulting = 0, visible = 0, type = 29, value = 0
+    // input[3]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[4]: defaulting = 1, visible = 1, type = 29, value = 1
+    // input[5]: defaulting = 1, visible = 1, type = 29, value = 0
+    // output[1]: visible = 1, type = 29, value = 0
+    // page group: 3DView
+    // toggle : 0
+    //
+    // 
+    // node Route[2]: x = 260, y = 502, inputs = 2, outputs = 2, label = Route
+    // page group: 3DView
+    //
+main_Route_2_out_1,
+main_Route_2_out_2[cache: 0] = 
+    Route(
+    main_Toggle_2_out_1,
+    main_AutoGlyph_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Image[4]: x = 432, y = 574, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_4"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [3.07962 8.15925 2.74122]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [36.347 -19.6507 26.44]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 26.481
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 640
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.75
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [-0.387822 0.283476 0.877061]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0001
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 0, visible = 0, type = 3, value = 1
+    // input[41]: defaulting = 0, visible = 0, type = 32, value = "rotate"
+    // input[42]: defaulting = 0, visible = 0, type = 32, value = "3dview"
+    // input[46]: visible = 1
+    // input[47]: visible = 1
+    // input[48]: visible = 1
+    // page group: 3DView
+    // title: value = 3dview
+    // depth: value = 24
+    // window: position = (0.2289,0.4268), size = 0.5109x0.5117
+    // internal caching: 1
+    //
+main_Image_4_out_1[cache: 0],
+main_Image_4_out_2[cache: 0],
+main_Image_4_out_3[cache: 0] = 
+    Image(
+    main_Image_4_in_1,
+    main_Route_2_out_1,
+    main_Image_4_in_3,
+    main_Image_4_in_4,
+    main_Image_4_in_5,
+    main_Image_4_in_6,
+    main_Image_4_in_7,
+    main_Image_4_in_8,
+    main_Image_4_in_9,
+    main_Image_4_in_10,
+    main_Image_4_in_11,
+    main_Image_4_in_12,
+    main_Image_4_in_13,
+    main_Image_4_in_14,
+    main_Image_4_in_15,
+    main_Image_4_in_16,
+    main_Image_4_in_17,
+    main_Image_4_in_18,
+    main_Image_4_in_19,
+    main_Image_4_in_20,
+    main_Image_4_in_21,
+    main_Image_4_in_22,
+    main_Image_4_in_23,
+    main_Image_4_in_24,
+    main_Image_4_in_25,
+    main_Image_4_in_26,
+    main_Image_4_in_27,
+    main_Image_4_in_28,
+    main_Image_4_in_29,
+    main_Image_4_in_30,
+    main_Image_4_in_31,
+    main_Image_4_in_32,
+    main_Image_4_in_33,
+    main_Image_4_in_34,
+    main_Image_4_in_35,
+    main_Image_4_in_36,
+    main_Image_4_in_37,
+    main_Image_4_in_38,
+    main_Image_4_in_39,
+    main_Image_4_in_40,
+    main_Image_4_in_41,
+    main_Image_4_in_42,
+    main_Image_4_in_43,
+    main_Image_4_in_44,
+    main_Image_4_in_45,
+    main_Extract_5_out_1,
+    main_Extract_6_out_1,
+    main_Extract_7_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node ManageImageWindow[1]: x = 23, y = 503, inputs = 3, label = ManageImageWindow
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"3dview"}
+    // page group: 3DView
+    //
+    ManageImageWindow(
+    main_ManageImageWindow_1_in_1,
+    main_Toggle_2_out_1,
+    main_ManageImageWindow_1_in_3
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+CacheScene("Image_2", main_Image_2_out_1, main_Image_2_out_2);
+CacheScene("Image_3", main_Image_3_out_1, main_Image_3_out_2);
+CacheScene("Image_4", main_Image_4_out_1, main_Image_4_out_2);
+}
+main_ImportSpreadsheet_1_in_1 = "grocery.txt";
+main_ImportSpreadsheet_1_in_2 = "\t";
+main_ImportSpreadsheet_1_in_3 = NULL;
+main_ImportSpreadsheet_1_in_4 = NULL;
+main_ImportSpreadsheet_1_in_5 = {"allstring"};
+main_ImportSpreadsheet_1_in_6 = NULL;
+main_ImportSpreadsheet_1_in_7 = NULL;
+main_ImportSpreadsheet_1_in_8 = NULL;
+main_ImportSpreadsheet_1_in_9 = NULL;
+main_ImportSpreadsheet_1_in_10 = NULL;
+main_ImportSpreadsheet_1_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_Mark_3_in_2 = "food group";
+main_Mark_3_out_1 = NULL;
+main_Mark_4_in_2 = "item";
+main_Mark_4_out_1 = NULL;
+main_Mark_5_in_2 = "unit";
+main_Mark_5_out_1 = NULL;
+main_Compute_5_in_1 = "float([$0.x, $1.x, $2.x])";
+main_Compute_5_out_1 = NULL;
+main_Categorize_1_in_2 = NULL;
+main_Categorize_1_out_1 = NULL;
+main_Toggle_1_in_1 = "Toggle_1";
+main_Toggle_1_in_2 = "accum";
+main_Toggle_1_in_3 = 0;
+main_Toggle_1_in_4 = NULL;
+main_Toggle_1_in_5 = NULL;
+main_Toggle_1_in_6 = NULL;
+main_Toggle_1_out_1 = "accum";
+main_CategoryStatistics_5_in_3 = NULL;
+main_CategoryStatistics_5_in_4 = "price";
+main_CategoryStatistics_5_in_5 = NULL;
+main_CategoryStatistics_5_out_1 = NULL;
+main_Lookup_1_in_2 = "data lookup";
+main_Lookup_1_in_3 = "positions";
+main_Lookup_1_in_4 = NULL;
+main_Lookup_1_in_5 = NULL;
+main_Lookup_1_in_6 = "positions";
+main_Lookup_1_in_7 = NULL;
+main_Lookup_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_AutoGlyph_1_in_2 = NULL;
+main_AutoGlyph_1_in_3 = NULL;
+main_AutoGlyph_1_in_4 = NULL;
+main_AutoGlyph_1_in_5 = NULL;
+main_AutoGlyph_1_in_6 = 0.0;
+main_AutoGlyph_1_in_7 = NULL;
+main_AutoGlyph_1_out_1 = NULL;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "food group" ;
+main_Selector_1_in_3 = 0 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_2 = "food group" ;
+main_Format_2_in_1 = "All groceries plotted by %s category";
+main_Format_2_in_3 = NULL;
+main_Format_2_out_1 = NULL;
+main_Caption_1_in_2 = [.5 .95];
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = NULL;
+main_Caption_1_in_7 = "area";
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_CategoryStatistics_2_in_2 = "accum";
+main_CategoryStatistics_2_in_4 = "price";
+main_CategoryStatistics_2_in_5 = NULL;
+main_CategoryStatistics_2_out_1 = NULL;
+main_Format_1_in_1 = "%s lookup";
+main_Format_1_in_3 = NULL;
+main_Format_1_out_1 = NULL;
+main_Extract_2_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_Pick_1_in_1 = "Pick_1";
+main_Pick_1_in_2 = "Image_2";
+main_Pick_1_in_3 = NULL;
+main_Pick_1_in_4 = 103;
+main_Pick_1_in_5 = NULL;
+main_Pick_1_in_6 = NULL;
+main_Pick_1_in_7 = 1;
+main_Pick_1_in_8 = NULL;
+main_Pick_1_in_9 = NULL;
+main_Pick_1_out_1 = NULL;
+main_Inquire_2_in_2 = "is empty + 1";
+main_Inquire_2_in_3 = NULL;
+main_Inquire_2_out_1 = NULL;
+main_Plot_1_in_2 = {"" "cost"};
+main_Plot_1_in_3 = NULL;
+main_Plot_1_in_4 = NULL;
+main_Plot_1_in_5 = 1;
+main_Plot_1_in_6 = NULL;
+main_Plot_1_in_7 = NULL;
+main_Plot_1_in_8 = 3;
+main_Plot_1_in_9 = .75;
+main_Plot_1_in_10 = {"blue"};
+main_Plot_1_in_11 = {"background"};
+main_Plot_1_in_12 = 2.0;
+main_Plot_1_in_13 = NULL;
+main_Plot_1_in_14 = NULL;
+main_Plot_1_in_15 = NULL;
+main_Plot_1_in_16 = NULL;
+main_Plot_1_in_17 = NULL;
+main_Plot_1_in_18 = NULL;
+main_Plot_1_in_19 = NULL;
+main_Plot_1_in_20 = NULL;
+main_Plot_1_in_21 = NULL;
+main_Plot_1_in_23 = NULL;
+main_Plot_1_in_24 = NULL;
+main_Plot_1_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_PickPlot_1_out_1 = NULL;
+main_Extract_3_in_2 = "positions";
+main_Extract_3_out_1 = NULL;
+main_Compute_4_in_1 = "$0.x<0?0: $0.x>6 ? 6 : int($0.x+0.5)";
+main_Compute_4_in_3 = NULL;
+main_Compute_4_out_1 = NULL;
+main_Switch_1_in_3 = 0;
+main_Switch_1_out_1 = NULL;
+main_Select_3_in_3 = NULL;
+main_Select_3_out_1 = NULL;
+main_Format_3_in_1 = "Items within picked category %s";
+main_Format_3_in_3 = NULL;
+main_Format_3_out_1 = NULL;
+main_Caption_2_in_2 = [.5 .95];
+main_Caption_2_in_3 = NULL;
+main_Caption_2_in_4 = NULL;
+main_Caption_2_in_5 = NULL;
+main_Caption_2_in_6 = NULL;
+main_Caption_2_in_7 = "area";
+main_Caption_2_in_8 = NULL;
+main_Caption_2_in_9 = NULL;
+main_Caption_2_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_Mark_2_out_1 = NULL;
+main_Include_1_in_4 = NULL;
+main_Include_1_in_5 = 1;
+main_Include_1_in_6 = 1;
+main_Include_1_out_1 = NULL;
+main_Unmark_1_in_2 = NULL;
+main_Unmark_1_out_1 = NULL;
+main_CategoryStatistics_3_in_2 = "accum";
+main_CategoryStatistics_3_in_3 = "item";
+main_CategoryStatistics_3_in_4 = "price";
+main_CategoryStatistics_3_in_5 = NULL;
+main_CategoryStatistics_3_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Extract_4_in_2 = "item lookup";
+main_Extract_4_out_1 = NULL;
+main_Plot_2_in_2 = {"" "cost"};
+main_Plot_2_in_3 = NULL;
+main_Plot_2_in_4 = NULL;
+main_Plot_2_in_5 = 1;
+main_Plot_2_in_6 = NULL;
+main_Plot_2_in_7 = NULL;
+main_Plot_2_in_8 = 3;
+main_Plot_2_in_9 = .75;
+main_Plot_2_in_10 = {"blue"};
+main_Plot_2_in_11 = {"background"};
+main_Plot_2_in_12 = 2.0;
+main_Plot_2_in_13 = NULL;
+main_Plot_2_in_14 = NULL;
+main_Plot_2_in_15 = NULL;
+main_Plot_2_in_16 = NULL;
+main_Plot_2_in_17 = NULL;
+main_Plot_2_in_18 = NULL;
+main_Plot_2_in_19 = NULL;
+main_Plot_2_in_20 = NULL;
+main_Plot_2_in_21 = NULL;
+main_Plot_2_in_23 = NULL;
+main_Plot_2_in_24 = NULL;
+main_Plot_2_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_Extract_5_in_2 = "food group lookup";
+main_Extract_5_out_1 = NULL;
+main_Extract_6_in_2 = "item lookup";
+main_Extract_6_out_1 = NULL;
+main_Extract_7_in_2 = "unit lookup";
+main_Extract_7_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_2_in_1 = "Image_2";
+main_Image_2_in_3 = "X24,,";
+main_Image_2_in_4 = 1;
+main_Image_2_in_5 = [1.84023 1.8494 0];
+main_Image_2_in_6 = [1.84023 1.8494 24.5627];
+main_Image_2_in_7 = 13.1631;
+main_Image_2_in_8 = 373;
+main_Image_2_in_9 = 0.924;
+main_Image_2_in_10 = [0 1 0];
+main_Image_2_in_11 = NULL;
+main_Image_2_in_12 = 0;
+main_Image_2_in_13 = NULL;
+main_Image_2_in_14 = 1;
+main_Image_2_in_15 = NULL;
+main_Image_2_in_16 = NULL;
+main_Image_2_in_17 = NULL;
+main_Image_2_in_18 = NULL;
+main_Image_2_in_19 = 0;
+main_Image_2_in_20 = NULL;
+main_Image_2_in_21 = 1;
+main_Image_2_in_22 = "gray20";
+main_Image_2_in_23 = NULL;
+main_Image_2_in_25 = NULL;
+main_Image_2_in_26 = NULL;
+main_Image_2_in_27 = NULL;
+main_Image_2_in_28 = NULL;
+main_Image_2_in_29 = NULL;
+main_Image_2_in_30 = NULL;
+main_Image_2_in_31 = NULL;
+main_Image_2_in_32 = NULL;
+main_Image_2_in_33 = NULL;
+main_Image_2_in_34 = NULL;
+main_Image_2_in_35 = NULL;
+main_Image_2_in_36 = NULL;
+main_Image_2_in_37 = NULL;
+main_Image_2_in_38 = NULL;
+main_Image_2_in_39 = NULL;
+main_Image_2_in_40 = NULL;
+main_Image_2_in_41 = "pick";
+main_Image_2_in_42 = NULL;
+main_Image_2_in_43 = NULL;
+main_Image_2_in_44 = NULL;
+main_Image_2_in_45 = NULL;
+main_Image_2_in_46 = NULL;
+main_Image_2_in_47 = NULL;
+main_Image_2_in_48 = NULL;
+main_Image_3_in_1 = "Image_3";
+main_Image_3_in_3 = "X24,,";
+main_Image_3_in_4 = 1;
+main_Image_3_in_5 = [6.76782 4.87035 0];
+main_Image_3_in_6 = [6.76782 4.87035 66.4097];
+main_Image_3_in_7 = 35.589;
+main_Image_3_in_8 = 604;
+main_Image_3_in_9 = 0.771;
+main_Image_3_in_10 = [0 1 0];
+main_Image_3_in_11 = NULL;
+main_Image_3_in_12 = 0;
+main_Image_3_in_13 = NULL;
+main_Image_3_in_14 = 1;
+main_Image_3_in_15 = NULL;
+main_Image_3_in_16 = NULL;
+main_Image_3_in_17 = NULL;
+main_Image_3_in_18 = NULL;
+main_Image_3_in_19 = 0;
+main_Image_3_in_20 = NULL;
+main_Image_3_in_21 = 1;
+main_Image_3_in_22 = "gray20";
+main_Image_3_in_23 = NULL;
+main_Image_3_in_25 = NULL;
+main_Image_3_in_26 = NULL;
+main_Image_3_in_27 = NULL;
+main_Image_3_in_28 = NULL;
+main_Image_3_in_29 = NULL;
+main_Image_3_in_30 = NULL;
+main_Image_3_in_31 = NULL;
+main_Image_3_in_32 = NULL;
+main_Image_3_in_33 = NULL;
+main_Image_3_in_34 = NULL;
+main_Image_3_in_35 = NULL;
+main_Image_3_in_36 = NULL;
+main_Image_3_in_37 = NULL;
+main_Image_3_in_38 = NULL;
+main_Image_3_in_39 = NULL;
+main_Image_3_in_40 = NULL;
+main_Image_3_in_41 = "none";
+main_Image_3_in_42 = NULL;
+main_Image_3_in_43 = NULL;
+main_Image_3_in_44 = NULL;
+main_Image_3_in_45 = NULL;
+main_Image_3_in_46 = NULL;
+main_Image_3_in_47 = NULL;
+main_Image_3_in_48 = NULL;
+main_Toggle_2_in_1 = "Toggle_2";
+main_Toggle_2_in_2 = 0;
+main_Toggle_2_in_3 = 0;
+main_Toggle_2_in_4 = NULL;
+main_Toggle_2_in_5 = NULL;
+main_Toggle_2_in_6 = NULL;
+main_Toggle_2_out_1 = 0;
+main_Route_2_out_1 = NULL;
+main_Image_4_in_1 = "Image_4";
+main_Image_4_in_3 = "X24,,3dview";
+main_Image_4_in_4 = 1;
+main_Image_4_in_5 = [3.07962 8.15925 2.74122];
+main_Image_4_in_6 = [36.347 -19.6507 26.44];
+main_Image_4_in_7 = 26.481;
+main_Image_4_in_8 = 640;
+main_Image_4_in_9 = 0.75;
+main_Image_4_in_10 = [-0.387822 0.283476 0.877061];
+main_Image_4_in_11 = NULL;
+main_Image_4_in_12 = 0;
+main_Image_4_in_13 = NULL;
+main_Image_4_in_14 = 1;
+main_Image_4_in_15 = NULL;
+main_Image_4_in_16 = NULL;
+main_Image_4_in_17 = NULL;
+main_Image_4_in_18 = NULL;
+main_Image_4_in_19 = 0;
+main_Image_4_in_20 = NULL;
+main_Image_4_in_21 = NULL;
+main_Image_4_in_22 = NULL;
+main_Image_4_in_23 = NULL;
+main_Image_4_in_25 = NULL;
+main_Image_4_in_26 = NULL;
+main_Image_4_in_27 = NULL;
+main_Image_4_in_28 = NULL;
+main_Image_4_in_29 = 1;
+main_Image_4_in_30 = NULL;
+main_Image_4_in_31 = NULL;
+main_Image_4_in_32 = NULL;
+main_Image_4_in_33 = NULL;
+main_Image_4_in_34 = NULL;
+main_Image_4_in_35 = NULL;
+main_Image_4_in_36 = NULL;
+main_Image_4_in_37 = NULL;
+main_Image_4_in_38 = NULL;
+main_Image_4_in_39 = NULL;
+main_Image_4_in_40 = NULL;
+main_Image_4_in_41 = "rotate";
+main_Image_4_in_42 = "3dview";
+main_Image_4_in_43 = NULL;
+main_Image_4_in_44 = NULL;
+main_Image_4_in_45 = NULL;
+main_ManageImageWindow_1_in_1 = {"3dview"};
+main_ManageImageWindow_1_in_3 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

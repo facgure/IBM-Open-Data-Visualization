@@ -1,0 +1,17 @@
+// import the watermolecule data
+data = Import("watermolecule");
+data = Partition(data);
+
+// take a slice of the data
+slice = Slab(data,2,5,0);
+
+//create a banded output with 6 divisions
+banded = Band(slice,number = 6);
+
+//AutoColor the result
+banded = AutoColor(banded);
+
+//Display the result
+camera = AutoCamera(banded);
+Display(banded,camera); 
+

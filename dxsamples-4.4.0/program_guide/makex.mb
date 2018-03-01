@@ -1,0 +1,40 @@
+MODULE_NAME = MakeX
+CATEGORY = User
+MODULE_DESCRIPTION = Draws an X
+ASYNCHRONOUS = FALSE
+PINNED = FALSE
+SIDE_EFFECT = FALSE
+
+INPUT = input
+DESCRIPTION = field in which to mark positions
+REQUIRED = TRUE
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Irregular
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+
+INPUT = size
+DESCRIPTION = size of mark
+REQUIRED = FALSE
+DEFAULT_VALUE = 1
+DESCRIPTIVE = FALSE
+TYPES = scalar
+STRUCTURE = Value
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+
+OUTPUT = output
+DESCRIPTION = field with positions marked
+TYPES = field
+STRUCTURE = Field/Group
+DATA_TYPE = float
+DATA_SHAPE = Scalar
+POSITIONS = Not required
+CONNECTIONS = Not required
+ELEMENT_TYPE = Not required
+DEPENDENCY = Positions or connections
+

@@ -1,0 +1,89 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Black-Scholes Option Valuation</title>
+</head>
+<body bgcolor="#dddddd">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Black-Scholes Option Pricing</h2>
+		<table>
+<tr>
+<td>
+<APPLET
+	CODE="optval.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="optval">
+	<PARAM NAME=NETNAME VALUE="optval.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[0.86, 0.86, 0.86]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+</APPLET>
+</td>
+<td>
+<h2>...what determines the value of a call option?</h2>
+At expiration the holder may deliver an amount equal to the
+<i>Strike</i> price in return for one share which she can turn around and
+sell.  So at expiration the value is strike price minus stock price with
+the exception that its value cannot be less than $0.0.  Before expiration
+the value of a call is determined by the liklihood that the stock's price
+at the expiration date will exceed the strike price and by the time
+value of money.  With respect to calls which will be excercised, the owner
+effectively owns the stock but hasn't paid for it yet.  She is borrowing
+and should therefore except to pay more if the interest rate is high.
+</td>
+</tr>
+</table>
+<br>
+<table border = 2>
+<tr bgcolor = black>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 435 HEIGHT = 390
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/optval1.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+<APPLET
+	CODE="CaptionLabels.class" WIDTH = 350 HEIGHT = 20
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=DXLOutput0 VALUE="DXLOutput_1">
+	<PARAM NAME=BACKGROUND VALUE="[0.86, 0.86, 0.86]">
+	<PARAM NAME=FOREGROUND VALUE="[0.0, 0.0, 0.0]">
+</APPLET>
+<br>
+<h2>...an option pricing formula</h2>
+Fischer Black and Myron Scholes invented a formula which predicts
+an option price as a function of time, volatility, stock price, strike
+price, and the interest rate.  Assuming a distant expiration date, the 
+model predicts that a $1.00 change in stock price causes a small change
+in option price - perhaps $0.50.  This makes intuitive sense because
+the call owner profits only from a high stock price at expiration and
+a small increase today might easily be canceled out by another small
+change in the opposite direction tomorrow.  If the stock price becomes
+quite high, then the option value will increase by nearly $1.00 for
+each $1.00 increase in the stock price.  This also makes sense because
+when the stock is way above the strike price, it's almost certain that
+the option buyer will excerise the option.
+
+		<h2>...visualizing Black-Scholes</h2>
+		<div align="left">
+			The red surface shows Black-Scholes call values for a variety of stock and strike prices. A <i>Sequencer</i> in the visualization shows the effect over time. You can <i>Pick</i>on a location on the surface which selects of combination of stock and strike and reports the Black-Scholes value. Then you can run the sequencer to watch the price change. Note that at very high stock prices, the slope of the surface approaches 45 degrees. In other words a $1.00 change in stock price translates to a $1.00 change in call price. When strike and stock are close together, a $1.00 change in stock produces about $0.60 change in call value.
+			<p></p>
+		</div>
+		<div align="center">
+			<hr>
+			<b>[ <a href="Status.html">Java Explorer</a> | <a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

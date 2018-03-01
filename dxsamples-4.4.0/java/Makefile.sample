@@ -1,0 +1,390 @@
+# 
+# (C) COPYRIGHT International Business Machines Corp. 1997
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+# 
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# 
+#
+# $Header: /src/master/dxsamples/java/Makefile.sample,v 1.1.1.1 1999/05/05 22:02:04 gda Exp $
+#/
+
+
+##
+## main java makefile
+##
+
+SHELL=/bin/sh
+
+CP = cp -f
+
+INSTALL_DIR = ../../java/htmlpages
+UNIXNETS_INSTALL_DIR = ../../java/server/unixnets
+PCNETS_INSTALL_DIR = ../../java/server/pcnets
+MACRO_INSTALL_DIR = ../../java/server/usermacros
+DATA_INSTALL_DIR = ../../java/server/userdata
+JAR = jar
+JARFILE = samples.jar
+
+include Makefile_$(ARCH)
+
+default: bin
+
+.SUFFIXES: .class .java
+
+.java.class:
+	$(JAVAC) $(JFLAGS) $*.java
+
+TWO_WELLS_FILES = \
+	TwoWells.net			\
+	TwoWells.cfg			\
+	TwoWells.java			\
+	TwoWells.make			\
+	TwoWells.html			\
+	TwoWells1.0.0.gif		\
+	TwoWells2.0.0.gif		\
+	well_1.txt   			\
+	well_13.txt  			\
+	well_17.txt  			\
+	well_20.txt  			\
+	well_5.txt   			\
+	well_9.txt			\
+	well_10.txt  			\
+	well_14.txt  			\
+	well_18.txt  			\
+	well_21.txt  			\
+	well_6.txt   			\
+	well_9a.txt			\
+	well_11.txt  			\
+	well_15.txt  			\
+	well_19.txt  			\
+	well_3.txt   			\
+	well_7.txt			\
+	well_12.txt  			\
+	well_16.txt  			\
+	well_2.txt   			\
+	well_4.txt   			\
+	well_8.txt
+
+AS400_FILES = \
+	AS400VSMonth.cfg		\
+	AS400VSMonth.make		\
+	AS400VSMonth4.0.0.gif		\
+	AS400VSMonth.html		\
+	AS400VSMonth.net		\
+	AS400VSMonth.java		\
+	AS400VSMonth3.0.0.gif		\
+	outfile.field
+
+
+
+OBJS = \
+	AutoInsurance.class		\
+	CCNet2.class			\
+	GroceryList.class		\
+	HomeOwn.class			\
+	MRI_2.class 			\
+	MutualFund.class		\
+	Navigation.class		\
+	ScatterData.class		\
+	Streamline.class		\
+	ThunderGlyphSheet.class		\
+	Topo.class			\
+	ddi.class			\
+	hedge.class			\
+	ibmqw.class			\
+	optval.class			\
+	gordon.class			\
+	npvcall.class			\
+	wacc.class
+
+MACROS = \
+	Legend2Macro.net		\
+	kmeansmacro.net			\
+	ClassifyMacro.net      		\
+	prunemac.net			\
+	vhwymac.net			\
+	MOSFromLongLat.net     		\
+	bschols.net 			\
+	logn.net 			\
+	optsurf.net 			\
+	pdflogn.net 
+
+
+SRCS = \
+	AutoInsurance.java		\
+	CCNet2.java			\
+	GroceryList.java		\
+	HomeOwn.java			\
+	MRI_2.java			\
+	MutualFund.java			\
+	Navigation.java			\
+	ScatterData.java		\
+	Streamline.java			\
+	ThunderGlyphSheet.java		\
+	Topo.java			\
+	ddi.java			\
+	optval.java 			\
+	hedge.java 			\
+	ibmqw.java			\
+	ibmqw.java			\
+	gordon.java			\
+	npvcall.java			\
+	wacc.java
+
+NETS = \
+	AutoInsurance.cfg		\
+	AutoInsurance.net		\
+	CCNet2.cfg			\
+	CCNet2.net			\
+	GroceryList.cfg			\
+	GroceryList.net			\
+	HomeOwn.net			\
+	HomeOwn.cfg			\
+	MRI_2.cfg			\
+	MRI_2.net			\
+	MutualFund.net			\
+	MutualFund.cfg			\
+	Navigation.cfg			\
+	Navigation.net			\
+	ScatterData.cfg			\
+	ScatterData.net			\
+	Streamline.net			\
+	Streamline.cfg			\
+	ThunderGlyphSheet.cfg		\
+	ThunderGlyphSheet.net		\
+	Topo.net			\
+	Topo.cfg			\
+	ddi.cfg				\
+	ddi.net				\
+	hedge.cfg 			\
+	optval.net 			\
+	hedge.net 			\
+	ibmqw.cfg			\
+	ibmqw.net			\
+	optval.cfg 			\
+	gordon.cfg			\
+	gordon.net			\
+	npvcall.cfg			\
+	npvcall.net			\
+	wacc.cfg			\
+	wacc.net
+
+
+EXTRAS = \
+	AutoInsurance1.0.0.gif			\
+	AutoInsurance2.0.0.gif			\
+	AutoInsurance3.0.0.gif			\
+	CCNet23.0.0.gif				\
+	CCNet24.0.0.gif				\
+	CCNet25.0.0.gif				\
+	GroceryList2.0.0.gif			\
+	GroceryList3.0.0.gif			\
+	GroceryList4.0.0.gif			\
+	GroceryList4.0.1.gif			\
+	GroceryList4.0.2.gif			\
+	GroceryList4.0.3.gif			\
+	GroceryList4.0.4.gif			\
+	GroceryList4.0.5.gif			\
+	GroceryList4.0.6.gif			\
+	GroceryList4.0.7.gif			\
+	GroceryList4.0.8.gif			\
+	HomeOwn1.0.0.gif			\
+	HomeOwn2.0.0.gif			\
+	HomeOwn3.0.0.gif			\
+	MRI_21.0.0.gif				\
+	MutualFund2.0.0.gif			\
+	MutualFund3.0.0.gif			\
+	MutualFund10.0.0.gif			\
+	Navigation1.0.0.gif			\
+	Navigation6.0.0.gif			\
+	Navigation7.0.0.gif			\
+	ScatterData3.0.0.gif			\
+	Streamline2.0.0.gif			\
+	Streamline7.0.0.gif			\
+	ThunderGlyphSheet2.0.0.wrl		\
+	ThunderGlyphSheet3.0.0.gif		\
+	Topo.gif				\
+	Topo2.0.0.gif				\
+	Topo4.0.0.gif				\
+	ddi5.0.0.gif				\
+	ddi7.0.0.gif				\
+	ddi8.0.0.gif				\
+	hedge3.0.0.gif 				\
+	ibmqw2.0.0.gif				\
+	ibmqw1.0.0.gif				\
+	optval1.0.0.gif 			\
+	gordon1.0.0.gif				\
+	gordon2.0.0.gif				\
+	npvcall3.0.0.gif			\
+	wacc1.0.0.gif
+
+HTML_FILES = \
+	AutoInsurance.html		\
+	CCNet2.html	\
+	GroceryList.html		\
+	HomeOwn.html			\
+	MRI_2.html			\
+	MutualFund.html			\
+	Navigation.html			\
+	ScatterData.html		\
+	Streamline.html			\
+	ThunderGlyphSheet.htm		\
+	ThunderGlyphSheet.html		\
+	Topo.html			\
+	ddi.html			\
+	optval.html 			\
+	hedge.html 			\
+	ibmqw.html			\
+	gordon.html			\
+	npvcall.html			\
+	wacc.html      
+
+MAKE_FILES = \
+	AutoInsurance.make		\
+	CCNet2.make	\
+	GroceryList.make		\
+	HomeOwn.make			\
+	MRI_2.make 			\
+	MutualFund.make			\
+	Navigation.make			\
+	ScatterData.make		\
+	Streamline.make			\
+	ThunderGlyphSheet.make		\
+	Topo.make			\
+	ddi.make			\
+	optval.make 			\
+	hedge.make 			\
+	ibmqw.make			\
+	gordon.make			\
+	npvcall.make			\
+	wacc.make
+
+DATA_FILES = \
+	AutoInsurance.txt	\
+	CCAll.dx		\
+	Norm.dx			\
+	apt.txt			\
+	arf.txt			\
+	asr.txt			\
+	enhigh.txt		\
+	enlow.txt		\
+	enhigh.cxn		\
+	enlow.cxn		\
+	option.cm		\
+	npvcall.cm		\
+	npvcall2.cm		\
+	ibm94.txt		\
+	ibm95.txt		\
+	ibm96.txt		\
+	mf1.txt
+
+FILES = \
+	$(DATA_FILES)		\
+	$(MAKE_FILES)		\
+	$(HTML_FILES)		\
+	$(EXTRAS)		\
+	$(NETS)			\
+	$(SRCS)			\
+	$(MACROS)
+
+# standard nightly build rules
+
+subdirs:
+
+as400co:
+	for i in $(AS400_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+
+twowellsco:
+	for i in $(TWO_WELLS_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+
+activexco:
+	for i in $(ACTIVEX_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+co:
+	for i in $(FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+
+test:
+	@echo ui++/java $@ ok
+
+# install client files
+install: bin
+	$(MAKE) $(MFLAGS) installall 
+
+bin bing binO: 
+	if [ "$$ARCH" = "ibm6000" -a `uname -n` = "patch" ]; then \
+	  CURDIR=`echo \`pwd\` | sed "s;/a/patch;;"` ; \
+	  rsh quad "sh -c \". /usr/svs/.profile && cd $$CURDIR && make all\" " ; \
+	fi ; \
+	if [ "$$ARCH" = "sgi" -a -d $(JBASE) ]; then \
+	  $(MAKE) $(MFLAGS) all ; \
+	fi
+	@echo ui++/java $@ ok
+
+
+installall: all
+	chmod -R u+w $(INSTALL_DIR) 
+	$(JAR) cf $(JARFILE) $(OBJS)
+	$(CP) $(EXTRAS) $(JARFILE) $(HTML_FILES) $(INSTALL_DIR)
+	$(CP) $(NETS) $(UNIXNETS_INSTALL_DIR)
+	$(CP) $(MACROS) $(MACRO_INSTALL_DIR)
+	$(CP) $(DATA_FILES) $(DATA_INSTALL_DIR)
+	chmod a+r,o-w $(INSTALL_DIR)/*
+
+all: $(OBJS)
+
+clean:
+	rm -f $(OBJS) $(JARFILE)
+
+ACTIVEX_FILES = \
+	SimplifySurface.cfg		\
+	SimplifySurface.html		\
+	SimplifySurface.java		\
+	SimplifySurface.make		\
+	SimplifySurface.net		\
+	SimplifySurface2.0.0.gif	\
+	SimplifySurface5.0.0.dx		\
+	SimplifySurface6.0.0.gif	\
+	SimplifySurface7.0.0.gif	\
+	MappedIso.cfg       		\
+	MappedIso.html      		\
+	MappedIso.make      		\
+	MappedIso3.0.0.dx		\
+	MappedIso.java      		\
+	MappedIso.net       		\
+	MappedIso4.0.0.gif		\
+	tgsheet.cfg       		\
+	tgsheet.html      		\
+	tgsheet.make      		\
+	tgsheet2.0.0.dx			\
+	tgsheet.java      		\
+	tgsheet.net       		\
+	tgsheet8.0.0.gif
+
+
+
+

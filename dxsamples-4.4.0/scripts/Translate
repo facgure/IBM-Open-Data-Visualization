@@ -1,0 +1,19 @@
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera for the data
+camera = AutoCamera(electrondensity,width=5);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Display the isosurface
+Display(isosurface,camera);
+
+
+
+    // Translate the isosurface by 0.5 in the x direction
+translated = Translate(isosurface,[0.5 0 0]);
+Display(translated,camera);
+    // Translate the isosurface by 0.5 in the y direction
+translated = Translate(isosurface,[0.0 0.5 0]);
+Display(translated,camera);

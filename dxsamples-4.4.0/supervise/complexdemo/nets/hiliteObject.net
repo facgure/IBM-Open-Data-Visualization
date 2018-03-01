@@ -1,0 +1,117 @@
+//
+// time: Tue Jan 28 13:13:21 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE HiliteObject
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT object; field; (no default);  
+// INPUT hilite; value list or field or string or string list; (no default);  
+// OUTPUT output_1; object;  
+// End MDF
+// workspace: width = 517, height = 572
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro HiliteObject(
+ object
+,hilite
+) -> (
+ output_1
+) {
+    // 
+    // node Input[3]: x = 95, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'object', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+HiliteObject_Input_3_out_1 = object;
+    // 
+    // node Replace[1]: x = 174, y = 92, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "original colors"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    //
+HiliteObject_Replace_1_out_1 = 
+    Replace(
+    HiliteObject_Input_3_out_1,
+    HiliteObject_Input_3_out_1,
+    "original colors",
+    "colors"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Replace[2]: x = 331, y = 230, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "original colors"
+    //
+HiliteObject_Replace_2_out_1 = 
+    Replace(
+    HiliteObject_Replace_1_out_1,
+    HiliteObject_Replace_1_out_1,
+    "colors",
+    "original colors"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Color[1]: x = 349, y = 310, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "red"
+    //
+HiliteObject_Color_1_out_1 = 
+    Color(
+    HiliteObject_Replace_2_out_1,
+    "red",
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[4]: x = 90, y = 375, inputs = 0, label = Input
+    // parameter: position = 2, name = 'hilite', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+HiliteObject_Input_4_out_1 = hilite;
+    // 
+    // node Compute[48]: x = 157, y = 363, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+HiliteObject_Compute_48_out_1 = 
+    Compute(
+    "$0+1",
+    HiliteObject_Input_4_out_1
+    ) [instance: 48, cache: 1];
+    // 
+    // node Switch[3]: x = 253, y = 388, inputs = 3, label = Switch
+    //
+HiliteObject_Switch_3_out_1 = 
+    Switch(
+    HiliteObject_Compute_48_out_1,
+    HiliteObject_Replace_1_out_1,
+    HiliteObject_Color_1_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Output[2]: x = 201, y = 510, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = HiliteObject_Switch_3_out_1;
+    //
+    // decorator Annotate	pos=(122,283) size=154x54 style(Label), value = <NULL>
+    // annotation user_begin: 65
+    // annotation user: If it SHOULD BE hilited,
+    // annotation user: save its original colors
+    // annotation user: re-color it red
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(269,29) size=248x54 style(Label), value = <NULL>
+    // annotation user_begin: 111
+    // annotation user: Replace "original colors" onto "colors"
+    // annotation user: If no "original colors" component exists,
+    // annotation user: a harmless warning will arise
+    // annotation user_end: <NULL>
+// network: end of macro body
+}
+HiliteObject_Input_3_out_1 = NULL;
+HiliteObject_Replace_1_out_1 = NULL;
+HiliteObject_Replace_2_out_1 = NULL;
+HiliteObject_Color_1_out_1 = NULL;
+HiliteObject_Input_4_out_1 = NULL;
+HiliteObject_Compute_48_out_1 = NULL;
+HiliteObject_Switch_3_out_1 = NULL;

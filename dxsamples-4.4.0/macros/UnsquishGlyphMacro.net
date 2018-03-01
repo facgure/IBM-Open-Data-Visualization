@@ -1,0 +1,101 @@
+//
+// time: Tue Apr  8 16:15:48 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE UnsquishGlyph
+// CATEGORY Macros
+// DESCRIPTION Produces a glyph which will result in an unsquished glyph when the object has been scaled
+// INPUT scale; value list or field or string or string list; (none); scaling used for overall image; should be a vector, e.g. [1 1 10] if the object is scaled by 10 in z
+// INPUT glyph_quality; scalar or string or field or group; .5; quality of glyph
+// OUTPUT unsquished_glyph; object; Use as the "type" parameter of AutoGlyph or Glyph
+// End MDF
+//
+// comment: Often people are visualizing data which has vastly different extents in the different dimensions. Scale is used to modify the appearance of the final image. If Scale is used immediately prior to the Image tool, then any AutoAxes used will display the correct, unscaled values along the axes. Unfortunately, if glyphs are used in the image, the glyphs will be scaled as well, and will show up as "squished".
+// comment: 
+// comment: This macro provides a simple solution for the "squished glyph syndrome". You give the macro the scale factor which you plan to use for the entire image. The macro produces an inversely squished glyph which you in turn give as a "user-given glyph" (see the man page for AutoGlyph if you're interested). Simply pass the output of the macro to the second tab of Glyph or AutoGlyph (the "type" parameter.
+// comment: 
+// comment: You need to tell the macro the "quality" of the glyph (a number from 0 to 1, or one of the defined glyph types (again, see the AutoGlyph man page).  Note that this macro will work only for  2D and 3D scalar data.
+// comment: 
+// comment: 
+// comment:  
+// workspace: width = 519, height = 519
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro UnsquishGlyph(
+ scale
+,glyph_quality = .5
+) -> (
+ unsquished_glyph
+) {
+    // 
+    // node Input[1]: x = 75, y = 18, inputs = 0, label = Input
+    // parameter: position = 1, name = 'scale', value = '(none)', descriptive = 1, description = 'scaling used for overall image; should be a vector, e.g. [1 1 10] if the object is scaled by 10 in z', required = 1, visible = 1
+    //
+UnsquishGlyph_Input_1_out_1 = scale;
+    // 
+    // node Compute[1]: x = 87, y = 157, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "norm(1./$0)"
+    // expression: value = norm(1./scale_factor)
+    // name[2]: value = scale_factor
+    //
+UnsquishGlyph_Compute_1_out_1 = 
+    Compute(
+    "norm(1./$0)",
+    UnsquishGlyph_Input_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Construct[1]: x = 423, y = 252, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0 0 0]}
+    // input[4]: defaulting = 0, visible = 1, type = 16777245, value = {1}
+    //
+UnsquishGlyph_Construct_1_out_1 = 
+    Construct(
+    {[0 0 0]},
+    NULL,
+    NULL,
+    {1}
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[2]: x = 294, y = 24, inputs = 0, label = Input
+    // parameter: position = 2, name = 'glyph_quality', value = '.5', descriptive = 0, description = 'quality of glyph', required = 0, visible = 1
+    //
+UnsquishGlyph_Input_2_out_1 = glyph_quality;
+    // 
+    // node Glyph[1]: x = 350, y = 339, inputs = 7, label = Glyph
+    // input[3]: defaulting = 1, visible = 1, type = 5, value = NULL
+    // input[4]: defaulting = 0, visible = 1, type = 5, value = 1.0
+    //
+UnsquishGlyph_Glyph_1_out_1 = 
+    Glyph(
+    UnsquishGlyph_Construct_1_out_1,
+    UnsquishGlyph_Input_2_out_1,
+    NULL,
+    1.0,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scale[1]: x = 248, y = 370, inputs = 2, label = Scale
+    //
+UnsquishGlyph_Scale_1_out_1 = 
+    Scale(
+    UnsquishGlyph_Glyph_1_out_1,
+    UnsquishGlyph_Compute_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 256, y = 457, inputs = 1, label = Output
+    // parameter: position = 1, name = 'unsquished_glyph', value = ' ', descriptive = 0, description = 'Use as the "type" parameter of AutoGlyph or Glyph', required = 0, visible = 1
+    //
+unsquished_glyph = UnsquishGlyph_Scale_1_out_1;
+// network: end of macro body
+}
+UnsquishGlyph_Input_1_out_1 = NULL;
+UnsquishGlyph_Compute_1_out_1 = NULL;
+UnsquishGlyph_Construct_1_out_1 = NULL;
+UnsquishGlyph_Input_2_out_1 = NULL;
+UnsquishGlyph_Glyph_1_out_1 = NULL;
+UnsquishGlyph_Scale_1_out_1 = NULL;

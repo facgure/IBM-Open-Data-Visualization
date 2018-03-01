@@ -1,0 +1,19 @@
+FILES = user.o add.o makex.o hello.o
+
+BASE = /usr/lpp/dx
+
+CC = cc
+
+CFLAGS = -O -Dalphax -I$(BASE)/include
+
+LIBS   = -L$(BASE)/lib_alphax -lDX -lX11 -lm -ly -ll 
+
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user.c:		user_inboard.mdf
+		mdf2c user_inboard.mdf > user.c

@@ -1,0 +1,30 @@
+
+BASE := $(shell dx -whereami | sed -e "s/installed in //")
+
+LIBDXL=$(BASE)/lib_macos/libDXL.a
+
+CFLAGS   = -O2 -Dmacos -DBASE=\"$(BASE)\" -I/usr/X11R6/include -I$(BASE)/include
+ 
+
+LIBS = -L$(BASE)/lib_macos -L/usr/X11R6/lib -lm $(LIBDXL)
+XLIBS   = -lXm -lXp -lXext -lXt -lXmu -lX11 
+
+
+all: sealevel maptoplane xapp xapp_supervise demoapp
+
+sealevel: sealevel.o
+	$(CC) sealevel.o $(LIBS) -o sealevel 
+
+maptoplane: maptoplane.o
+	$(CC) maptoplane.o $(LIBS) -o maptoplane 
+
+xapp:  xapp.o
+	$(CC) xapp.o $(LIBS) $(XLIBS) -o xapp 
+
+xapp_supervise:  xapp_supervise.o
+	$(CC) xapp_supervise.o $(LIBS) $(XLIBS) -o xapp_supervise 
+
+demoapp:  demoapp.o
+	$(CC) demoapp.o $(LIBS) $(XLIBS) -o demoapp 
+
+

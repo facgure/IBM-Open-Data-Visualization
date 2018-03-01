@@ -1,0 +1,25 @@
+# only the add module is shown as a parallellized module
+FILES = user_parallel.o add_parallel.o makex.o
+
+BASE = /usr/lpp/dx
+
+CC = pgcc
+
+LDFLAGS=-L$(BASE)/lib_ibmpvs
+
+CFLAGS = -O -I$(BASE)/include
+
+LIBS = -lDX -ly -ll -lX11 -liop -lm
+
+
+
+
+# make the Data Explorer executable
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec
+
+
+# make the user.c file
+user_parallel.c:	user_parallel.mdf
+			mdf2c user_parallel.mdf > user_parallel.c
+

@@ -1,0 +1,215 @@
+//
+// time: Fri Nov 13 08:48:48 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE lognpdf
+// CATEGORY Options
+// DESCRIPTION Log Normal Probability Density
+// INPUT z; value list or field or string or string list; (none); Value below which to calculate probability
+// OUTPUT probability; value or value list or field; N(z)
+// End MDF
+// page assignment: const	order=2, windowed=0, showing=0
+// workspace: width = 462, height = 483
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro lognpdf(
+ z
+) -> (
+ probability
+) {
+    // 
+    // node Input[1]: x = 0, y = 2, inputs = 0, label = Input
+    // parameter: position = 1, name = 'z', value = '(none)', descriptive = 1, description = 'Value below which to calculate probability', required = 1, visible = 1
+    //
+lognpdf_Input_1_out_1 = z;
+    // 
+    // node Transmitter[6]: x = 107, y = 20, inputs = 1, label = a
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {0.2316419}
+    // page group: const
+    //
+a = {0.2316419};
+    // 
+    // node Receiver[1]: x = 61, y = 252, inputs = 1, label = a
+    //
+lognpdf_Receiver_1_out_1[cache: 0] = a;
+    // 
+    // node Transmitter[11]: x = 1, y = 420, inputs = 1, label = data
+    //
+data = lognpdf_Input_1_out_1;
+    // 
+    // node Receiver[2]: x = 160, y = 0, inputs = 1, label = data
+    //
+lognpdf_Receiver_2_out_1[cache: 0] = data;
+    // 
+    // node Compute[8]: x = 88, y = 118, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "-$0"
+    // expression: value = -z
+    // name[2]: value = z
+    //
+lognpdf_Compute_8_out_1 = 
+    Compute(
+    "-$0",
+    lognpdf_Receiver_2_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Compute[1]: x = 37, y = 347, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 > 0.0? (1.0/(1.0 + ($1*$0))) : (1.0/(1.0 + ($1*$2)))"
+    // expression: value = z > 0.0? (1.0/(1.0 + (a*z))) : (1.0/(1.0 + (a*mz)))
+    // name[2]: value = z
+    // name[3]: value = a
+    // name[4]: value = mz
+    //
+lognpdf_Compute_1_out_1 = 
+    Compute(
+    "$0 > 0.0? (1.0/(1.0 + ($1*$0))) : (1.0/(1.0 + ($1*$2)))",
+    lognpdf_Input_1_out_1,
+    lognpdf_Receiver_1_out_1,
+    lognpdf_Compute_8_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[10]: x = 61, y = 421, inputs = 1, label = k
+    //
+k = lognpdf_Compute_1_out_1;
+    // 
+    // node Receiver[3]: x = 222, y = 127, inputs = 1, label = k
+    //
+lognpdf_Receiver_3_out_1[cache: 0] = k;
+    // 
+    // node Transmitter[7]: x = 93, y = 96, inputs = 1, label = e
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {2.78312}
+    // page group: const
+    //
+e = {2.78312};
+    // 
+    // node Receiver[4]: x = 270, y = 91, inputs = 1, label = e
+    //
+lognpdf_Receiver_4_out_1[cache: 0] = e;
+    // 
+    // node Transmitter[9]: x = 20, y = 190, inputs = 1, label = twopirad
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {0.39894228}
+    // page group: const
+    //
+twopirad = {0.39894228};
+    // 
+    // node Receiver[5]: x = 275, y = 1, inputs = 1, label = twopirad
+    //
+lognpdf_Receiver_5_out_1[cache: 0] = twopirad;
+    // 
+    // node Transmitter[1]: x = 20, y = 20, inputs = 1, label = b1
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {0.31938153}
+    // page group: const
+    //
+b1 = {0.31938153};
+    // 
+    // node Receiver[10]: x = 318, y = 77, inputs = 1, label = b1
+    //
+lognpdf_Receiver_10_out_1[cache: 0] = b1;
+    // 
+    // node Transmitter[2]: x = 66, y = 20, inputs = 1, label = b2
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {-0.356563782}
+    // page group: const
+    //
+b2 = {-0.356563782};
+    // 
+    // node Receiver[9]: x = 342, y = 153, inputs = 1, label = b2
+    //
+lognpdf_Receiver_9_out_1[cache: 0] = b2;
+    // 
+    // node Transmitter[3]: x = 20, y = 99, inputs = 1, label = b3
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {1.781477937}
+    // page group: const
+    //
+b3 = {1.781477937};
+    // 
+    // node Receiver[8]: x = 366, y = 1, inputs = 1, label = b3
+    //
+lognpdf_Receiver_8_out_1[cache: 0] = b3;
+    // 
+    // node Transmitter[4]: x = 55, y = 96, inputs = 1, label = b4
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {-1.821255978}
+    // page group: const
+    //
+b4 = {-1.821255978};
+    // 
+    // node Receiver[7]: x = 390, y = 82, inputs = 1, label = b4
+    //
+lognpdf_Receiver_7_out_1[cache: 0] = b4;
+    // 
+    // node Transmitter[5]: x = 150, y = 20, inputs = 1, label = b5
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {1.330274429}
+    // page group: const
+    //
+b5 = {1.330274429};
+    // 
+    // node Receiver[6]: x = 414, y = 164, inputs = 1, label = b5
+    //
+lognpdf_Receiver_6_out_1[cache: 0] = b5;
+    // 
+    // node Compute[3]: x = 222, y = 292, inputs = 11, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$1> 0.0 ? (1.0    -    $3*pow($2, -(($1*$1)/2.0)) *($4*$0 + $5*$0*$0 + $6*$0*$0*$0 + $7*$0*$0*$0*$0 + $8*$0*$0*$0*$0*$0)) : 1.0-(1.0    -    $3*pow($2, -(($9*$9)/2.0)) *($4*$0 + $5*$0*$0 + $6*$0*$0*$0 + $7*$0*$0*$0*$0 + $8*$0*$0*$0*$0*$0))"
+    // expression: value = z> 0.0 ? (1.0    -    tpr*pow(e, -((z*z)/2.0)) *(b1*k + b2*k*k + b3*k*k*k + b4*k*k*k*k + b5*k*k*k*k*k)) : 1.0-(1.0    -    tpr*pow(e, -((mz*mz)/2.0)) *(b1*k + b2*k*k + b3*k*k*k + b4*k*k*k*k + b5*k*k*k*k*k))
+    // name[2]: value = k
+    // name[3]: value = z
+    // name[4]: value = e
+    // name[5]: value = tpr
+    // name[6]: value = b1
+    // name[7]: value = b2
+    // name[8]: value = b3
+    // name[9]: value = b4
+    // name[10]: value = b5
+    // name[11]: value = mz
+    //
+lognpdf_Compute_3_out_1 = 
+    Compute(
+    "$1> 0.0 ? (1.0    -    $3*pow($2, -(($1*$1)/2.0)) *($4*$0 + $5*$0*$0 + $6*$0*$0*$0 + $7*$0*$0*$0*$0 + $8*$0*$0*$0*$0*$0)) : 1.0-(1.0    -    $3*pow($2, -(($9*$9)/2.0)) *($4*$0 + $5*$0*$0 + $6*$0*$0*$0 + $7*$0*$0*$0*$0 + $8*$0*$0*$0*$0*$0))",
+    lognpdf_Receiver_3_out_1,
+    lognpdf_Receiver_2_out_1,
+    lognpdf_Receiver_4_out_1,
+    lognpdf_Receiver_5_out_1,
+    lognpdf_Receiver_10_out_1,
+    lognpdf_Receiver_9_out_1,
+    lognpdf_Receiver_8_out_1,
+    lognpdf_Receiver_7_out_1,
+    lognpdf_Receiver_6_out_1,
+    lognpdf_Compute_8_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Output[1]: x = 319, y = 389, inputs = 1, label = Output
+    // parameter: position = 1, name = 'probability', value = '(NULL)', descriptive = 1, description = 'N(z)', required = 0, visible = 1
+    //
+probability = lognpdf_Compute_3_out_1;
+    // 
+    // node Transmitter[8]: x = 136, y = 99, inputs = 1, label = pi
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = {3.1415927}
+    // page group: const
+    //
+pi = {3.1415927};
+// network: end of macro body
+}
+lognpdf_Input_1_out_1 = NULL;
+lognpdf_Transmitter_6_out_1 = NULL;
+lognpdf_Receiver_1_out_1 = NULL;
+lognpdf_Transmitter_11_out_1 = NULL;
+lognpdf_Receiver_2_out_1 = NULL;
+lognpdf_Compute_8_out_1 = NULL;
+lognpdf_Compute_1_out_1 = NULL;
+lognpdf_Transmitter_10_out_1 = NULL;
+lognpdf_Receiver_3_out_1 = NULL;
+lognpdf_Transmitter_7_out_1 = NULL;
+lognpdf_Receiver_4_out_1 = NULL;
+lognpdf_Transmitter_9_out_1 = NULL;
+lognpdf_Receiver_5_out_1 = NULL;
+lognpdf_Transmitter_1_out_1 = NULL;
+lognpdf_Receiver_10_out_1 = NULL;
+lognpdf_Transmitter_2_out_1 = NULL;
+lognpdf_Receiver_9_out_1 = NULL;
+lognpdf_Transmitter_3_out_1 = NULL;
+lognpdf_Receiver_8_out_1 = NULL;
+lognpdf_Transmitter_4_out_1 = NULL;
+lognpdf_Receiver_7_out_1 = NULL;
+lognpdf_Transmitter_5_out_1 = NULL;
+lognpdf_Receiver_6_out_1 = NULL;
+lognpdf_Compute_3_out_1 = NULL;

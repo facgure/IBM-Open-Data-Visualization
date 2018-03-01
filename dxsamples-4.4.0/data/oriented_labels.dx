@@ -1,0 +1,42 @@
+# This data file is intended to demonstrate using the Text module to place
+# labels.
+
+
+# the positions component
+object 1 class array type float rank 1 shape 2 items 4 data follows
+    0.0 5.0
+    5.0 5.0
+    0.0 0.0
+    5.0 0.0
+
+# the data component (type string). The shape is the length of the longest
+# string + 1.
+object 2 class array type string rank 1 shape 11 items 4 data follows
+    "this"
+    "is"
+    "annotation"
+    "text"
+attribute "dep" string "positions"
+
+# the tangents component can be used to orient the direction of annotation
+# text
+object 3 class array type float rank 1 shape 2 items 4 data follows
+   0.0 1.0
+   0.5 0.5
+   1.0 0.0
+   0.5 -0.5
+
+# the binormals component can be used to orient the "up" direction of the
+# text. 
+object 4 class array type float rank 1 shape 2 items 4 data follows
+   -1.0 0.0
+   -0.5 0.5
+    0.2 1.0
+    0.2 0.5
+
+# create the field
+object 5 class field 
+   component "positions" value 1
+   component "data" value 2
+   component "tangents" value 3
+   component "binormals" value 4

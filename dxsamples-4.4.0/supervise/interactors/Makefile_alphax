@@ -1,0 +1,13 @@
+FILES = myinteractors.o
+
+BASE = /usr/lpp/dx
+
+CFLAGS = -O -Dalphax -I$(BASE)/include 
+
+LIBS     =   -L$(BASE)/lib_alphax -lDX -ly -ll -lX11 -lGL -lm 
+LITELIBS =   -L$(BASE)/lib_alphax -lDXlite -lm 
+LDLIBFLAGS = -shared -all -e DXEntry -expect_unresolved main -expect_unresolved DX*
+SYSLIBS  =   -lm -lc
+
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec

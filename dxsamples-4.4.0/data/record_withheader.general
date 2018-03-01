@@ -1,0 +1,13 @@
+file = record_withheader
+grid = 5 x 8 x 6
+format = text
+interleaving = record
+majority = row
+header = lines 3
+field = field0
+structure = scalar
+type = float
+dependency = positions
+positions = regular, regular, regular, 1, .5, 3, 1.0, 2.0, .75
+
+end

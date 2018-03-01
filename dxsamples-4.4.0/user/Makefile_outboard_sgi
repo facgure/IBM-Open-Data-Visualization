@@ -1,0 +1,12 @@
+FILES = outboard.o hello.o 
+
+BASE = /usr/lpp/dx
+
+CFLAGS   = -O -Dsgi -I. -I$(BASE)/include
+LITELIBS = -L$(BASE)/lib_sgi -lDXlite -lm
+
+hello:	hello.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES) $(LITELIBS) -o hello
+	rm outboard.o
+

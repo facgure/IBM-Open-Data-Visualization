@@ -1,0 +1,14 @@
+file = record_series
+grid = 5 x 5
+format = text
+interleaving = record
+majority = row
+header = marker "Time Step 1\n"
+series = 7, 1, 1, separator = lines 1
+field = field0
+structure = scalar
+type = float
+dependency = connections
+positions = regular, regular, 0, 1, 0, 1
+
+end

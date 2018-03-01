@@ -1,0 +1,60 @@
+#!/bin/sh 
+#
+# A shell script to start the correct external filter depending upon
+# the architecture that is being used. 
+#
+# This is referenced by the ImportExternalFilter.net example.
+#
+DIR=${DXEXECROOT-${DXROOT-/usr/lpp/dx}}/samples/data
+case "`uname -s`" in
+  AIX)		# RS/6000 or RS/6000 console for PVS
+    if [ -f /dev/pvs0 ]; then
+    	os $DIR/externalfilter_ibmpvs $*
+    else
+    	$DIR/externalfilter_ibm6000 $*
+    fi
+    ;;
+
+  IRIX)		# Indigo
+
+    $DIR/externalfilter_sgi $*
+    ;;
+
+  SunOS)	# Sun 4
+
+    case `uname -r` in
+	4*)
+	    $DIR/externalfilter_sun4 $*
+	    ;;
+	*)
+	    $DIR/externalfilter_solaris $*
+	    ;;
+    esac
+    ;;
+
+  HP-UX)	# HP700
+
+    $DIR/externalfilter_hp700 $*
+    ;;
+
+  dgux)
+    $DIR/externalfilter_aviion $*
+    ;;
+
+  OSF1)
+    $DIR/externalfilter_alphax $*
+    ;;
+  
+  *) 		# Try machine type
+    case "`uname -m`" in 
+      IP7) 	# SGI	
+
+	$DIR/externalfilter_sgi $* ;; 
+
+      *) 
+        echo unknown machine type
+        exit 1
+	;;
+
+    esac 
+esac

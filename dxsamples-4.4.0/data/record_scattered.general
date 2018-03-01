@@ -1,0 +1,10 @@
+file = record_deformed
+points = 20
+format = text
+interleaving = record-vector
+field = rainfall, temperature, locations
+structure = scalar, scalar, 2-vector
+type = float, int, float
+dependency = positions, positions, positions
+
+end

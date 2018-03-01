@@ -1,0 +1,14 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Compute the statistics
+mean, sd, var, min, max = Statistics(electrondensity);
+    // Echo the min and max
+Echo("min and max = ",min, max);
+    // Normalize the data to the range 0 to 1
+normalized = Compute("$0/($1-$2)", electrondensity, max, min);
+
+
+

@@ -1,0 +1,27 @@
+# This makefile has three targets:
+#    loadablelib creates a "library" of two run-time loadable modules,
+#       makex and add 
+#    hello creates a single runtime loadable executable, the hello module.
+#    all creates both of the above.
+BASE=/usr/lpp/dx
+
+INC = $(BASE)/include
+EXP = $(BASE)/lib_ibm6000/dxexec.exp
+BIN = $(BASE)/bin
+
+CFLAGS = -O -Dibm6000 -I$(BASE)/include
+
+.DEFAULT: 	all
+
+loadablelib: 	makex.o add.o
+		$(BIN)/mdf2c -m user_loadable.mdf > user.c
+		cc -I$(INC) -D$(ARCH) -c user.c
+		cc -o loadablelib user.o makex.o add.o -e DXEntry -bI:$(EXP)
+
+hello: 		hello.o
+		$(BIN)/mdf2c -m hello_loadable.mdf > user.c
+		cc -I$(INC) -D$(ARCH) -c user.c
+		cc -o hello user.o hello.o -e DXEntry -bI:$(EXP)
+
+all:      	hello loadablelib 
+

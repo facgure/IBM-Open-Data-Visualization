@@ -1,0 +1,49 @@
+
+     // Import some data
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create a camera for the data
+camera = AutoCamera(electrondensity,width=3); 
+     // Set the isovalue
+isoval = 0.3;
+     // Create an Isosurface
+isosurface = Isosurface(electrondensity,isoval);
+     // Create a caption. By default, it will be at the bottom center
+caption = Caption("caption at the bottom center");
+     // Collect it with the isosurface and display
+collected = Collect(isosurface,caption);
+Display(collected,camera);
+
+
+     // Create a caption. It will be placed at the center (0.5 in x)
+     // and near the top (0.9 in y) 
+caption = Caption("caption at the top center",[0.5 0.9]);
+collected = Collect(isosurface,caption);
+Display(collected,camera);
+
+     // Make a multi-line caption by giving a string list. Put it on the
+     // right side (0.1 in x and 0.8 in y), but right-justify it by setting
+     // alignment to 1.0 
+caption = Caption({"this is a", "multiline caption", "on the left side",
+                   "right-justified"}, [0.1 0.8], alignment = 1.0);
+collected = Collect(isosurface,caption);
+Display(collected,camera);
+
+     // You can also create the string list for Caption using the List 
+     // module
+stringlist = List("this is another","multiline caption", 
+                   "constructed using the List module");
+caption = Caption(stringlist, [0.1 0.8], alignment = 0.0);
+caption = Color(caption,"yellow");
+collected = Collect(isosurface,caption);
+Display(collected,camera);
+
+     // You can also set the position in pixel coordinates, measured from
+     // the bottom left. You can color any caption using the Color module 
+caption = Caption("this is a pixel coordinate caption at [200 100]", [200 100],
+                  flag = 1);
+caption = Color(caption,"red");
+collected = Collect(isosurface,caption);
+Display(collected,camera);
+

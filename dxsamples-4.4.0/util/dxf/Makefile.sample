@@ -1,0 +1,37 @@
+#----------------------------------------------------------------------#
+#	Copyright (c) 1995 International Business Machine Corporation. #
+# 								       #
+# THIS SOFTWARE IS PROVIDED 'AS-IS' AND WITHOUT WARRANTY OF ANY KIND,  #
+# EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY     #
+# WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.     #
+#----------------------------------------------------------------------#
+
+
+# This is a makefile for the ibm6000 architecture.
+
+BASE=/usr/lpp/dx
+CFLAGS=-O -D$(ARCH) -I . -I$(BASE)/include
+LITELIBS=-L$(BASE)/lib_$(ARCH) -lDXlite -lm
+
+OBJECTS=dxf.o entity.o common.o snag_funcs.o \
+	output_funcs.o dx.o header.o ignored.o \
+	tree.o colors.o table.o read.o
+
+dxf2dx: $(OBJECTS) *.h Makefile
+	cc -o dxf2dx $(OBJECTS) $(LITELIBS) 
+
+ship: dxf2dx
+	cp *.[ch] ship
+	cp Makefile ship
+	cp README.dxf2dx ship
+	cp MANIFEST ship
+	cp dxf2dx ship
+	cp objects/entrpris.dxf ship
+	cp entrpris.dx ship
+	cp import_dxf.* ship
+	cd ship; tar -cvf dxf2dx.tar *; compress dxf2dx.tar
+
+co:
+	co RCS/*.[ch],v
+
+	

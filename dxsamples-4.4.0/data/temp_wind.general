@@ -1,0 +1,30 @@
+# This is a general array importer header file which will import the data
+# in "temp_wind.lis".  This data is on a regular grid of longitude and latitude.
+# There are 144 longitude points, and 73 latitude points. At each location there
+# is a value for temperature (scalar) and wind velocity (2-vector).
+# The layout keyword describes how the data are formatted. The first number
+# is the number of characters to ignore before reading the first data value.
+# The second number is the number of characters for the temperature. The
+# third number is the number of characters to skip before finding the
+# wind value, and in this case is 0. The fourth number is the number of
+# characters for each component of the 2-vector for wind.
+# The majority keyword indicates that the data is organized by column
+# majority, meaning that the first dimension (longtitude) varies fastest.
+# That is, the data values for the first longitude and latitude position are 
+# read, then the data values for the second longitude and first latitude are
+# read, and so on. The interleaving keyword indicates that the temperature
+# and wind fields are interleaved. The header keyword indicates how many
+# lines at the top of the file to skip before reading the data, and the
+# positions keyword gives the longitude origin and delta, and the latitude
+# origin and delta for the grid. 
+file = temp_wind.lis
+grid = 144 x 73
+field = temperature, wind_velocity 
+structure = scalar, 2-vector
+# 25 bytes for time and 14 bytes for pressure (= 39) to ignore
+# 14 bytes each for temperature and the components of the wind velocity
+layout = 39, 14, 0, 14
+majority = column 
+interleaving = field
+header = lines 9
+positions = -178.75, 2.5, 90.0, -2.5

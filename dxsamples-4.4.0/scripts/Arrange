@@ -1,0 +1,43 @@
+// Import the data
+electrondensity = Import("watermolecule");
+
+// Partition the data
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at an isovalue of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// Create a camera which will look at the isosurface from the "front" 
+// (out along the z axis)
+camera1 = AutoCamera(isosurface,"front",resolution=320);
+
+// Create a camera which will look at the isosurface from the "top" 
+// (out along the y axis)
+camera2 = AutoCamera(isosurface,"top",resolution=320);
+
+// Create a camera which will look at the isosurface from the "left" 
+// (out along the -x axis)
+camera3 = AutoCamera(isosurface,"left",resolution=320);
+
+// Create a camera which will look at the isosurface from the "left" 
+// (out along the [1 1 1] direction)
+camera4 = AutoCamera(isosurface,"diagonal",resolution=320);
+
+
+
+// Now render the isosurface using each of the four cameras, creating four
+// images
+image1 = Render(isosurface,camera1);
+image2 = Render(isosurface,camera2);
+image3 = Render(isosurface,camera3);
+image4 = Render(isosurface,camera4);
+
+
+// Collect the four images together
+object = Collect(image1,image2,image3,image4);
+// Arrange the images so that there are two in each row
+arranged = Arrange(object,2);
+// Display the newly arranged image
+Display(arranged);
+
+

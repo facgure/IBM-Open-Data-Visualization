@@ -1,0 +1,293 @@
+//
+// time: Tue Apr 29 11:56:34 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// MODULE main
+//
+// comment: If you wish to render a displayed image at a higher resolution (for example to write to an output file), you can usually simply use Render on the same input object, with a new (higher resolution) camera.  However, if the rendered object contains screen objects (captions or colorbars), the new image will not be WYSIWYG (what you see is what you get) with respect to the displayed image, because the sizes of captions and colorbars are specified in pixels rather than in screen-relative units.  The ScaleScreen module allows you to modify the size of screen objects before rerendering.
+// comment: 
+// comment: Note that this operation is performed automatically for you if you are using the Image tool to render and save your images.
+// workspace: width = 594, height = 591
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 52, y = 9, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "southeastern_topo.dx"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Colormap[1]: x = 155, y = 112, inputs = 19, label = Colormap
+    // input[1]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 0.666667] [0.92948718 0.57894737] [0.93269231 0.14736842] [1.0 0.0] }
+    // input[2]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[3]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[4]: defaulting = 0, visible = 0, type = 16777224, value = { [0.0 1.0] [1.0 1.0] }
+    // input[5]: defaulting = 0, visible = 0, type = 32, value = "Colormap_1"
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = -5498.0
+    // input[8]: defaulting = 1, visible = 0, type = 5, value = 407.0
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 20
+    // input[12]: defaulting = 0, visible = 0, type = 16777221, value = { -5498.0 407.0 }
+    // input[17]: defaulting = 0, visible = 0, type = 5, value = -5498.0
+    // input[18]: defaulting = 0, visible = 0, type = 5, value = 407.0
+    // window: position = (0.4938,0.0576), size = 0.5078x0.4395
+    //
+main_Colormap_1_out_1[cache: 2],
+main_Colormap_1_out_2[cache: 2] = 
+    Colormap(
+    main_Colormap_1_in_1,
+    main_Colormap_1_in_2,
+    main_Colormap_1_in_3,
+    main_Colormap_1_in_4,
+    main_Colormap_1_in_5,
+    main_Import_1_out_1,
+    main_Colormap_1_in_7,
+    main_Colormap_1_in_8,
+    main_Colormap_1_in_9,
+    main_Colormap_1_in_10,
+    main_Colormap_1_in_11,
+    main_Colormap_1_in_12,
+    main_Colormap_1_in_13,
+    main_Colormap_1_in_14,
+    main_Colormap_1_in_15,
+    main_Colormap_1_in_16,
+    main_Colormap_1_in_17,
+    main_Colormap_1_in_18,
+    main_Colormap_1_in_19
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 60, y = 176, inputs = 5, label = Color
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_Import_1_out_1,
+    main_Colormap_1_out_1,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node ColorBar[1]: x = 173, y = 208, inputs = 14, label = ColorBar
+    //
+main_ColorBar_1_out_1 = 
+    ColorBar(
+    main_Colormap_1_out_1,
+    main_ColorBar_1_in_2,
+    main_ColorBar_1_in_3,
+    main_ColorBar_1_in_4,
+    main_ColorBar_1_in_5,
+    main_ColorBar_1_in_6,
+    main_ColorBar_1_in_7,
+    main_ColorBar_1_in_8,
+    main_ColorBar_1_in_9,
+    main_ColorBar_1_in_10,
+    main_ColorBar_1_in_11,
+    main_ColorBar_1_in_12,
+    main_ColorBar_1_in_13,
+    main_ColorBar_1_in_14
+    ) [instance: 1, cache: 1];
+    // 
+    // node Caption[1]: x = 358, y = 232, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Southeastern United States"
+    // input[6]: defaulting = 0, visible = 1, type = 1, value = 25
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "italic_d"
+    //
+main_Caption_1_out_1 = 
+    Caption(
+    main_Caption_1_in_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[1]: x = 152, y = 296, inputs = 3, label = Collect
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Color_1_out_1,
+    main_ColorBar_1_out_1,
+    main_Caption_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 235, y = 372, inputs = 9, label = AutoCamera
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Collect_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 121, y = 398, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.0000,0.0000), size = 0.5109x0.5117
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Collect_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+    // 
+    // node Integer[1]: x = 446, y = 352, inputs = 11, label = Integer
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Integer_1"
+    // input[3]: defaulting = 0, visible = 0, type = 1, value = 1000 
+    // input[4]: defaulting = 1, visible = 0, type = 1, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 1, value = 200
+    // input[6]: defaulting = 1, visible = 0, type = 1, value = 2000
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 0
+    // output[1]: visible = 1, type = 1, value = 1000 
+    //
+    // 
+    // node ScaleScreen[1]: x = 341, y = 454, inputs = 4, label = ScaleScreen
+    //
+main_ScaleScreen_1_out_1,
+main_ScaleScreen_1_out_2 = 
+    ScaleScreen(
+    main_Collect_1_out_1,
+    main_ScaleScreen_1_in_2,
+    main_Integer_1_out_1,
+    main_AutoCamera_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Render[1]: x = 356, y = 529, inputs = 3, label = Render
+    //
+main_Render_1_out_1 = 
+    Render(
+    main_ScaleScreen_1_out_1,
+    main_ScaleScreen_1_out_2,
+    main_Render_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node WriteImage[1]: x = 498, y = 524, inputs = 4, label = WriteImage
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "tiff"
+    //
+    WriteImage(
+    main_Render_1_out_1,
+    main_WriteImage_1_in_2,
+    main_WriteImage_1_in_3,
+    main_WriteImage_1_in_4
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "southeastern_topo.dx";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Colormap_1_in_1 = { [0.0 0.666667] [0.92948718 0.57894737] [0.93269231 0.14736842] [1.0 0.0] };
+main_Colormap_1_in_2 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_3 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_4 = { [0.0 1.0] [1.0 1.0] };
+main_Colormap_1_in_5 = "Colormap_1";
+main_Colormap_1_in_7 = NULL;
+main_Colormap_1_in_8 = NULL;
+main_Colormap_1_in_9 = NULL;
+main_Colormap_1_in_10 = NULL;
+main_Colormap_1_in_11 = NULL;
+main_Colormap_1_in_12 = { -5498.0 407.0 };
+main_Colormap_1_in_13 = NULL;
+main_Colormap_1_in_14 = NULL;
+main_Colormap_1_in_15 = NULL;
+main_Colormap_1_in_16 = NULL;
+main_Colormap_1_in_17 = -5498.0;
+main_Colormap_1_in_18 = 407.0;
+main_Colormap_1_in_19 = NULL;
+main_Colormap_1_out_1 = NULL;
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_ColorBar_1_in_2 = NULL;
+main_ColorBar_1_in_3 = NULL;
+main_ColorBar_1_in_4 = NULL;
+main_ColorBar_1_in_5 = NULL;
+main_ColorBar_1_in_6 = NULL;
+main_ColorBar_1_in_7 = NULL;
+main_ColorBar_1_in_8 = NULL;
+main_ColorBar_1_in_9 = NULL;
+main_ColorBar_1_in_10 = NULL;
+main_ColorBar_1_in_11 = NULL;
+main_ColorBar_1_in_12 = NULL;
+main_ColorBar_1_in_13 = NULL;
+main_ColorBar_1_in_14 = NULL;
+main_ColorBar_1_out_1 = NULL;
+main_Caption_1_in_1 = "Southeastern United States";
+main_Caption_1_in_2 = NULL;
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = 25;
+main_Caption_1_in_7 = "italic_d";
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = NULL;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+main_Integer_1_in_1 = "Integer_1";
+main_Integer_1_in_2 = NULL;
+main_Integer_1_in_3 = 1000 ;
+main_Integer_1_in_4 = NULL;
+main_Integer_1_in_5 = NULL;
+main_Integer_1_in_6 = NULL;
+main_Integer_1_in_7 = NULL;
+main_Integer_1_in_8 = NULL;
+main_Integer_1_in_9 = NULL;
+main_Integer_1_in_10 = NULL;
+main_Integer_1_in_11 = NULL;
+main_Integer_1_out_1 = 1000 ;
+main_ScaleScreen_1_in_2 = NULL;
+main_ScaleScreen_1_out_1 = NULL;
+main_ScaleScreen_1_out_2 = NULL;
+main_Render_1_in_3 = NULL;
+main_Render_1_out_1 = NULL;
+main_WriteImage_1_in_2 = NULL;
+main_WriteImage_1_in_3 = "tiff";
+main_WriteImage_1_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

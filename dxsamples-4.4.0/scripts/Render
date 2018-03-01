@@ -1,0 +1,42 @@
+     // Import the data
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+     // Create four camera, looking at the isosurface from four different
+     // directions
+camera1 = AutoCamera(isosurface,"front",resolution=320);
+camera2 = AutoCamera(isosurface,"top",resolution=320);
+camera3 = AutoCamera(isosurface,"left",resolution=320);
+camera4 = AutoCamera(isosurface,"diagonal",resolution=320);
+
+
+      // Create four images, using the four cameras
+image1 = Render(isosurface,camera1);
+image2 = Render(isosurface,camera2);
+image3 = Render(isosurface,camera3);
+image4 = Render(isosurface,camera4);
+
+      // Collect the four images together, and arrange them 2 to a row
+object = Collect(image1,image2,image3,image4);
+arranged = Arrange(object,2);
+      // Display the result
+Display(arranged);
+
+      // Create a new camera
+camera = AutoCamera(isosurface);
+      // Create a new image using the new camera
+image = Render(isosurface,camera);
+      // Display the image
+Display(image);
+      // Filter the image using the laplacian filter
+filtered = Filter(image,"laplacian","colors");
+      // Display the result
+Display(filtered);
+
+
+// NOTE: unless you are planning to manipulate the image as we have done
+// in these examples, it is usually more efficient to use the Display
+// module alone, as in
+//        Display(object,camera);

@@ -1,0 +1,17 @@
+// Verify is used to examine a data field for inconsitencies, such as
+// connections which reference non-existant positions, or components which
+// depend on one another but which don't have the same number of points.
+
+// This field should not result in any errors from Verify. Verify will
+// simply return the original object.
+data = Import("watermolecule");
+isosurface = Isosurface(data);
+verified = Verify(isosurface);
+Print(verified);
+
+// This field will result in an error from Verify, because we have created
+// a non-sensical connections component.
+bad_connections = {[-199 0 399], [-2 3 4]};
+bad_field = Replace(bad_connections, isosurface, NULL, "connections");
+verified = Verify(bad_field);
+Print(verified);

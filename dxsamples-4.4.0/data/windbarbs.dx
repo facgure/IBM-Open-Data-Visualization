@@ -1,0 +1,79 @@
+# here's the 0-5 Knots barb
+object "a" class array type float category real rank 1 shape 2 items 2 data follows
+0 0
+0 1
+object "b" class array type int category real rank 1 shape 2 items 1 data follows
+0 1
+attribute "ref" string "positions"
+attribute "element type" string "lines"
+object "0K" class field 
+component "positions" value "a"
+component "connections" value "b"
+# here's the 5-10 Knots barb
+object 1 class array type float category real rank 1 shape 2 items 3 data follows
+0 0
+0 1
+-0.3 1
+object 2 class array type int category real rank 1 shape 2 items 2 data follows
+0 1
+1 2
+attribute "ref" string "positions"
+attribute "element type" string "lines"
+object "5K" class field 
+component "positions" value 1
+component "connections" value 2
+# here's the 10-15 Knots barb
+object 3 class array type float category real rank 1 shape 2 items 3 data follows
+0 0
+0 1
+-0.6 1
+object 4 class array type int category real rank 1 shape 2 items 2 data follows
+0 1
+1 2
+attribute "ref" string "positions"
+attribute "element type" string "lines"
+object "10K" class field 
+component "positions" value 3
+component "connections" value 4
+# here's the 15-20 Knots barb
+object 5 class array type float category real rank 1 shape 2 items 5 data follows
+0 0
+0 .75
+0 1 
+-0.3 .75 
+-0.6 1
+object 6 class array type int category real rank 1 shape 2 items 4 data follows
+0 1
+1 2
+1 3
+2 4
+attribute "ref" string "positions"
+attribute "element type" string "lines"
+object "15K" class field 
+component "positions" value 5
+component "connections" value 6
+# here's the 20-25 Knots barb
+object 7 class array type float category real rank 1 shape 2 items 5 data follows
+0 0
+0 .75
+0 1 
+-0.6 .75 
+-0.6 1
+object 8 class array type int category real rank 1 shape 2 items 4 data follows
+0 1
+1 2
+1 3
+2 4
+attribute "ref" string "positions"
+attribute "element type" string "lines"
+object "20K" class field 
+component "positions" value 7
+component "connections" value 8
+# here's a group of all the fields, to import
+object "group" class group
+member 0 value "0K"
+member 1 value "5K"
+member 2 value "10K"
+member 3 value "15K"
+member 4 value "20K"
+end

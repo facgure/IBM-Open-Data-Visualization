@@ -1,0 +1,427 @@
+//
+// time: Wed Feb 26 15:11:44 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE MOSstatesmac
+// CATEGORY Macros
+// DESCRIPTION Calculate state statistics
+// INPUT input_1; field or string list or value or value list; (no default);  
+// INPUT input_2; field or string or value list; (no default);  
+// INPUT input_3; string; (no default);  
+// INPUT input_4; string; (no default);  
+// INPUT input_5; string; (no default);  
+// INPUT input_6; value list or field or string or string list; (no default);  
+// INPUT input_7; integer; (no default);  
+// INPUT input_8; object; (no default);  
+// OUTPUT output_1; value or value list or field;  
+// OUTPUT output_2; field;  
+// End MDF
+// workspace: width = 870, height = 994
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro MOSstatesmac(
+ input_1
+,input_2
+,input_3
+,input_4
+,input_5
+,input_6
+,input_7
+,input_8
+) -> (
+ output_1
+,output_2
+) {
+    // 
+    // node Input[31]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'input_1', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_31_out_1 = input_1;
+    // 
+    // node Input[32]: x = 434, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'input_2', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_32_out_1 = input_2;
+    // 
+    // node Input[33]: x = 372, y = 0, inputs = 0, label = Input
+    // parameter: position = 3, name = 'input_3', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_33_out_1 = input_3;
+    // 
+    // node Lookup[1]: x = 321, y = 91, inputs = 7, label = Lookup
+    // input[2]: defaulting = 1, visible = 1, type = 2048, value = NULL
+    // input[3]: defaulting = 1, visible = 1, type = 32, value = NULL
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "State"
+    // input[5]: defaulting = 0, visible = 0, type = 32, value = "MOSNum"
+    // input[6]: defaulting = 0, visible = 0, type = 32, value = "State"
+    // input[7]: defaulting = 0, visible = 0, type = 16777248, value = {"space" "case" "punctuation"}
+    //
+MOSstatesmac_Lookup_1_out_1 = 
+    Lookup(
+    MOSstatesmac_Input_31_out_1,
+    MOSstatesmac_Input_32_out_1,
+    MOSstatesmac_Input_33_out_1,
+    "State",
+    "MOSNum",
+    "State",
+    {"space" "case" "punctuation"}
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[34]: x = 310, y = 0, inputs = 0, label = Input
+    // parameter: position = 4, name = 'input_4', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_34_out_1 = input_4;
+    // 
+    // node Input[35]: x = 248, y = 0, inputs = 0, label = Input
+    // parameter: position = 5, name = 'input_5', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_35_out_1 = input_5;
+    // 
+    // node CategoryStatistics[1]: x = 342, y = 182, inputs = 5, label = CategoryStatistics
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "State"
+    // input[4]: defaulting = 1, visible = 1, type = 32, value = NULL
+    // input[5]: defaulting = 0, visible = 0, type = 1, value = 52
+    //
+MOSstatesmac_CategoryStatistics_1_out_1 = 
+    CategoryStatistics(
+    MOSstatesmac_Lookup_1_out_1,
+    MOSstatesmac_Input_34_out_1,
+    "State",
+    MOSstatesmac_Input_35_out_1,
+    52
+    ) [instance: 1, cache: 1];
+    // 
+    // node CategoryStatistics[2]: x = 168, y = 185, inputs = 5, label = CategoryStatistics
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "State"
+    // input[5]: defaulting = 0, visible = 0, type = 1, value = 52
+    //
+MOSstatesmac_CategoryStatistics_2_out_1 = 
+    CategoryStatistics(
+    MOSstatesmac_Lookup_1_out_1,
+    NULL,
+    "State",
+    NULL,
+    52
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[36]: x = 186, y = 0, inputs = 0, label = Input
+    // parameter: position = 6, name = 'input_6', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_36_out_1 = input_6;
+    // 
+    // node Compute[52]: x = 319, y = 320, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0==0 ? $2 : $1"
+    // expression: value = a==0 ? c : b
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    //
+MOSstatesmac_Compute_52_out_1 = 
+    Compute(
+    "$0==0 ? $2 : $1",
+    MOSstatesmac_CategoryStatistics_2_out_1,
+    MOSstatesmac_CategoryStatistics_1_out_1,
+    MOSstatesmac_Input_36_out_1
+    ) [instance: 52, cache: 1];
+    // 
+    // node Include[1]: x = 20, y = 281, inputs = 6, label = Include
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = -0.5
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 0.5
+    // input[4]: defaulting = 0, visible = 1, type = 3, value = 1
+    // input[6]: defaulting = 0, visible = 1, type = 3, value = 1
+    //
+MOSstatesmac_Include_1_out_1[cache: 0] = 
+    Include(
+    MOSstatesmac_CategoryStatistics_2_out_1,
+    -0.5,
+    0.5,
+    1,
+    NULL,
+    1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Extract[7]: x = 184, y = 338, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+MOSstatesmac_Extract_7_out_1[cache: 0] = 
+    Extract(
+    MOSstatesmac_Include_1_out_1,
+    "positions"
+    ) [instance: 7, cache: 1];
+    // 
+    // node Compute[57]: x = 34, y = 424, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int($0.x)"
+    // expression: value = int(a.x)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MOSstatesmac_Compute_57_out_1 = 
+    Compute(
+    "int($0.x)",
+    MOSstatesmac_Extract_7_out_1,
+    NULL
+    ) [instance: 57, cache: 1];
+    // 
+    // node Input[37]: x = 124, y = 0, inputs = 0, label = Input
+    // parameter: position = 7, name = 'input_7', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_37_out_1 = input_7;
+    // 
+    // node Transmitter[41]: x = 376, y = 390, inputs = 1, label = StateData0
+    //
+StateData0 = MOSstatesmac_Compute_52_out_1;
+    // 
+    // node Receiver[80]: x = 444, y = 528, inputs = 1, label = StateData0
+    //
+MOSstatesmac_Receiver_80_out_1[cache: 0] = StateData0;
+    // 
+    // node Receiver[81]: x = 549, y = 302, inputs = 1, label = StateData0
+    //
+MOSstatesmac_Receiver_81_out_1[cache: 0] = StateData0;
+    // 
+    // node Construct[5]: x = 647, y = 295, inputs = 4, label = Construct
+    // input[4]: defaulting = 0, visible = 1, type = 16777245, value = {1.0}
+    //
+MOSstatesmac_Construct_5_out_1 = 
+    Construct(
+    MOSstatesmac_Compute_57_out_1,
+    NULL,
+    NULL,
+    {1.0}
+    ) [instance: 5, cache: 1];
+    // 
+    // node Lookup[6]: x = 593, y = 370, inputs = 7, label = Lookup
+    // input[3]: defaulting = 0, visible = 0, type = 32, value = "positions"
+    //
+MOSstatesmac_Lookup_6_out_1[cache: 0] = 
+    Lookup(
+    MOSstatesmac_Receiver_81_out_1,
+    MOSstatesmac_Construct_5_out_1,
+    "positions",
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Mark[13]: x = 598, y = 438, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "lookedup"
+    //
+MOSstatesmac_Mark_13_out_1[cache: 0] = 
+    Mark(
+    MOSstatesmac_Lookup_6_out_1,
+    "lookedup"
+    ) [instance: 13, cache: 1];
+    // 
+    // node Include[3]: x = 556, y = 513, inputs = 6, label = Include
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = 0.5
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 1.5
+    // input[6]: defaulting = 0, visible = 1, type = 3, value = 1
+    //
+MOSstatesmac_Include_3_out_1[cache: 0] = 
+    Include(
+    MOSstatesmac_Mark_13_out_1,
+    0.5,
+    1.5,
+    NULL,
+    NULL,
+    1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Unmark[17]: x = 720, y = 566, inputs = 2, label = Unmark
+    //
+MOSstatesmac_Unmark_17_out_1[cache: 0] = 
+    Unmark(
+    MOSstatesmac_Include_3_out_1,
+    NULL
+    ) [instance: 17, cache: 1];
+    // 
+    // node Remove[15]: x = 591, y = 666, inputs = 2, label = Remove
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "lookedup"
+    //
+MOSstatesmac_Remove_15_out_1 = 
+    Remove(
+    MOSstatesmac_Unmark_17_out_1,
+    "lookedup"
+    ) [instance: 15, cache: 1];
+    // 
+    // node Switch[24]: x = 459, y = 608, inputs = 3, label = Switch
+    //
+MOSstatesmac_Switch_24_out_1[cache: 0] = 
+    Switch(
+    MOSstatesmac_Input_37_out_1,
+    MOSstatesmac_Receiver_80_out_1,
+    MOSstatesmac_Remove_15_out_1
+    ) [instance: 24, cache: 1];
+    // 
+    // node Mark[14]: x = 427, y = 704, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+MOSstatesmac_Mark_14_out_1[cache: 0] = 
+    Mark(
+    MOSstatesmac_Switch_24_out_1,
+    "positions"
+    ) [instance: 14, cache: 1];
+    // 
+    // node Compute[65]: x = 495, y = 771, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int($0.x)"
+    // expression: value = int(a.x)
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+MOSstatesmac_Compute_65_out_1 = 
+    Compute(
+    "int($0.x)",
+    MOSstatesmac_Mark_14_out_1,
+    NULL
+    ) [instance: 65, cache: 1];
+    // 
+    // node Input[38]: x = 773, y = 40, inputs = 0, label = Input
+    // parameter: position = 8, name = 'input_8', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+MOSstatesmac_Input_38_out_1 = input_8;
+    // 
+    // node Transmitter[46]: x = 788, y = 686, inputs = 1, label = wireless_46
+    //
+wireless_46 = MOSstatesmac_Input_38_out_1;
+    // 
+    // node Receiver[85]: x = 708, y = 755, inputs = 1, label = wireless_46
+    //
+MOSstatesmac_Receiver_85_out_1[cache: 0] = wireless_46;
+    // 
+    // node Lookup[7]: x = 601, y = 809, inputs = 7, label = Lookup
+    // input[3]: defaulting = 1, visible = 0, type = 32, value = "positions"
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "num"
+    // input[5]: defaulting = 0, visible = 0, type = 32, value = "abbrev"
+    // input[6]: defaulting = 0, visible = 0, type = 32, value = "abbrev"
+    //
+MOSstatesmac_Lookup_7_out_1 = 
+    Lookup(
+    MOSstatesmac_Compute_65_out_1,
+    MOSstatesmac_Receiver_85_out_1,
+    NULL,
+    "num",
+    "abbrev",
+    "abbrev",
+    NULL
+    ) [instance: 7, cache: 1];
+    // 
+    // node Lookup[8]: x = 598, y = 902, inputs = 7, label = Lookup
+    // input[3]: defaulting = 1, visible = 0, type = 32, value = "positions"
+    // input[4]: defaulting = 0, visible = 0, type = 32, value = "num"
+    // input[5]: defaulting = 0, visible = 0, type = 32, value = "state"
+    // input[6]: defaulting = 0, visible = 0, type = 32, value = "state"
+    //
+MOSstatesmac_Lookup_8_out_1[cache: 0] = 
+    Lookup(
+    MOSstatesmac_Lookup_7_out_1,
+    MOSstatesmac_Receiver_85_out_1,
+    NULL,
+    "num",
+    "state",
+    "state",
+    NULL
+    ) [instance: 8, cache: 1];
+    // 
+    // node Unmark[18]: x = 258, y = 384, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "foo"
+    //
+MOSstatesmac_Unmark_18_out_1[cache: 0] = 
+    Unmark(
+    MOSstatesmac_Lookup_8_out_1,
+    "foo"
+    ) [instance: 18, cache: 1];
+    // 
+    // node Remove[16]: x = 127, y = 486, inputs = 2, label = Remove
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "foo"
+    //
+MOSstatesmac_Remove_16_out_1 = 
+    Remove(
+    MOSstatesmac_Unmark_18_out_1,
+    "foo"
+    ) [instance: 16, cache: 1];
+    // 
+    // node Inquire[20]: x = 40, y = 564, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "position counts"
+    //
+MOSstatesmac_Inquire_20_out_1[cache: 0] = 
+    Inquire(
+    MOSstatesmac_Remove_16_out_1,
+    "position counts",
+    NULL
+    ) [instance: 20, cache: 1];
+    // 
+    // node Construct[6]: x = 0, y = 642, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0]}
+    // input[2]: defaulting = 0, visible = 1, type = 16777224, value = {[1]}
+    //
+MOSstatesmac_Construct_6_out_1 = 
+    Construct(
+    {[0]},
+    {[1]},
+    MOSstatesmac_Inquire_20_out_1,
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Output[9]: x = 174, y = 923, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = MOSstatesmac_Compute_57_out_1;
+    // 
+    // node Replace[39]: x = 94, y = 724, inputs = 4, label = Replace
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "connections"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "connections"
+    //
+MOSstatesmac_Replace_39_out_1 = 
+    Replace(
+    MOSstatesmac_Construct_6_out_1,
+    MOSstatesmac_Remove_16_out_1,
+    "connections",
+    "connections"
+    ) [instance: 39, cache: 1];
+    // 
+    // node Output[10]: x = 0, y = 932, inputs = 1, label = Output
+    // parameter: position = 2, name = 'output_2', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_2 = MOSstatesmac_Replace_39_out_1;
+// network: end of macro body
+}
+MOSstatesmac_Input_31_out_1 = NULL;
+MOSstatesmac_Input_32_out_1 = NULL;
+MOSstatesmac_Input_33_out_1 = NULL;
+MOSstatesmac_Lookup_1_out_1 = NULL;
+MOSstatesmac_Input_34_out_1 = NULL;
+MOSstatesmac_Input_35_out_1 = NULL;
+MOSstatesmac_CategoryStatistics_1_out_1 = NULL;
+MOSstatesmac_CategoryStatistics_2_out_1 = NULL;
+MOSstatesmac_Input_36_out_1 = NULL;
+MOSstatesmac_Compute_52_out_1 = NULL;
+MOSstatesmac_Include_1_out_1 = NULL;
+MOSstatesmac_Extract_7_out_1 = NULL;
+MOSstatesmac_Compute_57_out_1 = NULL;
+MOSstatesmac_Input_37_out_1 = NULL;
+MOSstatesmac_Transmitter_41_out_1 = NULL;
+MOSstatesmac_Receiver_80_out_1 = NULL;
+MOSstatesmac_Receiver_81_out_1 = NULL;
+MOSstatesmac_Construct_5_out_1 = NULL;
+MOSstatesmac_Lookup_6_out_1 = NULL;
+MOSstatesmac_Mark_13_out_1 = NULL;
+MOSstatesmac_Include_3_out_1 = NULL;
+MOSstatesmac_Unmark_17_out_1 = NULL;
+MOSstatesmac_Remove_15_out_1 = NULL;
+MOSstatesmac_Switch_24_out_1 = NULL;
+MOSstatesmac_Mark_14_out_1 = NULL;
+MOSstatesmac_Compute_65_out_1 = NULL;
+MOSstatesmac_Input_38_out_1 = NULL;
+MOSstatesmac_Transmitter_46_out_1 = NULL;
+MOSstatesmac_Receiver_85_out_1 = NULL;
+MOSstatesmac_Lookup_7_out_1 = NULL;
+MOSstatesmac_Lookup_8_out_1 = NULL;
+MOSstatesmac_Unmark_18_out_1 = NULL;
+MOSstatesmac_Remove_16_out_1 = NULL;
+MOSstatesmac_Inquire_20_out_1 = NULL;
+MOSstatesmac_Construct_6_out_1 = NULL;
+MOSstatesmac_Replace_39_out_1 = NULL;

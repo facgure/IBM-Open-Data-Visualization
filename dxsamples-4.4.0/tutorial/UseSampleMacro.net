@@ -1,0 +1,99 @@
+//
+// time: Tue Aug 13 15:57:45 1996
+//
+// version: 3.0.1 (format), 3.2.0 (DX Beta)
+//
+//
+//
+// macro reference (direct): SampleMacro samples/tutorial/SampleMacro.net
+include "SampleMacro.net"
+//
+// MODULE main
+//
+// comment: This visual program is used as part of the tutorial for Data Explorer. To access the tutorial you can type
+// comment:      dx -tutor
+// comment: or you can choose "Tutorial..." from the Help menu of any window.
+// comment: 
+// comment: This visual program is discussed in the section "Creating and Using Macros". To find this section, start the tutorial, then click on
+// comment: "Appendix B, Tutorial II: Editing and Creating Visual Programs" in the third paragraph. Then click on "Creating and Using Macros" in
+// comment: the list of Tutorial II Topics.
+// comment: 
+// comment: In order to successfully load this visual program, you will first need to load the macro samples/tutorial/SampleMacro.net.
+// comment: Use the "Load Macro" option in the Visual Program Editor File menu.
+// comment: 
+// comment: The tutorial will suggest ways to use and modify this visual program.
+// workspace: width = 235, height = 389
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 47, y = 14, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "southeastern_topo"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Slab[1]: x = 139, y = 71, inputs = 4, label = Slab
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 1
+    // input[3]: defaulting = 0, visible = 1, type = 1, value = 130
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 150
+    //
+main_Slab_1_out_1 = 
+    Slab(
+    main_Import_1_out_1,
+    main_Slab_1_in_2,
+    main_Slab_1_in_3,
+    main_Slab_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node SampleMacro[1]: x = 97, y = 181, inputs = 3, label = SampleMacro
+    // input[2]: defaulting = 1, visible = 1, type = 1, value = 13
+    //
+main_SampleMacro_1_out_1 = 
+    SampleMacro(
+    main_Slab_1_out_1,
+    main_SampleMacro_1_in_2,
+    main_SampleMacro_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 87, y = 327, inputs = 4, label = Display
+    // depth: value = 8
+    // window: position = (0.3086,0.0605), size = 0.6359x0.4336
+    //
+    Display(
+    main_SampleMacro_1_out_1,
+    main_Display_1_in_2,
+    main_Display_1_in_3,
+    main_Display_1_in_4
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "southeastern_topo";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Slab_1_in_2 = 1;
+main_Slab_1_in_3 = 130;
+main_Slab_1_in_4 = 150;
+main_Slab_1_out_1 = NULL;
+main_SampleMacro_1_in_2 = NULL;
+main_SampleMacro_1_in_3 = NULL;
+main_SampleMacro_1_out_1 = NULL;
+main_Display_1_in_2 = NULL;
+main_Display_1_in_3 = "X8,,";
+main_Display_1_in_4 = NULL;
+Executive("product version 3 2 0");
+$sync
+main();

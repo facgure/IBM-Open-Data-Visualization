@@ -1,0 +1,20 @@
+object 1 class gridpositions counts 75 100 
+ origin             0             0 
+ delta              0      3.027027 
+ delta       3.020202             0 
+#
+object 2 class gridconnections counts 75 100
+#
+object 3 class array type float rank 0 items 7500 msb ieee data file invalid_field.bin,0
+attribute "dep" string "positions"
+#
+object 4 class array type int rank 0 items 302 msb ieee data file invalid_field.bin,32180
+attribute "ref" string "positions"
+#
+object "invalid field" class field
+component "positions" value 1
+component "connections" value 2
+component "data" value 3
+component "invalid positions" value 4
+#
+end

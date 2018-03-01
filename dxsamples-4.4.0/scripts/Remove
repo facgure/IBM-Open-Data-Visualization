@@ -1,0 +1,24 @@
+
+     // Import the data
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+
+     // create a macro which does a maptoplane, colors the plane, and 
+     // displays the colored plane. Then the "normals" component is 
+     // removed (to remove shading)
+macro makeplane(point, normal)
+{
+   plane = MapToPlane(electrondensity, point, normal);
+   plane = AutoColor(plane,min=electrondensity);
+   Display(plane,camera);
+   plane = Remove(plane,"normals");
+   Display(plane,camera);
+}
+
+makeplane(NULL, [0 1 1]);
+
+
+

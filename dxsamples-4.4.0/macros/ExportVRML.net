@@ -1,0 +1,97 @@
+//
+// time: Fri Feb  6 16:21:07 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE ExportVRML
+// CATEGORY Import and Export
+// DESCRIPTION new macro
+// INPUT Object; object; (no default); Object to export
+// INPUT filename; string; (no default);  
+// INPUT ChildNode; value or string or object; (no default); First child node
+// INPUT NavigationInfo; value or string or object; (no default);  
+// INPUT text_as_string; value or string or object; (no default); send text as string if set to 1
+// INPUT FontStyle; value or string or object; (no default); 
+// End MDF
+// workspace: width = 313, height = 300
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro ExportVRML(
+ Object
+,filename
+,ChildNode
+,NavigationInfo
+,text_as_string
+,FontStyle
+) -> (
+) {
+    // 
+    // node Input[1]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'Object', value = '(no default)', descriptive = 1, description = 'Object to export', required = 0, visible = 1
+    //
+ExportVRML_Input_1_out_1 = Object;
+    // 
+    // node Input[3]: x = 65, y = 2, inputs = 0, label = Input
+    // parameter: position = 3, name = 'ChildNode', value = '(no default)', descriptive = 1, description = 'First child node', required = 0, visible = 1
+    //
+ExportVRML_Input_3_out_1 = ChildNode;
+    // 
+    // node Input[4]: x = 132, y = 5, inputs = 0, label = Input
+    // parameter: position = 4, name = 'NavigationInfo', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ExportVRML_Input_4_out_1 = NavigationInfo;
+    // 
+    // node Input[5]: x = 203, y = 8, inputs = 0, label = Input
+    // parameter: position = 5, name = 'text_as_string', value = '(no default)', descriptive = 1, description = 'send text as string if set to 1', required = 0, visible = 1
+    //
+ExportVRML_Input_5_out_1 = text_as_string;
+    // 
+    // node Input[6]: x = 271, y = 17, inputs = 0, label = Input
+    // parameter: position = 6, name = 'FontStyle', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ExportVRML_Input_6_out_1 = FontStyle;
+    // 
+    // node Options[2]: x = 0, y = 115, inputs = 9, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "VRML Insert First Child Node"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "VRML Set NavigationInfo type"
+    // input[6]: defaulting = 0, visible = 1, type = 32, value = "VRML text as string"
+    // input[8]: defaulting = 0, visible = 1, type = 32, value = "VRML FontStyle"
+    // input[9]: defaulting = 1, visible = 1, type = 32, value = "size 4.0"
+    //
+ExportVRML_Options_2_out_1 = 
+    Options(
+    ExportVRML_Input_1_out_1,
+    "VRML Insert First Child Node",
+    ExportVRML_Input_3_out_1,
+    "VRML Set NavigationInfo type",
+    ExportVRML_Input_4_out_1,
+    "VRML text as string",
+    ExportVRML_Input_5_out_1,
+    "VRML FontStyle",
+    ExportVRML_Input_6_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[2]: x = 261, y = 130, inputs = 0, label = Input
+    // parameter: position = 2, name = 'filename', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+ExportVRML_Input_2_out_1 = filename;
+    // 
+    // node Export[4]: x = 56, y = 238, inputs = 3, label = Export
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "vrml"
+    //
+    Export(
+    ExportVRML_Options_2_out_1,
+    ExportVRML_Input_2_out_1,
+    "vrml"
+    ) [instance: 4, cache: 1];
+// network: end of macro body
+}
+ExportVRML_Input_1_out_1 = NULL;
+ExportVRML_Input_3_out_1 = NULL;
+ExportVRML_Input_4_out_1 = NULL;
+ExportVRML_Input_5_out_1 = NULL;
+ExportVRML_Input_6_out_1 = NULL;
+ExportVRML_Options_2_out_1 = NULL;
+ExportVRML_Input_2_out_1 = NULL;

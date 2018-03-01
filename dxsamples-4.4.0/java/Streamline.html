@@ -1,0 +1,86 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Streamlines</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Time Series View of Wind Velocity</h2>
+		<table border = 0>
+<tr bgcolor="white">
+<td>
+<h3>...about the visualization</h3>
+You're viewing a sample data 
+set "velocity.dx". 
+This data is a velocity field in which the velocity 
+vectors spiral outward in the xz plane, except 
+near the center of the field. Near the center, 
+the velocity has a strong positive y component. 
+
+<h3>...about the visual program</h3>
+There are two selector interactors in the <i>Options</i>
+panel which allow you to control how the streamlines are colored.
+
+<APPLET
+	CODE="Streamline.class" width = 330 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="Streamline">
+	<PARAM NAME=NETNAME VALUE="Streamline.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+</td>
+<td>
+<table border = 0>
+<tr bgcolor="black">
+<td>
+
+<APPLET
+	CODE="imageWindow.class" WIDTH = 340 HEIGHT = 447
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Streamline2.0.0.gif">
+</APPLET>
+</td>
+</tr>
+<tr bgcolor="black">
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 433 HEIGHT = 63
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_7">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/Streamline7.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h3>...about the conversion to web page</h3>
+In the <i>Mode</i> menu, select <i>Sequence</i>.  You'll see
+the frames appear slowly as Data Explorer computes each one.
+When the <i>Execution</i> indicator turns black, Data Explorer
+has finished executing and the animation begins.  Terminate it
+at any time by changing the Mode selector.  You can also change
+the behavior of the animation by selecting <i>Faster</i>,
+<i>Slower</i>, <i>Loop</i>, or <i>Palindrome</i>.
+
+		
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

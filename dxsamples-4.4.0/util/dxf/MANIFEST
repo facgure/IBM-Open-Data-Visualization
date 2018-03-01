@@ -1,0 +1,31 @@
+MANIFEST
+==========
+dxf2dx 		- program to convert AutoCAD DXF file to IBM
+	 	  Visualization Data Explorer file format.  See
+		  README.dxf2dx for command line options.
+
+dxf.c		- main file
+read.c		- reads in various DXF file sections
+header.c	- functions to read in the header section
+table.c		- functions to read in the table section
+entity.c	- functions to read in the block and entity sections
+snag_funcs.c	- table of input functions for various entities
+common.c	- functions to handle common entity parts
+colors.c	- functions to extract color information from entity
+tree.c		- functions to build a tree in preparation of output
+dx.c		- functions that do the actual conversion
+output_funcs.c	- functions to output the data
+ignored.c	- for debugging only
+
+dxf.h		- some headers
+entity.h
+
+Makefile 	- as the name implies
+README.dxf2dx 	- as the name implies
+
+
+Other information:
+===================
+A whole bunch of 3-D file formats are available via anonymous ftp
+at avalon.chinalake.navy.mil.  There are documents describing file
+formats as well as many examples of 3-D files there.

@@ -1,0 +1,13 @@
+FILES = outboard.o hello.o 
+
+
+BASE = /usr/lpp/dx
+
+CFLAGS   = -O -Daviion -I . -I$(BASE)/include -Daviion -Xa
+LITELIBS = -L$(BASE)/lib_aviion -lDXlite -lm 
+
+hello:	hello.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES) $(LITELIBS) -o hello
+	rm outboard.o
+

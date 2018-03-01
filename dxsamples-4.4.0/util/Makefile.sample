@@ -1,0 +1,90 @@
+#######################################################################
+##                     I.B.M. CONFIDENTIAL                           ##
+##   xxxx-yyy (c) COPYRIGHT IBM CORP. 1991   ALL RIGHTS RESERVED.    ##
+##                                                                   ##
+## (I.B.M. CONFIDENTIAL-RESTRICTED when combined with the aggregated ##
+##              OCO source materials for this program.)              ##
+##                     OCO SOURCE MATERIAL                           ##
+##                LICENSED MATERIALS-PROPERTY OF IBM.                ##
+##                                                                   ##
+#######################################################################
+#
+
+SHELL=/bin/sh
+
+DIRS = \
+	dxf \
+	plot3d \
+	mpeg \
+	fluent	
+
+DXF_FILES = \
+	MANIFEST \
+	Makefile \
+	README \
+	balloon.dxf \
+	colors.c \
+	common.c \
+	dx.c \
+	dxf.c \
+	dxf.h \
+	dxf_r12.txt \
+	entity.c \
+	entity.h \
+	header.c \
+	ignored.c \
+	output_funcs.c \
+	read.c \
+	snag_funcs.c \
+	table.c \
+	tree.c \
+	x29.dxf
+
+FLUENT_FILES = Fluent2DX.c README
+PLOT3D_FILES = Plot3DtoDX.c README
+MPEG_FILES = README write_yuv.net write_yuv.cfg default.param
+
+co:
+	for i in $(DIRS) ;  \
+	do \
+	  if [ ! -d $$i ]; then \
+	     mkdir $$i ; \
+	  fi; \
+	  cd $$i ; \
+	  if [ ! -r RCS ]; then \
+	    ln -s /usr/svs/master/samples/util/$$i/RCS . ; \
+	  fi; \
+	  cd .. ; \
+	done
+	cd mpeg; \
+	for i in $(MPEG_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+	cd dxf; \
+	for i in $(DXF_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+	cd fluent; \
+	for i in $(FLUENT_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done
+	cd plot3d; \
+	for i in $(PLOT3D_FILES) ; \
+	do \
+	  if [ -f $$i ]; \
+	  then find RCS/$$i,v -newer $$i -exec co $(COFLAGS) $$i \;; \
+	  else co $(COFLAGS) $$i ; \
+	  fi; \
+	done

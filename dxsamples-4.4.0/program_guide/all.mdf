@@ -1,0 +1,79 @@
+MODULE Add
+CATEGORY User
+DESCRIPTION Adds a number to a field
+INPUT data; field; (none); field to add to
+INPUT addend; scalar; 0; value to add to field
+OUTPUT result; field; result of adding value to field
+
+MODULE Add2
+CATEGORY User
+DESCRIPTION Adds two fields together
+INPUT field1; field; (none); first field
+INPUT field2; field; (none); second field
+OUTPUT result; field; result of adding first field to second field
+
+MODULE Add2Invalid
+CATEGORY User
+DESCRIPTION Adds two fields together
+INPUT field1; field; (none); first field
+INPUT field2; field; (none); second field
+OUTPUT result; field; result of adding first field to second field
+
+MODULE AddParallel
+CATEGORY User
+DESCRIPTION Adds a number to a field
+INPUT data; field; (none); field to add to
+INPUT addend; scalar; 0; value to add to field
+OUTPUT result; field; result of adding value to field
+
+MODULE AverageCell 
+CATEGORY Transformation 
+DESCRIPTION computes the average of all the neighboring data values 
+INPUT input;  field;  (none); input field 
+OUTPUT output;  field; averaged field 
+
+MODULE AverageCellParallel 
+CATEGORY Transformation 
+DESCRIPTION computes the average of all the neighboring data values 
+INPUT input;  field;  (none); input field 
+OUTPUT output;  field; averaged field 
+
+MODULE Hello 
+CATEGORY Greetings 
+DESCRIPTION Prefixes "hello" to the input string 
+INPUT value;  string;  "world"; input string
+OUTPUT greeting;  string; prefixed string 
+
+MODULE HelloErrorChecking 
+CATEGORY Greetings 
+DESCRIPTION Prefixes "hello" to the input string 
+INPUT value;  string;  "world"; input string
+OUTPUT greeting;  string; prefixed string 
+
+MODULE MakeX
+CATEGORY Annotation 
+DESCRIPTION draws an X 
+INPUT input; field; (none); field to mark positions 
+INPUT size; scalar; 1; size 
+OUTPUT output;  field; field with positions marked 
+
+MODULE MakeXEfficient
+CATEGORY Annotation 
+DESCRIPTION draws an X 
+INPUT input; field; (none); field to mark positions 
+INPUT size; scalar; 1; size 
+OUTPUT output;  field; field with positions marked 
+
+MODULE ShowPick
+CATEGORY User
+DESCRIPTION sets a triangle in a picked field to a particular color
+INPUT input; object; (none); object which was picked in
+INPUT pickobject; field; (none); picking structure
+INPUT color; string; "red"; color to set
+INPUT colorwhich; integer; 0; color element (0), vertex (1) or entire field (2)
+INPUT poke; integer; (all); poke selection
+INPUT pick; integer; (all); pick selection
+INPUT depth; integer; (bottom); selection depth
+OUTPUT output;  object; object with picked object marked using color
+
+

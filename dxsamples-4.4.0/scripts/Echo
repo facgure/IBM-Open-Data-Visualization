@@ -1,0 +1,13 @@
+
+    // Import a field
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Compute the gradient of the data
+gradientdensity = Gradient(electrondensity);
+    // compute the divergence and curl of the gradient field
+divergence, curl = DivCurl(gradientdensity);
+    // Find the statistics of the divergence
+mean,sd,var,min,max = Statistics(divergence);
+    // Create an echo string listing the statistics
+Echo("divergence field:  mean=",mean,"sd=",sd,"min=",min,"max=",max);

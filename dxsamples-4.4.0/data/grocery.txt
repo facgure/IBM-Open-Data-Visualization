@@ -1,0 +1,19 @@
+food group	item	qty	unit	price
+dairy	milk	1	ea	$1.50
+veg	lettuce	1	lb	$2.00
+veg	cucumber	1	ea	$1.50
+bread	rye	2	loaf	$4.00
+bev	evian	1	6-pack	$3.00
+meat	steak	2.5	lb	$10.00
+bread	bagels	1	doz	$4.00
+dairy	fudge	6	lb	$35.00
+bev	heinekin	7	6-pack	$42.00
+fruit	bananas	3	lb	$5.00
+veg	french fries	30	lb	$50.00
+meat	liver	3	lb	$10.00
+fruit	apples	2	doz	$4.00
+dairy	haagen daz	4	pint	$16.00
+fish	salmon	2	lb	$10.00
+bread	twinkies	24	pair	$20.00
+bev	heinekin	2	6-pack	$12.00
+meat	staek	4.0	lb	$9.00

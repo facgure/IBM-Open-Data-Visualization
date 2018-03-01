@@ -1,0 +1,14 @@
+BASE=/usr/lpp/dx
+
+CC = cc
+
+CFLAGS = -O -Dsolaris -I$(BASE)/include
+LIBS       = -L$(BASE)/lib_solaris -L/usr/openwin/lib \
+	            -lDX -lm -ly -ll -lX11 -ldl -lnsl -lsocket -lthread
+LITELIBS   = -L$(BASE)/lib_solaris -lDXlite -lm -ldl -lnsl -lsocket -lthread
+LDLIBFLAGS    = -G -e DXEntry
+
+
+interactors: interactors.o
+		cc -I$(BASE)/include -D$(ARCH) -K pic -Xa -c interactors.c
+		$(CC) $(LDLIBFLAGS) -o interactors interactors.o

@@ -1,0 +1,225 @@
+//
+// time: Wed Mar 12 15:05:36 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+// workspace: width = 639, height = 621
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 16, y = 70, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Isosurface[1]: x = 28, y = 222, inputs = 6, label = Isosurface
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = .31
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 41, y = 375, inputs = 9, label = AutoCamera
+    // input[7]: defaulting = 1, visible = 1, type = 3, value = 1
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node SuperviseWindow[1]: x = 177, y = 187, inputs = 10, label = SuperviseWindow
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "fred"
+    //
+main_SuperviseWindow_1_out_1,
+main_SuperviseWindow_1_out_2,
+main_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    main_SuperviseWindow_1_in_1,
+    main_SuperviseWindow_1_in_2,
+    main_SuperviseWindow_1_in_3,
+    main_SuperviseWindow_1_in_4,
+    main_SuperviseWindow_1_in_5,
+    main_SuperviseWindow_1_in_6,
+    main_SuperviseWindow_1_in_7,
+    main_SuperviseWindow_1_in_8,
+    main_SuperviseWindow_1_in_9,
+    main_SuperviseWindow_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Reset[1]: x = 216, y = 268, inputs = 6, label = Reset
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "main_Reset_1_out_1"
+    // input[2]: defaulting = 0, visible = 0, type = 29, value = 0
+    // input[3]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[4]: defaulting = 1, visible = 0, type = 29, value = 1
+    // input[5]: defaulting = 1, visible = 0, type = 29, value = 0
+    // output[1]: visible = 1, type = 29, value = 0
+    // toggle : 0
+    //
+    // 
+    // node SuperviseState[1]: x = 185, y = 411, inputs = 9, label = SuperviseState
+    // input[8]: defaulting = 0, visible = 1, type = 1, value = 0
+    //
+main_SuperviseState_1_out_1,
+main_SuperviseState_1_out_2,
+main_SuperviseState_1_out_3,
+main_SuperviseState_1_out_4 = 
+    SuperviseState(
+    main_SuperviseWindow_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_Reset_1_out_1,
+    main_Isosurface_1_out_1,
+    main_SuperviseState_1_in_5,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_3,
+    main_SuperviseState_1_in_8,
+    main_SuperviseState_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[1]: x = 171, y = 486, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "software" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "hardware", "software" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1, 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "software" 
+    //
+    // 
+    // node Options[1]: x = 82, y = 515, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    //
+main_Options_1_out_1 = 
+    Options(
+    main_SuperviseState_1_out_1,
+    main_Options_1_in_2,
+    main_Selector_1_out_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 220, y = 559, inputs = 8, label = Display
+    // input[3]: visible = 1
+    // depth: value = 8
+    // window: position = (0.0000,0.0000), size = 0.5109x0.5127
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Options_1_out_1,
+    main_SuperviseState_1_out_2,
+    main_SuperviseState_1_out_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(128,116) size=511x60 style(Label), value = <NULL>
+    // annotation user_begin: 159
+    // annotation user: Go into execute-on-change mode, then drag the left mouse button in
+    // annotation user: either the horizontal or vertical direction in the Display window. You will 
+    // annotation user: zoom in or out.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    //
+    // decorator Annotate	pos=(155,16) size=412x92 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 278
+    // annotation user: IMPORTANT NOTE: you must build the runtime loadable
+    // annotation user: UserInteractors before running this net. Please see the
+    // annotation user: ReadMe file in samples/supervise/simpledemo.
+    // annotation user: This net should also be run using the script "demo" in
+    // annotation user: that directory, to set up necessary environment variables.
+    // annotation user_end: <NULL>
+// network: end of macro body
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Isosurface_1_in_2 = .31;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = NULL;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_SuperviseWindow_1_in_1 = "fred";
+main_SuperviseWindow_1_in_2 = NULL;
+main_SuperviseWindow_1_in_3 = NULL;
+main_SuperviseWindow_1_in_4 = NULL;
+main_SuperviseWindow_1_in_5 = NULL;
+main_SuperviseWindow_1_in_6 = NULL;
+main_SuperviseWindow_1_in_7 = NULL;
+main_SuperviseWindow_1_in_8 = NULL;
+main_SuperviseWindow_1_in_9 = NULL;
+main_SuperviseWindow_1_in_10 = NULL;
+main_SuperviseWindow_1_out_1 = NULL;
+main_SuperviseWindow_1_out_2 = NULL;
+main_SuperviseWindow_1_out_3 = NULL;
+main_Reset_1_in_1 = "main_Reset_1_out_1";
+main_Reset_1_in_2 = 0;
+main_Reset_1_in_3 = 0;
+main_Reset_1_in_4 = NULL;
+main_Reset_1_in_5 = NULL;
+main_Reset_1_in_6 = NULL;
+main_Reset_1_out_1 = 0;
+main_SuperviseState_1_in_5 = NULL;
+main_SuperviseState_1_in_8 = 0;
+main_SuperviseState_1_in_9 = NULL;
+main_SuperviseState_1_out_1 = NULL;
+main_SuperviseState_1_out_2 = NULL;
+main_SuperviseState_1_out_3 = NULL;
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "software" ;
+main_Selector_1_in_3 = 0 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_2 = "software" ;
+main_Options_1_in_2 = "rendering mode";
+main_Options_1_out_1 = NULL;
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

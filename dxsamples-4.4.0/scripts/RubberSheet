@@ -1,0 +1,65 @@
+
+     // Import the data
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create a camera for the data
+camera = AutoCamera(electrondensity,"off-diagonal");
+     // Create a cutting plane through the data. The point [1 0 -0.9] and
+     // the normals [0 0 1] (the default) define the plane 
+plane = MapToPlane(electrondensity,[1 0 -0.9]);
+     // Color the plane based on the data values
+plane = AutoColor(plane);
+     // RubberSheet deforms the plane based on the data values.
+rubbersheet = RubberSheet(plane);
+     // Add shading using the Normals module
+rubbersheet = Normals(rubbersheet);
+     // Display the result
+Display(rubbersheet,camera);
+
+
+    // Create a maptoplane through the center of the data
+plane = MapToPlane(electrondensity);
+    // Post the data so that it is dependent on connections rather than 
+    // upon positions
+plane = Post(plane,"connections");
+    // Color the plane using AutoColor
+plane = AutoColor(plane);
+    // Deform the colored plane using RubberSheet
+deformed = RubberSheet(plane);
+    // Add face-dependent normals and Display
+deformed = FaceNormals(deformed);
+
+macro movecamera(direction)
+{
+   camera = AutoCamera(deformed,direction,width=3);
+   Display(deformed,camera);
+}
+
+direction = Direction(azimuth=50, elevation=30);
+movecamera(direction);
+direction = Direction(azimuth=30, elevation=30);
+movecamera(direction);
+direction = Direction(azimuth=10, elevation=30);
+movecamera(direction);
+direction = Direction(azimuth=-10, elevation=30);
+movecamera(direction);
+
+
+    // create an isosurface of the data
+isosurface = Isosurface(electrondensity,0.3);
+    // compute the gradient of the electron density and map it onto the 
+    // isosurface
+gradient = Gradient(electrondensity);
+mapped = Map(isosurface,gradient);
+    // Take the magnitude of the gradient on the isosurface
+mapped = Compute("mag($0)", mapped);
+    // RubberSheet the mapped isosurface, then give it an opacity < 1.0
+mapped = AutoColor(mapped);
+deformed = RubberSheet(mapped);
+deformed = Color(deformed,opacity=0.3);
+    // Collect the deformed isosurface with the original isosurface and display
+collected = Collect(isosurface,deformed);
+camera = AutoCamera(collected);
+Display(collected,camera);
+

@@ -1,0 +1,1182 @@
+//
+// time: Fri Mar 21 15:00:59 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE Image2
+// CATEGORY Rendering
+// DESCRIPTION Interactive Image window 
+// INPUT object; object; (no default);  input object
+// INPUT renderMode[visible:0]; value or string or object; (no default);  rendering mode ("hardware"  or "software")
+// INPUT defaultCamera[visible:0]; value list or string list or object; (no default);  default camera for viewing the object
+// INPUT resetCamera[visible:0]; object; 0;  whether or not to reset the camera to defaultCamera
+// INPUT bkgndColor[visible:0]; value list or string list or object; "black";  background color of the image
+// INPUT throttle[visible:0]; scalar; 0;  throttle for image display
+// INPUT recordEnable[visible:0]; value list or string list or object; 0;  enable recording of images
+// INPUT recordFile[visible:0]; string; (no default); file name to record images to
+// INPUT recordFormat[visible:0]; string; (no default); format in which to record images
+// INPUT recordRes[visible:0]; value list or string list or object; (no default);  resolution of recorded images
+// INPUT recordAspect[visible:0]; value list or string list or object; (no default);  aspect ratio of recorded image
+// INPUT AAenable[visible:0]; value list or string list or object; (no default);  enable autoaxes
+// INPUT AAlabels[visible:0]; string list; (no default);  autoaxes labels
+// INPUT AAticks[visible:0]; integer or integer list; (no default); autoaxes ticks
+// INPUT AAcorners[visible:0]; vector list or object; (no default); autoaxes corners
+// INPUT AAframe[visible:0]; flag; (no default); autoaxes frame 
+// INPUT AAadjust[visible:0]; flag; (no default); autoaxes adjust 
+// INPUT AAcursor[visible:0]; vector; (no default);  autoaxes cursor
+// INPUT AAgrid[visible:0]; flag; (no default); autoaxes grid 
+// INPUT AAcolors[visible:0]; vector list or string list; (no default); autoaxes colors
+// INPUT AAannotation[visible:0]; string list; (no default);  autoaxes annotation
+// INPUT AAlabelScale[visible:0]; scalar; (no default); autoaxes label scale 
+// INPUT AAfont[visible:0]; string; (no default);  autoaxes font
+// INPUT AAxTickLocs[visible:0]; scalar list; (no default);  autoaxes x tick locations
+// INPUT AAyTickLocs[visible:0]; scalar list; (no default);  autoaxes y tick locations
+// INPUT AAzTickLocs[visible:0]; scalar list; (no default);  autoaxes z tick locations
+// INPUT AAxTickLabels[visible:0]; string list; (no default);  autoaxes x tick labels
+// INPUT AAyTickLabels[visible:0]; string list; (no default);  autoaxes y tick labels
+// INPUT AAzTickLabels[visible:0]; string list; (no default); autoaxes z tick labels
+// INPUT interactionMode; integer; 1; interaction mode (rotate=0, pan=1, zoom=2)
+// INPUT title[visible:0]; value list or string list or object; (no default);  title for image
+// OUTPUT renderable; object;  
+// OUTPUT camera; object;  
+// OUTPUT where; window;  
+// End MDF
+//
+// comment: This complex macro implements the functionality
+// comment: of the Image tool in the User Interface. For example, it enables the use of AutoAxes and saving images.
+// comment: 
+// comment: SuperviseWindow and SuperviseState are used to allow user interaction with the image. If the enviroment variable DX_USER_INTERACTOR_FILE is not set, the the default interactors provided with Data Explorer are used (rotate, pan, and zoom).
+// comment: 
+// comment: For a description of the inputs to this macro, see the manual page for Image, since they are the same.
+// page assignment: Main	order=7, windowed=0, showing=1
+// page assignment: aa_input	order=2, windowed=0, showing=0
+// page assignment: autoaxes	order=5, windowed=0, showing=0
+// page assignment: camera	order=4, windowed=0, showing=0
+// page assignment: wi_image	order=3, windowed=0, showing=0
+// page assignment: writeimage	order=6, windowed=0, showing=0
+// workspace: width = 593, height = 622
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro Image2(
+ object
+,renderMode
+,defaultCamera
+,resetCamera = 0
+,bkgndColor = "black"
+,throttle = 0
+,recordEnable = 0
+,recordFile
+,recordFormat
+,recordRes
+,recordAspect
+,AAenable
+,AAlabels
+,AAticks
+,AAcorners
+,AAframe
+,AAadjust
+,AAcursor
+,AAgrid
+,AAcolors
+,AAannotation
+,AAlabelScale
+,AAfont
+,AAxTickLocs
+,AAyTickLocs
+,AAzTickLocs
+,AAxTickLabels
+,AAyTickLabels
+,AAzTickLabels
+,interactionMode = 1
+,title
+) -> (
+ renderable
+,camera
+,where
+) {
+    // 
+    // node Input[32]: x = 516, y = 261, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 31, name = 'title', value = '(no default)', descriptive = 1, description = ' title for image', required = 0, visible = 0
+    //
+Image2_Input_32_out_1 = title;
+    // 
+    // node Inquire[16]: x = 490, y = 346, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: Main
+    //
+Image2_Inquire_16_out_1 = 
+    Inquire(
+    Image2_Input_32_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 16, cache: 1];
+    // 
+    // node Switch[12]: x = 490, y = 425, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = "Image"
+    // page group: Main
+    //
+Image2_Switch_12_out_1 = 
+    Switch(
+    Image2_Inquire_16_out_1,
+    Image2_Input_32_out_1,
+    "Image"
+    ) [instance: 12, cache: 1];
+    // 
+    // node Transmitter[23]: x = 560, y = 507, inputs = 1, label = Title
+    // page group: Main
+    //
+Title = Image2_Switch_12_out_1;
+    // 
+    // node Receiver[31]: x = 109, y = 5, inputs = 1, label = Title
+    // page group: Main
+    //
+Image2_Receiver_31_out_1[cache: 0] = Title;
+    // 
+    // node Input[3]: x = 8, y = 3, inputs = 0, label = Input
+    // page group: camera
+    // parameter: position = 3, name = 'defaultCamera', value = '(no default)', descriptive = 1, description = ' default camera for viewing the object', required = 0, visible = 0
+    //
+Image2_Input_3_out_1 = defaultCamera;
+    // 
+    // node Inquire[1]: x = 12, y = 99, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: camera
+    //
+Image2_Inquire_1_out_1 = 
+    Inquire(
+    Image2_Input_3_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[33]: x = 18, y = 25, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 1, name = 'object', value = '(no default)', descriptive = 1, description = ' input object', required = 0, visible = 1
+    //
+Image2_Input_33_out_1 = object;
+    // 
+    // node Transmitter[25]: x = 11, y = 121, inputs = 1, label = inputObject
+    // page group: Main
+    //
+inputObject = Image2_Input_33_out_1;
+    // 
+    // node Receiver[2]: x = 119, y = 5, inputs = 1, label = inputObject
+    // page group: camera
+    //
+Image2_Receiver_2_out_1[cache: 0] = inputObject;
+    // 
+    // node AutoCamera[1]: x = 134, y = 91, inputs = 9, label = AutoCamera
+    // page group: camera
+    //
+Image2_AutoCamera_1_out_1 = 
+    AutoCamera(
+    Image2_Receiver_2_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[1]: x = 78, y = 172, inputs = 3, label = Switch
+    // page group: camera
+    //
+Image2_Switch_1_out_1 = 
+    Switch(
+    Image2_Inquire_1_out_1,
+    Image2_Input_3_out_1,
+    Image2_AutoCamera_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[2]: x = 76, y = 351, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera aspect"
+    // page group: camera
+    //
+Image2_Inquire_2_out_1 = 
+    Inquire(
+    Image2_Switch_1_out_1,
+    "camera aspect",
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Inquire[3]: x = 189, y = 353, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera resolution"
+    // page group: camera
+    //
+Image2_Inquire_3_out_1 = 
+    Inquire(
+    Image2_Switch_1_out_1,
+    "camera resolution",
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[1]: x = 138, y = 434, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[$1,int($0*$1 + 0.9)]"
+    // page group: camera
+    // expression: value = [b,int(a*b + 0.9)]
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+Image2_Compute_1_out_1 = 
+    Compute(
+    "[$1,int($0*$1 + 0.9)]",
+    Image2_Inquire_2_out_1,
+    Image2_Inquire_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[3]: x = 117, y = 509, inputs = 1, label = defaultWindowSz
+    // page group: camera
+    //
+defaultWindowSz = Image2_Compute_1_out_1;
+    // 
+    // node Receiver[4]: x = 188, y = 9, inputs = 1, label = defaultWindowSz
+    // page group: Main
+    //
+Image2_Receiver_4_out_1[cache: 0] = defaultWindowSz;
+    // 
+    // node Input[4]: x = 445, y = 13, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 4, name = 'resetCamera', value = '0', descriptive = 0, description = ' whether or not to reset the camera to defaultCamera', required = 0, visible = 0
+    //
+Image2_Input_4_out_1 = resetCamera;
+    // 
+    // node Transmitter[19]: x = 430, y = 100, inputs = 1, label = resetCam
+    // page group: Main
+    //
+resetCam = Image2_Input_4_out_1;
+    // 
+    // node Receiver[6]: x = 342, y = 0, inputs = 1, label = resetCam
+    // page group: Main
+    //
+Image2_Receiver_6_out_1[cache: 0] = resetCam;
+    // 
+    // node SuperviseWindow[1]: x = 166, y = 79, inputs = 10, label = SuperviseWindow
+    // input[1]: defaulting = 1, visible = 1, type = 32, value = "Image2"
+    // page group: Main
+    //
+Image2_SuperviseWindow_1_out_1,
+Image2_SuperviseWindow_1_out_2,
+Image2_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    Image2_Receiver_31_out_1,
+    NULL,
+    Image2_Receiver_4_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    Image2_Receiver_6_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 0, y = 264, inputs = 1, label = defaultCamera1
+    // page group: camera
+    //
+defaultCamera1 = Image2_Switch_1_out_1;
+    // 
+    // node Receiver[3]: x = 61, y = 260, inputs = 1, label = defaultCamera1
+    // page group: Main
+    //
+Image2_Receiver_3_out_1[cache: 0] = defaultCamera1;
+    // 
+    // node Receiver[23]: x = 199, y = 231, inputs = 1, label = resetCam
+    // page group: Main
+    //
+Image2_Receiver_23_out_1[cache: 0] = resetCam;
+    // 
+    // node Receiver[26]: x = 297, y = 230, inputs = 1, label = inputObject
+    // page group: Main
+    //
+Image2_Receiver_26_out_1[cache: 0] = inputObject;
+    // 
+    // node Input[31]: x = 445, y = 280, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 30, name = 'interactionMode', value = '1', descriptive = 0, description = 'interaction mode (rotate=0, pan=1, zoom=2)', required = 0, visible = 1
+    //
+Image2_Input_31_out_1 = interactionMode;
+    // 
+    // node SuperviseState[1]: x = 200, y = 304, inputs = 9, label = SuperviseState
+    // input[5]: defaulting = 0, visible = 1, type = 3, value = 0
+    // input[8]: defaulting = 1, visible = 1, type = 1, value = 0
+    // page group: Main
+    //
+Image2_SuperviseState_1_out_1,
+Image2_SuperviseState_1_out_2,
+Image2_SuperviseState_1_out_3,
+Image2_SuperviseState_1_out_4 = 
+    SuperviseState(
+    Image2_SuperviseWindow_1_out_1,
+    Image2_Receiver_3_out_1,
+    Image2_Receiver_23_out_1,
+    Image2_Receiver_26_out_1,
+    0,
+    Image2_SuperviseWindow_1_out_2,
+    Image2_SuperviseWindow_1_out_3,
+    Image2_Input_31_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[17]: x = 41, y = 357, inputs = 1, label = superObj
+    // page group: Main
+    //
+superObj = Image2_SuperviseState_1_out_1;
+    // 
+    // node Receiver[7]: x = 66, y = 15, inputs = 1, label = superObj
+    // page group: aa_input
+    //
+Image2_Receiver_7_out_1[cache: 0] = superObj;
+    // 
+    // node Attribute[1]: x = 262, y = 193, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "interaction mode"
+    // page group: aa_input
+    //
+Image2_Attribute_1_out_1 = 
+    Attribute(
+    Image2_Receiver_7_out_1,
+    "interaction mode"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[13]: x = 11, y = 132, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "has attribute + 1"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "autoaxes"
+    // page group: aa_input
+    //
+Image2_Inquire_13_out_1 = 
+    Inquire(
+    Image2_Receiver_7_out_1,
+    "has attribute + 1",
+    "autoaxes"
+    ) [instance: 13, cache: 1];
+    // 
+    // node Select[1]: x = 148, y = 177, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 1
+    // page group: aa_input
+    //
+Image2_Select_1_out_1 = 
+    Select(
+    Image2_Receiver_7_out_1,
+    1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Options[2]: x = 164, y = 280, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "interaction mode"
+    // page group: aa_input
+    //
+Image2_Options_2_out_1 = 
+    Options(
+    Image2_Select_1_out_1,
+    "interaction mode",
+    Image2_Attribute_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[11]: x = 89, y = 422, inputs = 3, label = Switch
+    // page group: aa_input
+    //
+Image2_Switch_11_out_1 = 
+    Switch(
+    Image2_Inquire_13_out_1,
+    Image2_Receiver_7_out_1,
+    Image2_Options_2_out_1
+    ) [instance: 11, cache: 1];
+    // 
+    // node Transmitter[22]: x = 97, y = 509, inputs = 1, label = aaInput
+    // page group: aa_input
+    //
+aaInput = Image2_Switch_11_out_1;
+    // 
+    // node Receiver[30]: x = 104, y = 159, inputs = 1, label = aaInput
+    // page group: autoaxes
+    //
+Image2_Receiver_30_out_1[cache: 0] = aaInput;
+    // 
+    // node Transmitter[7]: x = 152, y = 378, inputs = 1, label = superCam
+    // page group: Main
+    //
+superCam = Image2_SuperviseState_1_out_2;
+    // 
+    // node Receiver[9]: x = 183, y = 185, inputs = 1, label = superCam
+    // page group: autoaxes
+    //
+Image2_Receiver_9_out_1[cache: 0] = superCam;
+    // 
+    // node Input[13]: x = 169, y = 20, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 13, name = 'AAlabels', value = '(no default)', descriptive = 1, description = ' autoaxes labels', required = 0, visible = 0
+    //
+Image2_Input_13_out_1 = AAlabels;
+    // 
+    // node Input[14]: x = 222, y = 99, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 14, name = 'AAticks', value = '(no default)', descriptive = 1, description = 'autoaxes ticks', required = 0, visible = 0
+    //
+Image2_Input_14_out_1 = AAticks;
+    // 
+    // node Input[15]: x = 251, y = 18, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 15, name = 'AAcorners', value = '(no default)', descriptive = 1, description = 'autoaxes corners', required = 0, visible = 0
+    //
+Image2_Input_15_out_1 = AAcorners;
+    // 
+    // node Input[16]: x = 305, y = 95, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 16, name = 'AAframe', value = '(no default)', descriptive = 1, description = 'autoaxes frame ', required = 0, visible = 0
+    //
+Image2_Input_16_out_1 = AAframe;
+    // 
+    // node Input[17]: x = 336, y = 21, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 17, name = 'AAadjust', value = '(no default)', descriptive = 1, description = 'autoaxes adjust ', required = 0, visible = 0
+    //
+Image2_Input_17_out_1 = AAadjust;
+    // 
+    // node Input[18]: x = 387, y = 93, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 18, name = 'AAcursor', value = '(no default)', descriptive = 1, description = ' autoaxes cursor', required = 0, visible = 0
+    //
+Image2_Input_18_out_1 = AAcursor;
+    // 
+    // node Input[19]: x = 418, y = 22, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 19, name = 'AAgrid', value = '(no default)', descriptive = 1, description = 'autoaxes grid ', required = 0, visible = 0
+    //
+Image2_Input_19_out_1 = AAgrid;
+    // 
+    // node Input[20]: x = 463, y = 85, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 20, name = 'AAcolors', value = '(no default)', descriptive = 1, description = 'autoaxes colors', required = 0, visible = 0
+    //
+Image2_Input_20_out_1 = AAcolors;
+    // 
+    // node Input[21]: x = 501, y = 11, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 21, name = 'AAannotation', value = '(no default)', descriptive = 1, description = ' autoaxes annotation', required = 0, visible = 0
+    //
+Image2_Input_21_out_1 = AAannotation;
+    // 
+    // node Input[22]: x = 519, y = 95, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 22, name = 'AAlabelScale', value = '(no default)', descriptive = 1, description = 'autoaxes label scale ', required = 0, visible = 0
+    //
+Image2_Input_22_out_1 = AAlabelScale;
+    // 
+    // node Input[23]: x = 563, y = 12, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 23, name = 'AAfont', value = '(no default)', descriptive = 1, description = ' autoaxes font', required = 0, visible = 0
+    //
+Image2_Input_23_out_1 = AAfont;
+    // 
+    // node Input[24]: x = 619, y = 90, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 24, name = 'AAxTickLocs', value = '(no default)', descriptive = 1, description = ' autoaxes x tick locations', required = 0, visible = 0
+    //
+Image2_Input_24_out_1 = AAxTickLocs;
+    // 
+    // node Input[25]: x = 668, y = 21, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 25, name = 'AAyTickLocs', value = '(no default)', descriptive = 1, description = ' autoaxes y tick locations', required = 0, visible = 0
+    //
+Image2_Input_25_out_1 = AAyTickLocs;
+    // 
+    // node Input[26]: x = 694, y = 101, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 26, name = 'AAzTickLocs', value = '(no default)', descriptive = 1, description = ' autoaxes z tick locations', required = 0, visible = 0
+    //
+Image2_Input_26_out_1 = AAzTickLocs;
+    // 
+    // node Input[27]: x = 718, y = 18, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 27, name = 'AAxTickLabels', value = '(no default)', descriptive = 1, description = ' autoaxes x tick labels', required = 0, visible = 0
+    //
+Image2_Input_27_out_1 = AAxTickLabels;
+    // 
+    // node Input[28]: x = 802, y = 101, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 28, name = 'AAyTickLabels', value = '(no default)', descriptive = 1, description = ' autoaxes y tick labels', required = 0, visible = 0
+    //
+Image2_Input_28_out_1 = AAyTickLabels;
+    // 
+    // node Input[29]: x = 806, y = 23, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 29, name = 'AAzTickLabels', value = '(no default)', descriptive = 1, description = 'autoaxes z tick labels', required = 0, visible = 0
+    //
+Image2_Input_29_out_1 = AAzTickLabels;
+    // 
+    // node AutoAxes[1]: x = 176, y = 272, inputs = 19, label = AutoAxes
+    // input[4]: visible = 1
+    // input[5]: visible = 1
+    // input[6]: visible = 1
+    // input[7]: visible = 1
+    // input[8]: visible = 1
+    // input[9]: visible = 1
+    // input[10]: visible = 1
+    // input[11]: visible = 1
+    // input[12]: visible = 1
+    // input[13]: visible = 1
+    // input[14]: visible = 1
+    // input[15]: visible = 1
+    // input[16]: visible = 1
+    // input[17]: visible = 1
+    // input[18]: visible = 1
+    // input[19]: visible = 1
+    // page group: autoaxes
+    //
+Image2_AutoAxes_1_out_1 = 
+    AutoAxes(
+    Image2_Receiver_30_out_1,
+    Image2_Receiver_9_out_1,
+    Image2_Input_13_out_1,
+    Image2_Input_14_out_1,
+    Image2_Input_15_out_1,
+    Image2_Input_16_out_1,
+    Image2_Input_17_out_1,
+    Image2_Input_18_out_1,
+    Image2_Input_19_out_1,
+    Image2_Input_20_out_1,
+    Image2_Input_21_out_1,
+    Image2_Input_22_out_1,
+    Image2_Input_23_out_1,
+    Image2_Input_24_out_1,
+    Image2_Input_25_out_1,
+    Image2_Input_26_out_1,
+    Image2_Input_27_out_1,
+    Image2_Input_28_out_1,
+    Image2_Input_29_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[10]: x = 47, y = 3, inputs = 0, label = Input
+    // page group: writeimage
+    // parameter: position = 10, name = 'recordRes', value = '(no default)', descriptive = 1, description = ' resolution of recorded images', required = 0, visible = 0
+    //
+Image2_Input_10_out_1 = recordRes;
+    // 
+    // node Inquire[7]: x = 11, y = 72, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: writeimage
+    //
+Image2_Inquire_7_out_1 = 
+    Inquire(
+    Image2_Input_10_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 7, cache: 1];
+    // 
+    // node Switch[8]: x = 63, y = 148, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = -1
+    // page group: writeimage
+    //
+Image2_Switch_8_out_1 = 
+    Switch(
+    Image2_Inquire_7_out_1,
+    Image2_Input_10_out_1,
+    -1
+    ) [instance: 8, cache: 1];
+    // 
+    // node Transmitter[10]: x = 56, y = 221, inputs = 1, label = recRes
+    // page group: writeimage
+    //
+recRes = Image2_Switch_8_out_1;
+    // 
+    // node Receiver[18]: x = 295, y = 34, inputs = 1, label = recRes
+    // page group: writeimage
+    //
+Image2_Receiver_18_out_1[cache: 0] = recRes;
+    // 
+    // node Input[11]: x = 157, y = 0, inputs = 0, label = Input
+    // page group: writeimage
+    // parameter: position = 11, name = 'recordAspect', value = '(no default)', descriptive = 1, description = ' aspect ratio of recorded image', required = 0, visible = 0
+    //
+Image2_Input_11_out_1 = recordAspect;
+    // 
+    // node Inquire[11]: x = 147, y = 79, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: writeimage
+    //
+Image2_Inquire_11_out_1 = 
+    Inquire(
+    Image2_Input_11_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 11, cache: 1];
+    // 
+    // node Switch[9]: x = 211, y = 167, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = -1
+    // page group: writeimage
+    //
+Image2_Switch_9_out_1 = 
+    Switch(
+    Image2_Inquire_11_out_1,
+    Image2_Input_11_out_1,
+    -1
+    ) [instance: 9, cache: 1];
+    // 
+    // node Transmitter[11]: x = 199, y = 235, inputs = 1, label = recAsp
+    // page group: writeimage
+    //
+recAsp = Image2_Switch_9_out_1;
+    // 
+    // node Receiver[19]: x = 400, y = 25, inputs = 1, label = recAsp
+    // page group: writeimage
+    //
+Image2_Receiver_19_out_1[cache: 0] = recAsp;
+    // 
+    // node Receiver[11]: x = 491, y = 7, inputs = 1, label = superCam
+    // page group: writeimage
+    //
+Image2_Receiver_11_out_1[cache: 0] = superCam;
+    // 
+    // node Inquire[10]: x = 457, y = 99, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera resolution"
+    // page group: writeimage
+    //
+Image2_Inquire_10_out_1 = 
+    Inquire(
+    Image2_Receiver_11_out_1,
+    "camera resolution",
+    NULL
+    ) [instance: 10, cache: 1];
+    // 
+    // node Inquire[9]: x = 549, y = 109, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "camera aspect"
+    // page group: writeimage
+    //
+Image2_Inquire_9_out_1 = 
+    Inquire(
+    Image2_Receiver_11_out_1,
+    "camera aspect",
+    NULL
+    ) [instance: 9, cache: 1];
+    // 
+    // node Compute[2]: x = 394, y = 198, inputs = 5, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0 == -1 || $0 == $2) && ($1 == -1 || $1 == $3) ? 2 : 1"
+    // page group: writeimage
+    // expression: value = (a == -1 || a == c) && (b == -1 || b == d) ? 2 : 1
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+    //
+Image2_Compute_2_out_1 = 
+    Compute(
+    "($0 == -1 || $0 == $2) && ($1 == -1 || $1 == $3) ? 2 : 1",
+    Image2_Receiver_18_out_1,
+    Image2_Receiver_19_out_1,
+    Image2_Inquire_10_out_1,
+    Image2_Inquire_9_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[12]: x = 0, y = 5, inputs = 0, label = Input
+    // page group: autoaxes
+    // parameter: position = 12, name = 'AAenable', value = '(no default)', descriptive = 1, description = ' enable autoaxes', required = 0, visible = 0
+    //
+Image2_Input_12_out_1 = AAenable;
+    // 
+    // node Inquire[12]: x = 0, y = 95, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: autoaxes
+    //
+Image2_Inquire_12_out_1 = 
+    Inquire(
+    Image2_Input_12_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 12, cache: 1];
+    // 
+    // node Switch[10]: x = 6, y = 177, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: autoaxes
+    //
+Image2_Switch_10_out_1 = 
+    Switch(
+    Image2_Inquire_12_out_1,
+    Image2_Input_12_out_1,
+    0
+    ) [instance: 10, cache: 1];
+    // 
+    // node Compute[5]: x = 0, y = 248, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: autoaxes
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+Image2_Compute_5_out_1 = 
+    Compute(
+    "$0+1",
+    Image2_Switch_10_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Switch[7]: x = 115, y = 370, inputs = 3, label = Switch
+    // page group: autoaxes
+    //
+Image2_Switch_7_out_1 = 
+    Switch(
+    Image2_Compute_5_out_1,
+    Image2_Receiver_30_out_1,
+    Image2_AutoAxes_1_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Transmitter[6]: x = 123, y = 457, inputs = 1, label = aaObj
+    // page group: autoaxes
+    //
+aaObj = Image2_Switch_7_out_1;
+    // 
+    // node Receiver[8]: x = 88, y = 442, inputs = 1, label = aaObj
+    // page group: Main
+    //
+Image2_Receiver_8_out_1[cache: 0] = aaObj;
+    // 
+    // node Input[2]: x = 174, y = 444, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 2, name = 'renderMode', value = '(no default)', descriptive = 1, description = ' rendering mode ("hardware"  or "software")', required = 0, visible = 0
+    //
+Image2_Input_2_out_1 = renderMode;
+    // 
+    // node Options[1]: x = 144, y = 519, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    // page group: Main
+    //
+Image2_Options_1_out_1 = 
+    Options(
+    Image2_Receiver_8_out_1,
+    "rendering mode",
+    Image2_Input_2_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[27]: x = 335, y = 154, inputs = 1, label = superCam
+    // page group: camera
+    //
+Image2_Receiver_27_out_1[cache: 0] = superCam;
+    // 
+    // node Input[5]: x = 520, y = 17, inputs = 0, label = Input
+    // page group: camera
+    // parameter: position = 5, name = 'bkgndColor', value = '"black"', descriptive = 0, description = ' background color of the image', required = 0, visible = 0
+    //
+Image2_Input_5_out_1 = bkgndColor;
+    // 
+    // node Inquire[4]: x = 441, y = 92, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is  null + 1"
+    // page group: camera
+    //
+Image2_Inquire_4_out_1 = 
+    Inquire(
+    Image2_Input_5_out_1,
+    "is  null + 1",
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Switch[13]: x = 533, y = 152, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 16777248, value = {"black"}
+    // page group: camera
+    //
+Image2_Switch_13_out_1 = 
+    Switch(
+    Image2_Inquire_4_out_1,
+    Image2_Input_5_out_1,
+    {"black"}
+    ) [instance: 13, cache: 1];
+    // 
+    // node UpdateCamera[1]: x = 321, y = 236, inputs = 10, label = UpdateCamera
+    // page group: camera
+    //
+Image2_UpdateCamera_1_out_1 = 
+    UpdateCamera(
+    Image2_Receiver_27_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    Image2_Switch_13_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[18]: x = 466, y = 339, inputs = 1, label = actualCam
+    // page group: camera
+    //
+actualCam = Image2_UpdateCamera_1_out_1;
+    // 
+    // node Receiver[28]: x = 235, y = 411, inputs = 1, label = actualCam
+    // page group: Main
+    //
+Image2_Receiver_28_out_1[cache: 0] = actualCam;
+    // 
+    // node Input[6]: x = 355, y = 389, inputs = 0, label = Input
+    // page group: Main
+    // parameter: position = 6, name = 'throttle', value = '0', descriptive = 0, description = ' throttle for image display', required = 0, visible = 0
+    //
+Image2_Input_6_out_1 = throttle;
+    // 
+    // node Display[1]: x = 252, y = 509, inputs = 10, label = Display
+    // input[3]: defaulting = 1, visible = 1, type = 1024, value = NULL
+    // input[4]: visible = 1
+    // page group: Main
+    // depth: value = 24
+    //
+Image2_Display_1_out_1[cache: 2] = 
+    Display(
+    Image2_Options_1_out_1,
+    Image2_Receiver_28_out_1,
+    Image2_SuperviseState_1_out_3,
+    Image2_Input_6_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[7]: x = 7, y = 295, inputs = 0, label = recordEnable
+    // page group: writeimage
+    // parameter: position = 7, name = 'recordEnable', value = '0', descriptive = 0, description = ' enable recording of images', required = 0, visible = 0
+    //
+Image2_Input_7_out_1 = recordEnable;
+    // 
+    // node Input[8]: x = 213, y = 355, inputs = 0, label = Input
+    // page group: writeimage
+    // parameter: position = 8, name = 'recordFile', value = '(no default)', descriptive = 1, description = 'file name to record images to', required = 0, visible = 0
+    //
+Image2_Input_8_out_1 = recordFile;
+    // 
+    // node Input[9]: x = 276, y = 380, inputs = 0, label = Input
+    // page group: writeimage
+    // parameter: position = 9, name = 'recordFormat', value = '(no default)', descriptive = 1, description = 'format in which to record images', required = 0, visible = 0
+    //
+Image2_Input_9_out_1 = recordFormat;
+    // 
+    // node Inquire[5]: x = 0, y = 377, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: writeimage
+    //
+Image2_Inquire_5_out_1 = 
+    Inquire(
+    Image2_Input_7_out_1,
+    "is null + 1",
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Output[1]: x = 68, y = 560, inputs = 1, label = Output
+    // page group: Main
+    // parameter: position = 1, name = 'renderable', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+renderable = Image2_Options_1_out_1;
+    // 
+    // node Output[2]: x = 402, y = 485, inputs = 1, label = Output
+    // page group: Main
+    // parameter: position = 2, name = 'camera', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+camera = Image2_Receiver_28_out_1;
+    // 
+    // node Output[3]: x = 368, y = 560, inputs = 1, label = Output
+    // page group: Main
+    // parameter: position = 3, name = 'where', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+where = Image2_Display_1_out_1;
+    // 
+    // node Switch[3]: x = 18, y = 459, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: writeimage
+    //
+Image2_Switch_3_out_1 = 
+    Switch(
+    Image2_Inquire_5_out_1,
+    Image2_Input_7_out_1,
+    0
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[13]: x = 110, y = 509, inputs = 1, label = recEnbl
+    // page group: writeimage
+    //
+recEnbl = Image2_Switch_3_out_1;
+    // 
+    // node Receiver[21]: x = 410, y = 106, inputs = 1, label = recEnbl
+    // page group: wi_image
+    //
+Image2_Receiver_21_out_1[cache: 0] = recEnbl;
+    // 
+    // node Transmitter[8]: x = 443, y = 555, inputs = 1, label = imageWindow
+    // page group: Main
+    //
+imageWindow = Image2_Display_1_out_1;
+    // 
+    // node Receiver[10]: x = 517, y = 94, inputs = 1, label = imageWindow
+    // page group: wi_image
+    //
+Image2_Receiver_10_out_1[cache: 0] = imageWindow;
+    // 
+    // node Route[3]: x = 482, y = 223, inputs = 2, outputs = 2, label = Route
+    // page group: wi_image
+    //
+Image2_Route_3_out_1,
+Image2_Route_3_out_2 = 
+    Route(
+    Image2_Receiver_21_out_1,
+    Image2_Receiver_10_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node ReadImageWindow[1]: x = 424, y = 349, inputs = 1, label = ReadImageWindow
+    // page group: wi_image
+    //
+Image2_ReadImageWindow_1_out_1 = 
+    ReadImageWindow(
+    Image2_Route_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[12]: x = 140, y = 74, inputs = 1, label = superCam
+    // page group: wi_image
+    //
+Image2_Receiver_12_out_1[cache: 0] = superCam;
+    // 
+    // node Receiver[13]: x = 214, y = 153, inputs = 1, label = recRes
+    // page group: wi_image
+    //
+Image2_Receiver_13_out_1[cache: 0] = recRes;
+    // 
+    // node Transmitter[9]: x = 409, y = 284, inputs = 1, label = reRender
+    // page group: writeimage
+    //
+reRender = Image2_Compute_2_out_1;
+    // 
+    // node Receiver[17]: x = 194, y = 427, inputs = 1, label = reRender
+    // page group: wi_image
+    //
+Image2_Receiver_17_out_1[cache: 0] = reRender;
+    // 
+    // node Receiver[16]: x = 172, y = 341, inputs = 1, label = aaObj
+    // page group: wi_image
+    //
+Image2_Receiver_16_out_1[cache: 0] = aaObj;
+    // 
+    // node Receiver[20]: x = 50, y = 79, inputs = 1, label = recEnbl
+    // page group: wi_image
+    //
+Image2_Receiver_20_out_1[cache: 0] = recEnbl;
+    // 
+    // node Route[2]: x = 122, y = 165, inputs = 2, outputs = 2, label = Route
+    // page group: wi_image
+    //
+Image2_Route_2_out_1,
+Image2_Route_2_out_2 = 
+    Route(
+    Image2_Receiver_20_out_1,
+    Image2_Receiver_12_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[15]: x = 291, y = 154, inputs = 1, label = recAsp
+    // page group: wi_image
+    //
+Image2_Receiver_15_out_1[cache: 0] = recAsp;
+    // 
+    // node UpdateCamera[2]: x = 133, y = 258, inputs = 10, label = UpdateCamera
+    // page group: wi_image
+    //
+Image2_UpdateCamera_2_out_1 = 
+    UpdateCamera(
+    Image2_Route_2_out_1,
+    NULL,
+    NULL,
+    NULL,
+    Image2_Receiver_13_out_1,
+    Image2_Receiver_15_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Render[1]: x = 250, y = 358, inputs = 3, label = Render
+    // page group: wi_image
+    //
+Image2_Render_1_out_1 = 
+    Render(
+    Image2_Receiver_16_out_1,
+    Image2_UpdateCamera_2_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[6]: x = 306, y = 469, inputs = 3, label = Switch
+    // input[3]: defaulting = 1, visible = 1, type = 67108863, value = 0
+    // page group: wi_image
+    //
+Image2_Switch_6_out_1 = 
+    Switch(
+    Image2_Receiver_17_out_1,
+    Image2_Render_1_out_1,
+    Image2_ReadImageWindow_1_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[12]: x = 404, y = 489, inputs = 1, label = image
+    // page group: wi_image
+    //
+image = Image2_Switch_6_out_1;
+    // 
+    // node Receiver[14]: x = 148, y = 363, inputs = 1, label = image
+    // page group: writeimage
+    //
+Image2_Receiver_14_out_1[cache: 0] = image;
+    // 
+    // node Transmitter[24]: x = 242, y = 161, inputs = 1, label = windowSz
+    // page group: Main
+    //
+windowSz = Image2_SuperviseWindow_1_out_2;
+    // 
+    // node WriteImage[1]: x = 194, y = 451, inputs = 4, label = WriteImage
+    // page group: writeimage
+    //
+    WriteImage(
+    Image2_Receiver_14_out_1,
+    Image2_Input_8_out_1,
+    Image2_Input_9_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(386,523) size=249x60 style(Label), value = <NULL>
+    // annotation user_begin: 93
+    // annotation user:    Image to be saved is either
+    // annotation user:     rendered or retrieved from
+    // annotation user:  image window on page"wi_image"
+    // annotation user_end: <NULL>
+    // page group: writeimage
+    //
+    // decorator Annotate	pos=(214,453) size=348x60 style(Label), value = <NULL>
+    // annotation user_begin: 144
+    // annotation user: If AutoAxes was enabled on the prior execution,
+    // annotation user: then the current object output of SuperviseState
+    // annotation user: will contain axes.  These axes must be deleted.
+    // annotation user_end: <NULL>
+    // page group: aa_input
+    //
+    // decorator Annotate	pos=(207,385) size=428x60 style(Label), value = <NULL>
+    // annotation user_begin: 142
+    // annotation user: Given the cuurrent state of the object (with any axes present
+    // annotation user: removed... look at page 'aa_input') and the current camera,
+    // annotation user: optionally add axes.
+    // annotation user_end: <NULL>
+    // page group: autoaxes
+// network: end of macro body
+}
+Image2_Input_32_out_1 = NULL;
+Image2_Inquire_16_out_1 = NULL;
+Image2_Switch_12_out_1 = NULL;
+Image2_Transmitter_23_out_1 = NULL;
+Image2_Receiver_31_out_1 = NULL;
+Image2_Input_3_out_1 = NULL;
+Image2_Inquire_1_out_1 = NULL;
+Image2_Input_33_out_1 = NULL;
+Image2_Transmitter_25_out_1 = NULL;
+Image2_Receiver_2_out_1 = NULL;
+Image2_AutoCamera_1_out_1 = NULL;
+Image2_Switch_1_out_1 = NULL;
+Image2_Inquire_2_out_1 = NULL;
+Image2_Inquire_3_out_1 = NULL;
+Image2_Compute_1_out_1 = NULL;
+Image2_Transmitter_3_out_1 = NULL;
+Image2_Receiver_4_out_1 = NULL;
+Image2_Input_4_out_1 = NULL;
+Image2_Transmitter_19_out_1 = NULL;
+Image2_Receiver_6_out_1 = NULL;
+Image2_SuperviseWindow_1_out_1 = NULL;
+Image2_SuperviseWindow_1_out_2 = NULL;
+Image2_SuperviseWindow_1_out_3 = NULL;
+Image2_Transmitter_2_out_1 = NULL;
+Image2_Receiver_3_out_1 = NULL;
+Image2_Receiver_23_out_1 = NULL;
+Image2_Receiver_26_out_1 = NULL;
+Image2_Input_31_out_1 = NULL;
+Image2_SuperviseState_1_out_1 = NULL;
+Image2_SuperviseState_1_out_2 = NULL;
+Image2_SuperviseState_1_out_3 = NULL;
+Image2_Transmitter_17_out_1 = NULL;
+Image2_Receiver_7_out_1 = NULL;
+Image2_Attribute_1_out_1 = NULL;
+Image2_Inquire_13_out_1 = NULL;
+Image2_Select_1_out_1 = NULL;
+Image2_Options_2_out_1 = NULL;
+Image2_Switch_11_out_1 = NULL;
+Image2_Transmitter_22_out_1 = NULL;
+Image2_Receiver_30_out_1 = NULL;
+Image2_Transmitter_7_out_1 = NULL;
+Image2_Receiver_9_out_1 = NULL;
+Image2_Input_13_out_1 = NULL;
+Image2_Input_14_out_1 = NULL;
+Image2_Input_15_out_1 = NULL;
+Image2_Input_16_out_1 = NULL;
+Image2_Input_17_out_1 = NULL;
+Image2_Input_18_out_1 = NULL;
+Image2_Input_19_out_1 = NULL;
+Image2_Input_20_out_1 = NULL;
+Image2_Input_21_out_1 = NULL;
+Image2_Input_22_out_1 = NULL;
+Image2_Input_23_out_1 = NULL;
+Image2_Input_24_out_1 = NULL;
+Image2_Input_25_out_1 = NULL;
+Image2_Input_26_out_1 = NULL;
+Image2_Input_27_out_1 = NULL;
+Image2_Input_28_out_1 = NULL;
+Image2_Input_29_out_1 = NULL;
+Image2_AutoAxes_1_out_1 = NULL;
+Image2_Input_10_out_1 = NULL;
+Image2_Inquire_7_out_1 = NULL;
+Image2_Switch_8_out_1 = NULL;
+Image2_Transmitter_10_out_1 = NULL;
+Image2_Receiver_18_out_1 = NULL;
+Image2_Input_11_out_1 = NULL;
+Image2_Inquire_11_out_1 = NULL;
+Image2_Switch_9_out_1 = NULL;
+Image2_Transmitter_11_out_1 = NULL;
+Image2_Receiver_19_out_1 = NULL;
+Image2_Receiver_11_out_1 = NULL;
+Image2_Inquire_10_out_1 = NULL;
+Image2_Inquire_9_out_1 = NULL;
+Image2_Compute_2_out_1 = NULL;
+Image2_Input_12_out_1 = NULL;
+Image2_Inquire_12_out_1 = NULL;
+Image2_Switch_10_out_1 = NULL;
+Image2_Compute_5_out_1 = NULL;
+Image2_Switch_7_out_1 = NULL;
+Image2_Transmitter_6_out_1 = NULL;
+Image2_Receiver_8_out_1 = NULL;
+Image2_Input_2_out_1 = NULL;
+Image2_Options_1_out_1 = NULL;
+Image2_Receiver_27_out_1 = NULL;
+Image2_Input_5_out_1 = NULL;
+Image2_Inquire_4_out_1 = NULL;
+Image2_Switch_13_out_1 = NULL;
+Image2_UpdateCamera_1_out_1 = NULL;
+Image2_Transmitter_18_out_1 = NULL;
+Image2_Receiver_28_out_1 = NULL;
+Image2_Input_6_out_1 = NULL;
+Image2_Display_1_out_1 = NULL;
+Image2_Input_7_out_1 = NULL;
+Image2_Input_8_out_1 = NULL;
+Image2_Input_9_out_1 = NULL;
+Image2_Inquire_5_out_1 = NULL;
+Image2_Switch_3_out_1 = NULL;
+Image2_Transmitter_13_out_1 = NULL;
+Image2_Receiver_21_out_1 = NULL;
+Image2_Transmitter_8_out_1 = NULL;
+Image2_Receiver_10_out_1 = NULL;
+Image2_Route_3_out_1 = NULL;
+Image2_ReadImageWindow_1_out_1 = NULL;
+Image2_Receiver_12_out_1 = NULL;
+Image2_Receiver_13_out_1 = NULL;
+Image2_Transmitter_9_out_1 = NULL;
+Image2_Receiver_17_out_1 = NULL;
+Image2_Receiver_16_out_1 = NULL;
+Image2_Receiver_20_out_1 = NULL;
+Image2_Route_2_out_1 = NULL;
+Image2_Receiver_15_out_1 = NULL;
+Image2_UpdateCamera_2_out_1 = NULL;
+Image2_Render_1_out_1 = NULL;
+Image2_Switch_6_out_1 = NULL;
+Image2_Transmitter_12_out_1 = NULL;
+Image2_Receiver_14_out_1 = NULL;

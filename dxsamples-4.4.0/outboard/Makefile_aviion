@@ -1,0 +1,42 @@
+
+FILES_HELLO = outboard.o hello.o 
+FILES_ASYNC = outboard.o async.o 
+FILES_WATCHFILE = outboard.o watchfile.o 
+FILES_WATCHSOCKET = outboard.o watchsocket.o socket.o
+FILES_MY_SIM = my_simulation.o socket.o
+
+
+BASE = /usr/local/dx
+
+CFLAGS   = -O -Daviion -I . -I$(BASE)/include -Daviion -Xa
+LITELIBS = -L$(BASE)/lib_aviion -lDXlite -lm 
+
+default:    hello async
+
+all:    hello async watchfile watchsocket my_simulation
+
+
+hello:	hello.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES_HELLO) $(LITELIBS) -o hello
+	rm outboard.o
+
+watchfile: watchfile.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_WatchFile -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES_WATCHFILE) $(LITELIBS) -o watchfile
+	rm outboard.o
+
+my_simulation: my_simulation.o socket.o
+	$(CC) $(FILES_MY_SIM) $(LITELIBS) -lm -o my_simulation
+
+watchsocket: watchsocket.o socket.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_WatchSocket -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES_WATCHSOCKET) $(LITELIBS) -lm -o watchsocket
+
+both: watchsocket my_simulation
+
+async: async.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Async -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES_ASYNC) $(LITELIBS) -o async
+	rm outboard.o
+

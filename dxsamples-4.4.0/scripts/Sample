@@ -1,0 +1,24 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera
+camera = AutoCamera(electrondensity,width=3);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Create 2000 samples
+samples = Sample(isosurface,200);
+    // Show the positions of the samples
+samples = ShowPositions(samples);
+Display(samples,camera);
+
+    // Compute the gradient of the data
+gradient = Gradient(electrondensity);
+    // Map the gradient onto the samples
+mapped = Map(samples,gradient);
+    // Use AutoGlyph to visualize the gradient
+glyphs = AutoGlyph(mapped);
+Display(glyphs,camera);
+
+

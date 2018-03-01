@@ -1,0 +1,11 @@
+
+
+MODULE WatchFile 
+CATEGORY Special
+DESCRIPTION This module checks status of a file after a delay.
+FLAGS ASYNC PERSISTENT
+OUTBOARD watchfile 
+INPUT filename; string; (none); filename to check 
+INPUT seconds; integer; 10; seconds until next run
+OUTPUT object; object; object imported from file "filename" 
+

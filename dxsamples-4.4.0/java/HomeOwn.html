@@ -1,0 +1,127 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Home Ownership</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Home Ownership Over Time</h2>
+		<center>
+<b>Height: % Home ownership
+<br>
+Color: %Change between decades</b>
+</center>
+<table border=2>
+<tr bgcolor="black">
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 82 HEIGHT = 362
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/HomeOwn2.0.0.gif">
+</APPLET>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 511 HEIGHT = 326
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/HomeOwn1.0.0.gif">
+</APPLET>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 82 HEIGHT = 362
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_3">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/HomeOwn3.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+
+<table border = 0>
+<tr>
+<td>
+<APPLET
+	CODE="HomeOwn.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="HomeOwn">
+	<PARAM NAME=NETNAME VALUE="HomeOwn.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<param name=BACKGROUND value="[1.0, 1.0, 1.0]">
+</APPLET>
+
+</td>
+<td>
+<h3>...about the visualization</h3>
+Over the past 90 years, as Americans have bought and sold
+homes, various regions of the U.S. have experienced varying
+rates of growth of home ownership.  You would expect to find
+a general trend towards increasing home ownership, but would
+the trend be the same in all states?  Would some parts of the
+previous century show significantly different changes in
+the rate of home ownership than other parts? 
+<p>
+<h4>The home ownsership data set</h4>
+<p>
+Clearly ownership increased in Alabama from 1900 to 1990,
+but with any significant number of states you can't
+glean useful information by examining the numbers.
+<blockquote>
+<small>
+<pre> Home Ownership
+state 1900 1910 1920 1930 1940 1950 1960 1970 1980 1990
+AL 34.4 35.1 35.0 34.2 33.6 49.4 59.7 66.7 70.1 70.5
+AZ 57.5 49.2 42.8 44.8 47.9 56.4 63.9 65.3 68.3 64.2
+AR 47.7 46.6 45.1 40.1 39.7 54.5 61.4 66.7 70.5 69.6
+.
+.
+.
+</pre>
+</small>
+</blockquote>
+
+
+</td>
+
+</tr>
+</table>
+<h3>...about the visual program</h3>
+The elevation of individual states represents the rate of home ownership
+in the state.  The color of each state represents the change in the rate
+of home ownership from the previous time period.
+<p>
+This Data Explorer visualization uses a <i>Sequencer</i> to produce
+an animation.  Each frame in the animation shows data corresponding
+to a interval in time.  Data Explorer takes 5 - 10 seconds to 
+create each frame.  Then the assembled frames are presented quickly
+in order to create the impression of motion.
+
+<h3>...about the conversion to web page</h3>
+In the <i>Mode</i> menu, select <i>Sequence</i>.  You'll see
+the frames appear slowly as Data Explorer computes each one.
+When the <i>Execution</i> indicator turns black, Data Explorer
+has finished executing and the animation begins.  Terminate it
+at any time by changing the Mode selector.  You can also change
+the behavior of the animation by selecting <i>Faster</i>,
+<i>Slower</i>, <i>Loop</i>, or <i>Palindrome</i>.
+
+
+		
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

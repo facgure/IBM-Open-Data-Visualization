@@ -1,0 +1,136 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Auto Insurance Claims</title>
+</head>
+<body bgcolor="white">
+
+<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Auto Insurance Claims</h2>
+		<table border = 0>
+<tr bgcolor="white">
+<td>
+<!-- It is required that codebase and archive applet tags be identical 
+     within the html page for both control panels and image windows. If not, then
+     separate class loaders will be instantiated for the separate applets, and 
+     the DXappplication will not be able to communicate with the image windows.
+     This manifests itself as any rendered images popping up in a separate 
+     browser window.
+-->
+<APPLET
+	CODE="imageWindow.class" WIDTH = 820 HEIGHT = 251
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/AutoInsurance1.0.0.gif">
+</APPLET>
+</td>
+</tr>
+<tr>
+<td>
+<APPLET
+	CODE="CaptionLabels.class" WIDTH = 820 HEIGHT = 25
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+<!--    <param name=cabbase value="htmlpages/dx.cab"> -->
+	<PARAM NAME=DXLOutput0 VALUE="DXLOutput_1">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+	<PARAM NAME=FOREGROUND VALUE="[0.0, 0.0, 0.0]">
+	<param name=FONT value="TimesRoman-italic-24">
+</APPLET>
+</td>
+</tr>
+</table>
+
+<br>
+<table border=0>
+<tr>
+<td>
+<APPLET
+	CODE="AutoInsurance.class" width = 440 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="AutoInsurance">
+<!--    <PARAM NAME=cabbase VALUE="dx.cab"> -->
+	<PARAM NAME=NETNAME VALUE="AutoInsurance.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+</td>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 432 HEIGHT = 141
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+<!--    <PARAM NAME=cabbase VALUE="dx.cab"> -->
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/AutoInsurance2.0.0.gif">
+</APPLET>
+
+
+<h3>...about the visualization</h3>
+This visual program shows car insurance claim information 
+projected onto a map using zip codes.  Height and color of 
+each glyph corresponds to statistics on three available claim 
+items: VehicleAge, Claim, and AnnualMileage.  The available 
+statistics are mean, standard deviation, max, and count 
+(the number of claims in the region).
+
+</td>
+</tr>
+</table>
+
+<h3>...about the visual program</h3>
+Also shown is a bounding box of all the zip codes, 
+which indicates claims in NY and CA - making it clear 
+that not all the claims come from addresses within Texas 
+(as might be assumed when mining the data).  This use of 
+data visualization to provide an interactive spatial view 
+of raw data with local aggregation is valuable both for 
+understanding the raw data prior to mining and for discovering 
+trends within the data itself.
+
+<h3>...about clustering</h3>
+The data may be shown by individual zip code or based on 
+the local aggregation of values.  This helps, for example, 
+in downtown regions where many zip codes are clustered 
+together.  AggregateSize specifies the bin size (in degrees) 
+of an imaginary grid overlaying the map, and data for all 
+zip codes in each bin will be gathered together before 
+calculating statistics.  If AggregateSize is 0, individual 
+zip codes will be used.
+<p>
+Another method for clustering is available using the K Means 
+algorithm, which uses spatial information to recognize a user 
+specified number of clusters.  This algorithm takes longer to 
+execute since it requires looping numerous times, but once the 
+clusters have been created the algorithm need not be re-run as 
+the user changes displayed statistics.  Note that the entire 
+algorithm is implemented as a macro in the visual program and 
+no C code was required.
+
+
+<h3>...about the web page</h3>
+In the <i>Execution</i> control panel, select <i>Pick</i> mode.
+Picking on a glyph will produce a caption showing its numeric 
+values, including the zip code, which may be the average zip 
+code in the bin if it encompasses more than one.
+
+
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>
+

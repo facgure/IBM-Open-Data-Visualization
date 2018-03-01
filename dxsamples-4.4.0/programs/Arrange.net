@@ -1,0 +1,256 @@
+//
+// time: Wed Apr  9 15:21:12 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program uses Arrange to arrange 4 different images of an isosurface, each with a different camera.
+// workspace: width = 616, height = 623
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 102, y = 16, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "cloudwater"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Isosurface[1]: x = 123, y = 104, inputs = 6, label = Isosurface
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 145, y = 219, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "diagonal"
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 300
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Render[1]: x = 84, y = 315, inputs = 3, label = Render
+    //
+main_Render_1_out_1 = 
+    Render(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[2]: x = 269, y = 228, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "bottom"
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 300
+    //
+main_AutoCamera_2_out_1 = 
+    AutoCamera(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_2_in_2,
+    main_AutoCamera_2_in_3,
+    main_AutoCamera_2_in_4,
+    main_AutoCamera_2_in_5,
+    main_AutoCamera_2_in_6,
+    main_AutoCamera_2_in_7,
+    main_AutoCamera_2_in_8,
+    main_AutoCamera_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Render[2]: x = 214, y = 315, inputs = 3, label = Render
+    //
+main_Render_2_out_1 = 
+    Render(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_2_out_1,
+    main_Render_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node AutoCamera[3]: x = 399, y = 223, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "left"
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 300
+    //
+main_AutoCamera_3_out_1 = 
+    AutoCamera(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_3_in_2,
+    main_AutoCamera_3_in_3,
+    main_AutoCamera_3_in_4,
+    main_AutoCamera_3_in_5,
+    main_AutoCamera_3_in_6,
+    main_AutoCamera_3_in_7,
+    main_AutoCamera_3_in_8,
+    main_AutoCamera_3_in_9
+    ) [instance: 3, cache: 1];
+    // 
+    // node Render[3]: x = 335, y = 331, inputs = 3, label = Render
+    //
+main_Render_3_out_1 = 
+    Render(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_3_out_1,
+    main_Render_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node AutoCamera[4]: x = 524, y = 221, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 300
+    //
+main_AutoCamera_4_out_1 = 
+    AutoCamera(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_4_in_2,
+    main_AutoCamera_4_in_3,
+    main_AutoCamera_4_in_4,
+    main_AutoCamera_4_in_5,
+    main_AutoCamera_4_in_6,
+    main_AutoCamera_4_in_7,
+    main_AutoCamera_4_in_8,
+    main_AutoCamera_4_in_9
+    ) [instance: 4, cache: 1];
+    // 
+    // node Render[4]: x = 484, y = 331, inputs = 3, label = Render
+    //
+main_Render_4_out_1 = 
+    Render(
+    main_Isosurface_1_out_1,
+    main_AutoCamera_4_out_1,
+    main_Render_4_in_3
+    ) [instance: 4, cache: 1];
+    // 
+    // node Collect[1]: x = 165, y = 416, inputs = 4, label = Collect
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Render_1_out_1,
+    main_Render_2_out_1,
+    main_Render_3_out_1,
+    main_Render_4_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Arrange[1]: x = 218, y = 516, inputs = 5, label = Arrange
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 2
+    //
+main_Arrange_1_out_1 = 
+    Arrange(
+    main_Collect_1_out_1,
+    main_Arrange_1_in_2,
+    main_Arrange_1_in_3,
+    main_Arrange_1_in_4,
+    main_Arrange_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 306, y = 561, inputs = 8, label = Display
+    // depth: value = 24
+    // window: position = (0.3664,0.0635), size = 0.4797x0.4824
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Arrange_1_out_1,
+    main_Display_1_in_2,
+    main_Display_1_in_3,
+    main_Display_1_in_4,
+    main_Display_1_in_5,
+    main_Display_1_in_6,
+    main_Display_1_in_7,
+    main_Display_1_in_8
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "cloudwater";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Isosurface_1_in_2 = NULL;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_AutoCamera_1_in_2 = "diagonal";
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = 300;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Render_1_in_3 = NULL;
+main_Render_1_out_1 = NULL;
+main_AutoCamera_2_in_2 = "bottom";
+main_AutoCamera_2_in_3 = NULL;
+main_AutoCamera_2_in_4 = 300;
+main_AutoCamera_2_in_5 = NULL;
+main_AutoCamera_2_in_6 = NULL;
+main_AutoCamera_2_in_7 = NULL;
+main_AutoCamera_2_in_8 = NULL;
+main_AutoCamera_2_in_9 = NULL;
+main_AutoCamera_2_out_1 = NULL;
+main_Render_2_in_3 = NULL;
+main_Render_2_out_1 = NULL;
+main_AutoCamera_3_in_2 = "left";
+main_AutoCamera_3_in_3 = NULL;
+main_AutoCamera_3_in_4 = 300;
+main_AutoCamera_3_in_5 = NULL;
+main_AutoCamera_3_in_6 = NULL;
+main_AutoCamera_3_in_7 = NULL;
+main_AutoCamera_3_in_8 = NULL;
+main_AutoCamera_3_in_9 = NULL;
+main_AutoCamera_3_out_1 = NULL;
+main_Render_3_in_3 = NULL;
+main_Render_3_out_1 = NULL;
+main_AutoCamera_4_in_2 = NULL;
+main_AutoCamera_4_in_3 = NULL;
+main_AutoCamera_4_in_4 = 300;
+main_AutoCamera_4_in_5 = NULL;
+main_AutoCamera_4_in_6 = NULL;
+main_AutoCamera_4_in_7 = NULL;
+main_AutoCamera_4_in_8 = NULL;
+main_AutoCamera_4_in_9 = NULL;
+main_AutoCamera_4_out_1 = NULL;
+main_Render_4_in_3 = NULL;
+main_Render_4_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Arrange_1_in_2 = 2;
+main_Arrange_1_in_3 = NULL;
+main_Arrange_1_in_4 = NULL;
+main_Arrange_1_in_5 = NULL;
+main_Arrange_1_out_1 = NULL;
+main_Display_1_in_2 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_1_in_5 = NULL;
+main_Display_1_in_6 = NULL;
+main_Display_1_in_7 = NULL;
+main_Display_1_in_8 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

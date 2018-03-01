@@ -1,0 +1,405 @@
+<html>
+<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Java Explorer Status</title>
+</head>
+<body bgcolor="white">
+		<table border="0" cellspacing="2" cellpadding="5">
+			<tr>
+				<td><img src="javadx-hd.gif" alt="Java Explorer" height="105" width="420" border="0"></td>
+				<td>
+					<h2 align="center">Data Explorer<br>
+						for the Web</h2>
+				</td>
+			</tr>
+		</table>
+		<a href="http://www.opendx.org/" TARGET="_parent">
+Data Explorer</a> is a general-purpose software package for data visualization and analysis. It employs a data-flow driven client-server execution model and provides a visual program editor (VPE) that allows the user to create a visualization using a point and click interface.
+		<hr>
+		<h3>Example Web Based Visualizations</h3>
+		<table border = 2 
+    bordercolordark="black"
+    bordercolorlight="white"
+>
+<thead>
+<tr> 
+    <th><a href="ScatterData.html" TARGET="_parent">1990 Census Data</a>
+    <th><a href="HomeOwn.html" TARGET="_parent">Home Ownership Trends</a>
+    <th><a href="Topo.html" TARGET="_parent">Mapping Colorado</a>
+</tr>
+<tbody>
+<tr bgcolor="black">
+<td>
+<applet
+	code="imageWindow.class" width = 186 height = 160
+	archive=dx.jar
+	MAYSCRIPT=true
+>
+	<param name=INITIAL_IMAGE value="ScatterData4.0.0.gif">
+        <param name=OPEN_IN_ORBIT_MODE value="true">
+</applet>
+</td>
+<td>
+<applet
+	code="imageWindow.class" width = 186 height = 159
+	archive=dx.jar
+	MAYSCRIPT=true
+>
+	<param name=INITIAL_IMAGE value="HomeOwn4.0.0.gif">
+	<param name=OPEN_IN_ORBIT_MODE value="true">
+</applet>
+</td>
+<td>
+<applet
+	code="imageWindow.class" width = 186 height = 159
+	archive=dx.jar
+	MAYSCRIPT=true
+>
+	<param name=INITIAL_IMAGE value="Topo3.0.0.gif">
+	<param name=OPEN_IN_ORBIT_MODE value="true">
+</applet>
+</td>
+</tr>
+<tr bgcolor="black">
+<td>
+<applet
+	code="imageWindow.class" width = 186 height = 159
+	archive=dx.jar
+	MAYSCRIPT=true
+>
+	<param name=INITIAL_IMAGE value="perp1.0.0.gif">
+	<param name=OPEN_IN_ORBIT_MODE value="true">
+</applet>
+</td>
+<td>
+<applet
+        code="imageWindow.class" width = 186 height = 159
+	archive=dx.jar
+        MAYSCRIPT=true
+>
+        <param name=INITIAL_IMAGE value="Streamline3.0.0.gif">
+        <param name=OPEN_IN_ORBIT_MODE value="true">
+</applet>
+</td>
+<td>
+<applet
+	code="imageWindow.class" width = 186 height = 159
+	archive=dx.jar
+	MAYSCRIPT=true
+>
+	<param name=INITIAL_IMAGE value="MRI_22.0.0.gif">
+	<param name=OPEN_IN_ORBIT_MODE value="true">
+</applet>
+</td>
+</tr>
+<tfoot>
+<tr>
+    <th><a href="gordon.html" TARGET="_parent">Valuing a Perpetuity</a>
+    <th><a href="Streamline.html" TARGET="_parent">Wind Veloctiy</a>
+    <th><a href="MRI_2.html" TARGET="_parent">MRI of the Brain</a>
+						<tr>
+							<th colspan="3">
+								<h6>Click and drag on the images to view at different angles.</h6>
+							</th>
+						</tr>
+					
+</table>
+		<hr>
+		<a name="interacting"></a>
+		<h3>Interacting with Images</h3>
+		
+Java Explorer provides interaction modes similar to those in Data Explorer:
+Rotate, Pan, Zoom, and Pick.  
+A new interaction mode available in Java Explorer is called <i>Orbit</i>
+mode.
+Each of the preceeding images corresponds to a sample visualization
+available thru a link in this page.  Click and drag inside an 
+image to sample orbit mode.
+<ul>
+<li>Java Explorer's Pick mode reflects the design of Data Explorer.  Select
+an Image then choose Pick mode.  Place a pick by clicking with the left
+mouse button on something in the image.  The original net must contain
+a Pick tool with appropriate wiring.
+<li>Rotate mode provides a gnomon for rotating in the x and y
+planes using the left mouse button.  Ctrl+mouse button rotates in the
+z plane.
+<li>Zoom mode provides a 2d area of interest in response the mouse button.
+Ctrl+mouse button zooms out.
+<li>Pan mode provides a single pan cursor which moves the screen
+in response to a mouse button drag.
+<li>The <i>Execution</i> control panel provides a 'Reset Camera' button
+which works the same way Data Explorer's Reset menu bar option works.
+</ul>
+<p>
+<hr>
+		<p>
+		<h3><a name="javifying"></a>Creating Web Pages from Visual Programs</h3>
+		<img src="Demo4.gif">
+		<p>Starting with a visualization and assuming it's called <i>myprog</i>.net...</p>
+		<ul>
+<li>Extend DXMACROS:
+<pre>
+<b>
+$ setenv DXMACROS "${DXMARCROS}:<i>installDir</i>/java/server/dxmacros"
+</b>
+or
+<b>
+$ setenv DXMACROS <i>installDir</i>/java/server/dxmacros
+</b>
+</pre>
+
+<li>Start the new copy of dxui:
+<b>
+<pre>
+$ dx -ui <i>installDir</i>/java/server/bin_<i>arch</i>/dxui \
+    -mdf <i>installDir</i>/java/server/mdf/ui.mdf &
+</pre>
+</b>
+<li>Load <i>myprog.net</i>
+<li>Choose 'Edit/Java/Add Tools' from the VPE menubar.
+<li>Save the visual program.
+<li>Choose 'Edit/Java/Save As Web Page'.
+<li><a href="Status.htm#makefile">Edit <i>myprog</i>.make.</a>
+<li>$ make -f <i>myprog</i>.make
+<li>$ make -f <i>myprog</i>.make install
+</ul>
+		<b>Tech Notes:</b>
+<ul>
+<li>The actual .net file which runs under control of Java Explorer is
+the same .net file you use when you run with the Data Explorer user
+interface.  The 'Add Tools' step makes minor modifications to the visualization
+which don't interfere with using the Image window as you normally do.
+<li>Java Explorer will not work with visual programs containing Display tools.
+You must manually change your nets so that you use Image tools rather
+than Display tools for all your images.
+<li>Java Explorer will provide camera interaction modes and possibly pick mode
+for any image whose Image window in the .net file was assigned a name using
+the 'Options/Change Image Name' menubar option.  If you're converting
+Display tools to Image tools, then you'll probably want to assign a name
+to the the original Image tools and leave the Display tools unnamed.
+<li>'Edit/Java/Remove Tools' reverses the affect of 'Edit/Java/Add Tools'.
+You can add and remove java tools as often as you like without changing the
+meaning of the visual program.  After you add tools, you'll need to choose
+'Edit/Java/Net to Applet' and build and install the resulting java code.
+<li>After you've chosen the 'Add Tools' menubar option in the VPE, the
+visual program will execute more slowly under control of the Data Explorer
+user interface. 
+<li>The 'Save as Web Page' option will reset dxexec and start an execution
+in order to produce the first batch of images for your web page.  This batch
+of images allows the web page to be complete at initial browser contact.
+This differs conceptually from the way Data Explorer works.  When you
+run a visualization under control of Data Explorer you must execute once
+before you can see any images.  If you choose the 'Save as Web Page' option
+when the Data Explorer user interface is not connected to dxexec, then
+a complete web page will be written however the images will not be saved to
+your disk.  Of course that's perfectly reasonable if you've already saved
+these images.
+</ul>
+<a name="generated_files"></a>
+<h4>The generated files</h4>
+Data Explorer will write the following files:
+<ul>
+<li><i>myprog</i>.html
+<li><i>myprog</i>.make
+<li><i>myprog</i>.java
+<li>For each Image tool which executes <i>myprog%d</i>_0_0.[gif | wrl]
+<small>Note that if dxexec is executing in a different directory than
+the Data Explorer user interface, you might have to go searching for the
+.gif or .wrl files.</small>
+</ul>
+<a name="makefile"></a>
+<h4>The generated makefile</h4>
+<i>myprog</i>.make contains values which you can insert using
+you favorite editor.  A new alternative is to set <a href="Status.htm#changes">
+app-defaults</a>.
+<blockquote>
+<pre>
+<b>
+JARFILE=<i>installDir</i>/java/htmlpages
+JDKFILE=/usr/jdk_base/lib/classes.zip
+DXSERVER=<i>installDir</i>/java/server
+</b>
+</pre>
+</blockquote>
+DXSERVER_DIR can be set to any directory as long
+as that directory is included in <i>installDir</i>/java/server/class/dxserver.paths.
+<p>
+<p>
+		<hr>
+		<h3><a name="installing"></a>Installing Java Explorer</h3>
+		There is no formal installation process
+for Java Explorer as there is with most software products
+including Data Explorer.  These instructions assume some
+familiarity with UNIX and pc file systems, http servers,
+and browsers.
+		<p>
+<i>installDir</i> refers to the location in which you've installed OpenDX.<ol>
+<a name="path"></a>
+			<li>Install the full version of OpenDX with Java Explorer compiled.<b>
+<pre>
+</pre>
+</b>
+			<li>Add <i>installDir</i>/java/server/bin to your path
+		</ol>
+		<ol>
+			<ul>
+				<li>For csh <br>
+					<code>$ set path = ($path <i>installDir</i>/java/server/bin)
+</code>
+				<li>For bash<br>
+					<code>$ PATH=$PATH:installDir/java/server/bin</code>
+				
+					
+				
+			</ul>
+			<li>For PC users... <a href="Status.htm#runthepc">Edit startserver.bat</a>.
+
+			
+			<li>Install a Web Server (optional)<br>
+			<li>Install <a href="http://java.sun.com/j2se/downloads/index.html">J2SE</a> (the Java Runtime Environment).
+		</ol>
+		<hr>
+		<h3><a name="running"></a>Running the Java Explorer Server</h3>
+		You run one DXServer process on a machine and it serves all requests from
+all browsers pointed at the machine.
+		<p>
+The web pages generated using Java Explorer use applets which detect
+the ip address of the machine from which they were loaded and attempt to
+contact a DXServer using that ip address.  
+<p>
+If you are browsing web pages using a URL beginning with file:/, then 
+the applets will be able to use only a DXServer running on the same
+machine as your browser.
+<p>
+After you've extended your 
+<a href=Status.htm#path>path</a>, you can control the DXServer using the startserver and stopserver scripts.<p>
+		<hr>
+		<h3><a name="cmds"></a>Scripts for Controlling the Java Explorer Server</h3>
+		
+These are located in <i>installDir</i>/java/server/bin:
+		<ul>
+<li> <pre><b> Format: startserver [ -webpage htmlfile | [ -outdir dir -outurl url ]] \
+		[ -help ] [ -debug ] [ -verbose ] [ -memory Mbytes ] \
+		[ -dxroot dir ] [ -user user ]
+    -webpage.......complete path of a Java Explorer web page
+    -outdir........directory into which new images should be written
+    -outurl........url of the -outdir argument relative to the document base
+    -help..........this message
+    -debug.........print message traffic
+    -verbose.......print cmd line args passed to DXServer
+    -version.......the software version number of this script
+    -foreground....run in the foreground in order to satisfy init
+    -memory........set the amount of memory dxexec uses. 
+    -dxroot........use dir as DXROOT
+    -user..........run the script under a different user id
+    -sessions......max number of simultaneous Data Explorer sessions (default: 1)
+    -morehelp......examples
+
+</b></pre>
+
+<li><pre><b>stopserver [ host ]
+     host..........the host machine of the DXServer (default is localhost)
+</b></pre>
+</ul>
+		<p>
+		<hr>
+		<h3><a name="runthepc"></a>Running the Java Explorer Server on a PC</h3>
+		
+A batch file is provided in
+<i>installDir</i>/java/server/bin/startserver.bat
+to start the pc version of DXServer.
+Using an editor such as vi or NotePad on your pc, edit in real
+values for <i>DXROOT</i>, <i>JDKPATH</i>, and <i>JXVSPATH</i> in this script.
+If you edit this file and then find that it won't run, then reinstall from the 
+original zip file and re-edit the file using a different
+editor.  You may have saved unprintable characters in the file.
+
+		<hr>
+		<h3><a name="configuration"></a>Configuration Files</h3>
+		DXServer reads the following files from its current working 
+directory (which will be <i>installDir</i>/java/server/class):
+<ul>
+<li><b><i>dxserver.paths</i></b>  contains directories which are searched
+    for visual program files.  DXServer locates the .net file prior to instructing
+    Data Explorer to load the visual program.
+<li><b><i>dxserver.hosts</i></b> contains host names. DXServer will schedule Data Explorer sessions on the hosts in <i>dxserver.hosts</i>
+    in round-robin fashion.  Before using this mechanism you will want to
+    modify the following environment variables which are normally set by
+    the startserver script: 
+    <ul>
+    <li>$ setenv DXDATA <i>installDir</i>/java/server/userdata
+    <li>$ setenv DXMACROS <b>$DXROOT</b>/samples/macros:<i>installDir</i>/java/server/dxmacros:<i>installDir</i>/java/server/usermacros
+    <li>$ setenv DXINCLUDES <b>$DXMACROS</b>
+    </ul>
+    The startserver script modifies these for use on localhost.  However, settings
+    which work on localhost won't work on a remote machine.
+    You must also modify <i>dxserver.paths</i> so that it contains a 
+    pathname beginning with a '/'.
+</ul>
+Lines beginning with // and empty lines are ignored.   DXServer rereads these
+files as they are updated, so it isn't necessary to restart.
+<p>
+<a name="changes"></a>
+		<hr>
+		<h3>Changes in This Release</h3>
+		<ul>
+			<li>
+			<li>Instead of the standard GridBagLayout, a lot of the internal layout of control panel components is using the customized AWT TableLayout. This should provide a tighter appearance on controls and make it significantly easier to develop other controls.
+			<li>Updated all the code to the Java 1.1 event model. This removes the compilation warnings about deprecated 1.0 functionality and should help performance.
+			<li>Changed the multiple page control panel to use a new tabbed window to improve functionality and appearance.
+			<li>Now possible to pass data into the network from the html using a DXLInput tool. Extremely useful if html is generated on the fly and the data file for the visualization is not static.
+			<li>Correction for FileSelector Interactor, quotes will now be included.
+			<li>Corrected the html generator to output a more correct Applet tag and added some new comments.
+			<li>Updated the WebOptions macro to make it more clear what the inputs are.
+			<li>Changed the way that execution of a network is presented to the user. A green (execution color) line stating &quot;Running. Please Wait..&quot; is presented at the bottom of the control panel.
+			<li>
+				
+			<li>
+				<pre>
+</pre>
+		</ul>
+		<a href="earlier.htm">Changes in earlier</a> releases.
+
+		<hr>
+		<h3><a name="interfaces"></a>Java Interfaces</h3>
+		<pre>
+</pre>
+		<pre>package dx.net;
+
+public interface DXLinkHandler {
+    public void outputHandler(String key, String msg, Object data);
+    public boolean hasHandler(String key);
+};
+</pre>
+		<p>
+outputHandler() will be called once each time a value is received
+from Data Explorer for the corresponding DXLOutput tool.  The name
+of the tool will be in <i>key</i>.
+<p>
+hasHandler() will be called by Java Explorer to determine if the applet
+intends to handle messages produced the the DXLOutput tool named in 
+<i>key</i>.
+
+
+		<hr>
+		<h3><a name="references"></a>References</h3>
+		<blockquote>
+Richard Brealy and Stewart Myers  1981. <i>Principles of
+Corporate Finance</i>. McGraw-Hill Book Company 
+</blockquote>
+		<hr>
+		<h3><a name="bugs"></a>Bugs/Issues</h3>
+		You should expect to have to find workarounds for things in the
+'Issues' list and software fixes in Java Explorer for things in the
+'Bugs' list.
+		<h4>Bugs</h4>
+		<ul>
+			<li>Please see the buglist at <a href="http://www.opendx.org/bugs">http://www.opendx.org/bugs/</a>
+		</ul>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

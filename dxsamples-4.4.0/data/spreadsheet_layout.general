@@ -1,0 +1,11 @@
+file = CO2fragment.lis
+points = 21
+format = text
+interleaving = field
+header = marker "CO2_CONC\n"
+field = locations, CO2_concentration
+structure = 2-vector, scalar
+type = float, float
+layout = 33, 12, 0, 10
+
+end

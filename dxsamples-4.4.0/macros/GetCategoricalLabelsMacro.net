@@ -1,0 +1,82 @@
+//
+// time: Fri Jun 13 13:46:17 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX)
+//
+//
+// Begin MDF
+// MODULE GetCategoricalLabels
+// CATEGORY Macros
+// DESCRIPTION if input field has categorical data, get the labels
+// INPUT input_1; value list or string; (no default);  
+// INPUT input_2; field; (no default);  
+// OUTPUT output_1; object;  
+// End MDF
+// workspace: width = 500, height = 400
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro GetCategoricalLabels(
+ input_1
+,input_2
+) -> (
+ output_1
+) {
+    // 
+    // node Input[43]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'input_2', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+GetCategoricalLabels_Input_43_out_1 = input_2;
+    // 
+    // node Input[42]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'input_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+GetCategoricalLabels_Input_42_out_1 = input_1;
+    // 
+    // node Format[2]: x = 105, y = 80, inputs = 2, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "%s lookup"
+    //
+GetCategoricalLabels_Format_2_out_1 = 
+    Format(
+    "%s lookup",
+    GetCategoricalLabels_Input_42_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Extract[10]: x = 80, y = 183, inputs = 2, label = Extract
+    //
+GetCategoricalLabels_Extract_10_out_1 = 
+    Extract(
+    GetCategoricalLabels_Input_43_out_1,
+    GetCategoricalLabels_Format_2_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Inquire[2]: x = 0, y = 151, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "has component"
+    //
+GetCategoricalLabels_Inquire_2_out_1 = 
+    Inquire(
+    GetCategoricalLabels_Input_43_out_1,
+    "has component",
+    GetCategoricalLabels_Format_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[1]: x = 12, y = 259, inputs = 3, label = Switch
+    //
+GetCategoricalLabels_Switch_1_out_1 = 
+    Switch(
+    GetCategoricalLabels_Inquire_2_out_1,
+    GetCategoricalLabels_Extract_10_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[13]: x = 0, y = 339, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = GetCategoricalLabels_Switch_1_out_1;
+// network: end of macro body
+}
+GetCategoricalLabels_Input_43_out_1 = NULL;
+GetCategoricalLabels_Input_42_out_1 = NULL;
+GetCategoricalLabels_Format_2_out_1 = NULL;
+GetCategoricalLabels_Extract_10_out_1 = NULL;
+GetCategoricalLabels_Inquire_2_out_1 = NULL;
+GetCategoricalLabels_Switch_1_out_1 = NULL;

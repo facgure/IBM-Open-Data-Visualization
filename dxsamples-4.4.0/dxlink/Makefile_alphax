@@ -1,0 +1,21 @@
+BASE = /usr/local/dx
+
+LIBDXL=$(BASE)/lib_alphax/libDXL.a
+
+CFLAGS   = -g -Dalphax -DBASE=\"$(BASE)\" -I$(BASE)/include
+
+LIBS = -L$(BASE)/lib_alphax $(LIBDXL) -lm
+XLIBS   = -lXm -lXt -lX11
+
+all: sealevel maptoplane xapp xapp_supervise demoapp
+
+sealevel: sealevel.o
+	$(CC) sealevel.o $(LIBS) -o sealevel
+maptoplane: maptoplane.o
+	$(CC) maptoplane.o $(LIBS) -o maptoplane
+xapp:  xapp.o
+	$(CC) xapp.o $(LIBS) $(XLIBS) -o xapp
+xapp_supervise:  xapp_supervise.o
+	$(CC) xapp_supervise.o $(LIBS) $(XLIBS) -o xapp_supervise
+demoapp:  demoapp.o
+	$(CC) demoapp.o $(LIBS) $(XLIBS) -o demoapp 

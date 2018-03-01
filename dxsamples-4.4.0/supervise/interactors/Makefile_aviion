@@ -1,0 +1,11 @@
+FILES = myinteractors.o
+
+BASE = /usr/lpp/dx
+
+CFLAGS = -O -Daviion -I$(BASE)/include -Daviion -Xa
+
+LIBS     =   -L$(BASE)/lib_aviion -lDX -ly -ll -lX11 -lm 
+LITELIBS =   -L$(BASE)/lib_aviion -lDXlite -lm 
+
+dxexec:		$(FILES)
+		$(CC) $(LDFLAGS) $(FILES) $(LIBS) -o dxexec

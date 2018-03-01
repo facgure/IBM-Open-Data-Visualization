@@ -1,0 +1,6 @@
+MODULE MakeX
+CATEGORY User
+DESCRIPTION Draws an X
+INPUT input; field;  (none); field in which to mark positions
+INPUT size; field or  scalar;  1; size of mark
+OUTPUT output; field;  field with positions marked

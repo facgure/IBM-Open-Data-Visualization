@@ -1,0 +1,23 @@
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create a camera for the data
+camera = AutoCamera(electrondensity,"off-diagonal");
+   // Form a plane through the data, and map the data onto it
+plane = MapToPlane(electrondensity,[1 0 -0.9]);
+   // Color the plane based on the data values
+plane = AutoColor(plane,min=electrondensity);
+   // Deform the plane based on the data values
+rubbersheet = RubberSheet(plane);
+   // Add shading to the deformed plane
+rubbersheet = Normals(rubbersheet);
+   // Display the result
+Display(rubbersheet,camera);
+
+   // Contrast to face normals shading
+rubbersheet = FaceNormals(rubbersheet);
+Display(rubbersheet,camera);
+
+
+

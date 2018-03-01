@@ -1,0 +1,17 @@
+first = 0;
+
+macro doloop()
+{
+  output,link = Get(first);
+  sum = Compute("$0 + 1", output);
+  Set(sum,link); 
+  Echo(sum);
+}
+
+doloop();
+doloop();
+doloop();
+doloop();
+doloop();
+doloop();
+

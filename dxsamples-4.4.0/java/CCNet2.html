@@ -1,0 +1,65 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: Correlation</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Correlation Coefficients</h2>
+		<div align="left">
+			<table border=0>
+				<tr>
+					<td>
+						<h3>...about the visualization</h3>
+						This program is use to visualized the correlation coefficient of a spread sheet type data. Import data are the normalized spread sheet data and correlation coefficient. The main image is the lower triangle of the correlation coefficient matrix. The invalid data is mark off as gray and also the autocorrelation coeiffient is marked gray or white.
+						<p>The entire matrix can be displayed or just the highly postive and negative correlated pairs are shown. The user can use the pick option of DX to choose an element it wanted to exam, the net work then plots the normalized data as a x y plot. Also displayed are the sensor number and correlation coefficient.</p>
+						<h3>...about pick mode</h3>
+						With the mouse, you can click on the lower triangular correlation coefficient matrix. The location picked will be displayed below and the data at that location will be displayed beneath the correlation coefficient matrix.
+						<hr>
+						<b>Location picked: <applet code="CaptionLabels.class" width=464 height=29 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT>
+								<param name=BACKGROUND value="[0.86, 0.86, 0.86]">
+								<param name=FOREGROUND value="[0.0, 0.0, 0.0]">
+								<param name=DXLOutput0 value="DXLOutput_1">
+								<param name=FONT value="helvetica-bold-20">
+							</applet></b></td>
+					<td>
+						<table border=2>
+							<tr bgcolor=black>
+								<td><applet code="imageWindow.class" width=464 height=466 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT>
+										<param name=IMAGE_NODE value="Image_3">
+										<param name=INITIAL_IMAGE value="htmlpages/CCNet23.0.0.gif">
+									</applet></td>
+							</tr>
+							<tr bgcolor=black>
+								<td><applet code="CaptionLabels.class" width=464 height=29 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT>
+										<param name=FOREGROUND value="[1.0, 1.0, 1.0]">
+										<param name=BACKGROUND value="[0.0, 0.0, 0.0]">
+										<param name=DXLOutput0 value="DXLOutput_2">
+										<param name=FONT value="helvetica-bold-20">
+									</applet></td>
+							</tr>
+							<tr bgcolor=black>
+								<td><applet code="imageWindow.class" width=466 height=252 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT>
+										<param name=IMAGE_NODE value="Image_5">
+										<param name=INITIAL_IMAGE value="htmlpages/CCNet25.0.0.gif">
+									</applet></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<applet code="CCNet2.class" width=455 height=260 codebase="../" archive="htmlpages/dx.jar,htmlpages/samples.jar" MAYSCRIPT>
+				<param name="name" value="CCNet2">
+				<param name=NETNAME value="CCNet2.net">
+				<param name=DXUIVERS value="4.3.3">
+				<param name=BACKGROUND value="[0.86, 0.86, 0.86]">
+				<param name=EXECUTE_ON_CHANGE value="true">
+			</applet></div>
+		<div align="center">
+			<p></p>
+			<hr>
+			<b>[ <a href="Status.html">Java Explorer</a> | <a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>
+

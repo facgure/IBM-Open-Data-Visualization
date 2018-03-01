@@ -1,0 +1,28 @@
+This directory contains a medium-complexity demonstration of DX User
+Interactors.  The demo incorporates picking to place a
+text glyph of a picked data value, along with placing a caption at
+a place on the screen where the user types characters.
+For a more complex demonstation, showing more of the
+capabilities of user interactors, see the demonstation in ../complexdemo.
+
+First copy this directory to someplace where you can modify it. 
+To run the demo, you must first create the run-time loadable
+interactor file.  This is done by first going to the interactor 
+subdirectory and typing:
+
+make -f Makefile_arch interactors
+
+where arch is one of ibm6000, sgi, alphax, hp700 and solaris.  
+Once the interactors file has been created,
+you can return to this directory and execute the 'demo' script that
+you'll find here.  Run 'demo', and when DX comes up, put it in 
+execute-on-change mode.  
+
+Click the left mouse button in the image window to place text
+glyphs. To remove the glyphs, use the interactor provided.
+
+Type keys anywhere in the image to place a caption. Only one caption is
+supported, so that if you type more keys later they are simply added
+to the existing caption. For a more complex demo which allows captions
+to be moved and modified, see ../complexdemo.
+

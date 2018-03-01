@@ -1,0 +1,3 @@
+#! /bin/csh
+
+dx -edit -program demo.net 

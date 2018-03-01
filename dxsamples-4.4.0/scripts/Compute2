@@ -1,0 +1,5 @@
+field1 = Construct([0 0],[1 1],[2 2], {1, 2, 3, 4});
+field2 = Construct([0 0],[1 1],[2 2], {1, 2, 3, 4});
+result = Compute2("sin(fred)+cos(joe)", "fred", field1, "joe", field2);
+Print(result,"D");
+

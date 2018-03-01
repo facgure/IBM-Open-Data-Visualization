@@ -1,0 +1,29 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+
+   // The macro creates a histogram, colors it, and turns it into a 2D 
+   // plot
+macro dohistogram(bins,min,max)
+{
+  histogram = Histogram(electrondensity,bins,min,max);
+  colored = AutoColor(histogram);
+  colored = Scale(colored,[2000 1 1]);
+  plot = Plot(colored);
+  camera = AutoCamera(plot,aspect=1);
+  Display(plot,camera);
+}
+
+  // use defaults
+dohistogram();
+  // specify the bins, and what range to look at
+dohistogram(50,0.1,1.0);
+
+
+
+
+
+
+

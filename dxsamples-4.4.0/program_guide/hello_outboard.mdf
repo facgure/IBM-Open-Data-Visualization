@@ -1,0 +1,6 @@
+MODULE Hello 
+CATEGORY Greetings 
+DESCRIPTION Prefixes "hello" to the input string 
+OUTBOARD hello_outboard
+INPUT value;  string;  "world"; input string
+OUTPUT greeting;  string; prefixed string 

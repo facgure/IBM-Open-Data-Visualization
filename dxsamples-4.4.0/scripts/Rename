@@ -1,0 +1,21 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create an isosurface
+isosurface = Isosurface(electrondensity,0.3);
+   // Rename the "colors" "backcolors"
+isosurface = Rename(isosurface,"colors","back colors");
+   // Use the ClipPlane module
+clipped = ClipPlane(isosurface);
+   // Create a camera and display
+camera = AutoCamera(clipped,"off-diagonal");
+Display(clipped,camera);
+
+
+   // Now rename the "normals" component of the isosurface "data"
+renamed = Rename(isosurface,"normals","data");
+   // Use AutoGlyph to visualize the normals
+glyphs = AutoGlyph(renamed); 
+Display(glyphs,camera);

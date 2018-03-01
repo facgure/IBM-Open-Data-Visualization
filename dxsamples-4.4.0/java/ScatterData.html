@@ -1,0 +1,83 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: US Census Data</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>1990 Census Data</h2>
+		<h3>...about the visualization</h3>
+		
+This visual program visualizes data from the United States 
+Census of 1990 (the data is for 1989). 
+<p>
+<table border = 0>
+<tr>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 500 HEIGHT = 500
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_3">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/ScatterData3.0.0.gif">
+</APPLET>
+</td>
+<td>
+<h3>...about the visual program</h3>
+<blockquote>
+The user chooses three variables to be mapped 
+to the x, y, and z positions, and another variable 
+to be visualized as colored glyphs. The creation of 
+the new field to be visualized is accomplished using 
+the macro Make3DField. The axes are automatically 
+scaled to a 1:1:1 aspect ratio using the AutoScaleMacro 
+found in samples/macros. The glyphs are made 
+to be of uniform aspect ratio by using the UnsquishGlyphsMacro 
+found in samples/macros.  All of these macros 
+will be automatically loaded for you if you do not explicitly load them.
+</blockquote>
+</td>
+</tr>
+</table>
+<p>
+
+<p>
+
+<table border = 0>
+<tr>
+<td>
+<APPLET
+	CODE="ScatterData.class" width = 440 height = 400
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="ScatterData">
+	<PARAM NAME=NETNAME VALUE="ScatterData.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+</td>
+<td>
+
+<h3>...about the conversion to web page</h3>
+<small><b>Web page under construction.</b></small>
+Data Explorer is computing
+viewing parameters automatically (using AutoCamera).  Selecting
+parameters with a different range of values from the current
+picture, typically gets you a picture of a polar bear in a snow storm.
+If this is what you get, then click on 'Reset Camera' in the 
+'Execution' page.
+</td>
+</tr>
+</table>
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

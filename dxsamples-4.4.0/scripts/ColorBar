@@ -1,0 +1,25 @@
+// Import the water molecule data
+data = Import("watermolecule");
+
+// Create an isosurface at the value 0.3
+isosurface = Isosurface(data, 0.3);
+
+// Compute the gradient of the electron density
+gradient = Gradient(data);
+
+// Map the gradient onto the isosurface
+isosurface = Map(isosurface, gradient);
+
+// Color the isosurface based on the magnitude of the gradient. 
+colored, colormap = AutoColor(isosurface);
+
+// use the colormap output of AutoColor as input to the ColorBar module.
+// The bar will be placed on the right hand side of the image, half way up.
+colorbar = ColorBar(colormap, position = [0.9 0.5]);
+
+// Collect the colorbar with the colored isosurface
+collected = Collect(colorbar, colored);
+
+// Display the bar with the isosurface
+camera = AutoCamera(collected, "off-diagonal");
+Display(collected,camera);

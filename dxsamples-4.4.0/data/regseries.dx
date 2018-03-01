@@ -1,0 +1,103 @@
+# This example describes a data series with three member fields
+# Object 1 is the data associated with the first frame in the
+# series. The data is "dep" positions, or in a one-to-one 
+# correspondence with positions.
+object 1 class array type float rank 1 shape 3 items 18 data follows
+     1.0  0.1  0.0
+     1.4  0.2  0.0
+     1.0  0.0  0.0 
+     2.2  0.1  0.2
+     1.0  0.0  0.0
+     2.0  0.0  0.1
+     0.9  0.1  0.0
+     1.1  -0.4  0.0
+     1.0  0.1  0.0 
+     1.2  0.1  0.1
+     0.3  0.0  0.0
+     1.0  0.1  0.1
+     1.1  -0.4  0.2
+     1.1  0.2  0.0
+     1.1  0.1  0.0 
+     1.2  0.1  0.1
+     1.1  0.0  0.0
+     0.9  0.0  0.1
+attribute "dep" string "positions"
+#
+# Object 2 is the data associated with the second frame in the series.
+object 2 class array type float rank 1 shape 3 items 18 data follows
+     0.0  1.1  0.0
+     0.1  2.2  0.0
+     0.0  1.0  0.0 
+     0.2  1.1  -0.2
+     0.0  0.8  0.0
+     0.0  1.9  0.4
+     0.1  1.1  0.0
+     0.1  1.2  0.0
+     0.0  1.1  0.0 
+     0.2  2.1  0.1
+     0.1  1.0  0.0
+     0.0  0.8  0.1
+     0.1  0.9  -0.2
+     0.1  1.2  0.0
+     0.1  1.1  0.0 
+     0.2  1.1  -0.4
+     0.1  0.9  0.0
+     0.2  0.9  0.1
+attribute "dep" string "positions"
+#
+# Object 3 is the data associated with the third frame in the series.
+object 3 class array type float rank 1 shape 3 items 18 data follows
+     0.0  0.1  1.0
+     0.1  0.2  1.0
+     0.0  0.0  2.0 
+    -0.2  0.1  2.2
+     0.0  0.1  0.9
+     0.0  0.2  0.8
+    -0.4  0.1  0.9
+     0.1  0.2  1.9
+     0.0  0.1  0.7 
+     0.2  0.1  1.1
+    -0.1  0.0  2.0
+     0.0  0.3  1.1
+     0.1  0.1  1.2
+    -0.5  0.2  1.0
+     0.1  0.1  2.0 
+     0.2  0.1  1.4
+     0.1 -0.3  0.9
+     0.2  0.3  1.1
+attribute "dep" string "positions"
+#
+# Object 4 is the first field in the series. The positions and 
+# connections are defined by objects in a separate file, 
+# "pos_conn.data", and the data is given by object 1.
+object 4 class field
+component "positions" value file "pos_conn.data",1
+component "connections" value file "pos_conn.data",2
+component "data" value 1
+#
+# Object 5 is the second field in the series. The positions and 
+# connections are defined by objects in a separate file, 
+# "pos_conn.data" (and are in fact the same positions and connections
+# as those of the first field), and the data is given by object 2.
+object 5 class field
+component "positions" value file "pos_conn.data",1
+component "connections" value file "pos_conn.data",2
+component "data" value 2
+#
+# Object 6 is the third field in the series. The positions and 
+# connections are defined by objects in a separate file, 
+# "pos_conn.data" (and are in fact the same positions and connections
+# as those of the first field), and the data is given by object 3.
+object 6 class field
+component "positions" value file "pos_conn.data",1
+component "connections" value file "pos_conn.data",2
+component "data" value 3
+#
+# Here we create the series object with three members. Each has
+# a position tag associated with it (for example a time tag).
+object "series" class series
+member 0 value 4 position 1.3
+member 1 value 5 position 2.5
+member 2 value 6 position 4.5
+#
+end

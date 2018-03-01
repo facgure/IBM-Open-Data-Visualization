@@ -1,0 +1,591 @@
+//
+// time: Wed Apr  9 15:47:15 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program illustrates some uses of Map. The visual program on the left side of the canvas creates an isosurface of the cloudwater data, then maps the rainwater data onto the isosurface, then uses AutoColor to color the surfaces, and then displays the image.
+// comment: 
+// comment: The visual program in the central portion of the canvas creates an isosurface of the rainwater data, then maps the cloudwater data onto it, then AutoColors and Displays it.
+// comment: 
+// comment: The visual program on the right side of the canvas first AutoColors the cloudwater field, then maps the colors onto the isosurface of rainwater. It is necessary to "mark" the colors as data first, using the Mark module. This is because Map always operates on the data component of the map field. The colors (marked as data) are mapped  into the "colors" component of the isosurface, using the destination parameter of Map.
+// comment: 
+// comment: Differences between the images produced in the last two examples are due to the fact that for the central portion, AutoColor operates only on the data values on the isosurface, while for the right-hand portion, AutoColor operates on the entire cloudwater field. The images would be identical if the entire cloudwater field were to be fed in as the "min" parameter to AutoColor in the central example.
+// page assignment: import	order=2, windowed=0, showing=1
+// page assignment: map_cloud	order=4, windowed=0, showing=0
+// page assignment: map_colors	order=5, windowed=0, showing=0
+// page assignment: map_rain	order=3, windowed=0, showing=0
+// workspace: width = 327, height = 321
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[2]: x = 230, y = 57, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "rainwater"
+    // page group: import
+    //
+main_Import_2_out_1 = 
+    Import(
+    main_Import_2_in_1,
+    main_Import_2_in_2,
+    main_Import_2_in_3,
+    main_Import_2_in_4,
+    main_Import_2_in_5,
+    main_Import_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[3]: x = 260, y = 259, inputs = 1, label = rainwater
+    // page group: import
+    //
+rainwater = main_Import_2_out_1;
+    // 
+    // node Receiver[4]: x = 50, y = 20, inputs = 1, label = rainwater
+    // page group: map_cloud
+    //
+main_Receiver_4_out_1[cache: 0] = rainwater;
+    // 
+    // node Isosurface[3]: x = 56, y = 114, inputs = 6, label = Isosurface
+    // input[2]: defaulting = 1, visible = 1, type = 5, value = 3.00000
+    // page group: map_cloud
+    //
+main_Isosurface_3_out_1 = 
+    Isosurface(
+    main_Receiver_4_out_1,
+    main_Isosurface_3_in_2,
+    main_Isosurface_3_in_3,
+    main_Isosurface_3_in_4,
+    main_Isosurface_3_in_5,
+    main_Isosurface_3_in_6
+    ) [instance: 3, cache: 1];
+    // 
+    // node Import[1]: x = 96, y = 59, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "cloudwater"
+    // page group: import
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 87, y = 257, inputs = 1, label = cloudwater
+    // page group: import
+    //
+cloudwater = main_Import_1_out_1;
+    // 
+    // node Receiver[6]: x = 140, y = 20, inputs = 1, label = cloudwater
+    // page group: map_cloud
+    //
+main_Receiver_6_out_1[cache: 0] = cloudwater;
+    // 
+    // node Map[3]: x = 86, y = 200, inputs = 4, label = Map
+    // page group: map_cloud
+    //
+main_Map_3_out_1 = 
+    Map(
+    main_Isosurface_3_out_1,
+    main_Receiver_6_out_1,
+    main_Map_3_in_3,
+    main_Map_3_in_4
+    ) [instance: 3, cache: 1];
+    // 
+    // node AutoColor[3]: x = 47, y = 276, inputs = 10, label = AutoColor
+    // input[6]: defaulting = 0, visible = 0, type = 5, value = .8
+    // page group: map_cloud
+    //
+main_AutoColor_3_out_1,
+main_AutoColor_3_out_2 = 
+    AutoColor(
+    main_Map_3_out_1,
+    main_AutoColor_3_in_2,
+    main_AutoColor_3_in_3,
+    main_AutoColor_3_in_4,
+    main_AutoColor_3_in_5,
+    main_AutoColor_3_in_6,
+    main_AutoColor_3_in_7,
+    main_AutoColor_3_in_8,
+    main_AutoColor_3_in_9,
+    main_AutoColor_3_in_10
+    ) [instance: 3, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 254, y = 385, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "off-back"
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 50000.0
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 375
+    // page group: map_cloud
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_AutoColor_3_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[1]: x = 20, y = 20, inputs = 1, label = cloudwater
+    // page group: map_rain
+    //
+main_Receiver_1_out_1[cache: 0] = cloudwater;
+    // 
+    // node Isosurface[1]: x = 43, y = 109, inputs = 6, label = Isosurface
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = .2
+    // page group: map_rain
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Receiver_1_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[2]: x = 143, y = 24, inputs = 1, label = rainwater
+    // page group: map_rain
+    //
+main_Receiver_2_out_1[cache: 0] = rainwater;
+    // 
+    // node Map[1]: x = 75, y = 192, inputs = 4, label = Map
+    // page group: map_rain
+    //
+main_Map_1_out_1 = 
+    Map(
+    main_Isosurface_1_out_1,
+    main_Receiver_2_out_1,
+    main_Map_1_in_3,
+    main_Map_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 47, y = 281, inputs = 10, label = AutoColor
+    // input[6]: defaulting = 0, visible = 0, type = 5, value = .8
+    // page group: map_rain
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_Map_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[2]: x = 227, y = 386, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "off-back"
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 50000.0
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 375
+    // page group: map_rain
+    //
+main_AutoCamera_2_out_1 = 
+    AutoCamera(
+    main_AutoColor_1_out_1,
+    main_AutoCamera_2_in_2,
+    main_AutoCamera_2_in_3,
+    main_AutoCamera_2_in_4,
+    main_AutoCamera_2_in_5,
+    main_AutoCamera_2_in_6,
+    main_AutoCamera_2_in_7,
+    main_AutoCamera_2_in_8,
+    main_AutoCamera_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[3]: x = 12, y = 52, inputs = 1, label = rainwater
+    // page group: map_colors
+    //
+main_Receiver_3_out_1[cache: 0] = rainwater;
+    // 
+    // node Isosurface[2]: x = 11, y = 149, inputs = 6, label = Isosurface
+    // input[2]: defaulting = 1, visible = 1, type = 5, value = 3.00000
+    // page group: map_colors
+    //
+main_Isosurface_2_out_1 = 
+    Isosurface(
+    main_Receiver_3_out_1,
+    main_Isosurface_2_in_2,
+    main_Isosurface_2_in_3,
+    main_Isosurface_2_in_4,
+    main_Isosurface_2_in_5,
+    main_Isosurface_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[5]: x = 107, y = 58, inputs = 1, label = cloudwater
+    // page group: map_colors
+    //
+main_Receiver_5_out_1[cache: 0] = cloudwater;
+    // 
+    // node AutoColor[2]: x = 112, y = 149, inputs = 10, label = AutoColor
+    // input[6]: defaulting = 0, visible = 0, type = 5, value = .8
+    // page group: map_colors
+    //
+main_AutoColor_2_out_1,
+main_AutoColor_2_out_2 = 
+    AutoColor(
+    main_Receiver_5_out_1,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Mark[1]: x = 141, y = 227, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // page group: map_colors
+    //
+main_Mark_1_out_1 = 
+    Mark(
+    main_AutoColor_2_out_1,
+    main_Mark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Map[2]: x = 81, y = 320, inputs = 4, label = Map
+    // input[3]: visible = 1
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    // page group: map_colors
+    //
+main_Map_2_out_1 = 
+    Map(
+    main_Isosurface_2_out_1,
+    main_Mark_1_out_1,
+    main_Map_2_in_3,
+    main_Map_2_in_4
+    ) [instance: 2, cache: 1];
+    // 
+    // node AutoCamera[3]: x = 226, y = 422, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "off-back"
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 50000.0
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 375
+    // page group: map_colors
+    //
+main_AutoCamera_3_out_1 = 
+    AutoCamera(
+    main_Map_2_out_1,
+    main_AutoCamera_3_in_2,
+    main_AutoCamera_3_in_3,
+    main_AutoCamera_3_in_4,
+    main_AutoCamera_3_in_5,
+    main_AutoCamera_3_in_6,
+    main_AutoCamera_3_in_7,
+    main_AutoCamera_3_in_8,
+    main_AutoCamera_3_in_9
+    ) [instance: 3, cache: 1];
+    // 
+    // node Caption[1]: x = 153, y = 246, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"rainwater mapped onto isosurface of cloudwater" "then AutoColored"}
+    // page group: map_rain
+    //
+main_Caption_1_out_1 = 
+    Caption(
+    main_Caption_1_in_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Caption[2]: x = 173, y = 368, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"cloudwater mapped onto isosurface of rainwater" "then AutoColored"}
+    // page group: map_cloud
+    //
+main_Caption_2_out_1 = 
+    Caption(
+    main_Caption_2_in_1,
+    main_Caption_2_in_2,
+    main_Caption_2_in_3,
+    main_Caption_2_in_4,
+    main_Caption_2_in_5,
+    main_Caption_2_in_6,
+    main_Caption_2_in_7,
+    main_Caption_2_in_8,
+    main_Caption_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Caption[3]: x = 197, y = 321, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"AutoColored cloudwater field" "mapped onto isosurface of rainwater"}
+    // page group: map_colors
+    //
+main_Caption_3_out_1 = 
+    Caption(
+    main_Caption_3_in_1,
+    main_Caption_3_in_2,
+    main_Caption_3_in_3,
+    main_Caption_3_in_4,
+    main_Caption_3_in_5,
+    main_Caption_3_in_6,
+    main_Caption_3_in_7,
+    main_Caption_3_in_8,
+    main_Caption_3_in_9
+    ) [instance: 3, cache: 1];
+    // 
+    // node Collect[1]: x = 107, y = 393, inputs = 2, label = Collect
+    // page group: map_rain
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_AutoColor_1_out_1,
+    main_Caption_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[2]: x = 66, y = 396, inputs = 2, label = Collect
+    // page group: map_cloud
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_AutoColor_3_out_1,
+    main_Caption_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[3]: x = 112, y = 432, inputs = 2, label = Collect
+    // page group: map_colors
+    //
+main_Collect_3_out_1 = 
+    Collect(
+    main_Map_2_out_1,
+    main_Caption_3_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Display[1]: x = 117, y = 506, inputs = 4, label = Display
+    // page group: map_rain
+    // depth: value = 24
+    // window: position = (0.0234,0.0566), size = 0.3039x0.3428
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Collect_1_out_1,
+    main_AutoCamera_2_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[2]: x = 136, y = 516, inputs = 4, label = Display
+    // page group: map_colors
+    // depth: value = 24
+    // window: position = (0.6547,0.0586), size = 0.3039x0.3428
+    //
+main_Display_2_out_1[cache: 2] = 
+    Display(
+    main_Collect_3_out_1,
+    main_AutoCamera_3_out_1,
+    main_Display_2_in_3,
+    main_Display_2_in_4
+    ) [instance: 2, cache: 1];
+    // 
+    // node Display[3]: x = 98, y = 500, inputs = 4, label = Display
+    // page group: map_cloud
+    // depth: value = 24
+    // window: position = (0.3383,0.0605), size = 0.3039x0.3428
+    //
+main_Display_3_out_1[cache: 2] = 
+    Display(
+    main_Collect_2_out_1,
+    main_AutoCamera_1_out_1,
+    main_Display_3_in_3,
+    main_Display_3_in_4
+    ) [instance: 3, cache: 1];
+    //
+    // decorator Annotate	pos=(194,133) size=424x44 style(Label), value = <NULL>
+    // annotation user_begin: 113
+    // annotation user: This page maps the rainwater data onto an isosurface of the
+    // annotation user: cloudwater data, autocolors, and displays the result.
+    // annotation user_end: <NULL>
+    // page group: map_rain
+    //
+    // decorator Annotate	pos=(202,137) size=436x44 style(Label), value = <NULL>
+    // annotation user_begin: 113
+    // annotation user: This page maps the cloudwater data onto an isosurface of the
+    // annotation user: rainwater data, autocolors, and displays the result.
+    // annotation user_end: <NULL>
+    // page group: map_cloud
+    //
+    // decorator Annotate	pos=(236,63) size=379x156 style(Label), value = <NULL>
+    // annotation user_begin: 470
+    // annotation user: This page  colors  the cloudwater first, then maps the
+    // annotation user: *colors*  onto   the  isosurface  of  the rainwater.  The
+    // annotation user: result  differs  from   that   on  the page  "map_cloud"
+    // annotation user: because AutoColor is coloring over a different range
+    // annotation user: (the entire range of cloudwater, rather than the range
+    // annotation user: of cloudwater  just  on the isosurface). However, if on
+    // annotation user: page "map_cloud" you connect the "cloudwater"
+    // annotation user: transmitter  to  the open tab of AutoColor, you would
+    // annotation user: see the same result as on this page.
+    // annotation user_end: <NULL>
+    // page group: map_colors
+// network: end of macro body
+}
+main_Import_2_in_1 = "rainwater";
+main_Import_2_in_2 = NULL;
+main_Import_2_in_3 = NULL;
+main_Import_2_in_4 = NULL;
+main_Import_2_in_5 = NULL;
+main_Import_2_in_6 = NULL;
+main_Import_2_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_Isosurface_3_in_2 = NULL;
+main_Isosurface_3_in_3 = NULL;
+main_Isosurface_3_in_4 = NULL;
+main_Isosurface_3_in_5 = NULL;
+main_Isosurface_3_in_6 = NULL;
+main_Isosurface_3_out_1 = NULL;
+main_Import_1_in_1 = "cloudwater";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Map_3_in_3 = NULL;
+main_Map_3_in_4 = NULL;
+main_Map_3_out_1 = NULL;
+main_AutoColor_3_in_2 = NULL;
+main_AutoColor_3_in_3 = NULL;
+main_AutoColor_3_in_4 = NULL;
+main_AutoColor_3_in_5 = NULL;
+main_AutoColor_3_in_6 = .8;
+main_AutoColor_3_in_7 = NULL;
+main_AutoColor_3_in_8 = NULL;
+main_AutoColor_3_in_9 = NULL;
+main_AutoColor_3_in_10 = NULL;
+main_AutoColor_3_out_1 = NULL;
+main_AutoCamera_1_in_2 = "off-back";
+main_AutoCamera_1_in_3 = 50000.0;
+main_AutoCamera_1_in_4 = 375;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Isosurface_1_in_2 = .2;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_Map_1_in_3 = NULL;
+main_Map_1_in_4 = NULL;
+main_Map_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = .8;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_AutoCamera_2_in_2 = "off-back";
+main_AutoCamera_2_in_3 = 50000.0;
+main_AutoCamera_2_in_4 = 375;
+main_AutoCamera_2_in_5 = NULL;
+main_AutoCamera_2_in_6 = NULL;
+main_AutoCamera_2_in_7 = NULL;
+main_AutoCamera_2_in_8 = NULL;
+main_AutoCamera_2_in_9 = NULL;
+main_AutoCamera_2_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Isosurface_2_in_2 = NULL;
+main_Isosurface_2_in_3 = NULL;
+main_Isosurface_2_in_4 = NULL;
+main_Isosurface_2_in_5 = NULL;
+main_Isosurface_2_in_6 = NULL;
+main_Isosurface_2_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = NULL;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = .8;
+main_AutoColor_2_in_7 = NULL;
+main_AutoColor_2_in_8 = NULL;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = NULL;
+main_AutoColor_2_out_1 = NULL;
+main_Mark_1_in_2 = "colors";
+main_Mark_1_out_1 = NULL;
+main_Map_2_in_3 = NULL;
+main_Map_2_in_4 = "colors";
+main_Map_2_out_1 = NULL;
+main_AutoCamera_3_in_2 = "off-back";
+main_AutoCamera_3_in_3 = 50000.0;
+main_AutoCamera_3_in_4 = 375;
+main_AutoCamera_3_in_5 = NULL;
+main_AutoCamera_3_in_6 = NULL;
+main_AutoCamera_3_in_7 = NULL;
+main_AutoCamera_3_in_8 = NULL;
+main_AutoCamera_3_in_9 = NULL;
+main_AutoCamera_3_out_1 = NULL;
+main_Caption_1_in_1 = {"rainwater mapped onto isosurface of cloudwater" "then AutoColored"};
+main_Caption_1_in_2 = NULL;
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = NULL;
+main_Caption_1_in_7 = NULL;
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_Caption_2_in_1 = {"cloudwater mapped onto isosurface of rainwater" "then AutoColored"};
+main_Caption_2_in_2 = NULL;
+main_Caption_2_in_3 = NULL;
+main_Caption_2_in_4 = NULL;
+main_Caption_2_in_5 = NULL;
+main_Caption_2_in_6 = NULL;
+main_Caption_2_in_7 = NULL;
+main_Caption_2_in_8 = NULL;
+main_Caption_2_in_9 = NULL;
+main_Caption_2_out_1 = NULL;
+main_Caption_3_in_1 = {"AutoColored cloudwater field" "mapped onto isosurface of rainwater"};
+main_Caption_3_in_2 = NULL;
+main_Caption_3_in_3 = NULL;
+main_Caption_3_in_4 = NULL;
+main_Caption_3_in_5 = NULL;
+main_Caption_3_in_6 = NULL;
+main_Caption_3_in_7 = NULL;
+main_Caption_3_in_8 = NULL;
+main_Caption_3_in_9 = NULL;
+main_Caption_3_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_Collect_3_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+main_Display_2_in_3 = "X24,,";
+main_Display_2_in_4 = NULL;
+main_Display_3_in_3 = "X24,,";
+main_Display_3_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

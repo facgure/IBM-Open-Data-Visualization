@@ -1,0 +1,19 @@
+macro main() {
+object = Import("cloudwater");
+object = Isosurface(object);
+
+//create a window using SuperviseWindow
+where, size, events = SuperviseWindow();
+
+//set a default camera
+defcam = AutoCamera(object);
+
+// mode 0 is rotation mode
+mode = 0;
+obj, cam, wh = SuperviseState(where=where, defaultCamera=defcam, 
+                              object=object, size=size, events=events, 
+                              mode=mode);
+
+Display(obj, cam, wh);
+}
+main();

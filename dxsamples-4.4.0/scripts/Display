@@ -1,0 +1,36 @@
+
+// Import the data
+electrondensity = Import("watermolecule");
+
+// Partition the data for parallelism
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at the value 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// Create a camera
+camera = AutoCamera(isosurface,"off-diagonal",resolution = 300, aspect = 1);
+
+// In this example, we create an image using the Render module. We could then
+// filter or compute on the image, for example, before displaying it using
+// the Display module.
+image = Render(isosurface,camera);
+Display(image);
+
+
+// In this example, we render and display in one step using the Display 
+// module. In this case, the image is not available for processing.
+Display(isosurface,camera);
+
+// In this example, we render two views of the object and display them
+// in two separate windows using the "where" parameter.
+camera1 = AutoCamera(isosurface,"front", resolution=300);
+camera2 = AutoCamera(isosurface,"top", resolution=300);
+image1 = Render(isosurface,camera1);
+image2 = Render(isosurface,camera2);
+
+//The host on which the images will be displayed is that to which the
+//DISPLAY environment variable is set, since the host name is left out
+//of the where parameter 
+Display(image1,where="X,,view from front");
+Display(image2,where="X,,view from top");

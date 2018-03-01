@@ -1,0 +1,144 @@
+//
+// time: Wed Jul 30 10:36:54 1997
+//
+// version: 3.1.1 (format), 4.1.1 (DX)
+//
+//
+// Begin MDF
+// MODULE KeyFrameCamera
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT current_camera; value list or string list or object; (none);  currently displayed camera
+// INPUT append_camera; integer or integer list; 0;  append currently displayed camera to camera list?
+// INPUT reset_list; flag; 0;  reset entire camera list
+// INPUT export_cameras; integer or integer list; 0;  export the camera list
+// INPUT filename; string; (none); filename of exported cameras
+// OUTPUT current_camera_list; object; current set of cameras
+// End MDF
+// workspace: width = 658, height = 556
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro KeyFrameCamera(
+ current_camera
+,append_camera = 0
+,reset_list = 0
+,export_cameras = 0
+,filename
+) -> (
+ current_camera_list
+) {
+    // 
+    // node Collect[1]: x = 126, y = 102, inputs = 2, label = Collect
+    //
+KeyFrameCamera_Collect_1_out_1 = 
+    Collect(
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[1]: x = 195, y = 107, inputs = 0, label = Input
+    // parameter: position = 3, name = 'reset_list', value = '0', descriptive = 0, description = ' reset entire camera list', required = 0, visible = 1
+    //
+KeyFrameCamera_Input_1_out_1 = reset_list;
+    // 
+    // node GetGlobal[1]: x = 128, y = 241, inputs = 3, label = GetGlobal
+    //
+KeyFrameCamera_GetGlobal_1_out_1,
+KeyFrameCamera_GetGlobal_1_out_2 = 
+    GetGlobal(
+    KeyFrameCamera_Collect_1_out_1,
+    KeyFrameCamera_Input_1_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[2]: x = 62, y = 96, inputs = 0, label = Input
+    // parameter: position = 2, name = 'append_camera', value = '0', descriptive = 0, description = ' append currently displayed camera to camera list?', required = 0, visible = 1
+    //
+KeyFrameCamera_Input_2_out_1 = append_camera;
+    // 
+    // node Input[3]: x = 20, y = 34, inputs = 0, label = Input
+    // parameter: position = 1, name = 'current_camera', value = '(none)', descriptive = 1, description = ' currently displayed camera', required = 1, visible = 1
+    //
+KeyFrameCamera_Input_3_out_1 = current_camera;
+    // 
+    // node Route[1]: x = 21, y = 210, inputs = 2, outputs = 2, label = Route
+    //
+KeyFrameCamera_Route_1_out_1,
+KeyFrameCamera_Route_1_out_2 = 
+    Route(
+    KeyFrameCamera_Input_2_out_1,
+    KeyFrameCamera_Input_3_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Append[1]: x = 27, y = 332, inputs = 3, label = Append
+    //
+KeyFrameCamera_Append_1_out_1 = 
+    Append(
+    KeyFrameCamera_GetGlobal_1_out_1,
+    KeyFrameCamera_Route_1_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[4]: x = 397, y = 80, inputs = 0, label = Input
+    // parameter: position = 4, name = 'export_cameras', value = '0', descriptive = 0, description = ' export the camera list', required = 0, visible = 1
+    //
+KeyFrameCamera_Input_4_out_1 = export_cameras;
+    // 
+    // node Transmitter[17]: x = 223, y = 494, inputs = 1, label = camera_collection
+    //
+camera_collection = KeyFrameCamera_GetGlobal_1_out_1;
+    // 
+    // node Receiver[26]: x = 528, y = 77, inputs = 1, label = camera_collection
+    //
+KeyFrameCamera_Receiver_26_out_1[cache: 0] = camera_collection;
+    // 
+    // node Route[2]: x = 554, y = 234, inputs = 2, outputs = 2, label = Route
+    //
+KeyFrameCamera_Route_2_out_1,
+KeyFrameCamera_Route_2_out_2 = 
+    Route(
+    KeyFrameCamera_Input_4_out_1,
+    KeyFrameCamera_Receiver_26_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[5]: x = 616, y = 252, inputs = 0, label = Input
+    // parameter: position = 5, name = 'filename', value = '(none)', descriptive = 1, description = 'filename of exported cameras', required = 1, visible = 1
+    //
+KeyFrameCamera_Input_5_out_1 = filename;
+    // 
+    // node Export[1]: x = 541, y = 367, inputs = 3, label = Export
+    // input[2]: defaulting = 1, visible = 1, type = 32, value = "test"
+    //
+    Export(
+    KeyFrameCamera_Route_2_out_1,
+    KeyFrameCamera_Input_5_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 423, y = 446, inputs = 1, label = Output
+    // parameter: position = 1, name = 'current_camera_list', value = ' ', descriptive = 0, description = 'current set of cameras', required = 0, visible = 1
+    //
+current_camera_list = KeyFrameCamera_Receiver_26_out_1;
+    // 
+    // node SetGlobal[1]: x = 131, y = 391, inputs = 3, label = SetGlobal
+    //
+    SetGlobal(
+    KeyFrameCamera_Append_1_out_1,
+    KeyFrameCamera_GetGlobal_1_out_2,
+    NULL
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+KeyFrameCamera_Collect_1_out_1 = NULL;
+KeyFrameCamera_Input_1_out_1 = NULL;
+KeyFrameCamera_GetGlobal_1_out_1 = NULL;
+KeyFrameCamera_GetGlobal_1_out_2 = NULL;
+KeyFrameCamera_Input_2_out_1 = NULL;
+KeyFrameCamera_Input_3_out_1 = NULL;
+KeyFrameCamera_Route_1_out_1 = NULL;
+KeyFrameCamera_Append_1_out_1 = NULL;
+KeyFrameCamera_Input_4_out_1 = NULL;
+KeyFrameCamera_Transmitter_17_out_1 = NULL;
+KeyFrameCamera_Receiver_26_out_1 = NULL;
+KeyFrameCamera_Route_2_out_1 = NULL;
+KeyFrameCamera_Input_5_out_1 = NULL;

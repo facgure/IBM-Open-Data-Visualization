@@ -1,0 +1,144 @@
+//
+// time: Fri Oct 23 15:12:46 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE PruneAir
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT input_1; field; (no default);  
+// INPUT input_2; scalar or vector; (no default);  
+// INPUT input_3; scalar or vector; (no default);  
+// INPUT input_4; scalar or vector; (no default);  
+// INPUT input_5; scalar or vector; (no default);  
+// OUTPUT output_1; value or value list or field;  
+// End MDF
+// workspace: width = 381, height = 724
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro PruneAir(
+ input_1
+,input_2
+,input_3
+,input_4
+,input_5
+) -> (
+ output_1
+) {
+    // 
+    // node Input[41]: x = 0, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'input_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+PruneAir_Input_41_out_1 = input_1;
+    // 
+    // node Mark[31]: x = 0, y = 80, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "LONGITUDE"
+    //
+PruneAir_Mark_31_out_1[cache: 2] = 
+    Mark(
+    PruneAir_Input_41_out_1,
+    "LONGITUDE"
+    ) [instance: 31, cache: 1];
+    // 
+    // node Input[42]: x = 224, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'input_2', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+PruneAir_Input_42_out_1 = input_2;
+    // 
+    // node Input[43]: x = 168, y = 0, inputs = 0, label = Input
+    // parameter: position = 3, name = 'input_3', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+PruneAir_Input_43_out_1 = input_3;
+    // 
+    // node Include[3]: x = 58, y = 200, inputs = 6, label = Include
+    //
+PruneAir_Include_3_out_1[cache: 0] = 
+    Include(
+    PruneAir_Mark_31_out_1,
+    PruneAir_Input_42_out_1,
+    PruneAir_Input_43_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Unmark[2]: x = 117, y = 296, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "LONGITUDE"
+    //
+PruneAir_Unmark_2_out_1[cache: 0] = 
+    Unmark(
+    PruneAir_Include_3_out_1,
+    "LONGITUDE"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Mark[32]: x = 131, y = 368, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "LATITUDE"
+    //
+PruneAir_Mark_32_out_1[cache: 2] = 
+    Mark(
+    PruneAir_Unmark_2_out_1,
+    "LATITUDE"
+    ) [instance: 32, cache: 1];
+    // 
+    // node Input[44]: x = 112, y = 0, inputs = 0, label = Input
+    // parameter: position = 4, name = 'input_4', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+PruneAir_Input_44_out_1 = input_4;
+    // 
+    // node Input[45]: x = 56, y = 0, inputs = 0, label = Input
+    // parameter: position = 5, name = 'input_5', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+PruneAir_Input_45_out_1 = input_5;
+    // 
+    // node Include[2]: x = 237, y = 440, inputs = 6, label = Include
+    //
+PruneAir_Include_2_out_1[cache: 0] = 
+    Include(
+    PruneAir_Mark_32_out_1,
+    PruneAir_Input_44_out_1,
+    PruneAir_Input_45_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Unmark[3]: x = 296, y = 512, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "LATITUDE"
+    //
+PruneAir_Unmark_3_out_1[cache: 0] = 
+    Unmark(
+    PruneAir_Include_2_out_1,
+    "LATITUDE"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[92]: x = 293, y = 584, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "1"
+    // expression: value = 1
+    // name[2]: value = a
+    //
+PruneAir_Compute_92_out_1[cache: 2] = 
+    Compute(
+    "1",
+    PruneAir_Unmark_3_out_1
+    ) [instance: 92, cache: 1];
+    // 
+    // node Output[2]: x = 0, y = 664, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = PruneAir_Compute_92_out_1;
+// network: end of macro body
+}
+PruneAir_Input_41_out_1 = NULL;
+PruneAir_Mark_31_out_1 = NULL;
+PruneAir_Input_42_out_1 = NULL;
+PruneAir_Input_43_out_1 = NULL;
+PruneAir_Include_3_out_1 = NULL;
+PruneAir_Unmark_2_out_1 = NULL;
+PruneAir_Mark_32_out_1 = NULL;
+PruneAir_Input_44_out_1 = NULL;
+PruneAir_Input_45_out_1 = NULL;
+PruneAir_Include_2_out_1 = NULL;
+PruneAir_Unmark_3_out_1 = NULL;
+PruneAir_Compute_92_out_1 = NULL;

@@ -1,0 +1,48 @@
+    // In this example, we construct a regular grid. The origin is at 
+    // [0 0 0]. The deltas are 2, 3, and 1 in the x, y, and z dimensions,
+    // respectively.  There are 2 x, 3 y and 2 z positions.  The data values
+    // are as given, assigned to the positions in z varying fastest order.
+newfield = Construct([0 0 0],[2 3 1],[2 3 2],{0 0 1 1 2 2 0 0 1 1 2 2});
+camera = AutoCamera(newfield,"off-front");
+colored = AutoColor(newfield);
+showconn = ShowConnections(colored);
+Display(showconn,camera);
+
+     // In this example, the origin is at [0 0 0].  The deltas are
+     // 2, 3, and 1 in the x, y, and z dimensions, respectively.
+     // There are 2 x positions, 3 y positions, and 2 z positions.
+     // All of the data values are 2
+newfield = Construct([0 0 0],[2 3 1],[2 3 2],2);
+camera = AutoCamera(newfield,"off-front");
+colored = AutoColor(newfield);
+showconn = ShowConnections(colored);
+Display(showconn,camera);
+
+     // In this example, we construct a grid with irregular positions.
+     // The positions are 2-dimensional, and are [0 0], [0 2],  etc.
+     // The connection elements are specified as [2 3], with the convention
+     // that y varies fastest. The data values are specified also as
+     // y varies fastest.
+newfield = Construct({[0 0][0 2][1 3][4 0][2 3][3 4]},
+                      NULL,
+                      [2 3],{0 1 2 3 4 3});
+camera = AutoCamera(newfield,"off-front");
+colored = AutoColor(newfield);
+showconn = ShowConnections(colored);
+Display(showconn,camera);
+
+
+
+
+     // In this example, a line is constructed connecting a list of input
+     // positions.
+newfield = Construct({[0, 0], [0.15, 0.259], [0.30, 0.5], [0.45, 0.707],
+                      [.60, 0.866], [.75, 0.966], [.90, 1], [1.05, 0.966],
+                      [1.20, 0.866], [1.35, 0.707], [1.50, 0.5], [1.65, 0.259],
+                      [1.80, 0], [1.95, -0.259], [2.10, -0.5], [2.25, -0.707],
+                      [2.40, -0.866], [2.55, -0.966], [2.70, -1.0],
+                      [2.85, -0.966], [3.00, -0.866],[3.15, -0.707]
+                      [3.30, -0.5], [3.45, -0.259]});
+camera = AutoCamera(newfield,"off-front");
+showconn = ShowConnections(newfield);
+Display(showconn,camera);

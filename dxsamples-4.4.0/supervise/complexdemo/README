@@ -1,0 +1,103 @@
+This directory contains a demonstration of DX User
+Interactors.  The demo allows you to interactively manipulate objects
+in the scene independently, and to interactively place and enter 
+captions into the image. 
+
+First copy this directory to someplace where you can write to.
+
+To run the demo, you must first create the run-time loadable
+interactor file.  This is done by first going to the interactor 
+subdirectory and typing:
+
+make -f Makefile_arch interactors
+
+where arch is one of ibm6000, sgi, alphax, hp700 and solaris.  
+(See the note at the bottom of this file for sun4 and aviion)
+Once the interactors file has been created,
+you can return to this directory and execute the 'demo' script that
+you'll find here.  Run 'demo', open the control panel and put it in
+execute-on-change mode.  
+
+Initially, the image contains three colored fragments which are stacked
+together in the center of the image. (These are in fact fragments of a 
+pre-Columbian temple ceiling from Peru; hence the name).   Using the 
+right mouse button, pick one of the colored fragments.  This causes
+the fragment to be highlighted, and for the system to enter 'slide' mode, 
+which is interaction mode 0.  In this mode you can use the left mouse
+button, to slide the selected fragment around.  When a vertical stroke 
+is made with the middle mouse betton depressed, the selected fragment is
+rotated.  Horizontal strokes with the middle button depressed causes 
+the image to be zoomed in and out.  At any time you can select another
+fragment by selecting it with the right mouse button, causing the 
+previously hightlighted fragment to return to its original color and the
+newly selected fragment to be highlighted.  Now left and middle mouse
+button actions will affect this fragment.
+
+If you use the right button to pick on the background, rather than on
+one of the fragments, you enter 'caption' mode.  Once you have done so,
+you can create a caption by simply typing into the window.  Moving the
+mouse with the left button pressed will slide the caption around.  
+Selecting a new point on the background will create a new caption.  Once
+you have created a caption, you can select it by picking it with the 
+right mouse button; it then can be manipulated by dragging it with the
+left mouse button and by typing characters.
+
+The data structure being manipulated in this application consists of
+a DX Group object containing named objects of two types: transformed
+objects, which may be any DX hierarchichal structure with a transformation
+node at the root, and DX captions.  Each of these objects has its object
+type attached to it as a string attribute, either "transformed object"
+or "caption".  An initial state is passed into SuperviseState (which
+in the demo consists of a group of three transformed objects, "fragment0", 
+"fragment1" and "fragment2", each a colored set of triangles with an
+identity transform.  In addition, the initial camera state is also
+passed into SuperviseState, having been created by AutoCamera.
+
+In SuperviseWindow applications, SuperviseWindow itself creates the
+window in which the rendered images are displayed, and receive events
+that occur in the window (as of today, left, middle and right button
+events and keypress events are handled).  These, along with the current
+size of the window, are passed from SuperviseWindow to SuperviseState,
+which uses this information to modify the current state of the scene
+objects and camera, which are then passed on to Display to render.  
+Events that are not actually used by the current interactor are passed
+out of SuperviseState and can be interpreted elsewhere in the network.
+
+Under the covers, this works slightly differently in hardware mode.
+When hardware rendering is used, events which are requested by the
+current interactor are captured by the hardware renderer itself,
+which manages the modification of the state as long as a button is
+pressed.  Other events that are not requested by the interactor are
+passed up to SuperviseWindow, and then out into the network.  The result
+is the same, however; the camera and object that are produced by 
+SuperviseState on given execution reflect all the events that have
+been seen since the prior execution.
+
+In this application, neither of the interactors requests the right 
+button events; therefore, these events can be interpreted by the 
+network.  Specifically, this application uses these events for picking.
+Picking is used both to select an object in the scene for interaction
+and to select an interaction mode, by examining the 'object type' 
+attribute of the selected group member and choosing the appropriate
+interaction mode.  (If the pick fails to select an object, the 
+network selects 'caption' mode).  Note that since the interaction mode
+is an input to SuperviseState, the interaction mode determination must
+occur prior to SuperviseState.  For this reason, rather than rely on
+SuperviseState to excise the right-button events (recall that since
+they are not requested by either of the interactors they will pass 
+through SuperviseState) we must explicitly extract them from the event
+output of SuperviseWindow.  Similarly, because picking occurs above
+SuperviseState, it cannot receive the current state from SuperviseState.
+Instead, at the bottom of the 'Window' page of the network you will 
+see two cases of a simple GetGlobal/SetGlobal that allow the object
+and camera state from the previous network execution to be made available
+above SuperviseState without an explicit network loop.
+
+Note: Two platforms (sun4 and aviion) do not support runtime
+loadable modules. For these, you will need to create a separate
+dxexec executable incorporating your custom interactors. For
+an example, see samples/supervise/interactors.
+
+
+
+

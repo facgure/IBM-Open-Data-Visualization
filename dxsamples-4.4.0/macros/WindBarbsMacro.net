@@ -1,0 +1,317 @@
+//
+// time: Tue Sep 16 10:40:26 1997
+//
+// version: 3.1.2 (format), 3.1.4 (DX)
+//
+//
+// Begin MDF
+// MODULE WindBarbs
+// CATEGORY RAMS
+// DESCRIPTION Creates Wind Barbs from a 2d vector field
+// INPUT data; value list or field or string or string list; (none); wind vector data, assumed to be in knots
+// INPUT barbs; group or field or series or value list or string list; (none); the wind barbs file.  Contains a group of fields describing the barbs.
+// INPUT scale[visible:0]; scalar; (input dependent); scale factor for size of barbs
+// OUTPUT wind_barbs; group; wind barbs for each category of wind vectors
+// End MDF
+//
+// comment: This macro chooses a glyph from an imported set of glyphs based on the data value.  Thus it is similar to "annotation glyphs" (see the AutoGlyph man page), but for this application, annotation glyphs were not appropriate since the glyphs are for vector data, and are also required to change direction based on the direction of the vector data.  Annotation glyphs are for scalar (categorical) data and are simply placed at the location of the data value in space. 
+// comment: 
+// comment: This macro loops over each category, choosing the appropriate glyph based on the magnitude of the data.   A glyph is created and appended to a group of glyphs.
+// workspace: width = 845, height = 1512
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro WindBarbs(
+ data
+,barbs
+,scale
+) -> (
+ wind_barbs
+) {
+    // 
+    // node Collect[1]: x = 495, y = 1051, inputs = 2, label = Collect
+    // input[1]: visible = 0
+    // input[2]: visible = 0
+    //
+WindBarbs_Collect_1_out_1 = 
+    Collect(
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node GetLocal[1]: x = 535, y = 1127, inputs = 3, label = GetLocal
+    // input[2]: visible = 0
+    //
+WindBarbs_GetLocal_1_out_1,
+WindBarbs_GetLocal_1_out_2 = 
+    GetLocal(
+    WindBarbs_Collect_1_out_1,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[1]: x = 219, y = 0, inputs = 0, label = Input
+    // parameter: position = 1, name = 'data', value = '(none)', descriptive = 1, description = 'wind vector data, assumed to be in knots', required = 1, visible = 1
+    //
+WindBarbs_Input_1_out_1 = data;
+    // 
+    // node Compute[1]: x = 0, y = 71, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "mag($0)"
+    // expression: value = mag(a)
+    // name[2]: value = a
+    //
+WindBarbs_Compute_1_out_1 = 
+    Compute(
+    "mag($0)",
+    WindBarbs_Input_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[2]: x = 0, y = 153, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 < 5 ? 0 : ($0 < 10 ? 1 : ($0 < 15 ? 2 : ($0 < 20 ? 3 : 4)))"
+    // expression: value = a < 5 ? 0 : (a < 10 ? 1 : (a < 15 ? 2 : (a < 20 ? 3 : 4)))
+    // name[2]: value = a
+    //
+WindBarbs_Compute_2_out_1 = 
+    Compute(
+    "$0 < 5 ? 0 : ($0 < 10 ? 1 : ($0 < 15 ? 2 : ($0 < 20 ? 3 : 4)))",
+    WindBarbs_Compute_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[71]: x = 345, y = 109, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "-norm($0)"
+    // expression: value = -norm(a)
+    // name[2]: value = a
+    //
+WindBarbs_Compute_71_out_1 = 
+    Compute(
+    "-norm($0)",
+    WindBarbs_Input_1_out_1
+    ) [instance: 71, cache: 1];
+    // 
+    // node Replace[6]: x = 194, y = 261, inputs = 4, label = Replace
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "wind_category"
+    //
+WindBarbs_Replace_6_out_1 = 
+    Replace(
+    WindBarbs_Compute_2_out_1,
+    WindBarbs_Compute_71_out_1,
+    NULL,
+    "wind_category"
+    ) [instance: 6, cache: 1];
+    // 
+    // node Mark[12]: x = 177, y = 354, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "wind_category"
+    //
+WindBarbs_Mark_12_out_1 = 
+    Mark(
+    WindBarbs_Replace_6_out_1,
+    "wind_category"
+    ) [instance: 12, cache: 1];
+    // 
+    // node Statistics[9]: x = 150, y = 484, inputs = 1, label = Statistics
+    // output[1]: visible = 0
+    // output[2]: visible = 0
+    // output[3]: visible = 0
+    // output[4]: visible = 0
+    //
+WindBarbs_Statistics_9_out_1,
+WindBarbs_Statistics_9_out_2,
+WindBarbs_Statistics_9_out_3,
+WindBarbs_Statistics_9_out_4,
+WindBarbs_Statistics_9_out_5 = 
+    Statistics(
+    WindBarbs_Mark_12_out_1
+    ) [instance: 9, cache: 1];
+    // 
+    // node Compute[72]: x = 150, y = 557, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int($0)"
+    // expression: value = int(a)
+    // name[2]: value = a
+    //
+WindBarbs_Compute_72_out_1 = 
+    Compute(
+    "int($0)",
+    WindBarbs_Statistics_9_out_5
+    ) [instance: 72, cache: 1];
+    // 
+    // node ForEachN[1]: x = 197, y = 650, inputs = 3, label = ForEachN
+    // input[1]: defaulting = 0, visible = 1, type = 1, value = 0
+    // output[2]: visible = 0
+    //
+WindBarbs_ForEachN_1_out_1,
+WindBarbs_ForEachN_1_out_2 = 
+    ForEachN(
+    0,
+    WindBarbs_Compute_72_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Include[18]: x = 95, y = 743, inputs = 6, label = Include
+    // input[4]: visible = 0
+    // input[5]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[6]: defaulting = 0, visible = 0, type = 3, value = 1
+    //
+WindBarbs_Include_18_out_1 = 
+    Include(
+    WindBarbs_Mark_12_out_1,
+    WindBarbs_ForEachN_1_out_1,
+    WindBarbs_ForEachN_1_out_1,
+    NULL,
+    0,
+    1
+    ) [instance: 18, cache: 1];
+    // 
+    // node Unmark[10]: x = 79, y = 866, inputs = 2, label = Unmark
+    // input[2]: visible = 0
+    //
+WindBarbs_Unmark_10_out_1 = 
+    Unmark(
+    WindBarbs_Include_18_out_1,
+    NULL
+    ) [instance: 10, cache: 1];
+    // 
+    // node Input[2]: x = 239, y = 983, inputs = 0, label = Input
+    // parameter: position = 2, name = 'barbs', value = '(none)', descriptive = 1, description = 'the wind barbs file.  Contains a group of fields describing the barbs.', required = 1, visible = 1
+    //
+WindBarbs_Input_2_out_1 = barbs;
+    // 
+    // node Select[1]: x = 346, y = 1070, inputs = 3, label = Select
+    //
+WindBarbs_Select_1_out_1 = 
+    Select(
+    WindBarbs_Input_2_out_1,
+    WindBarbs_ForEachN_1_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Options[3]: x = 263, y = 1127, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "uniformscale"
+    // input[3]: defaulting = 0, visible = 1, type = 29, value = 1
+    //
+WindBarbs_Options_3_out_1 = 
+    Options(
+    WindBarbs_Select_1_out_1,
+    "uniformscale",
+    1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Input[32]: x = 415, y = 1127, inputs = 0, label = Input
+    // parameter: position = 3, name = 'scale', value = '(input dependent)', descriptive = 1, description = 'scale factor for size of barbs', required = 0, visible = 0
+    //
+WindBarbs_Input_32_out_1 = scale;
+    // 
+    // node Glyph[1]: x = 243, y = 1240, inputs = 7, label = Glyph
+    // input[3]: visible = 0
+    // input[4]: defaulting = 1, visible = 1, type = 5, value = .75
+    // input[5]: visible = 0
+    //
+WindBarbs_Glyph_1_out_1 = 
+    Glyph(
+    WindBarbs_Unmark_10_out_1,
+    WindBarbs_Options_3_out_1,
+    NULL,
+    WindBarbs_Input_32_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Append[1]: x = 356, y = 1278, inputs = 5, label = Append
+    // input[3]: visible = 0
+    // input[4]: visible = 0
+    // input[5]: visible = 0
+    //
+WindBarbs_Append_1_out_1 = 
+    Append(
+    WindBarbs_GetLocal_1_out_1,
+    WindBarbs_Glyph_1_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 358, y = 1450, inputs = 1, label = Output
+    // parameter: position = 1, name = 'wind_barbs', value = ' ', descriptive = 0, description = 'wind barbs for each category of wind vectors', required = 0, visible = 1
+    //
+wind_barbs = WindBarbs_Append_1_out_1;
+    // 
+    // node SetLocal[1]: x = 497, y = 1351, inputs = 3, label = SetLocal
+    //
+    SetLocal(
+    WindBarbs_Append_1_out_1,
+    WindBarbs_GetLocal_1_out_2,
+    NULL
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(137,812) size=168x44 style(Label), value = <NULL>
+    // annotation user_begin: 37
+    // annotation user: select only the current
+    // annotation user: wind category
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(302,270) size=226x44 style(Label), value = <NULL>
+    // annotation user_begin: 56
+    // annotation user: add the wind category as
+    // annotation user: a component of the vector field
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(258,616) size=229x28 style(Label), value = <NULL>
+    // annotation user_begin: 31
+    // annotation user: iterate over each wind category
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(76,82) size=184x44 style(Label), value = <NULL>
+    // annotation user_begin: 46
+    // annotation user: compute the wind speed,
+    // annotation user: assumed to be in knots
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(78,163) size=212x44 style(Label), value = <NULL>
+    // annotation user_begin: 56
+    // annotation user: categorize the wind by speed
+    // annotation user: to be used to select a barb
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(422,98) size=255x92 style(Label), value = <NULL>
+    // annotation user_begin: 149
+    // annotation user: reverse the direction so that 
+    // annotation user: barbs point in the direction 
+    // annotation user: from where the wind is coming and 
+    // annotation user: normalize all vectors so they 
+    // annotation user: appear the same length
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(29,1240) size=171x60 style(Label), value = <NULL>
+    // annotation user_begin: 58
+    // annotation user: create a glyph for
+    // annotation user: each data value
+    // annotation user: in the current category
+    // annotation user_end: <NULL>
+    //
+    // decorator Annotate	pos=(582,1269) size=263x60 style(Label), value = <NULL>
+    // annotation user_begin: 92
+    // annotation user: append each glyph to a group using
+    // annotation user: Append, and using GetLocal and
+    // annotation user: SetLocal as an accumulator
+    // annotation user_end: <NULL>
+// network: end of macro body
+}
+WindBarbs_Collect_1_out_1 = NULL;
+WindBarbs_GetLocal_1_out_1 = NULL;
+WindBarbs_GetLocal_1_out_2 = NULL;
+WindBarbs_Input_1_out_1 = NULL;
+WindBarbs_Compute_1_out_1 = NULL;
+WindBarbs_Compute_2_out_1 = NULL;
+WindBarbs_Compute_71_out_1 = NULL;
+WindBarbs_Replace_6_out_1 = NULL;
+WindBarbs_Mark_12_out_1 = NULL;
+WindBarbs_Statistics_9_out_5 = NULL;
+WindBarbs_Compute_72_out_1 = NULL;
+WindBarbs_ForEachN_1_out_1 = NULL;
+WindBarbs_Include_18_out_1 = NULL;
+WindBarbs_Unmark_10_out_1 = NULL;
+WindBarbs_Input_2_out_1 = NULL;
+WindBarbs_Select_1_out_1 = NULL;
+WindBarbs_Options_3_out_1 = NULL;
+WindBarbs_Input_32_out_1 = NULL;
+WindBarbs_Glyph_1_out_1 = NULL;
+WindBarbs_Append_1_out_1 = NULL;

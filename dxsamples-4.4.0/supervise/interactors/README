@@ -1,0 +1,15 @@
+The makefiles in this directory demonstrate how to make
+a custom dxexec executable incorporating custom interactors.
+The custom interactors defined in myinteractors.c operate
+"opposite" to the default interactors in the Data Explorer 
+product. That is, for illustrative purposes, the rotation, 
+pan, and zoom functions are the reverse of those in the
+product. 
+
+To use these custom interactors, simply compile dxexec using
+the appropriate makefile. Then start Data Explorer with the
+-exec flag to specify the custom executable.
+
+These makefiles also illustrate how to use custom interactors
+for platforms for which runtime loadable modules are not 
+available (sun4 and aviion).

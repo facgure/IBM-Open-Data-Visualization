@@ -1,0 +1,17 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+   // Show all the positions in the data
+positions = ShowPositions(electrondensity);
+   // Color the positions. 
+colored = AutoColor(positions);
+   // Display the result
+Display(colored,camera);
+
+   // Compare to true volume rendering
+colored = AutoColor(electrondensity,intensity=3);
+Display(colored,camera);

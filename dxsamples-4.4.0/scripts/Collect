@@ -1,0 +1,23 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera
+camera = AutoCamera(electrondensity,"off-front"); 
+    // Create an isosurface at a value of 0.3
+iso = Isosurface(electrondensity,0.3);
+    // Give the isosurface an opacity of 0.3
+iso = Color(iso,opacity=0.3);
+    // Create a maptoplane through the data
+plane = MapToPlane(electrondensity);
+    // Color the plane
+plane = AutoColor(plane);
+    // create a bounding box and color it spring green
+box = ShowBox(electrondensity);
+box = Color(box,"spring green");
+    // Collect the plane with the isosurface with the box and display
+collected = Collect(plane,iso,box);
+Display(collected,camera);
+
+

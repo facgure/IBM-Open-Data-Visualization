@@ -1,0 +1,6 @@
+MODULE AddParallel
+CATEGORY User
+DESCRIPTION Adds a number to a field
+INPUT data; field; (none); field to add to
+INPUT addend; scalar; 0; value to add to field
+OUTPUT result; field; result of adding value to field

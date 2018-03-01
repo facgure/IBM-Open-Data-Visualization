@@ -1,0 +1,10 @@
+file = spreadsheet_deformed
+grid = 3 x 4
+format = text
+interleaving = field
+majority = row
+field = locations, field0
+structure = 2-vector, scalar
+type = float, float
+
+end

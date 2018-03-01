@@ -1,0 +1,76 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer: MRI</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>MRI of the Brain</h2>
+		<table border = 0>
+<tr>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 452 HEIGHT = 380
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/MRI_21.0.0.gif">
+</APPLET>
+</td>
+<td>
+<table border = 0>
+<tr>
+<td>
+<h3>...about the visualization</h3>
+This visualization shows a sequence of slices 
+of mri data. The data consist of 16 slices, each 128x128. 
+
+<h3>...about the visual program</h3>
+An isosurface is displayed with a slice of the data. 
+To move the slice, use the sequencer. You can also 
+change the isosurface value using the interactor in 
+the control panel.
+</td>
+</tr>
+<tr>
+<td>
+
+<APPLET
+	CODE="MRI_2.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="MRI_2">
+	<PARAM NAME=NETNAME VALUE="MRI_2.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+<h3>...about the conversion to web page</h3>
+In the <i>Mode</i> menu, select <i>Sequence</i>.  You'll see
+the frames appear slowly as Data Explorer computes each one.
+When the <i>Execution</i> indicator turns black, Data Explorer
+has finished executing and the animation begins.  Terminate it
+at any time by changing the Mode selector.  You can also change
+the behavior of the animation by selecting <i>Faster</i>,
+<i>Slower</i>, <i>Loop</i>, or <i>Palindrome</i>.
+
+
+		
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

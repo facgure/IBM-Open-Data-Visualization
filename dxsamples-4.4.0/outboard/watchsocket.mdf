@@ -1,0 +1,15 @@
+
+
+MODULE WatchSocket 
+CATEGORY Special
+DESCRIPTION This module monitors a file descriptor.
+FLAGS ASYNC PERSISTENT
+OUTBOARD watchsocket
+INPUT program_name; string; (none);  name of program to run
+INPUT scale1; scalar; .150;  scale factor for simulation program 
+INPUT scale2; scalar; .200;  scale factor for simulation program 
+INPUT phase1; scalar; 5.0;  phase factor for simulation program 
+INPUT phase2; scalar; 10.0;  phase factor for simulation program 
+INPUT stepsize;  scalar; 1;  number of steps simulation program 
+OUTPUT object; object; output object 
+

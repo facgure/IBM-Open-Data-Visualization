@@ -1,0 +1,1317 @@
+//
+// time: Fri Mar 21 16:32:44 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+//
+// macro reference (indirect): HiliteObject samples/supervise/complexdemo/nets/hiliteObject.net
+//
+// macro reference (direct): ShowSelected samples/supervise/complexdemo/nets/ShowSelected.net
+include "ShowSelected.net"
+//
+// MODULE main
+// page assignment: args	order=3, windowed=0, showing=0
+// page assignment: highlight	order=4, windowed=0, showing=0
+// page assignment: main	order=7, windowed=0, showing=0
+// page assignment: mode	order=2, windowed=0, showing=0
+// page assignment: selector	order=6, windowed=0, showing=0
+// page assignment: window	order=5, windowed=0, showing=1
+// workspace: width = 934, height = 795
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro main(
+) -> (
+) {
+    // 
+    // node FileSelector[2]: x = 8, y = 33, inputs = 0, label = FileSelector
+    // output[1]: visible = 1, type = 32, value = "data/frags.dx"
+    // output[2]: visible = 1, type = 32, value = "frags.dx"
+    // page group: main
+    //
+    // 
+    // node Import[2]: x = 12, y = 123, inputs = 6, label = Import
+    // page group: main
+    //
+main_Import_2_out_1 = 
+    Import(
+    main_FileSelector_2_out_1,
+    main_Import_2_in_2,
+    main_Import_2_in_3,
+    main_Import_2_in_4,
+    main_Import_2_in_5,
+    main_Import_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[59]: x = 17, y = 207, inputs = 1, label = object
+    // page group: main
+    //
+object = main_Import_2_out_1;
+    // 
+    // node Receiver[49]: x = 0, y = 471, inputs = 1, label = object
+    // page group: window
+    //
+main_Receiver_49_out_1[cache: 0] = object;
+    // 
+    // node GetGlobal[12]: x = 84, y = 532, inputs = 3, label = GetGlobal
+    // page group: window
+    //
+main_GetGlobal_12_out_1,
+main_GetGlobal_12_out_2 = 
+    GetGlobal(
+    main_Receiver_49_out_1,
+    main_GetGlobal_12_in_2,
+    main_GetGlobal_12_in_3
+    ) [instance: 12, cache: 1];
+    // 
+    // node Transmitter[30]: x = 4, y = 564, inputs = 1, label = lastObj
+    // page group: window
+    //
+lastObj = main_GetGlobal_12_out_1;
+    // 
+    // node Receiver[93]: x = 185, y = 221, inputs = 1, label = lastObj
+    // page group: mode
+    //
+main_Receiver_93_out_1[cache: 0] = lastObj;
+    // 
+    // node Receiver[91]: x = 33, y = 0, inputs = 1, label = lastObj
+    // page group: mode
+    //
+main_Receiver_91_out_1[cache: 0] = lastObj;
+    // 
+    // node Vector[1]: x = 74, y = 0, inputs = 11, label = Vector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Vector_1"
+    // input[3]: defaulting = 0, visible = 0, type = 8, value = [ 512 512 ]
+    // input[5]: defaulting = 1, visible = 0, type = 8, value = [ -1000000.0 -1000000.0 -1000000.0 ]
+    // input[6]: defaulting = 1, visible = 0, type = 8, value = [ 1000000.0 1000000.0 1000000.0 ]
+    // input[7]: defaulting = 1, visible = 0, type = 8, value = [       1        1        1]
+    // input[9]: defaulting = 1, visible = 0, type = 8, value = [ 0.0 0.0 5.0 ]
+    // output[1]: visible = 1, type = 8, value = [ 512 512 ]
+    // page group: window
+    //
+    // 
+    // node Compute[32]: x = 257, y = 121, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "int($0)"
+    // page group: window
+    // expression: value = int(a)
+    // name[2]: value = a
+    //
+main_Compute_32_out_1 = 
+    Compute(
+    main_Compute_32_in_1,
+    main_Vector_1_out_1
+    ) [instance: 32, cache: 1];
+    // 
+    // node SuperviseWindow[1]: x = 298, y = 190, inputs = 10, label = SuperviseWindow
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Peru"
+    // input[2]: defaulting = 1, visible = 1, type = 32, value = "gtv:0.0"
+    // input[9]: defaulting = 1, visible = 1, type = 3, value = 1
+    // page group: window
+    //
+main_SuperviseWindow_1_out_1,
+main_SuperviseWindow_1_out_2,
+main_SuperviseWindow_1_out_3 = 
+    SuperviseWindow(
+    main_SuperviseWindow_1_in_1,
+    main_SuperviseWindow_1_in_2,
+    main_Compute_32_out_1,
+    main_SuperviseWindow_1_in_4,
+    main_SuperviseWindow_1_in_5,
+    main_SuperviseWindow_1_in_6,
+    main_SuperviseWindow_1_in_7,
+    main_SuperviseWindow_1_in_8,
+    main_SuperviseWindow_1_in_9,
+    main_SuperviseWindow_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[17]: x = 480, y = 336, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null + 1"
+    // page group: window
+    //
+main_Inquire_17_out_1 = 
+    Inquire(
+    main_SuperviseWindow_1_out_3,
+    main_Inquire_17_in_2,
+    main_Inquire_17_in_3
+    ) [instance: 17, cache: 1];
+    // 
+    // node Include[1]: x = 519, y = 272, inputs = 6, label = Include
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [4 -9999999999.0 -9999999999.0 2 -9999999999.0 -9999999999.0 -9999999999.0 -9999999999.0]
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [4 9999999999.0 9999999999.0  2 9999999999.0 9999999999.0 9999999999.0 9999999999.0]
+    // page group: window
+    //
+main_Include_1_out_1 = 
+    Include(
+    main_SuperviseWindow_1_out_3,
+    main_Include_1_in_2,
+    main_Include_1_in_3,
+    main_Include_1_in_4,
+    main_Include_1_in_5,
+    main_Include_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[32]: x = 666, y = 434, inputs = 3, label = Switch
+    // page group: window
+    //
+main_Switch_32_out_1 = 
+    Switch(
+    main_Inquire_17_out_1,
+    main_Include_1_out_1,
+    main_SuperviseWindow_1_out_3
+    ) [instance: 32, cache: 1];
+    // 
+    // node Transmitter[7]: x = 658, y = 518, inputs = 1, label = poke
+    // page group: window
+    //
+poke = main_Switch_32_out_1;
+    // 
+    // node Receiver[60]: x = 564, y = 0, inputs = 1, label = poke
+    // page group: selector
+    //
+main_Receiver_60_out_1[cache: 0] = poke;
+    // 
+    // node Inquire[15]: x = 521, y = 84, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is empty"
+    // page group: selector
+    //
+main_Inquire_15_out_1 = 
+    Inquire(
+    main_Receiver_60_out_1,
+    main_Inquire_15_in_2,
+    main_Inquire_15_in_3
+    ) [instance: 15, cache: 1];
+    // 
+    // node Inquire[28]: x = 624, y = 72, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null"
+    // page group: selector
+    //
+main_Inquire_28_out_1 = 
+    Inquire(
+    main_Receiver_60_out_1,
+    main_Inquire_28_in_2,
+    main_Inquire_28_in_3
+    ) [instance: 28, cache: 1];
+    // 
+    // node Compute[58]: x = 567, y = 157, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 || $1 == 1 ? 0 : 1"
+    // page group: selector
+    // expression: value = a == 1 || b == 1 ? 0 : 1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_58_out_1 = 
+    Compute(
+    main_Compute_58_in_1,
+    main_Inquire_15_out_1,
+    main_Inquire_28_out_1
+    ) [instance: 58, cache: 1];
+    // 
+    // node Transmitter[31]: x = 563, y = 242, inputs = 1, label = newPoke
+    // page group: selector
+    //
+newPoke = main_Compute_58_out_1;
+    // 
+    // node Receiver[86]: x = 11, y = 12, inputs = 1, label = newPoke
+    // page group: args
+    //
+main_Receiver_86_out_1[cache: 0] = newPoke;
+    // 
+    // node Receiver[80]: x = 150, y = 378, inputs = 1, label = newPoke
+    // page group: selector
+    //
+main_Receiver_80_out_1[cache: 0] = newPoke;
+    // 
+    // node Compute[59]: x = 242, y = 414, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 0 ? 2 : 1"
+    // page group: selector
+    // expression: value = a == 0 ? 2 : 1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_59_out_1 = 
+    Compute(
+    main_Compute_59_in_1,
+    main_Receiver_80_out_1,
+    main_Compute_59_in_3
+    ) [instance: 59, cache: 1];
+    // 
+    // node Receiver[7]: x = 33, y = 43, inputs = 1, label = poke
+    // page group: selector
+    //
+main_Receiver_7_out_1[cache: 0] = poke;
+    // 
+    // node Receiver[11]: x = 125, y = 44, inputs = 1, label = lastObj
+    // page group: selector
+    //
+main_Receiver_11_out_1[cache: 0] = lastObj;
+    // 
+    // node Receiver[50]: x = 201, y = 9, inputs = 1, label = newPoke
+    // page group: selector
+    //
+main_Receiver_50_out_1[cache: 0] = newPoke;
+    // 
+    // node Receiver[17]: x = 33, y = 169, inputs = 1, label = object
+    // page group: window
+    //
+main_Receiver_17_out_1[cache: 0] = object;
+    // 
+    // node Compute[42]: x = 35, y = 76, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.0"
+    // page group: window
+    // expression: value = a.0
+    // name[2]: value = a
+    //
+main_Compute_42_out_1 = 
+    Compute(
+    main_Compute_42_in_1,
+    main_Vector_1_out_1
+    ) [instance: 42, cache: 1];
+    // 
+    // node Compute[43]: x = 147, y = 93, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0.1 + 0.99) / $0.0"
+    // page group: window
+    // expression: value = (a.1 + 0.99) / a.0
+    // name[2]: value = a
+    //
+main_Compute_43_out_1 = 
+    Compute(
+    main_Compute_43_in_1,
+    main_Vector_1_out_1
+    ) [instance: 43, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 139, y = 204, inputs = 9, label = AutoCamera
+    // input[2]: visible = 0
+    // input[3]: defaulting = 1, visible = 0, type = 5, value = 3.0
+    // input[4]: visible = 1
+    // input[5]: visible = 1
+    // page group: window
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Receiver_17_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_Compute_42_out_1,
+    main_Compute_43_out_1,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[43]: x = 23, y = 258, inputs = 1, label = initCamera
+    // page group: window
+    //
+initCamera = main_AutoCamera_1_out_1;
+    // 
+    // node Receiver[62]: x = 288, y = 527, inputs = 1, label = initCamera
+    // page group: window
+    //
+main_Receiver_62_out_1[cache: 0] = initCamera;
+    // 
+    // node GetGlobal[13]: x = 404, y = 564, inputs = 3, label = GetGlobal
+    // page group: window
+    //
+main_GetGlobal_13_out_1,
+main_GetGlobal_13_out_2 = 
+    GetGlobal(
+    main_Receiver_62_out_1,
+    main_GetGlobal_13_in_2,
+    main_GetGlobal_13_in_3
+    ) [instance: 13, cache: 1];
+    // 
+    // node Transmitter[42]: x = 296, y = 664, inputs = 1, label = lastCamera
+    // page group: window
+    //
+lastCamera = main_GetGlobal_13_out_1;
+    // 
+    // node Receiver[8]: x = 309, y = 18, inputs = 1, label = lastCamera
+    // page group: selector
+    //
+main_Receiver_8_out_1[cache: 0] = lastCamera;
+    // 
+    // node Route[1]: x = 215, y = 99, inputs = 2, outputs = 2, label = Route
+    // page group: selector
+    //
+main_Route_1_out_1,
+main_Route_1_out_2 = 
+    Route(
+    main_Receiver_50_out_1,
+    main_Receiver_8_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Pick[1]: x = 39, y = 133, inputs = 9, label = Pick_1
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Pick_1"
+    // input[3]: visible = 1
+    // input[6]: visible = 1
+    // input[7]: visible = 1
+    // input[8]: visible = 1
+    // input[9]: visible = 1
+    // page group: selector
+    //
+main_Pick_1_out_1 = 
+    Pick(
+    main_Pick_1_in_1,
+    main_Pick_1_in_2,
+    main_Receiver_7_out_1,
+    main_Pick_1_in_4,
+    main_Pick_1_in_5,
+    main_Pick_1_in_6,
+    main_Pick_1_in_7,
+    main_Receiver_11_out_1,
+    main_Route_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Inquire[2]: x = 116, y = 225, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is null"
+    // page group: selector
+    //
+main_Inquire_2_out_1 = 
+    Inquire(
+    main_Pick_1_out_1,
+    main_Inquire_2_in_2,
+    main_Inquire_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Inquire[3]: x = 205, y = 218, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is empty"
+    // page group: selector
+    //
+main_Inquire_3_out_1 = 
+    Inquire(
+    main_Pick_1_out_1,
+    main_Inquire_3_in_2,
+    main_Inquire_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[3]: x = 155, y = 295, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 || $1 == 1 ? 0 : 1"
+    // page group: selector
+    // expression: value = a == 1 || b == 1 ? 0 : 1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_3_out_1 = 
+    Compute(
+    main_Compute_3_in_1,
+    main_Inquire_2_out_1,
+    main_Inquire_3_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Switch[30]: x = 353, y = 427, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: selector
+    //
+main_Switch_30_out_1 = 
+    Switch(
+    main_Compute_59_out_1,
+    main_Compute_3_out_1,
+    main_Switch_30_in_3
+    ) [instance: 30, cache: 1];
+    // 
+    // node Transmitter[35]: x = 365, y = 516, inputs = 1, label = newPick
+    // page group: selector
+    //
+newPick = main_Switch_30_out_1;
+    // 
+    // node Receiver[85]: x = 121, y = 11, inputs = 1, label = newPick
+    // page group: args
+    //
+main_Receiver_85_out_1[cache: 0] = newPick;
+    // 
+    // node Compute[51]: x = 51, y = 89, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($0 == 1)  ? (($1 == 1) ? 1 : 2) : 3"
+    // page group: args
+    // expression: value = (a == 1)  ? ((b == 1) ? 1 : 2) : 3
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_51_out_1 = 
+    Compute(
+    main_Compute_51_in_1,
+    main_Receiver_86_out_1,
+    main_Receiver_85_out_1
+    ) [instance: 51, cache: 1];
+    // 
+    // node Transmitter[58]: x = 49, y = 164, inputs = 1, label = pickType
+    // page group: args
+    //
+pickType = main_Compute_51_out_1;
+    // 
+    // node Receiver[88]: x = 6, y = 348, inputs = 1, label = pickType
+    // page group: args
+    //
+main_Receiver_88_out_1[cache: 0] = pickType;
+    // 
+    // node Receiver[81]: x = 14, y = 480, inputs = 1, label = lastObj
+    // page group: selector
+    //
+main_Receiver_81_out_1[cache: 0] = lastObj;
+    // 
+    // node Inquire[22]: x = 11, y = 558, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "member names"
+    // page group: selector
+    //
+main_Inquire_22_out_1 = 
+    Inquire(
+    main_Receiver_81_out_1,
+    main_Inquire_22_in_2,
+    main_Inquire_22_in_3
+    ) [instance: 22, cache: 1];
+    // 
+    // node Route[2]: x = 73, y = 381, inputs = 2, outputs = 2, label = Route
+    // page group: selector
+    //
+main_Route_2_out_1,
+main_Route_2_out_2 = 
+    Route(
+    main_Compute_3_out_1,
+    main_Pick_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Extract[1]: x = 102, y = 466, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "pick paths"
+    // page group: selector
+    //
+main_Extract_1_out_1 = 
+    Extract(
+    main_Route_2_out_1,
+    main_Extract_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[1]: x = 109, y = 538, inputs = 3, label = Select
+    // input[2]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: selector
+    //
+main_Select_1_out_1 = 
+    Select(
+    main_Extract_1_out_1,
+    main_Select_1_in_2,
+    main_Select_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[7]: x = 87, y = 633, inputs = 3, label = Select
+    // page group: selector
+    //
+main_Select_7_out_1 = 
+    Select(
+    main_Inquire_22_out_1,
+    main_Select_1_out_1,
+    main_Select_7_in_3
+    ) [instance: 7, cache: 1];
+    // 
+    // node Transmitter[54]: x = 156, y = 671, inputs = 1, label = pickLabel
+    // page group: selector
+    //
+pickLabel = main_Select_7_out_1;
+    // 
+    // node Receiver[82]: x = 50, y = 263, inputs = 1, label = pickLabel
+    // page group: args
+    //
+main_Receiver_82_out_1[cache: 0] = pickLabel;
+    // 
+    // node GetGlobal[15]: x = 559, y = 109, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: args
+    //
+main_GetGlobal_15_out_1,
+main_GetGlobal_15_out_2 = 
+    GetGlobal(
+    main_GetGlobal_15_in_1,
+    main_GetGlobal_15_in_2,
+    main_GetGlobal_15_in_3
+    ) [instance: 15, cache: 1];
+    // 
+    // node Compute[50]: x = 515, y = 176, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+1"
+    // page group: args
+    // expression: value = a+1
+    // name[2]: value = a
+    //
+main_Compute_50_out_1 = 
+    Compute(
+    main_Compute_50_in_1,
+    main_GetGlobal_15_out_1
+    ) [instance: 50, cache: 1];
+    // 
+    // node Format[2]: x = 342, y = 228, inputs = 2, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "_label%d"
+    // page group: args
+    //
+main_Format_2_out_1 = 
+    Format(
+    main_Format_2_in_1,
+    main_Compute_50_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[57]: x = 369, y = 310, inputs = 1, label = newLabel
+    // page group: args
+    //
+newLabel = main_Format_2_out_1;
+    // 
+    // node Receiver[89]: x = 146, y = 262, inputs = 1, label = newLabel
+    // page group: args
+    //
+main_Receiver_89_out_1[cache: 0] = newLabel;
+    // 
+    // node GetGlobal[16]: x = 253, y = 322, inputs = 3, label = GetGlobal
+    // input[1]: defaulting = 0, visible = 1, type = 67108863, value = "NULL"
+    // page group: args
+    //
+main_GetGlobal_16_out_1,
+main_GetGlobal_16_out_2 = 
+    GetGlobal(
+    main_GetGlobal_16_in_1,
+    main_GetGlobal_16_in_2,
+    main_GetGlobal_16_in_3
+    ) [instance: 16, cache: 1];
+    // 
+    // node Switch[37]: x = 110, y = 371, inputs = 4, label = Switch
+    // page group: args
+    //
+main_Switch_37_out_1 = 
+    Switch(
+    main_Receiver_88_out_1,
+    main_Receiver_82_out_1,
+    main_Receiver_89_out_1,
+    main_GetGlobal_16_out_1
+    ) [instance: 37, cache: 1];
+    // 
+    // node Transmitter[56]: x = 87, y = 455, inputs = 1, label = label
+    // page group: args
+    //
+label = main_Switch_37_out_1;
+    // 
+    // node Receiver[90]: x = 114, y = 7, inputs = 1, label = label
+    // page group: mode
+    //
+main_Receiver_90_out_1[cache: 0] = label;
+    // 
+    // node Inquire[25]: x = 67, y = 103, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "has member + 1"
+    // page group: mode
+    //
+main_Inquire_25_out_1 = 
+    Inquire(
+    main_Receiver_91_out_1,
+    main_Inquire_25_in_2,
+    main_Receiver_90_out_1
+    ) [instance: 25, cache: 1];
+    // 
+    // node Route[20]: x = 277, y = 148, inputs = 2, outputs = 2, label = Route
+    // page group: mode
+    //
+main_Route_20_out_1,
+main_Route_20_out_2 = 
+    Route(
+    main_Inquire_25_out_1,
+    main_Receiver_90_out_1
+    ) [instance: 20, cache: 1];
+    // 
+    // node Select[10]: x = 264, y = 265, inputs = 3, label = Select
+    // page group: mode
+    //
+main_Select_10_out_1 = 
+    Select(
+    main_Receiver_93_out_1,
+    main_Route_20_out_2,
+    main_Select_10_in_3
+    ) [instance: 10, cache: 1];
+    // 
+    // node Attribute[4]: x = 345, y = 242, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "object type"
+    // page group: mode
+    //
+main_Attribute_4_out_1 = 
+    Attribute(
+    main_Select_10_out_1,
+    main_Attribute_4_in_2
+    ) [instance: 4, cache: 1];
+    // 
+    // node Receiver[92]: x = 19, y = 181, inputs = 1, label = label
+    // page group: mode
+    //
+main_Receiver_92_out_1[cache: 0] = label;
+    // 
+    // node Inquire[26]: x = 23, y = 268, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "NULL"
+    // page group: mode
+    //
+main_Inquire_26_out_1 = 
+    Inquire(
+    main_Receiver_92_out_1,
+    main_Inquire_26_in_2,
+    main_Inquire_26_in_3
+    ) [instance: 26, cache: 1];
+    // 
+    // node Compute[54]: x = 51, y = 357, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 ? 1 : 2"
+    // page group: mode
+    // expression: value = a == 1 ? 1 : 2
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_54_out_1 = 
+    Compute(
+    main_Compute_54_in_1,
+    main_Inquire_26_out_1,
+    main_Compute_54_in_3
+    ) [instance: 54, cache: 1];
+    // 
+    // node Receiver[58]: x = 7, y = 23, inputs = 1, label = newPick
+    // page group: highlight
+    //
+main_Receiver_58_out_1[cache: 0] = newPick;
+    // 
+    // node Compute[55]: x = 0, y = 220, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 0 ? 2 : 1"
+    // page group: highlight
+    // expression: value = a == 0 ? 2 : 1
+    // name[2]: value = a
+    //
+main_Compute_55_out_1 = 
+    Compute(
+    main_Compute_55_in_1,
+    main_Receiver_58_out_1
+    ) [instance: 55, cache: 1];
+    // 
+    // node Inquire[27]: x = 346, y = 316, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "string match"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "transformed object"
+    // page group: mode
+    //
+main_Inquire_27_out_1 = 
+    Inquire(
+    main_Attribute_4_out_1,
+    main_Inquire_27_in_2,
+    main_Inquire_27_in_3
+    ) [instance: 27, cache: 1];
+    // 
+    // node Compute[57]: x = 254, y = 369, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 == 1 ? 0 : 1"
+    // page group: mode
+    // expression: value = a == 1 ? 0 : 1
+    // name[2]: value = a
+    //
+main_Compute_57_out_1 = 
+    Compute(
+    main_Compute_57_in_1,
+    main_Inquire_27_out_1
+    ) [instance: 57, cache: 1];
+    // 
+    // node Switch[39]: x = 161, y = 379, inputs = 3, label = Switch
+    // input[2]: defaulting = 0, visible = 1, type = 67108863, value = 1
+    // page group: mode
+    //
+main_Switch_39_out_1 = 
+    Switch(
+    main_Inquire_25_out_1,
+    main_Switch_39_in_2,
+    main_Compute_57_out_1
+    ) [instance: 39, cache: 1];
+    // 
+    // node Switch[38]: x = 131, y = 448, inputs = 3, label = Switch
+    // input[2]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: mode
+    //
+main_Switch_38_out_1 = 
+    Switch(
+    main_Compute_54_out_1,
+    main_Switch_38_in_2,
+    main_Switch_39_out_1
+    ) [instance: 38, cache: 1];
+    // 
+    // node Transmitter[60]: x = 0, y = 526, inputs = 1, label = interactionMode
+    // page group: mode
+    //
+interactionMode = main_Switch_38_out_1;
+    // 
+    // node Receiver[53]: x = 311, y = 332, inputs = 1, label = interactionMode
+    // page group: window
+    //
+main_Receiver_53_out_1[cache: 0] = interactionMode;
+    // 
+    // node Receiver[47]: x = 555, y = 411, inputs = 1, label = label
+    // page group: window
+    //
+main_Receiver_47_out_1[cache: 0] = label;
+    // 
+    // node SuperviseState[1]: x = 320, y = 425, inputs = 9, label = SuperviseState
+    // input[9]: defaulting = 1, visible = 1, type = 67108863, value = "foobar"
+    // page group: window
+    //
+main_SuperviseState_1_out_1,
+main_SuperviseState_1_out_2,
+main_SuperviseState_1_out_3,
+main_SuperviseState_1_out_4 = 
+    SuperviseState(
+    main_SuperviseWindow_1_out_1,
+    main_AutoCamera_1_out_1,
+    main_SuperviseState_1_in_3,
+    main_Receiver_17_out_1,
+    main_SuperviseState_1_in_5,
+    main_SuperviseWindow_1_out_2,
+    main_SuperviseWindow_1_out_3,
+    main_Receiver_53_out_1,
+    main_Receiver_47_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[28]: x = 200, y = 535, inputs = 1, label = curObj
+    // page group: window
+    //
+curObj = main_SuperviseState_1_out_1;
+    // 
+    // node Receiver[46]: x = 106, y = 35, inputs = 1, label = curObj
+    // page group: highlight
+    //
+main_Receiver_46_out_1[cache: 0] = curObj;
+    // 
+    // node Route[13]: x = 139, y = 171, inputs = 2, outputs = 2, label = Route
+    // page group: highlight
+    //
+main_Route_13_out_1,
+main_Route_13_out_2 = 
+    Route(
+    main_Receiver_58_out_1,
+    main_Receiver_46_out_1
+    ) [instance: 13, cache: 1];
+    // 
+    // node Transmitter[62]: x = 178, y = 585, inputs = 1, label = pickIndex
+    // page group: selector
+    //
+pickIndex = main_Select_1_out_1;
+    // 
+    // node Receiver[35]: x = 227, y = 151, inputs = 1, label = pickIndex
+    // page group: highlight
+    //
+main_Receiver_35_out_1[cache: 0] = pickIndex;
+    // 
+    // node ShowSelected[1]: x = 124, y = 256, inputs = 2, label = ShowSelected
+    // page group: highlight
+    //
+main_ShowSelected_1_out_1 = 
+    ShowSelected(
+    main_Route_13_out_1,
+    main_Receiver_35_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[31]: x = 40, y = 318, inputs = 3, label = Switch
+    // page group: highlight
+    //
+main_Switch_31_out_1 = 
+    Switch(
+    main_Compute_55_out_1,
+    main_ShowSelected_1_out_1,
+    main_Receiver_46_out_1
+    ) [instance: 31, cache: 1];
+    // 
+    // node Transmitter[11]: x = 42, y = 398, inputs = 1, label = scene
+    // page group: highlight
+    //
+scene = main_Switch_31_out_1;
+    // 
+    // node Receiver[48]: x = 159, y = 31, inputs = 1, label = scene
+    // page group: main
+    //
+main_Receiver_48_out_1[cache: 0] = scene;
+    // 
+    // node Selector[5]: x = 236, y = 24, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_5"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "software" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 0 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "hardware" "software" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // output[1]: visible = 1, type = 29, value = 0 
+    // output[2]: visible = 1, type = 32, value = "software" 
+    // page group: main
+    //
+    // 
+    // node Options[5]: x = 206, y = 122, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    // input[3]: defaulting = 1, visible = 1, type = 32, value = "hardware"
+    // page group: main
+    //
+main_Options_5_out_1 = 
+    Options(
+    main_Receiver_48_out_1,
+    main_Options_5_in_2,
+    main_Selector_5_out_2
+    ) [instance: 5, cache: 1];
+    // 
+    // node Transmitter[41]: x = 520, y = 615, inputs = 1, label = curCamera
+    // page group: window
+    //
+curCamera = main_SuperviseState_1_out_2;
+    // 
+    // node Receiver[20]: x = 333, y = 82, inputs = 1, label = curCamera
+    // page group: main
+    //
+main_Receiver_20_out_1[cache: 0] = curCamera;
+    // 
+    // node Transmitter[9]: x = 520, y = 511, inputs = 1, label = window
+    // page group: window
+    //
+window = main_SuperviseState_1_out_3;
+    // 
+    // node Receiver[21]: x = 450, y = 128, inputs = 1, label = window
+    // page group: main
+    //
+main_Receiver_21_out_1[cache: 0] = window;
+    // 
+    // node Display[2]: x = 289, y = 207, inputs = 8, label = Display
+    // input[3]: visible = 1
+    // page group: main
+    // depth: value = 24
+    // window: position = (0.0000,0.0000), size = 0.5109x0.5127
+    //
+main_Display_2_out_1[cache: 2] = 
+    Display(
+    main_Options_5_out_1,
+    main_Receiver_20_out_1,
+    main_Receiver_21_out_1,
+    main_Display_2_in_4,
+    main_Display_2_in_5,
+    main_Display_2_in_6,
+    main_Display_2_in_7,
+    main_Display_2_in_8
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[87]: x = 477, y = 252, inputs = 1, label = pickType
+    // page group: args
+    //
+main_Receiver_87_out_1[cache: 0] = pickType;
+    // 
+    // node Route[19]: x = 582, y = 271, inputs = 2, outputs = 2, label = Route
+    // page group: args
+    //
+main_Route_19_out_1,
+main_Route_19_out_2 = 
+    Route(
+    main_Receiver_87_out_1,
+    main_Compute_50_out_1
+    ) [instance: 19, cache: 1];
+    // 
+    // node SetGlobal[9]: x = 96, y = 631, inputs = 3, label = SetGlobal
+    // page group: window
+    //
+    SetGlobal(
+    main_SuperviseState_1_out_1,
+    main_GetGlobal_12_out_2,
+    main_SetGlobal_9_in_3
+    ) [instance: 9, cache: 1];
+    // 
+    // node SetGlobal[10]: x = 413, y = 664, inputs = 3, label = SetGlobal
+    // page group: window
+    //
+    SetGlobal(
+    main_SuperviseState_1_out_2,
+    main_GetGlobal_13_out_2,
+    main_SetGlobal_10_in_3
+    ) [instance: 10, cache: 1];
+    // 
+    // node SetGlobal[12]: x = 671, y = 320, inputs = 3, label = SetGlobal
+    // page group: args
+    //
+    SetGlobal(
+    main_Route_19_out_2,
+    main_GetGlobal_15_out_2,
+    main_SetGlobal_12_in_3
+    ) [instance: 12, cache: 1];
+    // 
+    // node SetGlobal[13]: x = 211, y = 451, inputs = 3, label = SetGlobal
+    // page group: args
+    //
+    SetGlobal(
+    main_Switch_37_out_1,
+    main_GetGlobal_16_out_2,
+    main_SetGlobal_13_in_3
+    ) [instance: 13, cache: 1];
+    // 
+    // node Transmitter[18]: x = 384, y = 269, inputs = 1, label = size
+    // page group: window
+    //
+size = main_SuperviseWindow_1_out_2;
+    //
+    // decorator Annotate	pos=(184,51) size=399x60 style(Label), value = <NULL>
+    // annotation user_begin: 141
+    // annotation user: If a new member has been picked, call the ShowSelected
+    // annotation user: macro to highlight the selected entry.  Otherwise, just
+    // annotation user: pass the prior object through.
+    // annotation user_end: <NULL>
+    // page group: highlight
+    //
+    // decorator Annotate	pos=(153,116) size=342x76 style(Label), value = <NULL>
+    // annotation user_begin: 125
+    // annotation user: pickType:
+    // annotation user:      1 if a new member has been picked
+    // annotation user:      2 if a poke was made, but nothing was picked
+    // annotation user:      3 if no poke was made
+    // annotation user_end: <NULL>
+    // page group: args
+    //
+    // decorator Annotate	pos=(345,385) size=339x76 style(Label), value = <NULL>
+    // annotation user_begin: 183
+    // annotation user: Here we create new object labels as necessary.
+    // annotation user: A GetGlobal/SetGlobal pair is used to maintain
+    // annotation user: a count of new labels used, and is bumped only
+    // annotation user: if a poke was made, but nothing was picked
+    // annotation user_end: <NULL>
+    // page group: args
+    //
+    // decorator Annotate	pos=(1,517) size=403x92 style(Label), value = <NULL>
+    // annotation user_begin: 223
+    // annotation user: Here we determine the actual argument.  Its either
+    // annotation user: the name of a newly picked member of the scene group;
+    // annotation user: a manufactured name if a poke was made without picking
+    // annotation user: anything; or remains the same as last time if no poke
+    // annotation user: was made.
+    // annotation user_end: <NULL>
+    // page group: args
+    //
+    // decorator Annotate	pos=(505,314) size=166x44 style(Label), value = <NULL>
+    // annotation user_begin: 44
+    // annotation user: newPoke is 1 if a poke
+    // annotation user: was made, 2 otherwise
+    // annotation user_end: <NULL>
+    // page group: selector
+    //
+    // decorator Annotate	pos=(296,115) size=225x44 style(Label), value = <NULL>
+    // annotation user_begin: 59
+    // annotation user: This route turns off the picking
+    // annotation user: logic if no poke was made.
+    // annotation user_end: <NULL>
+    // page group: selector
+    //
+    // decorator Annotate	pos=(246,288) size=216x44 style(Label), value = <NULL>
+    // annotation user_begin: 49
+    // annotation user: Here we determine if anything
+    // annotation user: was actually picked
+    // annotation user_end: <NULL>
+    // page group: selector
+    //
+    // decorator Annotate	pos=(439,412) size=294x60 style(Label), value = <NULL>
+    // annotation user_begin: 110
+    // annotation user: If a poke was made, then newPick is 1 if
+    // annotation user: something was picked, 0 otherwise.  If no
+    // annotation user: poke was made, newPick is 0
+    // annotation user_end: <NULL>
+    // page group: selector
+    //
+    // decorator Annotate	pos=(245,677) size=423x76 style(Label), value = <NULL>
+    // annotation user_begin: 208
+    // annotation user: If something was picked, get its label.  This is done by
+    // annotation user: extracting the 'pick paths' component of the pick structure,
+    // annotation user: selecting off the 0-th entry, and using the result to index
+    // annotation user: the list of scene member names
+    // annotation user_end: <NULL>
+    // page group: selector
+    //
+    // decorator Annotate	pos=(5,284) size=137x44 style(Label), value = <NULL>
+    // annotation user_begin: 31
+    // annotation user: Read in the initial 
+    // annotation user: scene data
+    // annotation user_end: <NULL>
+    // page group: main
+    //
+    // decorator Annotate	pos=(236,294) size=339x60 style(Label), value = <NULL>
+    // annotation user_begin: 126
+    // annotation user: Render the current scene, using the current 
+    // annotation user: camera, in the display window.  Use Options to 
+    // annotation user: turn hardware rendering on or off
+    // annotation user_end: <NULL>
+    // page group: main
+    //
+    // decorator Annotate	pos=(425,269) size=445x92 style(Label), value = <NULL>
+    // annotation user_begin: 312
+    // annotation user: If the scene object contains a member matching the label,
+    // annotation user: then we extract the object and look at its 'object type' attribute
+    // annotation user: to determine the interaction mode.  If its 'transformed object',
+    // annotation user: we use the 'slide' interactor (mode 0) to manipulate it.  If not, it
+    // annotation user: must be a caption, so we use 'caption' mode (mode 1).
+    // annotation user_end: <NULL>
+    // page group: mode
+    //
+    // decorator Annotate	pos=(152,520) size=282x76 style(Label), value = <NULL>
+    // annotation user_begin: 141
+    // annotation user: ... unless the label is 'NULL', indicating
+    // annotation user: that no pokes have been made.  In that
+    // annotation user: case, use interaction mode -1 (eg. no 
+    // annotation user: direct interaction).
+    // annotation user_end: <NULL>
+    // page group: mode
+    //
+    // decorator Annotate	pos=(164,8) size=283x60 style(Label), value = <NULL>
+    // annotation user_begin: 111
+    // annotation user: Here we process the initial window size.
+    // annotation user: AutoCamera needs width/aspect, and 
+    // annotation user: SuperviseWindow needs width/height
+    // annotation user_end: <NULL>
+    // page group: window
+    //
+    // decorator Annotate	pos=(367,107) size=303x60 style(Label), value = <NULL>
+    // annotation user_begin: 102
+    // annotation user: SuperviseWindow creates the window and
+    // annotation user: watches it for button and keypress events
+    // annotation user: and for resize events
+    // annotation user_end: <NULL>
+    // page group: window
+    //
+    // decorator Annotate	pos=(653,354) size=281x60 style(Label), value = <NULL>
+    // annotation user_begin: 104
+    // annotation user: Here we remove all but right-button
+    // annotation user: button-press events, since only these 
+    // annotation user: are used in the picking logic
+    // annotation user_end: <NULL>
+    // page group: window
+    //
+    // decorator Annotate	pos=(0,339) size=299x92 style(Label), value = <NULL>
+    // annotation user_begin: 181
+    // annotation user: SuperviseState manages the current 
+    // annotation user: state of the object and camera.  The initial
+    // annotation user: states are passed in.  These are then 
+    // annotation user: modified interactively.  The outputs show
+    // annotation user: their current state
+    // annotation user_end: <NULL>
+    // page group: window
+    //
+    // decorator Annotate	pos=(27,703) size=249x92 style(Label), value = <NULL>
+    // annotation user_begin: 137
+    // annotation user: We always pick using the last
+    // annotation user: camera and object state since
+    // annotation user: these are what we are looking at 
+    // annotation user: when we pick.  Here we keep track 
+    // annotation user: of them.
+    // annotation user_end: <NULL>
+    // page group: window
+    //
+    // decorator Annotate	pos=(181,17) size=423x92 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 279
+    // annotation user: IMPORTANT NOTE: you must build the runtime loadable
+    // annotation user: UserInteractors before running this net. Please see the
+    // annotation user: ReadMe file in samples/supervise/complexdemo.
+    // annotation user: This net should also be run using the script "demo" in
+    // annotation user: that directory, to set up necessary environment variables.
+    // annotation user_end: <NULL>
+    // page group: mode
+// network: end of macro body
+}
+main_FileSelector_2_out_1 = "data/frags.dx";
+main_Import_2_in_2 = NULL;
+main_Import_2_in_3 = NULL;
+main_Import_2_in_4 = NULL;
+main_Import_2_in_5 = NULL;
+main_Import_2_in_6 = NULL;
+main_Import_2_out_1 = NULL;
+main_Transmitter_59_out_1 = NULL;
+main_Receiver_49_out_1 = NULL;
+main_GetGlobal_12_in_2 = NULL;
+main_GetGlobal_12_in_3 = NULL;
+main_GetGlobal_12_out_1 = NULL;
+main_GetGlobal_12_out_2 = NULL;
+main_Transmitter_30_out_1 = NULL;
+main_Receiver_93_out_1 = NULL;
+main_Receiver_91_out_1 = NULL;
+main_Vector_1_in_1 = "Vector_1";
+main_Vector_1_in_2 = NULL;
+main_Vector_1_in_3 = [ 512 512 ];
+main_Vector_1_in_4 = NULL;
+main_Vector_1_in_5 = NULL;
+main_Vector_1_in_6 = NULL;
+main_Vector_1_in_7 = NULL;
+main_Vector_1_in_8 = NULL;
+main_Vector_1_in_9 = NULL;
+main_Vector_1_in_10 = NULL;
+main_Vector_1_in_11 = NULL;
+main_Vector_1_out_1 = [ 512 512 ];
+main_Compute_32_in_1 = "int($0)";
+main_Compute_32_out_1 = NULL;
+main_SuperviseWindow_1_in_1 = "Peru";
+main_SuperviseWindow_1_in_2 = NULL;
+main_SuperviseWindow_1_in_4 = NULL;
+main_SuperviseWindow_1_in_5 = NULL;
+main_SuperviseWindow_1_in_6 = NULL;
+main_SuperviseWindow_1_in_7 = NULL;
+main_SuperviseWindow_1_in_8 = NULL;
+main_SuperviseWindow_1_in_9 = NULL;
+main_SuperviseWindow_1_in_10 = NULL;
+main_SuperviseWindow_1_out_1 = NULL;
+main_SuperviseWindow_1_out_2 = NULL;
+main_SuperviseWindow_1_out_3 = NULL;
+main_Inquire_17_in_2 = "is null + 1";
+main_Inquire_17_in_3 = NULL;
+main_Inquire_17_out_1 = NULL;
+main_Include_1_in_2 = [4 -9999999999.0 -9999999999.0 2 -9999999999.0 -9999999999.0 -9999999999.0 -9999999999.0];
+main_Include_1_in_3 = [4 9999999999.0 9999999999.0  2 9999999999.0 9999999999.0 9999999999.0 9999999999.0];
+main_Include_1_in_4 = NULL;
+main_Include_1_in_5 = NULL;
+main_Include_1_in_6 = NULL;
+main_Include_1_out_1 = NULL;
+main_Switch_32_out_1 = NULL;
+main_Transmitter_7_out_1 = NULL;
+main_Receiver_60_out_1 = NULL;
+main_Inquire_15_in_2 = "is empty";
+main_Inquire_15_in_3 = NULL;
+main_Inquire_15_out_1 = NULL;
+main_Inquire_28_in_2 = "is null";
+main_Inquire_28_in_3 = NULL;
+main_Inquire_28_out_1 = NULL;
+main_Compute_58_in_1 = "$0 == 1 || $1 == 1 ? 0 : 1";
+main_Compute_58_out_1 = NULL;
+main_Transmitter_31_out_1 = NULL;
+main_Receiver_86_out_1 = NULL;
+main_Receiver_80_out_1 = NULL;
+main_Compute_59_in_1 = "$0 == 0 ? 2 : 1";
+main_Compute_59_in_3 = NULL;
+main_Compute_59_out_1 = NULL;
+main_Receiver_7_out_1 = NULL;
+main_Receiver_11_out_1 = NULL;
+main_Receiver_50_out_1 = NULL;
+main_Receiver_17_out_1 = NULL;
+main_Compute_42_in_1 = "$0.0";
+main_Compute_42_out_1 = NULL;
+main_Compute_43_in_1 = "($0.1 + 0.99) / $0.0";
+main_Compute_43_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Transmitter_43_out_1 = NULL;
+main_Receiver_62_out_1 = NULL;
+main_GetGlobal_13_in_2 = NULL;
+main_GetGlobal_13_in_3 = NULL;
+main_GetGlobal_13_out_1 = NULL;
+main_GetGlobal_13_out_2 = NULL;
+main_Transmitter_42_out_1 = NULL;
+main_Receiver_8_out_1 = NULL;
+main_Route_1_out_1 = NULL;
+main_Pick_1_in_1 = "Pick_1";
+main_Pick_1_in_2 = NULL;
+main_Pick_1_in_4 = NULL;
+main_Pick_1_in_5 = NULL;
+main_Pick_1_in_6 = NULL;
+main_Pick_1_in_7 = NULL;
+main_Pick_1_out_1 = NULL;
+main_Inquire_2_in_2 = "is null";
+main_Inquire_2_in_3 = NULL;
+main_Inquire_2_out_1 = NULL;
+main_Inquire_3_in_2 = "is empty";
+main_Inquire_3_in_3 = NULL;
+main_Inquire_3_out_1 = NULL;
+main_Compute_3_in_1 = "$0 == 1 || $1 == 1 ? 0 : 1";
+main_Compute_3_out_1 = NULL;
+main_Switch_30_in_3 = 0;
+main_Switch_30_out_1 = NULL;
+main_Transmitter_35_out_1 = NULL;
+main_Receiver_85_out_1 = NULL;
+main_Compute_51_in_1 = "($0 == 1)  ? (($1 == 1) ? 1 : 2) : 3";
+main_Compute_51_out_1 = NULL;
+main_Transmitter_58_out_1 = NULL;
+main_Receiver_88_out_1 = NULL;
+main_Receiver_81_out_1 = NULL;
+main_Inquire_22_in_2 = "member names";
+main_Inquire_22_in_3 = NULL;
+main_Inquire_22_out_1 = NULL;
+main_Route_2_out_1 = NULL;
+main_Extract_1_in_2 = "pick paths";
+main_Extract_1_out_1 = NULL;
+main_Select_1_in_2 = 0;
+main_Select_1_in_3 = NULL;
+main_Select_1_out_1 = NULL;
+main_Select_7_in_3 = NULL;
+main_Select_7_out_1 = NULL;
+main_Transmitter_54_out_1 = NULL;
+main_Receiver_82_out_1 = NULL;
+main_GetGlobal_15_in_1 = 0;
+main_GetGlobal_15_in_2 = NULL;
+main_GetGlobal_15_in_3 = NULL;
+main_GetGlobal_15_out_1 = NULL;
+main_GetGlobal_15_out_2 = NULL;
+main_Compute_50_in_1 = "$0+1";
+main_Compute_50_out_1 = NULL;
+main_Format_2_in_1 = "_label%d";
+main_Format_2_out_1 = NULL;
+main_Transmitter_57_out_1 = NULL;
+main_Receiver_89_out_1 = NULL;
+main_GetGlobal_16_in_1 = "NULL";
+main_GetGlobal_16_in_2 = NULL;
+main_GetGlobal_16_in_3 = NULL;
+main_GetGlobal_16_out_1 = NULL;
+main_GetGlobal_16_out_2 = NULL;
+main_Switch_37_out_1 = NULL;
+main_Transmitter_56_out_1 = NULL;
+main_Receiver_90_out_1 = NULL;
+main_Inquire_25_in_2 = "has member + 1";
+main_Inquire_25_out_1 = NULL;
+main_Route_20_out_2 = NULL;
+main_Select_10_in_3 = NULL;
+main_Select_10_out_1 = NULL;
+main_Attribute_4_in_2 = "object type";
+main_Attribute_4_out_1 = NULL;
+main_Receiver_92_out_1 = NULL;
+main_Inquire_26_in_2 = "string match";
+main_Inquire_26_in_3 = "NULL";
+main_Inquire_26_out_1 = NULL;
+main_Compute_54_in_1 = "$0 == 1 ? 1 : 2";
+main_Compute_54_in_3 = NULL;
+main_Compute_54_out_1 = NULL;
+main_Receiver_58_out_1 = NULL;
+main_Compute_55_in_1 = "$0 == 0 ? 2 : 1";
+main_Compute_55_out_1 = NULL;
+main_Inquire_27_in_2 = "string match";
+main_Inquire_27_in_3 = "transformed object";
+main_Inquire_27_out_1 = NULL;
+main_Compute_57_in_1 = "$0 == 1 ? 0 : 1";
+main_Compute_57_out_1 = NULL;
+main_Switch_39_in_2 = 1;
+main_Switch_39_out_1 = NULL;
+main_Switch_38_in_2 = 0;
+main_Switch_38_out_1 = NULL;
+main_Transmitter_60_out_1 = NULL;
+main_Receiver_53_out_1 = NULL;
+main_Receiver_47_out_1 = NULL;
+main_SuperviseState_1_in_3 = NULL;
+main_SuperviseState_1_in_5 = NULL;
+main_SuperviseState_1_out_1 = NULL;
+main_SuperviseState_1_out_2 = NULL;
+main_SuperviseState_1_out_3 = NULL;
+main_Transmitter_28_out_1 = NULL;
+main_Receiver_46_out_1 = NULL;
+main_Route_13_out_1 = NULL;
+main_Transmitter_62_out_1 = NULL;
+main_Receiver_35_out_1 = NULL;
+main_ShowSelected_1_out_1 = NULL;
+main_Switch_31_out_1 = NULL;
+main_Transmitter_11_out_1 = NULL;
+main_Receiver_48_out_1 = NULL;
+main_Selector_5_in_1 = "Selector_5";
+main_Selector_5_in_2 = "software" ;
+main_Selector_5_in_3 = 0 ;
+main_Selector_5_in_4 = NULL;
+main_Selector_5_in_5 = NULL;
+main_Selector_5_in_6 = NULL;
+main_Selector_5_in_7 = NULL;
+main_Selector_5_out_2 = "software" ;
+main_Options_5_in_2 = "rendering mode";
+main_Options_5_out_1 = NULL;
+main_Transmitter_41_out_1 = NULL;
+main_Receiver_20_out_1 = NULL;
+main_Transmitter_9_out_1 = NULL;
+main_Receiver_21_out_1 = NULL;
+main_Display_2_in_4 = NULL;
+main_Display_2_in_5 = NULL;
+main_Display_2_in_6 = NULL;
+main_Display_2_in_7 = NULL;
+main_Display_2_in_8 = NULL;
+main_Receiver_87_out_1 = NULL;
+main_Route_19_out_2 = NULL;
+main_SetGlobal_9_in_3 = NULL;
+main_SetGlobal_10_in_3 = NULL;
+main_SetGlobal_12_in_3 = NULL;
+main_SetGlobal_13_in_3 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

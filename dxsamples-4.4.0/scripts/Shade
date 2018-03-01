@@ -1,0 +1,17 @@
+// create an isosurface
+data = Import("watermolecule");
+isosurface = Isosurface(data,0.38);
+
+// create a camera and display
+camera = AutoCamera(isosurface);
+Display(isosurface,camera);
+
+// use the shade module to create faceted shading (equivalent to using
+// FaceNormals
+faceted = Shade(isosurface,how="faceted");
+Display(faceted, camera);
+
+// now use the shade module to increase the specular component and decrease
+// the diffuse component
+newiso = Shade(isosurface,specular=0.9, diffuse=0.1);
+Display(newiso,camera);

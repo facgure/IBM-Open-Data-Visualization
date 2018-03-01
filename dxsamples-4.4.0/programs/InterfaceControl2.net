@@ -1,0 +1,1293 @@
+//
+// time: Wed Apr  9 15:37:52 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+// CATEGORY Macros
+//
+// comment: This example uses the ManageImageWindow module to close the plot image window when so specified by the toggle interactor. Note that it is important to also turn off the rendering into that image window, using Route.
+// page assignment: import	order=2, windowed=0, showing=1
+// page assignment: plot	order=4, windowed=0, showing=0
+// page assignment: visualize	order=3, windowed=0, showing=0
+// workspace: width = 331, height = 352
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 196, y = 147, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    // page group: import
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[20]: x = 215, y = 290, inputs = 1, label = imported
+    // page group: import
+    //
+imported = main_Import_1_out_1;
+    // 
+    // node Receiver[30]: x = 59, y = 34, inputs = 1, label = imported
+    // page group: visualize
+    //
+main_Receiver_30_out_1[cache: 0] = imported;
+    // 
+    // node Isosurface[1]: x = 20, y = 144, inputs = 6, label = Isosurface
+    // input[2]: defaulting = 0, visible = 1, type = 16777221, value = { 0.300000 }
+    // page group: visualize
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Receiver_30_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[2]: x = 25, y = 237, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "green"
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 0.400000
+    // page group: visualize
+    //
+main_Color_2_out_1 = 
+    Color(
+    main_Isosurface_1_out_1,
+    main_Color_2_in_2,
+    main_Color_2_in_3,
+    main_Color_2_in_4,
+    main_Color_2_in_5
+    ) [instance: 2, cache: 1];
+    // 
+    // node ShowBox[1]: x = 105, y = 230, inputs = 1, label = ShowBox
+    // page group: visualize
+    //
+main_ShowBox_1_out_1,
+main_ShowBox_1_out_2 = 
+    ShowBox(
+    main_Receiver_30_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scalar[1]: x = 226, y = 18, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_1"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 0.00000
+    // input[4]: defaulting = 1, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = -1.0
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "5"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 5
+    // output[1]: visible = 1, type = 5, value = 0.00000
+    // page group: visualize
+    //
+    // 
+    // node Compute[2]: x = 214, y = 111, inputs = 2, label = Compute--construct a point at [1.0, y, -1.0], where y is provided by an interactor
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[1.0, $0, -1.0]"
+    // page group: visualize
+    // expression: value = [1.0, y, -1.0]
+    // name[2]: value = y
+    //
+main_Compute_2_out_1 = 
+    Compute(
+    main_Compute_2_in_1,
+    main_Scalar_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Grid[1]: x = 217, y = 180, inputs = 4, label = Grid- line extending in x direction
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "line"
+    // input[3]: defaulting = 0, visible = 1, type = 16777224, value = {[1.5, 0, 0]}
+    // input[4]: defaulting = 0, visible = 1, type = 16777217, value = {50}
+    // page group: visualize
+    //
+main_Grid_1_out_1 = 
+    Grid(
+    main_Compute_2_out_1,
+    main_Grid_1_in_2,
+    main_Grid_1_in_3,
+    main_Grid_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node ShowConnections[1]: x = 218, y = 254, inputs = 1, label = ShowConnections
+    // page group: visualize
+    //
+main_ShowConnections_1_out_1 = 
+    ShowConnections(
+    main_Grid_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 195, y = 337, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "red"
+    // page group: visualize
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_ShowConnections_1_out_1,
+    main_Color_1_in_2,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[1]: x = 90, y = 405, inputs = 3, label = Collect
+    // page group: visualize
+    //
+main_Collect_1_out_1 = 
+    Collect(
+    main_Color_2_out_1,
+    main_ShowBox_1_out_1,
+    main_Color_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[21]: x = 383, y = 503, inputs = 1, label = grid
+    // page group: visualize
+    //
+grid = main_Grid_1_out_1;
+    // 
+    // node Receiver[29]: x = 25, y = 21, inputs = 1, label = grid
+    // page group: plot
+    //
+main_Receiver_29_out_1[cache: 0] = grid;
+    // 
+    // node Receiver[28]: x = 105, y = 26, inputs = 1, label = imported
+    // page group: plot
+    //
+main_Receiver_28_out_1[cache: 0] = imported;
+    // 
+    // node Map[1]: x = 58, y = 101, inputs = 4, label = Map
+    // page group: plot
+    //
+main_Map_1_out_1 = 
+    Map(
+    main_Receiver_29_out_1,
+    main_Receiver_28_out_1,
+    main_Map_1_in_3,
+    main_Map_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[1]: x = 134, y = 152, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: plot
+    //
+main_Mark_1_out_1 = 
+    Mark(
+    main_Map_1_out_1,
+    main_Mark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[1]: x = 58, y = 204, inputs = 2, label = Compute--extract just the x component of the positions
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x"
+    // page group: plot
+    // expression: value = a.x
+    // name[2]: value = a
+    //
+main_Compute_1_out_1 = 
+    Compute(
+    main_Compute_1_in_1,
+    main_Mark_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Unmark[1]: x = 67, y = 288, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: plot
+    //
+main_Unmark_1_out_1 = 
+    Unmark(
+    main_Compute_1_out_1,
+    main_Unmark_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[3]: x = 66, y = 371, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "medium turquoise"
+    // page group: plot
+    //
+main_Color_3_out_1 = 
+    Color(
+    main_Unmark_1_out_1,
+    main_Color_3_in_2,
+    main_Color_3_in_3,
+    main_Color_3_in_4,
+    main_Color_3_in_5
+    ) [instance: 3, cache: 1];
+    // 
+    // node Image[3]: x = 106, y = 502, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_3"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [0.95 -0.05 -1.05]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [0.95 -0.05 17.3526]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 9.86198
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 288
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 1.321
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0002
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 0, visible = 0, type = 3, value = 0
+    // page group: visualize
+    // depth: value = 24
+    // window: position = (0.5672,0.0557), size = 0.2359x0.4395
+    // internal caching: 1
+    //
+main_Image_3_out_1,
+main_Image_3_out_2,
+main_Image_3_out_3 = 
+    Image(
+    main_Image_3_in_1,
+    main_Collect_1_out_1,
+    main_Image_3_in_3,
+    main_Image_3_in_4,
+    main_Image_3_in_5,
+    main_Image_3_in_6,
+    main_Image_3_in_7,
+    main_Image_3_in_8,
+    main_Image_3_in_9,
+    main_Image_3_in_10,
+    main_Image_3_in_11,
+    main_Image_3_in_12,
+    main_Image_3_in_13,
+    main_Image_3_in_14,
+    main_Image_3_in_15,
+    main_Image_3_in_16,
+    main_Image_3_in_17,
+    main_Image_3_in_18,
+    main_Image_3_in_19,
+    main_Image_3_in_20,
+    main_Image_3_in_21,
+    main_Image_3_in_22,
+    main_Image_3_in_23,
+    main_Image_3_in_24,
+    main_Image_3_in_25,
+    main_Image_3_in_26,
+    main_Image_3_in_27,
+    main_Image_3_in_28,
+    main_Image_3_in_29,
+    main_Image_3_in_30,
+    main_Image_3_in_31,
+    main_Image_3_in_32,
+    main_Image_3_in_33,
+    main_Image_3_in_34,
+    main_Image_3_in_35,
+    main_Image_3_in_36,
+    main_Image_3_in_37,
+    main_Image_3_in_38,
+    main_Image_3_in_39,
+    main_Image_3_in_40,
+    main_Image_3_in_41,
+    main_Image_3_in_42,
+    main_Image_3_in_43,
+    main_Image_3_in_44,
+    main_Image_3_in_45,
+    main_Image_3_in_46,
+    main_Image_3_in_47,
+    main_Image_3_in_48
+    ) [instance: 3, cache: 1];
+    // 
+    // node Toggle[1]: x = 189, y = 452, inputs = 6, label = Toggle
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Toggle_1"
+    // input[2]: defaulting = 0, visible = 0, type = 29, value = 1
+    // input[3]: defaulting = 0, visible = 0, type = 3, value = 1
+    // input[4]: defaulting = 1, visible = 1, type = 29, value = 1
+    // input[5]: defaulting = 1, visible = 1, type = 29, value = 0
+    // output[1]: visible = 1, type = 29, value = 1
+    // page group: plot
+    // toggle : 1
+    //
+    // 
+    // node Plot[1]: x = 183, y = 376, inputs = 24, label = Plot
+    // input[2]: defaulting = 0, visible = 1, type = 16777248, value = {"x position" "electron density"}
+    // input[4]: defaulting = 0, visible = 1, type = 16777224, value = {[-1, 0], [3, 10]}
+    // input[9]: defaulting = 0, visible = 1, type = 5, value = 1.00000
+    // input[10]: defaulting = 0, visible = 1, type = 16777248, value = {"red"}
+    // input[11]: defaulting = 0, visible = 1, type = 16777248, value = {"ticks" "axes"}
+    // input[13]: defaulting = 0, visible = 1, type = 32, value = "roman_dser"
+    // page group: plot
+    //
+main_Plot_1_out_1 = 
+    Plot(
+    main_Color_3_out_1,
+    main_Plot_1_in_2,
+    main_Plot_1_in_3,
+    main_Plot_1_in_4,
+    main_Plot_1_in_5,
+    main_Plot_1_in_6,
+    main_Plot_1_in_7,
+    main_Plot_1_in_8,
+    main_Plot_1_in_9,
+    main_Plot_1_in_10,
+    main_Plot_1_in_11,
+    main_Plot_1_in_12,
+    main_Plot_1_in_13,
+    main_Plot_1_in_14,
+    main_Plot_1_in_15,
+    main_Plot_1_in_16,
+    main_Plot_1_in_17,
+    main_Plot_1_in_18,
+    main_Plot_1_in_19,
+    main_Plot_1_in_20,
+    main_Plot_1_in_21,
+    main_Plot_1_in_22,
+    main_Plot_1_in_23,
+    main_Plot_1_in_24
+    ) [instance: 1, cache: 1];
+    // 
+    // node Route[1]: x = 322, y = 483, inputs = 2, outputs = 2, label = Route
+    // page group: plot
+    //
+main_Route_1_out_1,
+main_Route_1_out_2 = 
+    Route(
+    main_Toggle_1_out_1,
+    main_Plot_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[4]: x = 398, y = 537, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_4"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [0.431084 1.29964 0]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [0.431084 1.29964 15.4716]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 8.29122
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 362
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 1.051
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0 1 0]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0001
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[42]: defaulting = 0, visible = 0, type = 32, value = "Plot"
+    // page group: plot
+    // title: value = Plot
+    // depth: value = 24
+    // window: position = (0.5664,0.5225), size = 0.2937x0.4395
+    // internal caching: 1
+    //
+main_Image_4_out_1,
+main_Image_4_out_2,
+main_Image_4_out_3 = 
+    Image(
+    main_Image_4_in_1,
+    main_Route_1_out_1,
+    main_Image_4_in_3,
+    main_Image_4_in_4,
+    main_Image_4_in_5,
+    main_Image_4_in_6,
+    main_Image_4_in_7,
+    main_Image_4_in_8,
+    main_Image_4_in_9,
+    main_Image_4_in_10,
+    main_Image_4_in_11,
+    main_Image_4_in_12,
+    main_Image_4_in_13,
+    main_Image_4_in_14,
+    main_Image_4_in_15,
+    main_Image_4_in_16,
+    main_Image_4_in_17,
+    main_Image_4_in_18,
+    main_Image_4_in_19,
+    main_Image_4_in_20,
+    main_Image_4_in_21,
+    main_Image_4_in_22,
+    main_Image_4_in_23,
+    main_Image_4_in_24,
+    main_Image_4_in_25,
+    main_Image_4_in_26,
+    main_Image_4_in_27,
+    main_Image_4_in_28,
+    main_Image_4_in_29,
+    main_Image_4_in_30,
+    main_Image_4_in_31,
+    main_Image_4_in_32,
+    main_Image_4_in_33,
+    main_Image_4_in_34,
+    main_Image_4_in_35,
+    main_Image_4_in_36,
+    main_Image_4_in_37,
+    main_Image_4_in_38,
+    main_Image_4_in_39,
+    main_Image_4_in_40,
+    main_Image_4_in_41,
+    main_Image_4_in_42,
+    main_Image_4_in_43,
+    main_Image_4_in_44,
+    main_Image_4_in_45,
+    main_Image_4_in_46,
+    main_Image_4_in_47,
+    main_Image_4_in_48
+    ) [instance: 4, cache: 1];
+    // 
+    // node ManageImageWindow[1]: x = 138, y = 537, inputs = 3, label = ManageImageWindow
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Plot"
+    // page group: plot
+    //
+    ManageImageWindow(
+    main_ManageImageWindow_1_in_1,
+    main_Toggle_1_out_1,
+    main_ManageImageWindow_1_in_3
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(135,65) size=196x28 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 26
+    // annotation user: This page imports the data
+    // annotation user_end: <NULL>
+    // page group: import
+    //
+    // decorator Annotate	pos=(372,89) size=271x108 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 192
+    // annotation user: This page creates a visualization of
+    // annotation user: the imported data (an isosurface) and
+    // annotation user: also creates a grid along which the
+    // annotation user: data will be mapped. The grid is
+    // annotation user: included in the visualization of the
+    // annotation user: isosurface.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: visualize
+    //
+    // decorator Annotate	pos=(224,71) size=331x108 style(Label), font=bold, value = <NULL>
+    // annotation user_begin: 235
+    // annotation user: This page maps the data onto the line ("grid"),
+    // annotation user: then extracts just the x component of the
+    // annotation user: line's positions. Plot plots the data along the
+    // annotation user: line vs the x-position. The toggle allows the 
+    // annotation user: user to choose whether or not to display the
+    // annotation user: plot.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: plot
+// network: end of macro body
+CacheScene("Image_3", main_Image_3_out_1, main_Image_3_out_2);
+CacheScene("Image_4", main_Image_4_out_1, main_Image_4_out_2);
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Transmitter_20_out_1 = NULL;
+main_Receiver_30_out_1 = NULL;
+main_Isosurface_1_in_2 = { 0.300000 };
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_Color_2_in_2 = "green";
+main_Color_2_in_3 = 0.400000;
+main_Color_2_in_4 = NULL;
+main_Color_2_in_5 = NULL;
+main_Color_2_out_1 = NULL;
+main_ShowBox_1_out_1 = NULL;
+main_Scalar_1_in_1 = "Scalar_1";
+main_Scalar_1_in_2 = NULL;
+main_Scalar_1_in_3 = 0.00000;
+main_Scalar_1_in_4 = NULL;
+main_Scalar_1_in_5 = NULL;
+main_Scalar_1_in_6 = NULL;
+main_Scalar_1_in_7 = NULL;
+main_Scalar_1_in_8 = NULL;
+main_Scalar_1_in_9 = NULL;
+main_Scalar_1_in_10 = NULL;
+main_Scalar_1_in_11 = NULL;
+main_Scalar_1_out_1 = 0.00000;
+main_Compute_2_in_1 = "[1.0, $0, -1.0]";
+main_Compute_2_out_1 = NULL;
+main_Grid_1_in_2 = "line";
+main_Grid_1_in_3 = {[1.5, 0, 0]};
+main_Grid_1_in_4 = {50};
+main_Grid_1_out_1 = NULL;
+main_ShowConnections_1_out_1 = NULL;
+main_Color_1_in_2 = "red";
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Transmitter_21_out_1 = NULL;
+main_Receiver_29_out_1 = NULL;
+main_Receiver_28_out_1 = NULL;
+main_Map_1_in_3 = NULL;
+main_Map_1_in_4 = NULL;
+main_Map_1_out_1 = NULL;
+main_Mark_1_in_2 = "positions";
+main_Mark_1_out_1 = NULL;
+main_Compute_1_in_1 = "$0.x";
+main_Compute_1_out_1 = NULL;
+main_Unmark_1_in_2 = "positions";
+main_Unmark_1_out_1 = NULL;
+main_Color_3_in_2 = "medium turquoise";
+main_Color_3_in_3 = NULL;
+main_Color_3_in_4 = NULL;
+main_Color_3_in_5 = NULL;
+main_Color_3_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_3_in_1 = "Image_3";
+main_Image_3_in_3 = "X24,,";
+main_Image_3_in_4 = 1;
+main_Image_3_in_5 = [0.95 -0.05 -1.05];
+main_Image_3_in_6 = [0.95 -0.05 17.3526];
+main_Image_3_in_7 = 9.86198;
+main_Image_3_in_8 = 288;
+main_Image_3_in_9 = 1.321;
+main_Image_3_in_10 = [0 1 0];
+main_Image_3_in_11 = NULL;
+main_Image_3_in_12 = 0;
+main_Image_3_in_13 = NULL;
+main_Image_3_in_14 = 1;
+main_Image_3_in_15 = NULL;
+main_Image_3_in_16 = NULL;
+main_Image_3_in_17 = NULL;
+main_Image_3_in_18 = NULL;
+main_Image_3_in_19 = 0;
+main_Image_3_in_20 = NULL;
+main_Image_3_in_21 = NULL;
+main_Image_3_in_22 = NULL;
+main_Image_3_in_23 = NULL;
+main_Image_3_in_25 = NULL;
+main_Image_3_in_26 = NULL;
+main_Image_3_in_27 = NULL;
+main_Image_3_in_28 = NULL;
+main_Image_3_in_29 = 0;
+main_Image_3_in_30 = NULL;
+main_Image_3_in_31 = NULL;
+main_Image_3_in_32 = NULL;
+main_Image_3_in_33 = NULL;
+main_Image_3_in_34 = NULL;
+main_Image_3_in_35 = NULL;
+main_Image_3_in_36 = NULL;
+main_Image_3_in_37 = NULL;
+main_Image_3_in_38 = NULL;
+main_Image_3_in_39 = NULL;
+main_Image_3_in_40 = NULL;
+main_Image_3_in_41 = NULL;
+main_Image_3_in_42 = NULL;
+main_Image_3_in_43 = NULL;
+main_Image_3_in_44 = NULL;
+main_Image_3_in_45 = NULL;
+main_Image_3_in_46 = NULL;
+main_Image_3_in_47 = NULL;
+main_Image_3_in_48 = NULL;
+main_Toggle_1_in_1 = "Toggle_1";
+main_Toggle_1_in_2 = 1;
+main_Toggle_1_in_3 = 1;
+main_Toggle_1_in_4 = NULL;
+main_Toggle_1_in_5 = NULL;
+main_Toggle_1_in_6 = NULL;
+main_Toggle_1_out_1 = 1;
+main_Plot_1_in_2 = {"x position" "electron density"};
+main_Plot_1_in_3 = NULL;
+main_Plot_1_in_4 = {[-1, 0], [3, 10]};
+main_Plot_1_in_5 = NULL;
+main_Plot_1_in_6 = NULL;
+main_Plot_1_in_7 = NULL;
+main_Plot_1_in_8 = NULL;
+main_Plot_1_in_9 = 1.00000;
+main_Plot_1_in_10 = {"red"};
+main_Plot_1_in_11 = {"ticks" "axes"};
+main_Plot_1_in_12 = NULL;
+main_Plot_1_in_13 = "roman_dser";
+main_Plot_1_in_14 = NULL;
+main_Plot_1_in_15 = NULL;
+main_Plot_1_in_16 = NULL;
+main_Plot_1_in_17 = NULL;
+main_Plot_1_in_18 = NULL;
+main_Plot_1_in_19 = NULL;
+main_Plot_1_in_20 = NULL;
+main_Plot_1_in_21 = NULL;
+main_Plot_1_in_22 = NULL;
+main_Plot_1_in_23 = NULL;
+main_Plot_1_in_24 = NULL;
+main_Plot_1_out_1 = NULL;
+main_Route_1_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_4_in_1 = "Image_4";
+main_Image_4_in_3 = "X24,,Plot";
+main_Image_4_in_4 = 1;
+main_Image_4_in_5 = [0.431084 1.29964 0];
+main_Image_4_in_6 = [0.431084 1.29964 15.4716];
+main_Image_4_in_7 = 8.29122;
+main_Image_4_in_8 = 362;
+main_Image_4_in_9 = 1.051;
+main_Image_4_in_10 = [0 1 0];
+main_Image_4_in_11 = NULL;
+main_Image_4_in_12 = 0;
+main_Image_4_in_13 = NULL;
+main_Image_4_in_14 = 1;
+main_Image_4_in_15 = NULL;
+main_Image_4_in_16 = NULL;
+main_Image_4_in_17 = NULL;
+main_Image_4_in_18 = NULL;
+main_Image_4_in_19 = 0;
+main_Image_4_in_20 = NULL;
+main_Image_4_in_21 = NULL;
+main_Image_4_in_22 = NULL;
+main_Image_4_in_23 = NULL;
+main_Image_4_in_25 = NULL;
+main_Image_4_in_26 = NULL;
+main_Image_4_in_27 = NULL;
+main_Image_4_in_28 = NULL;
+main_Image_4_in_29 = 0;
+main_Image_4_in_30 = NULL;
+main_Image_4_in_31 = NULL;
+main_Image_4_in_32 = NULL;
+main_Image_4_in_33 = NULL;
+main_Image_4_in_34 = NULL;
+main_Image_4_in_35 = NULL;
+main_Image_4_in_36 = NULL;
+main_Image_4_in_37 = NULL;
+main_Image_4_in_38 = NULL;
+main_Image_4_in_39 = NULL;
+main_Image_4_in_40 = NULL;
+main_Image_4_in_41 = NULL;
+main_Image_4_in_42 = "Plot";
+main_Image_4_in_43 = NULL;
+main_Image_4_in_44 = NULL;
+main_Image_4_in_45 = NULL;
+main_Image_4_in_46 = NULL;
+main_Image_4_in_47 = NULL;
+main_Image_4_in_48 = NULL;
+main_ManageImageWindow_1_in_1 = "Plot";
+main_ManageImageWindow_1_in_3 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

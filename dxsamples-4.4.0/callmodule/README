@@ -1,0 +1,22 @@
+The samples in this directory show how to use DXCallModule in
+a stand-alone program. The example Simple.c imports data, creates
+an isosurface, and displays an image. The example renderimage.c
+imports data, creates an isosurface, renders an image, and writes
+it as a .tiff file to disk.  The example ThunderStreamlines.c
+is a more complex visualization, based on the example visual program
+ThunderStreamlines.net. The example
+xapp_supervise creates a custom graphical user interface and uses
+DXCallModule to call Data Explorer modules to import data, create
+an isosurface and display it within the custom gui.
+
+To make the example Simple, type
+   make -f Makefile_architecture Simple
+
+To make the example renderimage, type
+   make -f Makefile_architecture renderimage 
+
+To make the example ThunderStreamlines, type
+   make -f Makefile_architecture ThunderStreamlines 
+
+To make the example xapp_supervise, type
+   make -f Makefile_architecture xapp_supervise 

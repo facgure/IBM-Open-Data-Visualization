@@ -1,0 +1,112 @@
+//
+// time: Wed Feb 12 11:23:15 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE ConvertColorNameList
+// CATEGORY Macros
+// DESCRIPTION converts a list of string color names to a list of rgb values
+// INPUT colorname; object; "red"; name of color to convert to rgb
+// OUTPUT output_1; value list or string list;  
+// End MDF
+//
+// comment: This macro takes as input a list of colorname strings (such as "red", "linen",  "cyan", "light goldenrod", etc.) and converts it to a list of rgb vectors.
+// comment: 
+// comment:  ForEachMember is used to iterate over the list of colornames given. Each colorname is used to color a trivial field created using the Construct module. The "colors" component (an rgb vector) is then extracted from the colored field and appended to a list. The list is maintained using GetLocal and SetLocal. Each time the macro is rerun, the list is automatically restarted as an empty list. This is because we are using GetLocal and SetLocal, which do not maintain state between executions of the loop.
+// workspace: width = 441, height = 480
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro ConvertColorNameList(
+ colorname = "red"
+) -> (
+ output_1
+) {
+    // 
+    // node Construct[1]: x = 23, y = 106, inputs = 4, label = Construct
+    // input[1]: defaulting = 0, visible = 1, type = 16777224, value = {[0 0 0]}
+    // input[3]: defaulting = 0, visible = 1, type = 1, value = 1
+    //
+ConvertColorNameList_Construct_1_out_1 = 
+    Construct(
+    {[0 0 0]},
+    NULL,
+    1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[1]: x = 237, y = 4, inputs = 0, label = Input
+    // parameter: position = 1, name = 'colorname', value = '"red"', descriptive = 0, description = 'name of color to convert to rgb', required = 0, visible = 1
+    //
+ConvertColorNameList_Input_1_out_1 = colorname;
+    // 
+    // node ForEachMember[1]: x = 216, y = 73, inputs = 1, label = ForEachMember
+    //
+ConvertColorNameList_ForEachMember_1_out_1,
+ConvertColorNameList_ForEachMember_1_out_2,
+ConvertColorNameList_ForEachMember_1_out_3 = 
+    ForEachMember(
+    ConvertColorNameList_Input_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 140, y = 158, inputs = 5, label = Color
+    //
+ConvertColorNameList_Color_1_out_1 = 
+    Color(
+    ConvertColorNameList_Construct_1_out_1,
+    ConvertColorNameList_ForEachMember_1_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Extract[1]: x = 151, y = 256, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "colors"
+    //
+ConvertColorNameList_Extract_1_out_1 = 
+    Extract(
+    ConvertColorNameList_Color_1_out_1,
+    "colors"
+    ) [instance: 1, cache: 1];
+    // 
+    // node GetLocal[1]: x = 345, y = 215, inputs = 3, label = GetLocal
+    //
+ConvertColorNameList_GetLocal_1_out_1,
+ConvertColorNameList_GetLocal_1_out_2 = 
+    GetLocal(
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node List[1]: x = 201, y = 334, inputs = 2, label = List
+    //
+ConvertColorNameList_List_1_out_1 = 
+    List(
+    ConvertColorNameList_GetLocal_1_out_1,
+    ConvertColorNameList_Extract_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[1]: x = 243, y = 418, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = ConvertColorNameList_List_1_out_1;
+    // 
+    // node SetLocal[1]: x = 375, y = 359, inputs = 3, label = SetLocal
+    //
+    SetLocal(
+    ConvertColorNameList_List_1_out_1,
+    ConvertColorNameList_GetLocal_1_out_2,
+    NULL
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+ConvertColorNameList_Construct_1_out_1 = NULL;
+ConvertColorNameList_Input_1_out_1 = NULL;
+ConvertColorNameList_ForEachMember_1_out_1 = NULL;
+ConvertColorNameList_Color_1_out_1 = NULL;
+ConvertColorNameList_Extract_1_out_1 = NULL;
+ConvertColorNameList_GetLocal_1_out_1 = NULL;
+ConvertColorNameList_GetLocal_1_out_2 = NULL;
+ConvertColorNameList_List_1_out_1 = NULL;

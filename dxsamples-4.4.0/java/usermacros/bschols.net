@@ -1,0 +1,273 @@
+//
+// time: Fri Nov 20 16:29:24 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+//
+// macro reference (direct): lognpdf /a/raster/homes/raster/c1tignor/options/pdflogn.net
+include "pdflogn.net"
+//
+// Begin MDF
+// MODULE BlackScholes
+// CATEGORY Options
+// DESCRIPTION Value of a Call Options
+// INPUT stockPrice; object; (none); Price of the Underlying Security (S)
+// INPUT stdev; object; (none); Standard Dev of Price Relative
+// INPUT time; object; (none); Periods to Expiration (t)
+// INPUT rate; object; (none); Interest Rate (r)
+// INPUT strikePrice; object; (none); Striking Price of the Call (K)
+// INPUT call[visible:0]; integer; 1; 1 if call, 2 if put
+// OUTPUT output_1; object;  
+// End MDF
+// workspace: width = 620, height = 748
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro BlackScholes(
+ stockPrice
+,stdev
+,time
+,rate
+,strikePrice
+,call = 1
+) -> (
+ output_1
+) {
+    // 
+    // node Input[2]: x = 0, y = 1, inputs = 0, label = Input
+    // parameter: position = 1, name = 'stockPrice', value = '(none)', descriptive = 1, description = 'Price of the Underlying Security (S)', required = 1, visible = 1
+    //
+BlackScholes_Input_2_out_1 = stockPrice;
+    // 
+    // node Transmitter[18]: x = 6, y = 80, inputs = 1, label = S
+    //
+S = BlackScholes_Input_2_out_1;
+    // 
+    // node Receiver[23]: x = 79, y = 285, inputs = 1, label = S
+    //
+BlackScholes_Receiver_23_out_1[cache: 0] = S;
+    // 
+    // node Input[3]: x = 256, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'stdev', value = '(none)', descriptive = 1, description = 'Standard Dev of Price Relative', required = 1, visible = 1
+    //
+BlackScholes_Input_3_out_1 = stdev;
+    // 
+    // node Transmitter[22]: x = 256, y = 78, inputs = 1, label = sdev
+    //
+sdev = BlackScholes_Input_3_out_1;
+    // 
+    // node Receiver[27]: x = 97, y = 194, inputs = 1, label = sdev
+    //
+BlackScholes_Receiver_27_out_1[cache: 0] = sdev;
+    // 
+    // node Input[4]: x = 168, y = 0, inputs = 0, label = Input
+    // parameter: position = 3, name = 'time', value = '(none)', descriptive = 1, description = 'Periods to Expiration (t)', required = 1, visible = 1
+    //
+BlackScholes_Input_4_out_1 = time;
+    // 
+    // node Transmitter[21]: x = 174, y = 77, inputs = 1, label = t
+    //
+t = BlackScholes_Input_4_out_1;
+    // 
+    // node Receiver[26]: x = 127, y = 280, inputs = 1, label = t
+    //
+BlackScholes_Receiver_26_out_1[cache: 0] = t;
+    // 
+    // node Input[5]: x = 111, y = 0, inputs = 0, label = Input
+    // parameter: position = 4, name = 'rate', value = '(none)', descriptive = 1, description = 'Interest Rate (r)', required = 1, visible = 1
+    //
+BlackScholes_Input_5_out_1 = rate;
+    // 
+    // node Transmitter[20]: x = 117, y = 78, inputs = 1, label = r
+    //
+r = BlackScholes_Input_5_out_1;
+    // 
+    // node Receiver[25]: x = 151, y = 347, inputs = 1, label = r
+    //
+BlackScholes_Receiver_25_out_1[cache: 0] = r;
+    // 
+    // node Input[6]: x = 56, y = 0, inputs = 0, label = Input
+    // parameter: position = 5, name = 'strikePrice', value = '(none)', descriptive = 1, description = 'Striking Price of the Call (K)', required = 1, visible = 1
+    //
+BlackScholes_Input_6_out_1 = strikePrice;
+    // 
+    // node Transmitter[19]: x = 62, y = 78, inputs = 1, label = K
+    //
+K = BlackScholes_Input_6_out_1;
+    // 
+    // node Receiver[24]: x = 175, y = 247, inputs = 1, label = K
+    //
+BlackScholes_Receiver_24_out_1[cache: 0] = K;
+    // 
+    // node Compute[9]: x = 79, y = 457, inputs = 6, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "(log10($0/($4*pow($3, -$2))) / ($1 * pow($2,0.5))) + (0.5*$1*pow($2,0.5))"
+    // expression: value = (log10(S/(K*pow(r, -t))) / (sdev * pow(t,0.5))) + (0.5*sdev*pow(t,0.5))
+    // name[2]: value = S
+    // name[3]: value = sdev
+    // name[4]: value = t
+    // name[5]: value = r
+    // name[6]: value = K
+    //
+BlackScholes_Compute_9_out_1 = 
+    Compute(
+    "(log10($0/($4*pow($3, -$2))) / ($1 * pow($2,0.5))) + (0.5*$1*pow($2,0.5))",
+    BlackScholes_Receiver_23_out_1,
+    BlackScholes_Receiver_27_out_1,
+    BlackScholes_Receiver_26_out_1,
+    BlackScholes_Receiver_25_out_1,
+    BlackScholes_Receiver_24_out_1
+    ) [instance: 9, cache: 1];
+    // 
+    // node Transmitter[17]: x = 127, y = 551, inputs = 1, label = x
+    //
+x = BlackScholes_Compute_9_out_1;
+    // 
+    // node Receiver[33]: x = 256, y = 274, inputs = 1, label = x
+    //
+BlackScholes_Receiver_33_out_1[cache: 0] = x;
+    // 
+    // node lognpdf[4]: x = 244, y = 364, inputs = 1, label = lognpdf
+    //
+BlackScholes_lognpdf_4_out_1 = 
+    lognpdf(
+    BlackScholes_Receiver_33_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Receiver[40]: x = 319, y = 359, inputs = 1, label = K
+    //
+BlackScholes_Receiver_40_out_1[cache: 0] = K;
+    // 
+    // node Receiver[30]: x = 343, y = 293, inputs = 1, label = t
+    //
+BlackScholes_Receiver_30_out_1[cache: 0] = t;
+    // 
+    // node Receiver[29]: x = 367, y = 362, inputs = 1, label = r
+    //
+BlackScholes_Receiver_29_out_1[cache: 0] = r;
+    // 
+    // node Receiver[16]: x = 367, y = 66, inputs = 1, label = x
+    //
+BlackScholes_Receiver_16_out_1[cache: 0] = x;
+    // 
+    // node Receiver[32]: x = 385, y = 0, inputs = 1, label = sdev
+    //
+BlackScholes_Receiver_32_out_1[cache: 0] = sdev;
+    // 
+    // node Receiver[34]: x = 415, y = 69, inputs = 1, label = t
+    //
+BlackScholes_Receiver_34_out_1[cache: 0] = t;
+    // 
+    // node Compute[11]: x = 367, y = 149, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0 - ($1*pow($2,0.5))"
+    // expression: value = x - (sdev*pow(t,0.5))
+    // name[2]: value = x
+    // name[3]: value = sdev
+    // name[4]: value = t
+    //
+BlackScholes_Compute_11_out_1 = 
+    Compute(
+    "$0 - ($1*pow($2,0.5))",
+    BlackScholes_Receiver_16_out_1,
+    BlackScholes_Receiver_32_out_1,
+    BlackScholes_Receiver_34_out_1
+    ) [instance: 11, cache: 1];
+    // 
+    // node lognpdf[5]: x = 379, y = 251, inputs = 1, label = lognpdf
+    //
+BlackScholes_lognpdf_5_out_1 = 
+    lognpdf(
+    BlackScholes_Compute_11_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Receiver[28]: x = 415, y = 381, inputs = 1, label = S
+    //
+BlackScholes_Receiver_28_out_1[cache: 0] = S;
+    // 
+    // node Compute[10]: x = 295, y = 481, inputs = 7, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "($5*$0 - ($1*pow($3, -$2)*$4)) "
+    // expression: value = (S*X1 - (K*pow(r, -t)*X2)) 
+    // name[2]: value = X1
+    // name[3]: value = K
+    // name[4]: value = t
+    // name[5]: value = r
+    // name[6]: value = X2
+    // name[7]: value = S
+    //
+BlackScholes_Compute_10_out_1 = 
+    Compute(
+    "($5*$0 - ($1*pow($3, -$2)*$4)) ",
+    BlackScholes_lognpdf_4_out_1,
+    BlackScholes_Receiver_40_out_1,
+    BlackScholes_Receiver_30_out_1,
+    BlackScholes_Receiver_29_out_1,
+    BlackScholes_lognpdf_5_out_1,
+    BlackScholes_Receiver_28_out_1
+    ) [instance: 10, cache: 1];
+    // 
+    // node Compute[29]: x = 548, y = 512, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$1-$2+$0"
+    // expression: value = K-S+a
+    // name[2]: value = a
+    // name[3]: value = K
+    // name[4]: value = S
+    //
+BlackScholes_Compute_29_out_1 = 
+    Compute(
+    "$1-$2+$0",
+    BlackScholes_Compute_10_out_1,
+    BlackScholes_Receiver_40_out_1,
+    BlackScholes_Receiver_28_out_1
+    ) [instance: 29, cache: 1];
+    // 
+    // node Input[11]: x = 472, y = 506, inputs = 0, label = Input
+    // parameter: position = 6, name = 'call', value = '1', descriptive = 0, description = '1 if call, 2 if put', required = 0, visible = 0
+    //
+BlackScholes_Input_11_out_1 = call;
+    // 
+    // node Switch[1]: x = 488, y = 605, inputs = 3, label = Switch
+    //
+BlackScholes_Switch_1_out_1 = 
+    Switch(
+    BlackScholes_Input_11_out_1,
+    BlackScholes_Compute_10_out_1,
+    BlackScholes_Compute_29_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[2]: x = 507, y = 688, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = BlackScholes_Switch_1_out_1;
+// network: end of macro body
+}
+BlackScholes_Input_2_out_1 = NULL;
+BlackScholes_Transmitter_18_out_1 = NULL;
+BlackScholes_Receiver_23_out_1 = NULL;
+BlackScholes_Input_3_out_1 = NULL;
+BlackScholes_Transmitter_22_out_1 = NULL;
+BlackScholes_Receiver_27_out_1 = NULL;
+BlackScholes_Input_4_out_1 = NULL;
+BlackScholes_Transmitter_21_out_1 = NULL;
+BlackScholes_Receiver_26_out_1 = NULL;
+BlackScholes_Input_5_out_1 = NULL;
+BlackScholes_Transmitter_20_out_1 = NULL;
+BlackScholes_Receiver_25_out_1 = NULL;
+BlackScholes_Input_6_out_1 = NULL;
+BlackScholes_Transmitter_19_out_1 = NULL;
+BlackScholes_Receiver_24_out_1 = NULL;
+BlackScholes_Compute_9_out_1 = NULL;
+BlackScholes_Transmitter_17_out_1 = NULL;
+BlackScholes_Receiver_33_out_1 = NULL;
+BlackScholes_lognpdf_4_out_1 = NULL;
+BlackScholes_Receiver_40_out_1 = NULL;
+BlackScholes_Receiver_30_out_1 = NULL;
+BlackScholes_Receiver_29_out_1 = NULL;
+BlackScholes_Receiver_16_out_1 = NULL;
+BlackScholes_Receiver_32_out_1 = NULL;
+BlackScholes_Receiver_34_out_1 = NULL;
+BlackScholes_Compute_11_out_1 = NULL;
+BlackScholes_lognpdf_5_out_1 = NULL;
+BlackScholes_Receiver_28_out_1 = NULL;
+BlackScholes_Compute_10_out_1 = NULL;
+BlackScholes_Compute_29_out_1 = NULL;
+BlackScholes_Input_11_out_1 = NULL;
+BlackScholes_Switch_1_out_1 = NULL;

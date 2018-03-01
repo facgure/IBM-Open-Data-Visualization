@@ -1,0 +1,43 @@
+// Import the water molecule data
+electrondensity = Import("watermolecule");
+
+// Partition the data for parallelism
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at the value 0.3
+isosurface = Isosurface(electrondensity,0.3);
+box = ShowBox(isosurface);
+
+// Create an orthographic camera. 
+// The look-to point is [1 0 -1], the look-from point is
+// [1 10 -1], the width of the field of view is 3 in user units, and the
+// resolution of the image is 300 pixels. The "up" direction is the x axis.
+camera = Camera([1, 0, -1], [1, 10, -1], width = 3, resolution = 300,
+                 up = [1 0 0]); 
+
+// Display the isosurface with the bounding box using the computed camera
+collected = Collect(box,isosurface);
+Display(collected,camera);
+
+// Create a perspective camera. 
+// The look-to point is [1 0 -1], the look-from point is
+// [1 10 -1], the width of the field of view is 3 in user units, and the
+// resolution of the image is 300 pixels. The "up" direction is the x axis.
+camera = Camera([1, 0, -1], [1, 5, -1], resolution = 300,
+                 up = [1 0 0], perspective=1, angle = 30); 
+
+// Display the isosurface with the bounding box using the computed camera
+Display(collected,camera);
+
+// Create a perspective camera with a different angle. 
+camera = Camera([1, 0, -1], [1, 5, -1], resolution = 300,
+                 up = [1 0 0], perspective=1, angle = 70); 
+
+// Display the isosurface with the bounding box using the computed camera
+Display(collected,camera);
+
+
+
+
+
+

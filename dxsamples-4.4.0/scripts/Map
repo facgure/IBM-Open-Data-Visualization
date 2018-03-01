@@ -1,0 +1,53 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Compute the gradient
+gradient = Gradient(electrondensity);
+    // Create a camera
+camera = AutoCamera(electrondensity);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Map the gradient field onto the isosurface
+isomapped = Map(isosurface,gradient);
+    // Color the isosurface
+colored = AutoColor(isomapped);
+    // Display
+Display(colored,camera);
+
+    // Create a set of about 10 starting points
+starts = Sample(electrondensity, 10);
+    // Create streamlines
+lines = Streamline(gradient, starts);
+    // Map the original field onto the lines
+streamlinesmapped = Map(lines,electrondensity);
+    // Color the lines
+colored = AutoColor(streamlinesmapped);
+Display(colored,camera);
+
+    // Create tubes from the lines
+tubes = Tube(lines);
+    // Map the data onto the tubes (instead of onto the lines)
+tubesmapped = Map(tubes,electrondensity);
+    // Color the tubes
+colored = AutoColor(tubesmapped);
+Display(colored,camera);
+
+
+    // Create a plane through the data
+plane = MapToPlane(electrondensity);
+    // Color, then use RubberSheet to deform
+colored = AutoColor(plane);
+deformed = RubberSheet(colored);
+    // Add normals for shading
+deformed = Normals(deformed);
+Display(deformed,camera);
+
+    // Now map data onto the deformed plane and color. The colors will
+    // represent data values at the deformed, rather than original, positions
+new = Map(deformed, electrondensity);
+colored = AutoColor(new);
+Display(colored,camera);
+
+

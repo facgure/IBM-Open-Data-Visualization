@@ -1,0 +1,28 @@
+// Import the data
+electrondensity = Import("watermolecule");
+
+// Partition the data
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// Create a camera for the isosurface, looking roughly from the direction 
+// [1 1 1]
+camera = AutoCamera(electrondensity,"off-diagonal",width=12);
+
+// Create some labels for the axes
+labels = {"x direction", "y direction", "z direction"};
+
+// Put axes around the isosurface, along with an additional frame around the
+// front faces. Use the entire field to set the bounding box for the axes so
+// that if the isovalue is changed, the axes box will remain the same.
+// A grid is added, and the grid is colored red while the labels and
+// ticks are colored yellow.
+objectwithaxes = AutoAxes(isosurface,camera,labels,frame=1, 
+                          corners=electrondensity, grid = 1,
+                          colors = {"red", "yellow", "yellow"},
+                          annotation = {"grid", "labels", "ticks"});
+
+// Display the object with the added axes
+Display(objectwithaxes,camera);

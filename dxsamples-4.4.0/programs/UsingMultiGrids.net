@@ -1,0 +1,273 @@
+//
+// time: Wed Apr  9 15:47:38 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: Multigrid groups can be used when a data set uses different grids in different regions. This visual program illustrates the difference between a multigrid group and a generic group, and also shows how to use the invalid positions component to define the valid region when grids in a multigrid overlap. Choose "Open All Control Panels" from the Image window to access the selector interactor.
+// comment: 
+// comment: The generic group and the non-overlapping multigrid group contain positions with exactly the same data values. However, when AutoColored, the images are different because AutoColor colors each field in a generic group independently (from blue to red in this case), while a multigrid group is treated as a single entity.
+// comment: 
+// comment: The overlapping multigrid choices show how to use the invalid positions component. In one case, the position in the upper right of the lower grid is marked invalid. This causes the upper grid to be drawn in the overlapping region. In the other case, the position in the lower left of the upper grid is marked as invalid. This causes the lower grid to be drawn in the overlapping region.
+// workspace: width = 538, height = 546
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Selector[1]: x = 36, y = 182, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_1"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "multigrid group (overlapping, invalid position in lower left grid)" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 3 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "generic group" "multigrid group (non-overlapping)" "multigrid group (overlapping, invalid position in lower left grid)" "multigrid group (overlapping, invalid position in upper right grid)" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 3 4 }
+    // output[1]: visible = 1, type = 29, value = 3 
+    // output[2]: visible = 1, type = 32, value = "multigrid group (overlapping, invalid position in lower left grid)" 
+    //
+    // 
+    // node Caption[2]: x = 104, y = 319, inputs = 9, label = Caption
+    //
+main_Caption_2_out_1 = 
+    Caption(
+    main_Selector_1_out_2,
+    main_Caption_2_in_2,
+    main_Caption_2_in_3,
+    main_Caption_2_in_4,
+    main_Caption_2_in_5,
+    main_Caption_2_in_6,
+    main_Caption_2_in_7,
+    main_Caption_2_in_8,
+    main_Caption_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Import[4]: x = 62, y = 41, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "group"
+    //
+main_Import_4_out_1 = 
+    Import(
+    main_Import_4_in_1,
+    main_Import_4_in_2,
+    main_Import_4_in_3,
+    main_Import_4_in_4,
+    main_Import_4_in_5,
+    main_Import_4_in_6
+    ) [instance: 4, cache: 1];
+    // 
+    // node Import[3]: x = 206, y = 39, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "multigrid1"
+    //
+main_Import_3_out_1 = 
+    Import(
+    main_Import_3_in_1,
+    main_Import_3_in_2,
+    main_Import_3_in_3,
+    main_Import_3_in_4,
+    main_Import_3_in_5,
+    main_Import_3_in_6
+    ) [instance: 3, cache: 1];
+    // 
+    // node Import[2]: x = 319, y = 38, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "multigrid2"
+    //
+main_Import_2_out_1 = 
+    Import(
+    main_Import_2_in_1,
+    main_Import_2_in_2,
+    main_Import_2_in_3,
+    main_Import_2_in_4,
+    main_Import_2_in_5,
+    main_Import_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Import[1]: x = 466, y = 43, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "multigrid3"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Switch[1]: x = 192, y = 156, inputs = 5, label = Switch
+    //
+main_Switch_1_out_1 = 
+    Switch(
+    main_Selector_1_out_1,
+    main_Import_4_out_1,
+    main_Import_3_out_1,
+    main_Import_2_out_1,
+    main_Import_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[4]: x = 236, y = 250, inputs = 10, label = AutoColor
+    //
+main_AutoColor_4_out_1,
+main_AutoColor_4_out_2 = 
+    AutoColor(
+    main_Switch_1_out_1,
+    main_AutoColor_4_in_2,
+    main_AutoColor_4_in_3,
+    main_AutoColor_4_in_4,
+    main_AutoColor_4_in_5,
+    main_AutoColor_4_in_6,
+    main_AutoColor_4_in_7,
+    main_AutoColor_4_in_8,
+    main_AutoColor_4_in_9,
+    main_AutoColor_4_in_10
+    ) [instance: 4, cache: 1];
+    // 
+    // node AutoGlyph[1]: x = 380, y = 230, inputs = 7, label = AutoGlyph
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "text"
+    //
+main_AutoGlyph_1_out_1 = 
+    AutoGlyph(
+    main_Switch_1_out_1,
+    main_AutoGlyph_1_in_2,
+    main_AutoGlyph_1_in_3,
+    main_AutoGlyph_1_in_4,
+    main_AutoGlyph_1_in_5,
+    main_AutoGlyph_1_in_6,
+    main_AutoGlyph_1_in_7
+    ) [instance: 1, cache: 1];
+    // 
+    // node Color[1]: x = 403, y = 327, inputs = 5, label = Color
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "magenta"
+    //
+main_Color_1_out_1 = 
+    Color(
+    main_AutoGlyph_1_out_1,
+    main_Color_1_in_2,
+    main_Color_1_in_3,
+    main_Color_1_in_4,
+    main_Color_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[2]: x = 222, y = 383, inputs = 3, label = Collect
+    //
+main_Collect_2_out_1 = 
+    Collect(
+    main_Caption_2_out_1,
+    main_AutoColor_4_out_1,
+    main_Color_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 316, y = 430, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 500
+    //
+main_AutoCamera_1_out_1 = 
+    AutoCamera(
+    main_Collect_2_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[1]: x = 212, y = 484, inputs = 4, label = Display
+    // depth: value = 24
+    // window: position = (0.5188,0.0596), size = 0.4016x0.4092
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Collect_2_out_1,
+    main_AutoCamera_1_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Selector_1_in_1 = "Selector_1";
+main_Selector_1_in_2 = "multigrid group (overlapping, invalid position in lower left grid)" ;
+main_Selector_1_in_3 = 3 ;
+main_Selector_1_in_4 = NULL;
+main_Selector_1_in_5 = NULL;
+main_Selector_1_in_6 = NULL;
+main_Selector_1_in_7 = NULL;
+main_Selector_1_out_1 = 3 ;
+main_Selector_1_out_2 = "multigrid group (overlapping, invalid position in lower left grid)" ;
+main_Caption_2_in_2 = NULL;
+main_Caption_2_in_3 = NULL;
+main_Caption_2_in_4 = NULL;
+main_Caption_2_in_5 = NULL;
+main_Caption_2_in_6 = NULL;
+main_Caption_2_in_7 = NULL;
+main_Caption_2_in_8 = NULL;
+main_Caption_2_in_9 = NULL;
+main_Caption_2_out_1 = NULL;
+main_Import_4_in_1 = "group";
+main_Import_4_in_2 = NULL;
+main_Import_4_in_3 = NULL;
+main_Import_4_in_4 = NULL;
+main_Import_4_in_5 = NULL;
+main_Import_4_in_6 = NULL;
+main_Import_4_out_1 = NULL;
+main_Import_3_in_1 = "multigrid1";
+main_Import_3_in_2 = NULL;
+main_Import_3_in_3 = NULL;
+main_Import_3_in_4 = NULL;
+main_Import_3_in_5 = NULL;
+main_Import_3_in_6 = NULL;
+main_Import_3_out_1 = NULL;
+main_Import_2_in_1 = "multigrid2";
+main_Import_2_in_2 = NULL;
+main_Import_2_in_3 = NULL;
+main_Import_2_in_4 = NULL;
+main_Import_2_in_5 = NULL;
+main_Import_2_in_6 = NULL;
+main_Import_2_out_1 = NULL;
+main_Import_1_in_1 = "multigrid3";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Switch_1_out_1 = NULL;
+main_AutoColor_4_in_2 = NULL;
+main_AutoColor_4_in_3 = NULL;
+main_AutoColor_4_in_4 = NULL;
+main_AutoColor_4_in_5 = NULL;
+main_AutoColor_4_in_6 = NULL;
+main_AutoColor_4_in_7 = NULL;
+main_AutoColor_4_in_8 = NULL;
+main_AutoColor_4_in_9 = NULL;
+main_AutoColor_4_in_10 = NULL;
+main_AutoColor_4_out_1 = NULL;
+main_AutoGlyph_1_in_2 = "text";
+main_AutoGlyph_1_in_3 = NULL;
+main_AutoGlyph_1_in_4 = NULL;
+main_AutoGlyph_1_in_5 = NULL;
+main_AutoGlyph_1_in_6 = NULL;
+main_AutoGlyph_1_in_7 = NULL;
+main_AutoGlyph_1_out_1 = NULL;
+main_Color_1_in_2 = "magenta";
+main_Color_1_in_3 = NULL;
+main_Color_1_in_4 = NULL;
+main_Color_1_in_5 = NULL;
+main_Color_1_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_AutoCamera_1_in_2 = NULL;
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = 500;
+main_AutoCamera_1_in_5 = NULL;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

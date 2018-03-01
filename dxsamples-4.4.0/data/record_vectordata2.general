@@ -1,0 +1,12 @@
+file = record_vectordata2
+grid = 5 x 4
+format = text
+interleaving = record-vector
+majority = row
+field = field0
+structure = 2-vector
+type = float
+dependency = positions
+positions = regular, regular, 0, 1, 0, 1
+
+end

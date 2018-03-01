@@ -1,0 +1,54 @@
+#! /bin/csh -f
+
+# initialize the counter
+@ i=1
+
+# remove the temporary files, if they exist. This is in case this shell
+# script is interupted before finishing and cleaning up.
+
+/bin/rm tmpdata
+/bin/rm tmppos
+/bin/rm tmpheaddata
+/bin/rm tmpheadpos
+/bin/rm tmpheadfield
+/bin/rm tmpdatafile.dx
+
+
+while ($i <= 100)
+
+   @ data = ($i % 3) + ($i % 5) + ($i % 11) + ($i % 17)
+
+#  write out the new temp data file 
+   echo "$data" >> tmpdata
+
+#  write out the new temp positions file
+   echo "$i" >> tmppos
+
+#  write out the new temp header files
+   echo "object 1 class array type float rank 1 shape 1 items $i" > tmpheadpos
+   echo "   data follows" >> tmpheadpos
+   echo "object 2 class array type float rank 0 items $i " > tmpheaddata
+   echo "   data follows" >> tmpheaddata
+   echo '   attribute "dep" string "positions" ' > tmpheadfield
+   echo "object 3 class field" >> tmpheadfield
+   echo '   component "positions" value 1' >> tmpheadfield
+   echo '   component "data" value 2' >> tmpheadfield
+
+#  put it all together 
+   cat tmpheadpos tmppos tmpheaddata tmpdata tmpheadfield > tmpdatafile.dx
+   mv tmpdatafile.dx datafile.dx
+
+#  increment the counter
+   @ i++
+
+# pause for awhile
+  sleep 1
+end
+
+# remove temporary files
+/bin/rm tmpdata
+/bin/rm tmppos
+/bin/rm tmpheaddata
+/bin/rm tmpheadpos
+/bin/rm tmpheadfield
+/bin/rm tmpdatafile.dx

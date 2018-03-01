@@ -1,0 +1,710 @@
+//
+// time: Wed Nov 25 12:11:55 1998
+//
+// version: 3.1.2 (format), 4.1.1 (DX Beta)
+//
+//
+//
+// macro reference (direct): lognpdf /a/raster/homes/raster/c1tignor/ibm6000/samples/java/pdflogn.net
+include "pdflogn.net"
+//
+// Begin MDF
+// MODULE OptionSurface
+// CATEGORY Options
+// DESCRIPTION Rubbersheeted Call or Put
+// INPUT field; field; (none);  2D field of Stock and sdev values
+// INPUT intRate; object; (none);  1 + r
+// INPUT t; value list or field or string or string list; (none);  Time to Maturity
+// INPUT K; object; (none);  Strike Price
+// INPUT optPrice; object; (none);  What you paid for the Option
+// INPUT type; integer; (no default); 1(buy call) 2(buy put) 3(sell short) 4(write call) 5(write put) 6(buy long)
+// INPUT currentPrice; value list or field or string or string list; (no default); Price of Stock at t0
+// OUTPUT sheet; object;  Rubbersheet with N(z) data values
+// OUTPUT cnxs; object;  Connections in sheet
+// OUTPUT profit; object; 2D Profit data
+// End MDF
+// page assignment: buy call	order=4, windowed=0, showing=0
+// page assignment: buy put	order=5, windowed=0, showing=0
+// page assignment: buy share	order=2, windowed=0, showing=0
+// page assignment: data	order=9, windowed=0, showing=1
+// page assignment: sell short	order=6, windowed=0, showing=0
+// page assignment: which price	order=3, windowed=0, showing=0
+// page assignment: write call	order=7, windowed=0, showing=0
+// page assignment: write put	order=8, windowed=0, showing=0
+// workspace: width = 721, height = 702
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro OptionSurface(
+ field
+,intRate
+,t
+,K
+,optPrice
+,type
+,currentPrice
+) -> (
+ sheet
+,cnxs
+,profit
+) {
+    // 
+    // node Input[7]: x = 0, y = 0, inputs = 0, label = Input
+    // page group: data
+    // parameter: position = 1, name = 'field', value = '(none)', descriptive = 1, description = ' 2D field of Stock and sdev values', required = 1, visible = 1
+    //
+OptionSurface_Input_7_out_1 = field;
+    // 
+    // node Extract[2]: x = 14, y = 379, inputs = 2, label = Extract
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: data
+    //
+OptionSurface_Extract_2_out_1 = 
+    Extract(
+    OptionSurface_Input_7_out_1,
+    "positions"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Replace[2]: x = 88, y = 435, inputs = 4, label = Replace
+    // page group: data
+    //
+OptionSurface_Replace_2_out_1 = 
+    Replace(
+    OptionSurface_Extract_2_out_1,
+    OptionSurface_Input_7_out_1,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[15]: x = 138, y = 540, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.y"
+    // page group: data
+    // expression: value = a.y
+    // name[2]: value = a
+    //
+OptionSurface_Compute_15_out_1 = 
+    Compute(
+    "$0.y",
+    OptionSurface_Replace_2_out_1
+    ) [instance: 15, cache: 1];
+    // 
+    // node Compute[16]: x = 0, y = 538, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x"
+    // page group: data
+    // expression: value = a.x
+    // name[2]: value = a
+    //
+OptionSurface_Compute_16_out_1 = 
+    Compute(
+    "$0.x",
+    OptionSurface_Replace_2_out_1
+    ) [instance: 16, cache: 1];
+    // 
+    // node Transmitter[28]: x = 204, y = 452, inputs = 1, label = plan
+    // page group: data
+    //
+plan = OptionSurface_Input_7_out_1;
+    // 
+    // node Receiver[47]: x = 20, y = 20, inputs = 1, label = plan
+    // page group: buy call
+    //
+OptionSurface_Receiver_47_out_1[cache: 0] = plan;
+    // 
+    // node Mark[2]: x = 24, y = 124, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: buy call
+    //
+OptionSurface_Mark_2_out_1 = 
+    Mark(
+    OptionSurface_Receiver_47_out_1,
+    "positions"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[11]: x = 382, y = 0, inputs = 0, label = Input
+    // page group: data
+    // parameter: position = 5, name = 'optPrice', value = '(none)', descriptive = 1, description = ' What you paid for the Option', required = 1, visible = 1
+    //
+OptionSurface_Input_11_out_1 = optPrice;
+    // 
+    // node Transmitter[40]: x = 391, y = 83, inputs = 1, label = C
+    // page group: data
+    //
+C = OptionSurface_Input_11_out_1;
+    // 
+    // node Receiver[68]: x = 90, y = 137, inputs = 1, label = C
+    // page group: buy call
+    //
+OptionSurface_Receiver_68_out_1[cache: 0] = C;
+    // 
+    // node Input[10]: x = 167, y = 2, inputs = 0, label = Input
+    // page group: data
+    // parameter: position = 4, name = 'K', value = '(none)', descriptive = 1, description = ' Strike Price', required = 1, visible = 1
+    //
+OptionSurface_Input_10_out_1 = K;
+    // 
+    // node Transmitter[37]: x = 176, y = 83, inputs = 1, label = k
+    // page group: data
+    //
+k = OptionSurface_Input_10_out_1;
+    // 
+    // node Receiver[65]: x = 121, y = 55, inputs = 1, label = k
+    // page group: buy call
+    //
+OptionSurface_Receiver_65_out_1[cache: 0] = k;
+    // 
+    // node Compute[23]: x = 72, y = 220, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "(($0.x <= $2)? 0.0 : $0.x - $2) - $1"
+    // page group: buy call
+    // expression: value = ((StockPrice.x <= StrikePrice)? 0.0 : StockPrice.x - StrikePrice) - CallPrice
+    // name[2]: value = StockPrice
+    // name[3]: value = CallPrice
+    // name[4]: value = StrikePrice
+    //
+OptionSurface_Compute_23_out_1 = 
+    Compute(
+    "(($0.x <= $2)? 0.0 : $0.x - $2) - $1",
+    OptionSurface_Mark_2_out_1,
+    OptionSurface_Receiver_68_out_1,
+    OptionSurface_Receiver_65_out_1
+    ) [instance: 23, cache: 1];
+    // 
+    // node Receiver[63]: x = 0, y = 28, inputs = 1, label = plan
+    // page group: buy put
+    //
+OptionSurface_Receiver_63_out_1[cache: 0] = plan;
+    // 
+    // node Mark[3]: x = 11, y = 121, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: buy put
+    //
+OptionSurface_Mark_3_out_1 = 
+    Mark(
+    OptionSurface_Receiver_63_out_1,
+    "positions"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Receiver[69]: x = 80, y = 121, inputs = 1, label = C
+    // page group: buy put
+    //
+OptionSurface_Receiver_69_out_1[cache: 0] = C;
+    // 
+    // node Receiver[66]: x = 132, y = 63, inputs = 1, label = k
+    // page group: buy put
+    //
+OptionSurface_Receiver_66_out_1[cache: 0] = k;
+    // 
+    // node Compute[25]: x = 66, y = 224, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "(($0.x > $2)? 0.0 : $2- $0.x) - $1"
+    // page group: buy put
+    // expression: value = ((StockPrice.x > StrikePrice)? 0.0 : StrikePrice- StockPrice.x) - CallPrice
+    // name[2]: value = StockPrice
+    // name[3]: value = CallPrice
+    // name[4]: value = StrikePrice
+    //
+OptionSurface_Compute_25_out_1 = 
+    Compute(
+    "(($0.x > $2)? 0.0 : $2- $0.x) - $1",
+    OptionSurface_Mark_3_out_1,
+    OptionSurface_Receiver_69_out_1,
+    OptionSurface_Receiver_66_out_1
+    ) [instance: 25, cache: 1];
+    // 
+    // node Receiver[71]: x = 17, y = 68, inputs = 1, label = plan
+    // page group: sell short
+    //
+OptionSurface_Receiver_71_out_1[cache: 0] = plan;
+    // 
+    // node Mark[4]: x = 28, y = 161, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: sell short
+    //
+OptionSurface_Mark_4_out_1 = 
+    Mark(
+    OptionSurface_Receiver_71_out_1,
+    "positions"
+    ) [instance: 4, cache: 1];
+    // 
+    // node Input[13]: x = 124, y = 102, inputs = 0, label = Input
+    // page group: sell short
+    // parameter: position = 7, name = 'currentPrice', value = '(no default)', descriptive = 1, description = 'Price of Stock at t0', required = 0, visible = 1
+    //
+OptionSurface_Input_13_out_1 = currentPrice;
+    // 
+    // node Compute[26]: x = 79, y = 266, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$1 - $0.x"
+    // page group: sell short
+    // expression: value = PurchPrice - StockPrice.x
+    // name[2]: value = StockPrice
+    // name[3]: value = PurchPrice
+    //
+OptionSurface_Compute_26_out_1 = 
+    Compute(
+    "$1 - $0.x",
+    OptionSurface_Mark_4_out_1,
+    OptionSurface_Input_13_out_1
+    ) [instance: 26, cache: 1];
+    // 
+    // node Receiver[74]: x = 27, y = 53, inputs = 1, label = plan
+    // page group: write call
+    //
+OptionSurface_Receiver_74_out_1[cache: 0] = plan;
+    // 
+    // node Mark[5]: x = 31, y = 157, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: write call
+    //
+OptionSurface_Mark_5_out_1 = 
+    Mark(
+    OptionSurface_Receiver_74_out_1,
+    "positions"
+    ) [instance: 5, cache: 1];
+    // 
+    // node Receiver[75]: x = 97, y = 170, inputs = 1, label = C
+    // page group: write call
+    //
+OptionSurface_Receiver_75_out_1[cache: 0] = C;
+    // 
+    // node Receiver[76]: x = 128, y = 88, inputs = 1, label = k
+    // page group: write call
+    //
+OptionSurface_Receiver_76_out_1[cache: 0] = k;
+    // 
+    // node Compute[27]: x = 78, y = 253, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$1 - (($0.x <= $2)? 0.0 : $0.x - $2)"
+    // page group: write call
+    // expression: value = CallPrice - ((StockPrice.x <= StrikePrice)? 0.0 : StockPrice.x - StrikePrice)
+    // name[2]: value = StockPrice
+    // name[3]: value = CallPrice
+    // name[4]: value = StrikePrice
+    //
+OptionSurface_Compute_27_out_1 = 
+    Compute(
+    "$1 - (($0.x <= $2)? 0.0 : $0.x - $2)",
+    OptionSurface_Mark_5_out_1,
+    OptionSurface_Receiver_75_out_1,
+    OptionSurface_Receiver_76_out_1
+    ) [instance: 27, cache: 1];
+    // 
+    // node Receiver[77]: x = 42, y = 64, inputs = 1, label = plan
+    // page group: write put
+    //
+OptionSurface_Receiver_77_out_1[cache: 0] = plan;
+    // 
+    // node Mark[6]: x = 46, y = 168, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: write put
+    //
+OptionSurface_Mark_6_out_1 = 
+    Mark(
+    OptionSurface_Receiver_77_out_1,
+    "positions"
+    ) [instance: 6, cache: 1];
+    // 
+    // node Receiver[78]: x = 112, y = 181, inputs = 1, label = C
+    // page group: write put
+    //
+OptionSurface_Receiver_78_out_1[cache: 0] = C;
+    // 
+    // node Receiver[79]: x = 143, y = 99, inputs = 1, label = k
+    // page group: write put
+    //
+OptionSurface_Receiver_79_out_1[cache: 0] = k;
+    // 
+    // node Compute[29]: x = 80, y = 262, inputs = 4, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$1 - (($0.x > $2)? 0.0 : $2- $0.x)"
+    // page group: write put
+    // expression: value = CallPrice - ((StockPrice.x > StrikePrice)? 0.0 : StrikePrice- StockPrice.x)
+    // name[2]: value = StockPrice
+    // name[3]: value = CallPrice
+    // name[4]: value = StrikePrice
+    //
+OptionSurface_Compute_29_out_1 = 
+    Compute(
+    "$1 - (($0.x > $2)? 0.0 : $2- $0.x)",
+    OptionSurface_Mark_6_out_1,
+    OptionSurface_Receiver_78_out_1,
+    OptionSurface_Receiver_79_out_1
+    ) [instance: 29, cache: 1];
+    // 
+    // node Input[12]: x = 0, y = 0, inputs = 0, label = Input
+    // page group: which price
+    // parameter: position = 6, name = 'type', value = '(no default)', descriptive = 1, description = '1(buy call) 2(buy put) 3(sell short) 4(write call) 5(write put) 6(buy long)', required = 0, visible = 1
+    //
+OptionSurface_Input_12_out_1 = type;
+    // 
+    // node Compute[30]: x = 14, y = 376, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "(($0>=1) && ($0<=6))? 1: 2"
+    // page group: which price
+    // expression: value = ((a>=1) && (a<=6))? 1: 2
+    // name[2]: value = a
+    //
+OptionSurface_Compute_30_out_1 = 
+    Compute(
+    "(($0>=1) && ($0<=6))? 1: 2",
+    OptionSurface_Input_12_out_1
+    ) [instance: 30, cache: 1];
+    // 
+    // node Receiver[146]: x = 34, y = 104, inputs = 1, label = plan
+    // page group: buy share
+    //
+OptionSurface_Receiver_146_out_1[cache: 0] = plan;
+    // 
+    // node Mark[7]: x = 38, y = 208, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    // page group: buy share
+    //
+OptionSurface_Mark_7_out_1 = 
+    Mark(
+    OptionSurface_Receiver_146_out_1,
+    "positions"
+    ) [instance: 7, cache: 1];
+    // 
+    // node Transmitter[75]: x = 190, y = 254, inputs = 1, label = purch
+    // page group: sell short
+    //
+purch = OptionSurface_Input_13_out_1;
+    // 
+    // node Receiver[150]: x = 208, y = 177, inputs = 1, label = purch
+    // page group: buy share
+    //
+OptionSurface_Receiver_150_out_1[cache: 0] = purch;
+    // 
+    // node Compute[39]: x = 50, y = 306, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0.x - $1"
+    // page group: buy share
+    // expression: value = StockPrice.x - PurchPrice
+    // name[2]: value = StockPrice
+    // name[3]: value = PurchPrice
+    //
+OptionSurface_Compute_39_out_1 = 
+    Compute(
+    "$0.x - $1",
+    OptionSurface_Mark_7_out_1,
+    OptionSurface_Receiver_150_out_1
+    ) [instance: 39, cache: 1];
+    // 
+    // node Input[9]: x = 310, y = 2, inputs = 0, label = Input
+    // page group: data
+    // parameter: position = 3, name = 't', value = '(none)', descriptive = 1, description = ' Time to Maturity', required = 1, visible = 1
+    //
+OptionSurface_Input_9_out_1 = t;
+    // 
+    // node Receiver[188]: x = 363, y = 186, inputs = 1, label = purch
+    // page group: data
+    //
+OptionSurface_Receiver_188_out_1[cache: 0] = purch;
+    // 
+    // node Compute[42]: x = 285, y = 289, inputs = 5, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "log10($0/$3) / ($1*pow($2, 0.5))"
+    // page group: data
+    // expression: value = log10(S/k) / (sdev*pow(t, 0.5))
+    // name[2]: value = S
+    // name[3]: value = sdev
+    // name[4]: value = t
+    // name[5]: value = k
+    //
+OptionSurface_Compute_42_out_1 = 
+    Compute(
+    "log10($0/$3) / ($1*pow($2, 0.5))",
+    OptionSurface_Compute_16_out_1,
+    OptionSurface_Compute_15_out_1,
+    OptionSurface_Input_9_out_1,
+    OptionSurface_Receiver_188_out_1
+    ) [instance: 42, cache: 1];
+    // 
+    // node Input[8]: x = 56, y = 0, inputs = 0, label = Input
+    // page group: data
+    // parameter: position = 2, name = 'intRate', value = '(none)', descriptive = 1, description = ' 1 + r', required = 1, visible = 1
+    //
+OptionSurface_Input_8_out_1 = intRate;
+    // 
+    // node Transmitter[49]: x = 12, y = 477, inputs = 1, label = validType
+    // page group: which price
+    //
+validType = OptionSurface_Compute_30_out_1;
+    // 
+    // node Receiver[101]: x = 582, y = 323, inputs = 1, label = validType
+    // page group: data
+    //
+OptionSurface_Receiver_101_out_1[cache: 0] = validType;
+    // 
+    // node lognpdf[7]: x = 293, y = 385, inputs = 1, label = lognpdf
+    // page group: data
+    //
+OptionSurface_lognpdf_7_out_1 = 
+    lognpdf(
+    OptionSurface_Compute_42_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Transmitter[32]: x = 314, y = 519, inputs = 1, label = prob
+    // page group: data
+    //
+prob = OptionSurface_lognpdf_7_out_1;
+    // 
+    // node Receiver[52]: x = 488, y = 101, inputs = 1, label = prob
+    // page group: data
+    //
+OptionSurface_Receiver_52_out_1[cache: 0] = prob;
+    // 
+    // node Transmitter[31]: x = 86, y = 306, inputs = 1, label = cprices
+    // page group: buy call
+    //
+cprices = OptionSurface_Compute_23_out_1;
+    // 
+    // node Receiver[62]: x = 52, y = 0, inputs = 1, label = cprices
+    // page group: which price
+    //
+OptionSurface_Receiver_62_out_1[cache: 0] = cprices;
+    // 
+    // node Transmitter[38]: x = 76, y = 311, inputs = 1, label = pprices
+    // page group: buy put
+    //
+pprices = OptionSurface_Compute_25_out_1;
+    // 
+    // node Receiver[67]: x = 114, y = 0, inputs = 1, label = pprices
+    // page group: which price
+    //
+OptionSurface_Receiver_67_out_1[cache: 0] = pprices;
+    // 
+    // node Transmitter[42]: x = 76, y = 358, inputs = 1, label = shrprices
+    // page group: sell short
+    //
+shrprices = OptionSurface_Compute_26_out_1;
+    // 
+    // node Receiver[80]: x = 188, y = 0, inputs = 1, label = shrprices
+    // page group: which price
+    //
+OptionSurface_Receiver_80_out_1[cache: 0] = shrprices;
+    // 
+    // node Transmitter[43]: x = 83, y = 343, inputs = 1, label = wcallprices
+    // page group: write call
+    //
+wcallprices = OptionSurface_Compute_27_out_1;
+    // 
+    // node Receiver[81]: x = 317, y = 0, inputs = 1, label = wcallprices
+    // page group: which price
+    //
+OptionSurface_Receiver_81_out_1[cache: 0] = wcallprices;
+    // 
+    // node Transmitter[44]: x = 98, y = 354, inputs = 1, label = wputprices
+    // page group: write put
+    //
+wputprices = OptionSurface_Compute_29_out_1;
+    // 
+    // node Receiver[82]: x = 429, y = 0, inputs = 1, label = wputprices
+    // page group: which price
+    //
+OptionSurface_Receiver_82_out_1[cache: 0] = wputprices;
+    // 
+    // node Transmitter[76]: x = 75, y = 435, inputs = 1, label = buyprices
+    // page group: buy share
+    //
+buyprices = OptionSurface_Compute_39_out_1;
+    // 
+    // node Receiver[149]: x = 541, y = 0, inputs = 1, label = buyprices
+    // page group: which price
+    //
+OptionSurface_Receiver_149_out_1[cache: 0] = buyprices;
+    // 
+    // node Switch[1]: x = 68, y = 253, inputs = 8, label = Switch
+    // input[7]: defaulting = 1, visible = 1, type = 67108863, value = 0
+    // input[8]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: which price
+    //
+OptionSurface_Switch_1_out_1 = 
+    Switch(
+    OptionSurface_Input_12_out_1,
+    OptionSurface_Receiver_62_out_1,
+    OptionSurface_Receiver_67_out_1,
+    OptionSurface_Receiver_80_out_1,
+    OptionSurface_Receiver_81_out_1,
+    OptionSurface_Receiver_82_out_1,
+    OptionSurface_Receiver_149_out_1,
+    0
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[39]: x = 148, y = 383, inputs = 1, label = prices
+    // page group: which price
+    //
+prices = OptionSurface_Switch_1_out_1;
+    // 
+    // node Receiver[51]: x = 615, y = 0, inputs = 1, label = prices
+    // page group: data
+    //
+OptionSurface_Receiver_51_out_1[cache: 0] = prices;
+    // 
+    // node RubberSheet[2]: x = 602, y = 94, inputs = 4, label = RubberSheet
+    // input[2]: defaulting = 0, visible = 1, type = 5, value = 1.0
+    // page group: data
+    //
+OptionSurface_RubberSheet_2_out_1 = 
+    RubberSheet(
+    OptionSurface_Receiver_51_out_1,
+    1.0,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Replace[4]: x = 493, y = 194, inputs = 4, label = Replace
+    // page group: data
+    //
+OptionSurface_Replace_4_out_1 = 
+    Replace(
+    OptionSurface_Receiver_52_out_1,
+    OptionSurface_RubberSheet_2_out_1,
+    NULL,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Switch[3]: x = 535, y = 429, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 16777245, value = NULL
+    // page group: data
+    //
+OptionSurface_Switch_3_out_1 = 
+    Switch(
+    OptionSurface_Receiver_101_out_1,
+    OptionSurface_Replace_4_out_1,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Output[4]: x = 566, y = 529, inputs = 1, label = Output
+    // page group: data
+    // parameter: position = 1, name = 'sheet', value = ' ', descriptive = 0, description = ' Rubbersheet with N(z) data values', required = 0, visible = 1
+    //
+sheet = OptionSurface_Switch_3_out_1;
+    // 
+    // node ShowConnections[2]: x = 609, y = 192, inputs = 1, label = ShowConnections
+    // page group: data
+    //
+OptionSurface_ShowConnections_2_out_1 = 
+    ShowConnections(
+    OptionSurface_RubberSheet_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[4]: x = 628, y = 425, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 16777245, value = NULL
+    // page group: data
+    //
+OptionSurface_Switch_4_out_1 = 
+    Switch(
+    OptionSurface_Receiver_101_out_1,
+    OptionSurface_ShowConnections_2_out_1,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Output[5]: x = 645, y = 528, inputs = 1, label = Output
+    // page group: data
+    // parameter: position = 2, name = 'cnxs', value = ' ', descriptive = 0, description = ' Connections in sheet', required = 0, visible = 1
+    //
+cnxs = OptionSurface_Switch_4_out_1;
+    // 
+    // node Receiver[135]: x = 412, y = 395, inputs = 1, label = prices
+    // page group: data
+    //
+OptionSurface_Receiver_135_out_1[cache: 0] = prices;
+    // 
+    // node Switch[21]: x = 399, y = 496, inputs = 3, label = Switch
+    // input[3]: defaulting = 0, visible = 1, type = 67108863, value = 0
+    // page group: data
+    //
+OptionSurface_Switch_21_out_1 = 
+    Switch(
+    OptionSurface_Receiver_101_out_1,
+    OptionSurface_Receiver_135_out_1,
+    0
+    ) [instance: 21, cache: 1];
+    // 
+    // node Output[6]: x = 418, y = 594, inputs = 1, label = Output
+    // page group: data
+    // parameter: position = 3, name = 'profit', value = ' ', descriptive = 0, description = '2D Profit data', required = 0, visible = 1
+    //
+profit = OptionSurface_Switch_21_out_1;
+    // 
+    // node Transmitter[12]: x = 149, y = 640, inputs = 1, label = sdev
+    // input[1]: defaulting = 1, visible = 1, type = 67108863, value = {0.5}
+    // page group: data
+    //
+sdev = OptionSurface_Compute_15_out_1;
+    // 
+    // node Transmitter[24]: x = 18, y = 619, inputs = 1, label = S
+    // page group: data
+    //
+S = OptionSurface_Compute_16_out_1;
+    // 
+    // node Transmitter[34]: x = 62, y = 116, inputs = 1, label = r
+    // page group: data
+    //
+r = OptionSurface_Input_8_out_1;
+// network: end of macro body
+}
+OptionSurface_Input_7_out_1 = NULL;
+OptionSurface_Extract_2_out_1 = NULL;
+OptionSurface_Replace_2_out_1 = NULL;
+OptionSurface_Compute_15_out_1 = NULL;
+OptionSurface_Compute_16_out_1 = NULL;
+OptionSurface_Transmitter_28_out_1 = NULL;
+OptionSurface_Receiver_47_out_1 = NULL;
+OptionSurface_Mark_2_out_1 = NULL;
+OptionSurface_Input_11_out_1 = NULL;
+OptionSurface_Transmitter_40_out_1 = NULL;
+OptionSurface_Receiver_68_out_1 = NULL;
+OptionSurface_Input_10_out_1 = NULL;
+OptionSurface_Transmitter_37_out_1 = NULL;
+OptionSurface_Receiver_65_out_1 = NULL;
+OptionSurface_Compute_23_out_1 = NULL;
+OptionSurface_Receiver_63_out_1 = NULL;
+OptionSurface_Mark_3_out_1 = NULL;
+OptionSurface_Receiver_69_out_1 = NULL;
+OptionSurface_Receiver_66_out_1 = NULL;
+OptionSurface_Compute_25_out_1 = NULL;
+OptionSurface_Receiver_71_out_1 = NULL;
+OptionSurface_Mark_4_out_1 = NULL;
+OptionSurface_Input_13_out_1 = NULL;
+OptionSurface_Compute_26_out_1 = NULL;
+OptionSurface_Receiver_74_out_1 = NULL;
+OptionSurface_Mark_5_out_1 = NULL;
+OptionSurface_Receiver_75_out_1 = NULL;
+OptionSurface_Receiver_76_out_1 = NULL;
+OptionSurface_Compute_27_out_1 = NULL;
+OptionSurface_Receiver_77_out_1 = NULL;
+OptionSurface_Mark_6_out_1 = NULL;
+OptionSurface_Receiver_78_out_1 = NULL;
+OptionSurface_Receiver_79_out_1 = NULL;
+OptionSurface_Compute_29_out_1 = NULL;
+OptionSurface_Input_12_out_1 = NULL;
+OptionSurface_Compute_30_out_1 = NULL;
+OptionSurface_Receiver_146_out_1 = NULL;
+OptionSurface_Mark_7_out_1 = NULL;
+OptionSurface_Transmitter_75_out_1 = NULL;
+OptionSurface_Receiver_150_out_1 = NULL;
+OptionSurface_Compute_39_out_1 = NULL;
+OptionSurface_Input_9_out_1 = NULL;
+OptionSurface_Receiver_188_out_1 = NULL;
+OptionSurface_Compute_42_out_1 = NULL;
+OptionSurface_Input_8_out_1 = NULL;
+OptionSurface_Transmitter_49_out_1 = NULL;
+OptionSurface_Receiver_101_out_1 = NULL;
+OptionSurface_lognpdf_7_out_1 = NULL;
+OptionSurface_Transmitter_32_out_1 = NULL;
+OptionSurface_Receiver_52_out_1 = NULL;
+OptionSurface_Transmitter_31_out_1 = NULL;
+OptionSurface_Receiver_62_out_1 = NULL;
+OptionSurface_Transmitter_38_out_1 = NULL;
+OptionSurface_Receiver_67_out_1 = NULL;
+OptionSurface_Transmitter_42_out_1 = NULL;
+OptionSurface_Receiver_80_out_1 = NULL;
+OptionSurface_Transmitter_43_out_1 = NULL;
+OptionSurface_Receiver_81_out_1 = NULL;
+OptionSurface_Transmitter_44_out_1 = NULL;
+OptionSurface_Receiver_82_out_1 = NULL;
+OptionSurface_Transmitter_76_out_1 = NULL;
+OptionSurface_Receiver_149_out_1 = NULL;
+OptionSurface_Switch_1_out_1 = NULL;
+OptionSurface_Transmitter_39_out_1 = NULL;
+OptionSurface_Receiver_51_out_1 = NULL;
+OptionSurface_RubberSheet_2_out_1 = NULL;
+OptionSurface_Replace_4_out_1 = NULL;
+OptionSurface_Switch_3_out_1 = NULL;
+OptionSurface_ShowConnections_2_out_1 = NULL;
+OptionSurface_Switch_4_out_1 = NULL;
+OptionSurface_Receiver_135_out_1 = NULL;
+OptionSurface_Switch_21_out_1 = NULL;

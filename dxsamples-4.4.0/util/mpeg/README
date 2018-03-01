@@ -1,0 +1,68 @@
+/*
+ * (C) COPYRIGHT International Business Machines Corp. 1995
+ *
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted,
+ * provided that the above copyright notice appear in all copies and that
+ * both that copyright notice and this permission notice appear in
+ * supporting documentation, and that the name of IBM not be
+ * used in advertising or publicity pertaining to distribution of the
+ * software without specific prior written permission.
+ *
+ * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
+ * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE. IN NO EVENT SHALL IBM BE LIABLE FOR ANY SPECIAL, INDIRECT
+ * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+ * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+ * OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
+
+
+
+
+This README describes how to make mpeg movies from Data Explorer
+images.
+
+There is a public domain encoder and player available from
+Berkeley. You can ftp the package:
+   ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz
+It is well documented.
+
+The encoder requires that images be in yuv or ppm format.
+You can use DX to write yuv format images by specifying
+"yuv" as the format to WriteImage.  (This was added too
+late to be included in the documentation for WriteImage
+in the Data Explorer User Reference. The format is
+Abekas YUV). An example visual program, "write_yuv.net",
+is included in this directory. It writes a series of
+yuv-format images: iso.0.yuv, iso.1.yuv, etc.
+
+Use the encoder to create an mpeg file. You need a param
+file; one is included here, called "default.param". 
+For example:
+    .../mpeg_encode default.param
+
+Then you can use the player to play the mpeg movie. For example:
+    .../mpeg_play output.mpg
+
+WHAT IF YOUR MPEG DOESN'T LOOK RIGHT?
+  Note that Data Explorer v 3.1 had a bug which caused incorrect
+yuv images to sometimes be written. In later versions this bug
+has been fixed (to check your version, type "dx -version" or use
+the Product Information choice from the Help menu).
+  Make sure that you are writing only one frame per file (the default
+behavior of WriteImage yuv format is to append new frames if a file
+already exists; set the frame parameter to 0 to ensure that new frames
+overwrite previous frames).
+  Make sure that you have 
+BASE_FILE_FORMAT        YUV
+YUV_FORMAT      ABEKAS
+
+in your .param file.
+

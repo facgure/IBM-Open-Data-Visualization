@@ -1,0 +1,323 @@
+//
+// time: Tue Aug 13 15:56:04 1996
+//
+// version: 3.0.1 (format), 3.2.0 (DX Beta)
+//
+//
+// Begin MDF
+// MODULE SampleMacro
+// CATEGORY Macros
+// DESCRIPTION creates a rubbersheet with contour lines
+// INPUT data; field; (none); two-dimensional data field
+// INPUT num_contours; integer; 5; number of contour lines
+// INPUT color; field or vector or string; "black"; color of contour lines
+// OUTPUT output; image; rubbersheet and contour lines
+// End MDF
+//
+// comment: This visual program is used as part of the tutorial for Data Explorer. To access the tutorial you can type
+// comment:      dx -tutor
+// comment: or you can choose "Tutorial..." from the Help menu of any window.
+// comment: 
+// comment: This visual program is discussed in the section "Creating and Using Macros". To find this section, start the tutorial, then click on
+// comment: "Appendix B, Tutorial II: Editing and Creating Visual Programs" in the third paragraph. Then click on "Creating and Using Macros" in
+// comment: the list of Tutorial II Topics.
+// comment: 
+// comment: The tutorial will suggest ways to use and modify this visual program.
+// workspace: width = 631, height = 812
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro SampleMacro(
+ data
+,num_contours = 5
+,color = "black"
+) -> (
+ output
+) {
+    // 
+    // node Input[2]: x = 137, y = 11, inputs = 0, label = Input
+    // parameter: position = 1, name = 'data', value = ' ', descriptive = 0, description = 'two-dimensional data field', required = 1, visible = 1
+    //
+SampleMacro_Input_2_out_1 = data;
+    // 
+    // node RubberSheet[1]: x = 25, y = 112, inputs = 4, label = RubberSheet
+    //
+SampleMacro_RubberSheet_1_out_1 = 
+    RubberSheet(
+    SampleMacro_Input_2_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[1]: x = 36, y = 195, inputs = 10, label = AutoColor
+    //
+SampleMacro_AutoColor_1_out_1,
+SampleMacro_AutoColor_1_out_2 = 
+    AutoColor(
+    SampleMacro_RubberSheet_1_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node ColorBar[1]: x = 124, y = 313, inputs = 14, label = ColorBar
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [200 10]
+    // input[4]: defaulting = 0, visible = 1, type = 3, value = 1
+    //
+SampleMacro_ColorBar_1_out_1 = 
+    ColorBar(
+    SampleMacro_AutoColor_1_out_2,
+    NULL,
+    [200 10],
+    1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[3]: x = 220, y = 0, inputs = 0, label = Input
+    // parameter: position = 2, name = 'num_contours', value = '5', descriptive = 0, description = 'number of contour lines', required = 0, visible = 1
+    //
+SampleMacro_Input_3_out_1 = num_contours;
+    // 
+    // node Isosurface[1]: x = 253, y = 217, inputs = 6, label = Isosurface
+    //
+SampleMacro_Isosurface_1_out_1 = 
+    Isosurface(
+    SampleMacro_RubberSheet_1_out_1,
+    NULL,
+    SampleMacro_Input_3_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Input[4]: x = 321, y = 10, inputs = 0, label = Input
+    // parameter: position = 3, name = 'color', value = '"black"', descriptive = 0, description = 'color of contour lines', required = 0, visible = 1
+    //
+SampleMacro_Input_4_out_1 = color;
+    // 
+    // node Color[1]: x = 344, y = 269, inputs = 5, label = Color
+    //
+SampleMacro_Color_1_out_1 = 
+    Color(
+    SampleMacro_Isosurface_1_out_1,
+    SampleMacro_Input_4_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[1]: x = 159, y = 440, inputs = 3, label = Collect
+    //
+SampleMacro_Collect_1_out_1 = 
+    Collect(
+    SampleMacro_AutoColor_1_out_1,
+    SampleMacro_ColorBar_1_out_1,
+    SampleMacro_Color_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 251, y = 486, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 400
+    // input[5]: defaulting = 0, visible = 0, type = 5, value = 1.0
+    //
+SampleMacro_AutoCamera_1_out_1 = 
+    AutoCamera(
+    SampleMacro_Collect_1_out_1,
+    NULL,
+    NULL,
+    400,
+    1.0,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Render[1]: x = 82, y = 486, inputs = 3, label = Render
+    //
+SampleMacro_Render_1_out_1 = 
+    Render(
+    SampleMacro_Collect_1_out_1,
+    SampleMacro_AutoCamera_1_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Histogram[1]: x = 415, y = 112, inputs = 5, label = Histogram
+    //
+SampleMacro_Histogram_1_out_1,
+SampleMacro_Histogram_1_out_2 = 
+    Histogram(
+    SampleMacro_Input_2_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Mark[1]: x = 507, y = 148, inputs = 2, label = Mark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+SampleMacro_Mark_1_out_1 = 
+    Mark(
+    SampleMacro_Histogram_1_out_1,
+    "positions"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 156, y = 233, inputs = 1, label = colormap
+    //
+colormap = SampleMacro_AutoColor_1_out_2;
+    // 
+    // node Receiver[1]: x = 562, y = 160, inputs = 1, label = colormap
+    //
+SampleMacro_Receiver_1_out_1 = colormap;
+    // 
+    // node Color[3]: x = 504, y = 239, inputs = 5, label = Color
+    //
+SampleMacro_Color_3_out_1 = 
+    Color(
+    SampleMacro_Mark_1_out_1,
+    SampleMacro_Receiver_1_out_1,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Unmark[1]: x = 459, y = 319, inputs = 2, label = Unmark
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "positions"
+    //
+SampleMacro_Unmark_1_out_1 = 
+    Unmark(
+    SampleMacro_Color_3_out_1,
+    "positions"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Post[1]: x = 567, y = 384, inputs = 2, label = Post
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "connections"
+    //
+SampleMacro_Post_1_out_1 = 
+    Post(
+    SampleMacro_Unmark_1_out_1,
+    "connections"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Plot[1]: x = 400, y = 438, inputs = 24, label = Plot
+    // input[2]: defaulting = 0, visible = 1, type = 16777248, value = {"altitude" "number of data values"}
+    // input[9]: defaulting = 0, visible = 1, type = 5, value = 1.0
+    //
+SampleMacro_Plot_1_out_1 = 
+    Plot(
+    SampleMacro_Post_1_out_1,
+    {"altitude" "number of data values"},
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    1.0,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[2]: x = 539, y = 486, inputs = 9, label = AutoCamera
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 400
+    // input[5]: defaulting = 0, visible = 0, type = 5, value = 1.0
+    //
+SampleMacro_AutoCamera_2_out_1 = 
+    AutoCamera(
+    SampleMacro_Plot_1_out_1,
+    NULL,
+    NULL,
+    400,
+    1.0,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Render[2]: x = 457, y = 570, inputs = 3, label = Render
+    //
+SampleMacro_Render_2_out_1 = 
+    Render(
+    SampleMacro_Plot_1_out_1,
+    SampleMacro_AutoCamera_2_out_1,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[2]: x = 202, y = 586, inputs = 2, label = Collect
+    //
+SampleMacro_Collect_2_out_1 = 
+    Collect(
+    SampleMacro_Render_1_out_1,
+    SampleMacro_Render_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Arrange[1]: x = 387, y = 586, inputs = 5, label = Arrange
+    //
+SampleMacro_Arrange_1_out_1 = 
+    Arrange(
+    SampleMacro_Collect_2_out_1,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Output[2]: x = 381, y = 750, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output', value = ' ', descriptive = 0, description = 'rubbersheet and contour lines', required = 0, visible = 1
+    //
+output = SampleMacro_Arrange_1_out_1;
+// network: end of macro body
+}
+SampleMacro_Input_2_out_1 = NULL;
+SampleMacro_RubberSheet_1_out_1 = NULL;
+SampleMacro_AutoColor_1_out_1 = NULL;
+SampleMacro_AutoColor_1_out_2 = NULL;
+SampleMacro_ColorBar_1_out_1 = NULL;
+SampleMacro_Input_3_out_1 = NULL;
+SampleMacro_Isosurface_1_out_1 = NULL;
+SampleMacro_Input_4_out_1 = NULL;
+SampleMacro_Color_1_out_1 = NULL;
+SampleMacro_Collect_1_out_1 = NULL;
+SampleMacro_AutoCamera_1_out_1 = NULL;
+SampleMacro_Render_1_out_1 = NULL;
+SampleMacro_Histogram_1_out_1 = NULL;
+SampleMacro_Mark_1_out_1 = NULL;
+SampleMacro_Transmitter_1_out_1 = NULL;
+SampleMacro_Receiver_1_out_1 = NULL;
+SampleMacro_Color_3_out_1 = NULL;
+SampleMacro_Unmark_1_out_1 = NULL;
+SampleMacro_Post_1_out_1 = NULL;
+SampleMacro_Plot_1_out_1 = NULL;
+SampleMacro_AutoCamera_2_out_1 = NULL;
+SampleMacro_Render_2_out_1 = NULL;
+SampleMacro_Collect_2_out_1 = NULL;
+SampleMacro_Arrange_1_out_1 = NULL;

@@ -1,0 +1,24 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+   // Create a from vector at azimuth 20 degrees, elevation 80 degrees, and
+   // distance 10 degrees
+from = Direction(20, 80, 10);
+camera = AutoCamera(isosurface,from);
+Display(isosurface,camera);
+
+    // Change the from direction
+from = Direction(20, 10, 100);
+    // Choose the point on the ClipPlane
+center = [1 0 -1];
+    // Create a camera
+camera = Camera(center, from, 3);
+    // Find the vector from the from direction to the center
+clipnormal = Compute("$0 - $1", from, center);
+    // Use that vector as the normal to the clipping plane
+clipped_object = ClipPlane(isosurface, center, clipnormal);
+Display(clipped_object,camera);

@@ -1,0 +1,27 @@
+// Import the electron density field
+electrondensity = Import("watermolecule");
+
+// Partition the data for parallelism
+electrondensity = Partition(electrondensity);
+
+// create approximately 200 samples of the field
+mapped = Sample(electrondensity,200);
+
+// Color the samples based on the data values
+mapped = AutoColor(mapped);
+
+// create a camera
+camera = AutoCamera(mapped,"off-diagonal", resolution = 300, aspect = 1);
+
+// Use glyph to create sphere glyphs. The size of each glyph, in user units,
+// will be equal to 0.5 times the data value.
+glyphs = Glyph(mapped, scale = 0.5);
+
+// Display the glyphs using the camera
+Display(glyphs,camera);
+
+
+
+
+
+

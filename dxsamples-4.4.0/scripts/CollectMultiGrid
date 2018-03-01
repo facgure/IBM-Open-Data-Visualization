@@ -1,0 +1,49 @@
+// The following two grids are non-overlapping
+grid1 = Construct([0 0], [1 1], [4 4], {1 .. 16});
+grid2 = Construct([3 3], [1 1], [4 4], {33 .. 48});
+
+// Collect is used to create a generic group. When colored using AutoColor,
+// each will be colored independently.
+group = Collect(grid1,NULL, grid2);
+colored = AutoColor(group);
+camera = AutoCamera(group);
+Display(colored, camera);
+KeyIn();
+
+// CollectMultiGrid is used to create a multigrid group. When colored using 
+// AutoColor, the multigrid will be colored as a single entity.
+multigrid = CollectMultiGrid(grid1,NULL, grid2);
+colored = AutoColor(multigrid);
+camera = AutoCamera(multigrid);
+Display(colored, camera);
+KeyIn();
+
+// The following two grids are overlapping
+grid1 = Construct([0 0], [1 1], [4 4], {1 .. 16});
+grid2 = Construct([2 2], [1 1], [4 4], {33 .. 48});
+
+// In this case, the one position of grid1 completely within the 
+// overlapping region is labeled invalid.
+invalid = {0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1};
+invalid = Compute("byte($0)", invalid);
+invalid = Options(invalid,"dep", "positions");
+grid1inv = Replace(invalid, grid1, NULL, "invalid positions");
+multigrid = CollectMultiGrid(grid1inv,NULL, grid2);
+colored = AutoColor(multigrid);
+camera = AutoCamera(multigrid);
+Display(colored, camera);
+KeyIn();
+
+// In this case, the one position of grid2 completely within the 
+// overlapping region is labeled invalid.
+invalid = {1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0};
+invalid = Compute("byte($0)", invalid);
+invalid = Options(invalid,"dep", "positions");
+grid2inv = Replace(invalid, grid2, NULL, "invalid positions");
+multigrid = CollectMultiGrid(grid1,NULL, grid2inv);
+colored = AutoColor(multigrid);
+camera = AutoCamera(multigrid);
+Display(colored, camera);
+
+
+

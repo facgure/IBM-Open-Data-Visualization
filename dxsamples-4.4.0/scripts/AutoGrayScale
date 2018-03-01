@@ -1,0 +1,19 @@
+// In this example, first we use AutoGrayScale with the default parameters.
+// The actual range of the data is from approximately 0 to 10.5. In the
+// second example, we color the range of 3 to 11 using the gray scale. By 
+// default, outofrange data values get the color of the minimum data value
+// or maximum data value, depending on whether they are smaller than min or
+// larger than max. In the third example, we explicitly set all outofrange
+// data values to the color "red".
+
+rainwater = Import("rainwater");
+slice = MapToPlane(rainwater);
+camera = AutoCamera(slice);
+colored = AutoGrayScale(slice);
+Display(colored,camera);
+
+colored = AutoGrayScale(slice,min=3, max=11);
+Display(colored,camera);
+
+colored = AutoGrayScale(slice,min=3, max=11, outofrange="red");
+Display(colored,camera);

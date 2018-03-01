@@ -1,0 +1,42 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera for the data
+camera = AutoCamera(electrondensity,"off-diagonal");
+
+
+    // Define a macro. The macro takes as input a point and a normal.
+    // It creates a box outlining the data, and it also creates a 
+    // cutting plane through the data using the specified point and normal.
+    // It colors the plane using AutoColor, collects the colored plane with
+    // the box, and displays the result.  Since AutoColor is also given the
+    // entire field for the "min" input, the color map will be based on the
+    // statistics of the entire field. This means that the relationship 
+    // between color and data value will be consistent. If "min" were not
+    // specified, AutoColor would color each input plane from blue to red
+    // based on the statistics only of that plane.
+macro makeplane(point, normal)
+{
+   box = ShowBox(electrondensity);
+   plane = MapToPlane(electrondensity, point, normal);
+   plane = AutoColor(plane,min=electrondensity);
+   collected = Collect(plane,box);
+   Display(collected,camera);
+}
+
+    // Call the macro with a series of points and normals
+makeplane([0, 1, -1.1], [0 0 1]);
+makeplane([0, 1, -1.0], [0 0 1]);
+makeplane([0, 1, -0.9], [0 0 1]);
+
+    // Call the macro with a series of normals. Since point is not specified,
+    // MapToPlane will use its default, which is the center of the bounding
+    // box of the input data
+makeplane(NULL, [-0.1 0.0 1]);
+makeplane(NULL, [-0.3 0.0 1]);
+makeplane(NULL, [-0.5 0.0 1]);
+
+
+

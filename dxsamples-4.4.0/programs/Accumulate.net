@@ -1,0 +1,565 @@
+//
+// time: Wed Apr  9 15:20:15 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This visual program shows some ways of using Looping and the GetLocal and SetLocal tools to accumulate information in a visual program. ForEachMember loops over each slab in the three-dimensional object. One GetLocal/SetLocal pair is used to save and retrieve the sum of slabs up to the current slab. Another GetLocal/SetLocal pair is used to save and retrieve the sum of showbox's around the individual slabs.   Because we are using GetLocal (as opposed to GetGlobal) the GetLocal modules are automatically reset when the loop is rerun.
+// comment: 
+// comment: To see this visualization, choose Execute Once from the Execute menu .
+// comment: 
+// comment: Most of the modules have been set to "not cache results" in their configuration dialog boxes. This is because this visual program is not intended to reuse results, and not saving them makes the program run faster.
+// comment: 
+// comment: Note that if you re-run this visualization after the loop is complete, the entire loop will be re-run. This is because ForEachMember has been placed in the top level program. If you do not wish to have this behavior, ForEachMember should be placed in a macro.
+
+// page assignment: CreateImage	order=6, windowed=0, showing=0
+// page assignment: image1	order=4, windowed=0, showing=0
+// page assignment: image2	order=5, windowed=0, showing=0
+// page assignment: import	order=2, windowed=0, showing=1
+// page assignment: loop	order=3, windowed=0, showing=0
+// workspace: width = 601, height = 412
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Collect[3]: x = 338, y = 319, inputs = 2, label = Collect
+    // page group: image1
+    //
+main_Collect_3_out_1[cache: 0] = 
+    Collect(
+    main_Collect_3_in_1,
+    main_Collect_3_in_2
+    ) [instance: 3, cache: 1];
+    // 
+    // node GetLocal[2]: x = 340, y = 402, inputs = 3, label = GetLocal
+    // page group: image1
+    //
+main_GetLocal_2_out_1[cache: 0],
+main_GetLocal_2_out_2[cache: 0] = 
+    GetLocal(
+    main_Collect_3_out_1,
+    main_GetLocal_2_in_2,
+    main_GetLocal_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Import[1]: x = 71, y = 124, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "cloudwater"
+    // page group: import
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Slab[1]: x = 59, y = 243, inputs = 4, label = Slab
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: import
+    //
+main_Slab_1_out_1 = 
+    Slab(
+    main_Import_1_out_1,
+    main_Slab_1_in_2,
+    main_Slab_1_in_3,
+    main_Slab_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[1]: x = 80, y = 350, inputs = 1, label = imported
+    // page group: import
+    //
+imported = main_Slab_1_out_1;
+    // 
+    // node Receiver[2]: x = 132, y = 121, inputs = 1, label = imported
+    // page group: loop
+    //
+main_Receiver_2_out_1[cache: 0] = imported;
+    // 
+    // node ForEachMember[2]: x = 134, y = 200, inputs = 1, label = ForEachMember
+    // page group: loop
+    //
+main_ForEachMember_2_out_1,
+main_ForEachMember_2_out_2,
+main_ForEachMember_2_out_3 = 
+    ForEachMember(
+    main_Receiver_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[3]: x = 112, y = 286, inputs = 1, label = member
+    // page group: loop
+    //
+member = main_ForEachMember_2_out_1;
+    // 
+    // node Receiver[4]: x = 195, y = 132, inputs = 1, label = member
+    // page group: image1
+    //
+main_Receiver_4_out_1[cache: 0] = member;
+    // 
+    // node ShowBox[2]: x = 164, y = 336, inputs = 1, label = ShowBox
+    // page group: image1
+    //
+main_ShowBox_2_out_1[cache: 0],
+main_ShowBox_2_out_2[cache: 0] = 
+    ShowBox(
+    main_Receiver_4_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Append[1]: x = 196, y = 429, inputs = 5, label = Append
+    // page group: image1
+    //
+main_Append_1_out_1[cache: 0] = 
+    Append(
+    main_GetLocal_2_out_1,
+    main_ShowBox_2_out_1,
+    main_Append_1_in_3,
+    main_Append_1_in_4,
+    main_Append_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[1]: x = 56, y = 126, inputs = 1, label = imported
+    // page group: image1
+    //
+main_Receiver_1_out_1[cache: 0] = imported;
+    // 
+    // node AutoColor[1]: x = 57, y = 238, inputs = 10, label = AutoColor
+    // page group: image1
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_Receiver_1_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[1]: x = 62, y = 419, inputs = 2, label = Collect
+    // page group: image1
+    //
+main_Collect_1_out_1[cache: 0] = 
+    Collect(
+    main_AutoColor_1_out_1,
+    main_Append_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scale[1]: x = 69, y = 510, inputs = 2, label = Scale
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [2 1 1]
+    // page group: image1
+    //
+main_Scale_1_out_1[cache: 0] = 
+    Scale(
+    main_Collect_1_out_1,
+    main_Scale_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoCamera[2]: x = 166, y = 564, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [30000, 70000, 100000]
+    // input[3]: defaulting = 0, visible = 1, type = 5, value = 210000.0
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 500
+    // input[5]: defaulting = 0, visible = 1, type = 5, value = .5
+    // page group: image1
+    //
+main_AutoCamera_2_out_1[cache: 0] = 
+    AutoCamera(
+    main_Scale_1_out_1,
+    main_AutoCamera_2_in_2,
+    main_AutoCamera_2_in_3,
+    main_AutoCamera_2_in_4,
+    main_AutoCamera_2_in_5,
+    main_AutoCamera_2_in_6,
+    main_AutoCamera_2_in_7,
+    main_AutoCamera_2_in_8,
+    main_AutoCamera_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Render[1]: x = 58, y = 668, inputs = 3, label = Render
+    // page group: image1
+    //
+main_Render_1_out_1[cache: 0] = 
+    Render(
+    main_Scale_1_out_1,
+    main_AutoCamera_2_out_1,
+    main_Render_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[2]: x = 162, y = 706, inputs = 1, label = image1
+    // page group: image1
+    //
+image1 = main_Render_1_out_1;
+    // 
+    // node Receiver[3]: x = 109, y = 131, inputs = 1, label = image1
+    // page group: CreateImage
+    //
+main_Receiver_3_out_1[cache: 0] = image1;
+    // 
+    // node Receiver[5]: x = 149, y = 107, inputs = 1, label = member
+    // page group: image2
+    //
+main_Receiver_5_out_1[cache: 0] = member;
+    // 
+    // node GetLocal[4]: x = 256, y = 208, inputs = 3, label = GetLocal
+    // page group: image2
+    //
+main_GetLocal_4_out_1,
+main_GetLocal_4_out_2 = 
+    GetLocal(
+    main_Receiver_5_out_1,
+    main_GetLocal_4_in_2,
+    main_GetLocal_4_in_3
+    ) [instance: 4, cache: 1];
+    // 
+    // node Compute[4]: x = 167, y = 295, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0+$1"
+    // page group: image2
+    // expression: value = current+accumulated
+    // name[2]: value = current
+    // name[3]: value = accumulated
+    //
+main_Compute_4_out_1 = 
+    Compute(
+    main_Compute_4_in_1,
+    main_Receiver_5_out_1,
+    main_GetLocal_4_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node AutoColor[2]: x = 194, y = 403, inputs = 10, label = AutoColor
+    // page group: image2
+    //
+main_AutoColor_2_out_1[cache: 0],
+main_AutoColor_2_out_2[cache: 0] = 
+    AutoColor(
+    main_Compute_4_out_1,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[4]: x = 267, y = 270, inputs = 1, label = index
+    // page group: loop
+    //
+index = main_ForEachMember_2_out_2;
+    // 
+    // node Receiver[6]: x = 384, y = 108, inputs = 1, label = index
+    // page group: image2
+    //
+main_Receiver_6_out_1[cache: 0] = index;
+    // 
+    // node Format[1]: x = 305, y = 410, inputs = 2, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "sum of slabs 0 to %d"
+    // page group: image2
+    //
+main_Format_1_out_1[cache: 0] = 
+    Format(
+    main_Format_1_in_1,
+    main_Receiver_6_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Caption[1]: x = 325, y = 491, inputs = 9, label = Caption
+    // page group: image2
+    //
+main_Caption_1_out_1[cache: 0] = 
+    Caption(
+    main_Format_1_out_1,
+    main_Caption_1_in_2,
+    main_Caption_1_in_3,
+    main_Caption_1_in_4,
+    main_Caption_1_in_5,
+    main_Caption_1_in_6,
+    main_Caption_1_in_7,
+    main_Caption_1_in_8,
+    main_Caption_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Collect[2]: x = 250, y = 519, inputs = 2, label = Collect
+    // page group: image2
+    //
+main_Collect_2_out_1[cache: 0] = 
+    Collect(
+    main_AutoColor_2_out_1,
+    main_Caption_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node AutoCamera[1]: x = 318, y = 564, inputs = 9, label = AutoCamera
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "left"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 500
+    // input[5]: defaulting = 0, visible = 0, type = 5, value = .5
+    // page group: image2
+    //
+main_AutoCamera_1_out_1[cache: 0] = 
+    AutoCamera(
+    main_Collect_2_out_1,
+    main_AutoCamera_1_in_2,
+    main_AutoCamera_1_in_3,
+    main_AutoCamera_1_in_4,
+    main_AutoCamera_1_in_5,
+    main_AutoCamera_1_in_6,
+    main_AutoCamera_1_in_7,
+    main_AutoCamera_1_in_8,
+    main_AutoCamera_1_in_9
+    ) [instance: 1, cache: 1];
+    // 
+    // node Render[2]: x = 211, y = 632, inputs = 3, label = Render
+    // page group: image2
+    //
+main_Render_2_out_1[cache: 0] = 
+    Render(
+    main_Collect_2_out_1,
+    main_AutoCamera_1_out_1,
+    main_Render_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[5]: x = 213, y = 743, inputs = 1, label = image2
+    // page group: image2
+    //
+image2 = main_Render_2_out_1;
+    // 
+    // node Receiver[7]: x = 193, y = 127, inputs = 1, label = image2
+    // page group: CreateImage
+    //
+main_Receiver_7_out_1[cache: 0] = image2;
+    // 
+    // node Collect[4]: x = 129, y = 222, inputs = 2, label = Collect
+    // page group: CreateImage
+    //
+main_Collect_4_out_1[cache: 0] = 
+    Collect(
+    main_Receiver_3_out_1,
+    main_Receiver_7_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Arrange[1]: x = 108, y = 317, inputs = 5, label = Arrange
+    // page group: CreateImage
+    //
+main_Arrange_1_out_1[cache: 0] = 
+    Arrange(
+    main_Collect_4_out_1,
+    main_Arrange_1_in_2,
+    main_Arrange_1_in_3,
+    main_Arrange_1_in_4,
+    main_Arrange_1_in_5
+    ) [instance: 1, cache: 1];
+    // 
+    // node Options[1]: x = 158, y = 413, inputs = 3, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "cache"
+    // input[3]: defaulting = 0, visible = 1, type = 29, value = 0
+    // page group: CreateImage
+    //
+main_Options_1_out_1[cache: 0] = 
+    Options(
+    main_Arrange_1_out_1,
+    main_Options_1_in_2,
+    main_Options_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Display[2]: x = 205, y = 525, inputs = 4, label = Display
+    // page group: CreateImage
+    // depth: value = 24
+    // window: position = (0.0156,0.1924), size = 0.7922x0.2871
+    //
+main_Display_2_out_1[cache: 2] = 
+    Display(
+    main_Options_1_out_1,
+    main_Display_2_in_2,
+    main_Display_2_in_3,
+    main_Display_2_in_4
+    ) [instance: 2, cache: 1];
+    // 
+    // node SetLocal[2]: x = 306, y = 528, inputs = 3, label = SetLocal
+    // page group: image1
+    //
+    SetLocal(
+    main_Append_1_out_1,
+    main_GetLocal_2_out_2,
+    main_SetLocal_2_in_3
+    ) [instance: 2, cache: 1];
+    // 
+    // node SetLocal[4]: x = 288, y = 298, inputs = 3, label = SetLocal
+    // page group: image2
+    //
+    SetLocal(
+    main_Compute_4_out_1,
+    main_GetLocal_4_out_2,
+    main_SetLocal_4_in_3
+    ) [instance: 4, cache: 1];
+    //
+    // decorator Annotate	pos=(73,38) size=425x40 style(Label), value = <NULL>
+    // annotation user_begin: 139
+    // annotation user: This page loops over each member of the group of slices, passing the
+    // annotation user: output slice (and index of the slice) to other pages via transmitters.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: loop
+    //
+    // decorator Annotate	pos=(52,32) size=461x68 style(Label), value = <NULL>
+    // annotation user_begin: 281
+    // annotation user: This page creates one of the two images. The bounding box of each slice
+    // annotation user: of the data is appended to the set of accumulated bounding boxes using the
+    // annotation user: GetLocal/SetLocal pair. The set of all bounding boxes is also collected with
+    // annotation user: the current slice (AutoColored) and rendered as an image.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: image1
+    //
+    // decorator Annotate	pos=(30,60) size=471x40 style(Label), value = <NULL>
+    // annotation user_begin: 95
+    // annotation user: This page collects the two images created on other pages and arranges them
+    // annotation user: into a single image.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: CreateImage
+    //
+    // decorator Annotate	pos=(68,37) size=533x44 style(Label), value = <NULL>
+    // annotation user_begin: 95
+    // annotation user: This page imports the data and extracts all of the two-dimensional slices as
+    // annotation user: a group of slices.
+    // annotation user_end: <NULL>
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: import
+    //
+    // decorator Annotate	pos=(85,28) size=468x54 style(Label), value = <NULL>
+    // annotation user_begin: 187
+    // annotation user: In this page, the current member is summed with the sum of all the previous
+    // annotation user: members (using the GetLocal/SetLocal pair). The result is autocolored and
+    // annotation user: rendered into the second image shown.
+    // annotation user_end: <NULL>
+    // resource *decorator.foreground:#000
+    // resource *decorator.alignment:XmALIGNMENT_BEGINNING
+    // page group: image2
+// network: end of macro body
+}
+main_Collect_3_in_1 = NULL;
+main_Collect_3_in_2 = NULL;
+main_Collect_3_out_1 = NULL;
+main_GetLocal_2_in_2 = NULL;
+main_GetLocal_2_in_3 = NULL;
+main_GetLocal_2_out_1 = NULL;
+main_GetLocal_2_out_2 = NULL;
+main_Import_1_in_1 = "cloudwater";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Slab_1_in_2 = NULL;
+main_Slab_1_in_3 = NULL;
+main_Slab_1_in_4 = 0;
+main_Slab_1_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_2_out_1 = NULL;
+main_ForEachMember_2_out_1 = NULL;
+main_ForEachMember_2_out_2 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_ShowBox_2_out_1 = NULL;
+main_Append_1_in_3 = NULL;
+main_Append_1_in_4 = NULL;
+main_Append_1_in_5 = NULL;
+main_Append_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = NULL;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_Collect_1_out_1 = NULL;
+main_Scale_1_in_2 = [2 1 1];
+main_Scale_1_out_1 = NULL;
+main_AutoCamera_2_in_2 = [30000, 70000, 100000];
+main_AutoCamera_2_in_3 = 210000.0;
+main_AutoCamera_2_in_4 = 500;
+main_AutoCamera_2_in_5 = .5;
+main_AutoCamera_2_in_6 = NULL;
+main_AutoCamera_2_in_7 = NULL;
+main_AutoCamera_2_in_8 = NULL;
+main_AutoCamera_2_in_9 = NULL;
+main_AutoCamera_2_out_1 = NULL;
+main_Render_1_in_3 = NULL;
+main_Render_1_out_1 = NULL;
+main_Transmitter_2_out_1 = NULL;
+main_Receiver_3_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_GetLocal_4_in_2 = NULL;
+main_GetLocal_4_in_3 = NULL;
+main_GetLocal_4_out_1 = NULL;
+main_GetLocal_4_out_2 = NULL;
+main_Compute_4_in_1 = "$0+$1";
+main_Compute_4_out_1 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = NULL;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = NULL;
+main_AutoColor_2_in_7 = NULL;
+main_AutoColor_2_in_8 = NULL;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = NULL;
+main_AutoColor_2_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Format_1_in_1 = "sum of slabs 0 to %d";
+main_Format_1_out_1 = NULL;
+main_Caption_1_in_2 = NULL;
+main_Caption_1_in_3 = NULL;
+main_Caption_1_in_4 = NULL;
+main_Caption_1_in_5 = NULL;
+main_Caption_1_in_6 = NULL;
+main_Caption_1_in_7 = NULL;
+main_Caption_1_in_8 = NULL;
+main_Caption_1_in_9 = NULL;
+main_Caption_1_out_1 = NULL;
+main_Collect_2_out_1 = NULL;
+main_AutoCamera_1_in_2 = "left";
+main_AutoCamera_1_in_3 = NULL;
+main_AutoCamera_1_in_4 = 500;
+main_AutoCamera_1_in_5 = .5;
+main_AutoCamera_1_in_6 = NULL;
+main_AutoCamera_1_in_7 = NULL;
+main_AutoCamera_1_in_8 = NULL;
+main_AutoCamera_1_in_9 = NULL;
+main_AutoCamera_1_out_1 = NULL;
+main_Render_2_in_3 = NULL;
+main_Render_2_out_1 = NULL;
+main_Transmitter_5_out_1 = NULL;
+main_Receiver_7_out_1 = NULL;
+main_Collect_4_out_1 = NULL;
+main_Arrange_1_in_2 = NULL;
+main_Arrange_1_in_3 = NULL;
+main_Arrange_1_in_4 = NULL;
+main_Arrange_1_in_5 = NULL;
+main_Arrange_1_out_1 = NULL;
+main_Options_1_in_2 = "cache";
+main_Options_1_in_3 = 0;
+main_Options_1_out_1 = NULL;
+main_Display_2_in_2 = NULL;
+main_Display_2_in_3 = "X24,,";
+main_Display_2_in_4 = NULL;
+main_SetLocal_2_in_3 = NULL;
+main_SetLocal_4_in_3 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

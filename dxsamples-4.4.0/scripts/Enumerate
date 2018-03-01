@@ -1,0 +1,36 @@
+
+// In this example, a list of numbers between 0 and 12 is created. There
+// are three values in the list: 0, 6, and 12.
+start = 0;
+end = 12;
+counts = 3;
+enumerate_list = Enumerate(start, end, counts);
+Echo("start= ",start, "end = ", end, "counts = ", counts);
+Echo("list = ", enumerate_list);
+Echo(" ");
+
+
+// In this example, a list of vectors beginning at [0 0 0] and extending
+// to [12 15 18] is created. There are 3 values in the list:
+// [0 0 0], [6 7 9] and [12 15 18].
+start = [0 0 0];
+end = [12 15 18];
+counts = 3;
+enumerate_list = Enumerate(start, end, counts);
+Echo("start= ",start, "end = ", end, "counts = ", counts);
+Echo("list = ", enumerate_list);
+Echo(" ");
+
+// In this example, a list of vectors beginning at [0 0 0] for 3 counts 
+// is created. The delta vector is specified as [3 4 5].
+// There are three values in the list:
+// [0 0 0], [3 4 5], and [6 8 10].
+start = [0 0 0];
+delta = [3 4 5];
+counts = 3;
+enumerate_list = Enumerate(start, NULL, counts, delta);
+Echo("start= ",start, "delta = ", delta, "counts = ", counts);
+Echo("list = ", enumerate_list);
+Echo(" ");
+
+

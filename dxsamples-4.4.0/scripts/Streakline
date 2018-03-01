@@ -1,0 +1,54 @@
+
+    // Import a series field
+series = Import("seriesdata","series","dx");
+    // Create a camera
+camera = AutoCamera(series,"off-diagonal");
+
+    // Select the first field in the series
+first = Select(series,0);
+    // Use glyphs to show the direction of the vectors in the first field
+glyphs = AutoGlyph(first,shape=3,scale = 0.3);
+caption = Caption("first frame in series");
+both = Collect(caption,glyphs);
+Display(both,camera);
+
+    // Select the second field in the series
+second = Select(series,1);
+    // Use glyphs to show the direction of the vectors in the second field
+glyphs = AutoGlyph(second,shape=3,scale = 0.3);
+caption = Caption("second frame in series");
+both = Collect(caption,glyphs);
+Display(both,camera);
+
+    // Select the third field in the series
+third = Select(series,2);
+    // Use glyphs to show the direction of the vectors in the third field
+glyphs = AutoGlyph(third,shape=3,scale = 0.3);
+caption = Caption("third frame in series");
+both = Collect(caption,glyphs);
+Display(both,camera);
+
+    // Create a set of starting points using the Sample module. By default,
+    // there will be approximately 100
+startingpoints = Sample(first);
+    // Create streaklines using those starting points
+streakline = Streakline(NULL,series,startingpoints);
+caption = Caption("streakline of series");
+both = Collect(caption,streakline);
+Display(both,camera);
+
+    // Now use the frame parameter to see the streaklines progress
+streakline = Streakline(NULL,series,startingpoints,frame=0);
+caption = Caption("frame = 0 (streaklines have not progressed yet)");
+both = Collect(caption,streakline);
+Display(both,camera);
+
+streakline = Streakline(NULL,series,startingpoints,frame=1);
+caption = Caption("frame = 1");
+both = Collect(caption,streakline);
+Display(both,camera);
+
+streakline = Streakline(NULL,series,startingpoints,frame=2);
+caption = Caption("frame = 2");
+both = Collect(caption,streakline);
+Display(both,camera);

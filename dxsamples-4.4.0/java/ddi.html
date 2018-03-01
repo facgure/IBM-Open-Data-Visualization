@@ -1,0 +1,132 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Thunderstorm Visualiztion</h2>
+		<h3>...about the visualization</h3>
+		
+Data describing a section of the atmosphere are imported.
+This particular section of the atmosphere shows a wide variation
+in moisture content, temperature, and wind velocity.  Choose
+a variable in the "Data Selection" page, and then vary the 
+isosurface value in order to see regions with common characteristics.
+<p>
+<table border = 1>
+<tr bgcolor="black" align="right">
+<td width=135 height=350>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 135 HEIGHT = 313
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_7">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/ddi7.0.0.gif">
+</APPLET>
+
+</td>
+<td width=626 height=350>
+<APPLET
+	CODE="CaptionLabels.class" WIDTH = 626 HEIGHT = 34
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=DXLOutput0 VALUE="DXLOutput_2">
+	<PARAM NAME=FONT VALUE="Helvetica-bold-24">
+	<PARAM NAME=BACKGROUND VALUE="[0.0, 0.0, 0.0]">
+	<PARAM NAME=FOREGROUND VALUE="[1.0, 1.0, 1.0]">
+</APPLET>
+
+<APPLET
+	CODE="imageWindow.class" WIDTH = 626 HEIGHT = 271
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_5">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/ddi5.0.0.jpg">
+</APPLET>
+
+</td>
+</tr>
+
+</table>
+<p>
+<table border=0>
+<tr>
+<td>
+<!-- The following applet describes ddi.net.  It produces a representation 
+     of the visual program's control panels and provides execution control.
+-->
+<APPLET
+	CODE="ddi.class" width = 310 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="ddi">
+	<PARAM NAME=NETNAME VALUE="ddi.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+	<PARAM NAME=SHADOWS VALUE="true">
+	<PARAM NAME="CACHING_FEATURES" VALUE="true">
+</APPLET>
+</td>
+<td>
+<blockquote>
+
+<p>
+<h3>...about the visual program</h3>
+<small>
+This visual program demonstrates the use of data-driven scalar
+and integer interactors.  The integer interactor controls the
+slab position and is constrained by the size of the data sets.
+<p>
+The Scalar interactor which chooses the isosurface value is also 
+data-driven, so that it cannot exceed the range of the data values.
+</small>
+<h3>...about the conversion to web page</h3>
+<small>
+The original visual program rendered an object and used the Collect
+tool to combine that with a color bar and a caption.  The web version
+of the .net file, does not use Collect.  Instead each part of the 
+original image is separated into its own Image tool.  The resulting
+pictures are then assembled in an html table giving the web page
+author greater flexibilty in layouting out the document and increasing
+the proportion of meaningful gif byte transmitted with each new image.
+</small>
+</blockquote>
+</td>
+</table>
+<h3>...about <i>Enable Animation</i></h3>
+This web page passes the following parameter to the applet which
+controls the Data Explorer sesssion:
+<tt>
+<pre>
+    &lt param name="CACHING_FEATURES" value="true">
+</pre>
+</tt>
+The applet has the built-in ability to cache images inside the
+browser.  Normally this ability is used on behalf of <i>Orbit</i>
+mode and on behalf of operating Data Explorer's <i>Sequencer</i>.
+The html author can provide access to this caching function
+in his web page by setting CACHING_FEATURES.  Then the end-user
+can enable caching by clicking the <i>Enable Animation</i> toggle
+and specifing a cache size.  The applet will cache as many images
+as requested, allowing the user to play back a sequence by selecting
+<i>Review</i> in the Mode menu.
+
+		
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

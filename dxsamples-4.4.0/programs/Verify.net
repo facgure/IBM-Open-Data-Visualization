@@ -1,0 +1,114 @@
+//
+// time: Wed Apr  9 15:48:27 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: In this visual program, Verify is used twice. On the left, it simply passes through its input, as the input is a valid field. On the right, it produces an error, because we have inserted a non-sensensical set of connections into the isosurface field.
+// workspace: width = 313, height = 520
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 62, y = 59, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "watermolecule"
+    //
+main_Import_1_out_1 = 
+    Import(
+    main_Import_1_in_1,
+    main_Import_1_in_2,
+    main_Import_1_in_3,
+    main_Import_1_in_4,
+    main_Import_1_in_5,
+    main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Isosurface[1]: x = 71, y = 186, inputs = 6, label = Isosurface
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+    main_Import_1_out_1,
+    main_Isosurface_1_in_2,
+    main_Isosurface_1_in_3,
+    main_Isosurface_1_in_4,
+    main_Isosurface_1_in_5,
+    main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Verify[1]: x = 48, y = 327, inputs = 2, label = Verify
+    //
+main_Verify_1_out_1 = 
+    Verify(
+    main_Isosurface_1_out_1,
+    main_Verify_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node Print[1]: x = 77, y = 430, inputs = 3, label = Print
+    //
+    Print(
+    main_Verify_1_out_1,
+    main_Print_1_in_2,
+    main_Print_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Replace[1]: x = 202, y = 296, inputs = 4, label = Replace
+    // input[1]: defaulting = 0, visible = 1, type = 16777245, value = {[-199 0 399][-2 3 4]}
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "connections"
+    //
+main_Replace_1_out_1 = 
+    Replace(
+    main_Replace_1_in_1,
+    main_Isosurface_1_out_1,
+    main_Replace_1_in_3,
+    main_Replace_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Verify[2]: x = 222, y = 374, inputs = 2, label = Verify
+    //
+main_Verify_2_out_1 = 
+    Verify(
+    main_Replace_1_out_1,
+    main_Verify_2_in_2
+    ) [instance: 2, cache: 1];
+    // 
+    // node Print[2]: x = 241, y = 458, inputs = 3, label = Print
+    //
+    Print(
+    main_Verify_2_out_1,
+    main_Print_2_in_2,
+    main_Print_2_in_3
+    ) [instance: 2, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "watermolecule";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = NULL;
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Isosurface_1_in_2 = NULL;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+main_Verify_1_in_2 = NULL;
+main_Verify_1_out_1 = NULL;
+main_Print_1_in_2 = NULL;
+main_Print_1_in_3 = NULL;
+main_Replace_1_in_1 = {[-199 0 399][-2 3 4]};
+main_Replace_1_in_3 = NULL;
+main_Replace_1_in_4 = "connections";
+main_Replace_1_out_1 = NULL;
+main_Verify_2_in_2 = NULL;
+main_Verify_2_out_1 = NULL;
+main_Print_2_in_2 = NULL;
+main_Print_2_in_3 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

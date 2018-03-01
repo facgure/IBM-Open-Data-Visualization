@@ -1,0 +1,21 @@
+
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+electrondensity = Partition(electrondensity);
+    // Create a camera for the data
+camera = AutoCamera(electrondensity,width=5);
+    // Create an isosurface at a value of 0.3
+isosurface = Isosurface(electrondensity,0.3);
+    // Display the isosurface using the camera
+Display(isosurface,camera);
+
+
+    // Scale by 2, only in the x dimension
+scaled = Scale(isosurface,[2 1 1]);
+Display(scaled,camera);
+    // Scale by 2, in all dimensions
+scaled = Scale(isosurface,2);
+Display(scaled,camera);
+
+    // Note that scaling is relative the origin of world coordinate space

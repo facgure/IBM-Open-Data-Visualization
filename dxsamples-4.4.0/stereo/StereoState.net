@@ -1,0 +1,130 @@
+//
+// time: Thu Jun 21 06:32:13 2001
+//
+// version: 3.1.2 (format), 4.1.3 (DX)
+//
+//
+// Begin MDF
+// MODULE StereoState
+// CATEGORY Stereo
+// DESCRIPTION new macro
+// INPUT modifiedObject; object; (no default);  
+// INPUT where; window; (no default);  
+// INPUT originalObject; object; (no default);  
+// OUTPUT output_1; object;  
+// End MDF
+// workspace: width = 562, height = 484
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro StereoState(
+ modifiedObject
+,where
+,originalObject
+) -> (
+ output_1
+) {
+    // 
+    // node Input[22]: x = 230, y = 30, inputs = 0, label = Input
+    // parameter: position = 3, name = 'originalObject', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoState_Input_22_out_1 = originalObject;
+    // 
+    // node Attribute[1]: x = 235, y = 126, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    //
+StereoState_Attribute_1_out_1 = 
+    Attribute(
+    StereoState_Input_22_out_1,
+    "rendering mode"
+    ) [instance: 1, cache: 1];
+    // 
+    // node Attribute[2]: x = 328, y = 122, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "stereo camera mode"
+    //
+StereoState_Attribute_2_out_1 = 
+    Attribute(
+    StereoState_Input_22_out_1,
+    "stereo camera mode"
+    ) [instance: 2, cache: 1];
+    // 
+    // node Attribute[3]: x = 422, y = 111, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "stereo system mode"
+    //
+StereoState_Attribute_3_out_1 = 
+    Attribute(
+    StereoState_Input_22_out_1,
+    "stereo system mode"
+    ) [instance: 3, cache: 1];
+    // 
+    // node Attribute[4]: x = 495, y = 97, inputs = 2, label = Attribute
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "interaction mode"
+    //
+StereoState_Attribute_4_out_1 = 
+    Attribute(
+    StereoState_Input_22_out_1,
+    "interaction mode"
+    ) [instance: 4, cache: 1];
+    // 
+    // node Input[20]: x = 146, y = 33, inputs = 0, label = Input
+    // parameter: position = 1, name = 'modifiedObject', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoState_Input_20_out_1 = modifiedObject;
+    // 
+    // node Input[21]: x = 26, y = 29, inputs = 0, label = Input
+    // parameter: position = 2, name = 'where', value = '(no default)', descriptive = 1, description = ' ', required = 0, visible = 1
+    //
+StereoState_Input_21_out_1 = where;
+    // 
+    // node SuperviseState[2]: x = 0, y = 211, inputs = 9, label = SuperviseState
+    // input[5]: defaulting = 0, visible = 1, type = 3, value = 1
+    //
+StereoState_SuperviseState_2_out_1,
+StereoState_SuperviseState_2_out_2,
+StereoState_SuperviseState_2_out_3,
+StereoState_SuperviseState_2_out_4 = 
+    SuperviseState(
+    StereoState_Input_21_out_1,
+    NULL,
+    NULL,
+    StereoState_Input_20_out_1,
+    1,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Options[2]: x = 182, y = 312, inputs = 9, label = Options
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "rendering mode"
+    // input[4]: defaulting = 0, visible = 1, type = 32, value = "stereo camera mode"
+    // input[6]: defaulting = 0, visible = 1, type = 32, value = "stereo system mode"
+    // input[8]: defaulting = 0, visible = 1, type = 32, value = "interaction mode"
+    //
+StereoState_Options_2_out_1 = 
+    Options(
+    StereoState_SuperviseState_2_out_1,
+    "rendering mode",
+    StereoState_Attribute_1_out_1,
+    "stereo camera mode",
+    StereoState_Attribute_2_out_1,
+    "stereo system mode",
+    StereoState_Attribute_3_out_1,
+    "interaction mode",
+    StereoState_Attribute_4_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Output[5]: x = 342, y = 422, inputs = 1, label = Output
+    // parameter: position = 1, name = 'output_1', value = ' ', descriptive = 0, description = ' ', required = 0, visible = 1
+    //
+output_1 = StereoState_Options_2_out_1;
+// network: end of macro body
+}
+StereoState_Input_22_out_1 = NULL;
+StereoState_Attribute_1_out_1 = NULL;
+StereoState_Attribute_2_out_1 = NULL;
+StereoState_Attribute_3_out_1 = NULL;
+StereoState_Attribute_4_out_1 = NULL;
+StereoState_Input_20_out_1 = NULL;
+StereoState_Input_21_out_1 = NULL;
+StereoState_SuperviseState_2_out_1 = NULL;
+StereoState_Options_2_out_1 = NULL;

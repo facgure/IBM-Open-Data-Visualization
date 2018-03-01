@@ -1,0 +1,11 @@
+file = record_multiscalardepconn
+grid = 4 x 2 x 3
+format = text
+interleaving = record
+majority = row
+header = lines 1
+field = Energy, Pressure, Temperature
+recordseparator = lines 1
+dependency = connections, connections, connections
+
+end

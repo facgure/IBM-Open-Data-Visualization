@@ -1,0 +1,23 @@
+
+   // Construct a simple 5x5x5 field for illustrative purposes
+basefield = Construct([0 0 0],[1 1 1],[5 5 5]);
+   // Create a camera for this field
+camera = AutoCamera(basefield,"off-diagonal");
+
+    // Show the connections of the field
+conn = ShowConnections(basefield);
+Display(conn,camera);
+
+
+    // Reduce the field by a factor of 2 in all dimensions
+reduced = Reduce(basefield,2);
+    // Show the connections of the result
+conn = ShowConnections(reduced);
+Display(conn,camera);
+
+    // Reduce the field by a factor of 2 only in the y dimension.
+reduced = Reduce(basefield,[1 2 1]);
+conn = ShowConnections(reduced);
+Display(conn,camera);
+
+

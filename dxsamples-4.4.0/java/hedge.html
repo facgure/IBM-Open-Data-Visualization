@@ -1,0 +1,145 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Hedged Option Portfolios</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Option Hedging Strategies</h2>
+		<table>
+<tr>
+<td>
+<APPLET
+	CODE="hedge.class" width = 550 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="hedge">
+	<PARAM NAME=NETNAME VALUE="hedge.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[0.86, 0.86, 0.86]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+</APPLET>
+</td>
+<td>
+<h2>...there are 6 basic positions</h2>
+<ul>
+<li>Buy a share (a.k.a. go long)
+<li>Sell a share short.
+<li>Buy a call.
+<li>Buy a put.
+<li>Write a call.
+<li>Write a put.
+</ul>
+Each position can be described by the payoff at a variety of
+prices of the underlying security.  For example, if you buy a share
+of stock, your profit is Purchase Price minus Selling Price.  If you
+buy a call options, your profit is Stock Price at expiration
+minus Call Price minus Excercise Price.  Caveat: If Stock Price at
+expiration is less than the excercise price, then the holder elects
+not to excercise the option and the profit is just -Call Price.
+</td>
+</tr>
+</table>
+<br>
+<table border = 2>
+<tr bgcolor=black>
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 629 HEIGHT = 460
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_3">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/hedge3.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+<APPLET
+	CODE="CaptionLabels.class" WIDTH = 350 HEIGHT = 20
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=DXLOutput0 VALUE="DXLOutput_1">
+	<PARAM NAME=BACKGROUND VALUE="[0.86, 0.86, 0.86]">
+	<PARAM NAME=FOREGROUND VALUE="[0.0, 0.0, 0.0]">
+</APPLET>
+<APPLET
+	CODE="CaptionLabels.class" WIDTH = 350 HEIGHT = 20
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=DXLOutput0 VALUE="DXLOutput_2">
+	<PARAM NAME=BACKGROUND VALUE="[0.86, 0.86, 0.86]">
+	<PARAM NAME=FOREGROUND VALUE="[0.0, 0.0, 0.0]">
+</APPLET>
+<br>
+<h2>...what is a hedged position?</h2>
+Consider the profit situation when you own (or go long) 1 share.
+The potential loss is fairly large - equal to the amount paid for
+the share.  Of course the potential gain is infinite.  But suppose
+your knowledge of the firm or its markets convinces you that it's
+precariously poised.  The next few days could an incredible
+announcement - probably something disasterous, although the test
+results might possibly confirm that the firm's earlier rosy predictions.
+In either case, you know something is up and you have suspicions.
+Now if you add to your existing portfolio of 1 share, a put option - the
+right to sell 1 share at a pre-specified (or <i>Strike</i>)
+price, you have a hedge portfolio.
+If the firm goes bust your share is worthless but you get back an amount
+equal to the strike price.  So your loss is limited.  If the fantastic
+happens and the firm becomes the next darling of Wall Street your payoff
+is less by whatever you paid for the put, but still infinite.  You're
+hedged.
+
+<h2>...visualizing hedged portfolios</h2>
+This visualization lets you invest in 3 securities of any of the 6 basic
+types.  The surfaces use a red-green colormap with green showing the
+most likely outcomes (where <i>likely</i> is computed using a specified
+average and standard deviation assuming a log normal distribution of
+price fluctuations).  Then  you can view the overall behavior of your
+selected portfolio.  This <i>signature</i> is shown semi-transparently
+in white if you select <i>Securities + Signature</i> in the <i>Common</i>
+page.  
+<p>
+When you select <i>Signature only</i> or <i>Signature colored by N(x)</i>
+the visualization shows the zero payoff plane with a semi-transparent
+black surface.  Portions of the signature above this plane make the investor
+happy, portions below make her sad.
+<h2>...what are some common hedges?</h2>
+		<ul>
+<li><b>Top Straddle</b>... Write 1 call and 1 put.  The signature will
+show a right-side-up tent with (the big end pointing down).  
+<li><b>Top Vertical Combination</b>... Write 1 call and 1 put.
+By varying the strike prices you can change the bluntness and
+width of the top of the signature so that you profit over a wider
+range of outcomes than with a <b>Top Straddle</b>.
+<li><b>Bottom Straddle</b>... Buy 1 call and 1 put.  The signature
+will resemble and upside-down tent.  The interpretation of this
+is that the investor has no idea what will happen except that
+she's sure any price change will be very big.  She's betting that
+the situation at expiration will be very different from the situation
+today.
+<li><b>Bottom Vertical Combination</b>... Buy 1 call and 1 put and
+vary the strike prices to modify the
+<li><b>Bullish Vertical Spread</b>... Buy 1 call with a low strike
+price and 1 put with a high strike price.
+<li><b>Bearish Vertical Spread</b>... Buy 1 call with a high strike
+price and 1 put with a low strike price.
+
+			<li><b>Butterfly Spread</b>... Buy 2 calls - 1 with a very low strike
+price and 1 with a very high strike price - and 1 put with a moderate
+strike price.  The investor is betting against any major changes in
+the market value of the firm's stock.  
+
+		</ul>
+		<div align="center">
+			<hr>
+			<b>[ <a href="Status.html">Java Explorer</a> | <a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

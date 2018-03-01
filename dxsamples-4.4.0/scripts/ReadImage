@@ -1,0 +1,30 @@
+// Import the electron density data
+electrondensity = Import("watermolecule");
+
+// Partition the data for parallelism
+electrondensity = Partition(electrondensity);
+
+// Create an isosurface at the value 0.3
+isosurface = Isosurface(electrondensity,0.3);
+
+// create a camera
+camera = AutoCamera(isosurface, resolution =300, aspect=1);
+
+// color the isosurface red
+isosurface = Color(isosurface,"red");
+image = Render(isosurface,camera);
+// write the image to the file "iso"
+WriteImage(image,"iso",frame=0);
+
+// color the isosurface yellow 
+isosurface = Color(isosurface,"yellow");
+image = Render(isosurface,camera);
+// append the image to the file "iso"
+WriteImage(image,"iso",frame=1);
+
+// read in the images as an image series
+i=ReadImage("iso");
+
+// arrange the images together and display
+i = Arrange(i);
+Display(i);

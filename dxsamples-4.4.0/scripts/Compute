@@ -1,0 +1,107 @@
+macro main() {
+    // Import the data
+electrondensity = Import("watermolecule");
+    // Partition the data
+//electrondensity = Partition(electrondensity);
+    // Compute the field squared
+esquared = Compute("$0^2",electrondensity);
+    // Take the gradient of the original field 
+gradient = Gradient(electrondensity);
+    // Extract only the x component of the gradient field
+xcomponent = Compute("$0.x",gradient);
+
+
+    // Create two isosurfaces, don't create normals for shading
+iso1 = Isosurface(electrondensity,0.3,flag=0);
+iso2 = Isosurface(electrondensity,0.35,flag=0);
+    // Create a camera
+camera = AutoCamera(iso1);
+    // Create two images and display them
+image1 = Render(iso1,camera);
+Display(image1);
+image2 = Render(iso2,camera);
+Display(image2);
+
+
+    // Mark the "colors" component in each images as the "data" component
+    // so that Compute can operate on them
+image1 = Mark(image1,"colors");
+image2 = Mark(image2,"colors");
+    // Compute the difference between the two images
+difference = Compute("$0 - $1",image1,image2);
+image = Unmark(difference,"colors");
+    // Display the result
+Display(image);
+
+
+    // Create a 2D slice of the data, through the center
+slice = Slice(electrondensity, "z", 5);
+    // Color the slice
+slice = AutoColor(slice);
+    // Display the slice
+camera = AutoCamera(slice);
+caption = Caption("Original Slice");
+collected = Collect(caption, slice);
+Display(collected,camera);
+    // Mark the positions so that they can be computed on
+    // The original x positions go from -1 to 2.9 
+    // The original y positions go from -3 to 2.9 
+markedslice = Mark(slice,"positions");
+    // Warp the positions onto the shape of a cylinder
+pi = 3.14159;
+function = "[sin(2*$1*($0.x+1)/3.9), $0.y,-cos(2*$1*($0.x+1)/3.9)]"; 
+warped = Compute(function, markedslice, pi);
+    // Unmark the warped positions, returning them to the positions 
+    // component
+warped = Unmark(warped, "positions");
+    // Add shading
+warped = Normals(warped);
+camera = AutoCamera(warped,"off-diagonal");
+caption = Caption("Warped into the shape of a cylinder");
+collected = Collect(caption,warped);
+Display(collected, camera);
+
+    // Now warp the positions onto the shape of a doubled cone 
+    // by multiplying the x and z positions by the original 
+    // y value, which goes from -3 to 2.9 
+fnctn="[$0.y*sin(2*$1*($0.x+1)/3.9),$0.y,-$0.y*cos(2*$1*($0.x+1)/3.9)]";
+warped = Compute(fnctn, markedslice, pi);
+    // Unmark the warped positions, returning them to the positions 
+    // component
+warped = Unmark(warped, "positions");
+    // Add shading
+warped = Normals(warped);
+caption = Caption("Warped into the shape of a double cone");
+collected = Collect(caption,warped);
+Display(collected, camera);
+
+    // For illustration, Construct a 2D grid which represents longitude (x 
+    // positions) and latitude (y positions). 
+grid = Construct([0, -90], [5 5], [73, 37], {-1350 .. 1350});
+grid = Compute("abs($0)",grid);
+    // convert the positions of the grid from degrees to radians for convenience
+grid = Mark(grid,"positions");
+markedgrid = Compute("($0*$1)/180.0", pi, grid);
+grid = Unmark(markedgrid,"positions");
+colored = AutoColor(grid);
+camera = AutoCamera(grid); 
+colored = AutoAxes(colored,camera);
+caption = Caption("Original latitude and longitude grid (radians)");
+collected = Collect(caption,colored);
+Display(collected, camera);
+
+    // Now warp the grid into the shape of a sphere. 
+fnctn="[cos($0.x)*cos($0.y), sin($0.y), sin($0.x)*cos($0.y)]";
+warped = Compute(fnctn, markedgrid, pi);
+    // Unmark the warped positions, returning them to the positions 
+    // component
+warped = Unmark(warped, "positions");
+    // Add shading and colors
+colored = AutoColor(warped);
+colored = Normals(colored);
+caption = Caption("Warped into the shape of a sphere");
+collected = Collect(caption,colored);
+camera = AutoCamera(colored,"off-diagonal");
+Display(collected, camera);
+}
+main();

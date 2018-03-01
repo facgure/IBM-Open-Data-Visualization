@@ -1,0 +1,336 @@
+//
+// time: Mon Mar 14 16:51:25 2005
+//
+// version: 3.2.0 (format), 4.3.3 (DX)
+//
+//
+// Begin MDF
+// MODULE FormatList
+// CATEGORY Macros
+// DESCRIPTION new macro
+// INPUT format; string; ("%f"); format string
+// INPUT list; value list or string list or object; (none); list of scalar values to be formated
+// INPUT list1; value list or string list or group or series; (no default); list of scalar values to be formated
+// OUTPUT formatted; object; formatted list of scalar values
+// End MDF
+// workspace: width = 583, height = 822
+// layout: snap = 0, width = 50, height = 50, align = NN
+//
+macro FormatList(
+ format
+,list
+,list1
+) -> (
+ formatted
+) {
+    // 
+    // node Input[40]: x = 181, y = 235, inputs = 0, label = Input
+    // parameter: position = 2, name = 'list', value = ' ', descriptive = 0, description = 'list of scalar values to be formated', required = 1, visible = 1
+    //
+FormatList_Input_40_out_1 = list;
+    // 
+    // node Inquire[4]: x = 417, y = 310, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "items"
+    //
+FormatList_Inquire_4_out_1 = 
+    Inquire(
+    FormatList_Input_40_out_1,
+    "items",
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Input[42]: x = 52, y = 10, inputs = 0, label = Input
+    // parameter: position = 3, name = 'list1', value = '(no default)', descriptive = 1, description = 'list of scalar values to be formated', required = 0, visible = 1
+    //
+FormatList_Input_42_out_1 = list1;
+    // 
+    // node Inquire[3]: x = 61, y = 85, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is not null+1"
+    //
+FormatList_Inquire_3_out_1 = 
+    Inquire(
+    FormatList_Input_42_out_1,
+    "is not null+1",
+    NULL
+    ) [instance: 3, cache: 1];
+    // 
+    // node Compute[13]: x = 80, y = 160, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0-1"
+    // expression: value = a-1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+FormatList_Compute_13_out_1 = 
+    Compute(
+    "$0-1",
+    FormatList_Inquire_3_out_1,
+    NULL
+    ) [instance: 13, cache: 1];
+    // 
+    // node Route[6]: x = 504, y = 235, inputs = 2, outputs = 2, label = Route
+    //
+FormatList_Route_6_out_1,
+FormatList_Route_6_out_2 = 
+    Route(
+    FormatList_Compute_13_out_1,
+    FormatList_Input_42_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Inquire[5]: x = 504, y = 310, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "items"
+    //
+FormatList_Inquire_5_out_1 = 
+    Inquire(
+    FormatList_Route_6_out_1,
+    "items",
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Compute[11]: x = 489, y = 385, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0==$1?0:1"
+    // expression: value = a==b?0:1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+FormatList_Compute_11_out_1 = 
+    Compute(
+    "$0==$1?0:1",
+    FormatList_Inquire_4_out_1,
+    FormatList_Inquire_5_out_1
+    ) [instance: 11, cache: 1];
+    // 
+    // node Compute[14]: x = 97, y = 235, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "$0==1?0:1"
+    // expression: value = a==1?0:1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+FormatList_Compute_14_out_1 = 
+    Compute(
+    "$0==1?0:1",
+    FormatList_Compute_13_out_1,
+    NULL
+    ) [instance: 14, cache: 1];
+    // 
+    // node Route[7]: x = 166, y = 310, inputs = 2, outputs = 2, label = Route
+    //
+FormatList_Route_7_out_1,
+FormatList_Route_7_out_2 = 
+    Route(
+    FormatList_Compute_13_out_1,
+    FormatList_Input_40_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node ForEachMember[1]: x = 186, y = 385, inputs = 1, label = ForEachMember
+    //
+FormatList_ForEachMember_1_out_1,
+FormatList_ForEachMember_1_out_2,
+FormatList_ForEachMember_1_out_3 = 
+    ForEachMember(
+    FormatList_Route_7_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node Route[8]: x = 39, y = 304, inputs = 2, outputs = 2, label = Route
+    //
+FormatList_Route_8_out_1,
+FormatList_Route_8_out_2 = 
+    Route(
+    FormatList_Compute_14_out_1,
+    FormatList_Input_40_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node ForEachMember[2]: x = 0, y = 379, inputs = 1, label = ForEachMember
+    //
+FormatList_ForEachMember_2_out_1,
+FormatList_ForEachMember_2_out_2,
+FormatList_ForEachMember_2_out_3 = 
+    ForEachMember(
+    FormatList_Route_8_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Input[41]: x = 324, y = 99, inputs = 0, label = Input
+    // parameter: position = 1, name = 'format', value = '("%f")', descriptive = 1, description = 'format string', required = 0, visible = 1
+    //
+FormatList_Input_41_out_1 = format;
+    // 
+    // node Inquire[6]: x = 240, y = 151, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "is not null+1"
+    //
+FormatList_Inquire_6_out_1 = 
+    Inquire(
+    FormatList_Input_41_out_1,
+    "is not null+1",
+    NULL
+    ) [instance: 6, cache: 1];
+    // 
+    // node Switch[4]: x = 287, y = 250, inputs = 3, label = Switch
+    // input[2]: defaulting = 0, visible = 1, type = 67108863, value = "%f"
+    //
+FormatList_Switch_4_out_1 = 
+    Switch(
+    FormatList_Inquire_6_out_1,
+    "%f",
+    FormatList_Input_41_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Format[1]: x = 19, y = 535, inputs = 3, label = Format
+    //
+FormatList_Format_1_out_1 = 
+    Format(
+    FormatList_Switch_4_out_1,
+    FormatList_ForEachMember_2_out_1,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node Select[4]: x = 130, y = 458, inputs = 3, label = Select
+    //
+FormatList_Select_4_out_1 = 
+    Select(
+    FormatList_Input_42_out_1,
+    FormatList_ForEachMember_1_out_2,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Format[3]: x = 106, y = 535, inputs = 3, label = Format
+    //
+FormatList_Format_3_out_1 = 
+    Format(
+    FormatList_Switch_4_out_1,
+    FormatList_ForEachMember_1_out_1,
+    FormatList_Select_4_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Route[5]: x = 511, y = 460, inputs = 2, outputs = 2, label = Route
+    //
+FormatList_Route_5_out_1,
+FormatList_Route_5_out_2 = 
+    Route(
+    FormatList_Compute_11_out_1,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node Format[4]: x = 487, y = 535, inputs = 3, label = Format
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "FormatList: Lists do not match in quantity"
+    //
+FormatList_Format_4_out_1 = 
+    Format(
+    "FormatList: Lists do not match in quantity",
+    FormatList_Route_5_out_1,
+    NULL
+    ) [instance: 4, cache: 1];
+    // 
+    // node Format[5]: x = 366, y = 177, inputs = 3, label = Format
+    //
+FormatList_Format_5_out_1 = 
+    Format(
+    FormatList_Input_41_out_1,
+    NULL,
+    NULL
+    ) [instance: 5, cache: 1];
+    // 
+    // node GetLocal[1]: x = 335, y = 535, inputs = 3, label = GetLocal
+    //
+FormatList_GetLocal_1_out_1,
+FormatList_GetLocal_1_out_2 = 
+    GetLocal(
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node GetLocal[2]: x = 253, y = 535, inputs = 3, label = GetLocal
+    //
+FormatList_GetLocal_2_out_1,
+FormatList_GetLocal_2_out_2 = 
+    GetLocal(
+    NULL,
+    NULL,
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node List[1]: x = 19, y = 610, inputs = 2, label = List
+    //
+FormatList_List_1_out_1 = 
+    List(
+    FormatList_GetLocal_1_out_1,
+    FormatList_Format_1_out_1
+    ) [instance: 1, cache: 1];
+    // 
+    // node List[2]: x = 106, y = 610, inputs = 2, label = List
+    //
+FormatList_List_2_out_1 = 
+    List(
+    FormatList_GetLocal_2_out_1,
+    FormatList_Format_3_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Message[2]: x = 511, y = 610, inputs = 3, label = Message
+    // input[1]: defaulting = 1, visible = 1, type = 32, value = NULL
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "error"
+    //
+    Message(
+    FormatList_Format_4_out_1,
+    "error",
+    NULL
+    ) [instance: 2, cache: 1];
+    // 
+    // node Switch[3]: x = 70, y = 685, inputs = 3, label = Switch
+    //
+FormatList_Switch_3_out_1 = 
+    Switch(
+    FormatList_Inquire_3_out_1,
+    FormatList_List_1_out_1,
+    FormatList_List_2_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Output[12]: x = 79, y = 760, inputs = 1, label = Output
+    // parameter: position = 1, name = 'formatted', value = ' ', descriptive = 0, description = 'formatted list of scalar values', required = 0, visible = 1
+    //
+formatted = FormatList_Switch_3_out_1;
+    // 
+    // node SetLocal[1]: x = 336, y = 685, inputs = 3, label = SetLocal
+    //
+    SetLocal(
+    FormatList_List_1_out_1,
+    FormatList_GetLocal_1_out_2,
+    NULL
+    ) [instance: 1, cache: 1];
+    // 
+    // node SetLocal[2]: x = 254, y = 685, inputs = 3, label = SetLocal
+    //
+    SetLocal(
+    FormatList_List_2_out_1,
+    FormatList_GetLocal_2_out_2,
+    NULL
+    ) [instance: 2, cache: 1];
+// network: end of macro body
+}
+FormatList_Input_40_out_1 = NULL;
+FormatList_Inquire_4_out_1 = NULL;
+FormatList_Input_42_out_1 = NULL;
+FormatList_Inquire_3_out_1 = NULL;
+FormatList_Compute_13_out_1 = NULL;
+FormatList_Route_6_out_1 = NULL;
+FormatList_Inquire_5_out_1 = NULL;
+FormatList_Compute_11_out_1 = NULL;
+FormatList_Compute_14_out_1 = NULL;
+FormatList_Route_7_out_1 = NULL;
+FormatList_ForEachMember_1_out_1 = NULL;
+FormatList_ForEachMember_1_out_2 = NULL;
+FormatList_Route_8_out_1 = NULL;
+FormatList_ForEachMember_2_out_1 = NULL;
+FormatList_Input_41_out_1 = NULL;
+FormatList_Inquire_6_out_1 = NULL;
+FormatList_Switch_4_out_1 = NULL;
+FormatList_Format_1_out_1 = NULL;
+FormatList_Select_4_out_1 = NULL;
+FormatList_Format_3_out_1 = NULL;
+FormatList_Route_5_out_1 = NULL;
+FormatList_Format_4_out_1 = NULL;
+FormatList_GetLocal_1_out_1 = NULL;
+FormatList_GetLocal_1_out_2 = NULL;
+FormatList_GetLocal_2_out_1 = NULL;
+FormatList_GetLocal_2_out_2 = NULL;
+FormatList_List_1_out_1 = NULL;
+FormatList_List_2_out_1 = NULL;
+FormatList_Switch_3_out_1 = NULL;

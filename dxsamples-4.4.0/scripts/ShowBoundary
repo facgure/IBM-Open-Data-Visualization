@@ -1,0 +1,25 @@
+
+   // Import the data
+electrondensity = Import("watermolecule");
+   // Partition the data
+electrondensity = Partition(electrondensity);
+   // Create a camera
+camera = AutoCamera(electrondensity,"off-diagonal");
+   // Show the boundary
+boundary = ShowBoundary(electrondensity);
+   // Add face (faceted) normals for shading
+boundary = FaceNormals(boundary);
+   // Display
+Display(boundary,camera);
+
+
+   // The following example finds the boundary of the valid region of
+   // ShowBoundary's input. The input is invalidated using Include such that
+   // all points outside the range of 0.20 -> 10 are invalid. The validity
+   // flag for ShowBoundary tells ShowBoundary to consider the validity 
+   // information in constructing the boundary.
+
+invalidated = Include(electrondensity, 0.20, 10, cull=0);
+boundary = ShowBoundary(invalidated, validity=1);
+Display(boundary,camera);
+

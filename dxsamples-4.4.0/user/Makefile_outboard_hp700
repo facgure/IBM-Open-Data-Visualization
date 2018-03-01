@@ -1,0 +1,15 @@
+FILES = outboard.o hello.o 
+
+BASE = /usr/lpp/dx
+
+# The -Aa (ANSI mode) option is only supported by the C compiler sold
+# as an optional separate product.
+CFLAGS   = -O -Dhp700 -I . -I$(BASE)/include -Aa -D_HPUX_SOURCE
+LITELIBS = -L$(BASE)/lib_hp700 -lDXlite -lm
+
+hello:	hello.o
+	$(CC) $(CFLAGS) -DUSERMODULE=m_Hello -c $(BASE)/lib/outboard.c
+	$(CC) $(FILES) $(LITELIBS) -o hello
+	rm outboard.o
+
+

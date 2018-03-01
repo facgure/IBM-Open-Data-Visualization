@@ -1,0 +1,1231 @@
+//
+// time: Wed Apr  9 15:49:09 1997
+//
+// version: 3.1.1 (format), 3.1.4 (DX Beta)
+//
+//
+// MODULE main
+//
+// comment: This example compares the velocity of a wind field to the vorticity of that wind field. This data is provided courtesy of NCSA at the University of Illinois, Urbana-Champaign.  You can choose to see either a volume rendering of the data or a single slab of the data. Interactors control which realization you see, and if you are using slabs, which slab position and how to color the slab. Choose "Open All Control Panels" from the Windows menu to open the control panel.
+// comment: 
+// comment: The integer interactor which controls the slab position is data driven, so that regardless of which dimension the slab is taken in, the interactor cannot exceed the actual number of slabs.
+// comment: 
+// comment: An interactor also controls whether the slabs are colored from blue to red on each slab, or whether they are colored based on the data values in the entire data set. The latter will result in colors which are consistent from slab to slab, though they will be less dramatic on a given slab.
+// comment: 
+// comment: Note that the slab dimension parameter specifies which dimension in connection space is selected. Connection space does not necessarily correspond to position space, and in fact in this particular data set, the second dimension of connections corresponds to z in positions, and the third dimension of connections correponds to y in positions.
+// page assignment: div_curl	order=6, windowed=0, showing=0
+// page assignment: image	order=8, windowed=0, showing=0
+// page assignment: import	order=2, windowed=0, showing=1
+// page assignment: make_slab	order=4, windowed=0, showing=0
+// page assignment: slab_curl	order=7, windowed=0, showing=0
+// page assignment: visualize	order=5, windowed=0, showing=0
+// page assignment: volume_viz	order=3, windowed=0, showing=0
+// workspace: width = 614, height = 572
+// layout: snap = 0, width = 50, height = 50, align = UL
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[2]: x = 20, y = 20, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "wind"
+    // page group: import
+    //
+main_Import_2_out_1 = 
+    Import(
+    main_Import_2_in_1,
+    main_Import_2_in_2,
+    main_Import_2_in_3,
+    main_Import_2_in_4,
+    main_Import_2_in_5,
+    main_Import_2_in_6
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[6]: x = 410, y = 504, inputs = 1, label = original_data
+    // page group: import
+    //
+original_data = main_Import_2_out_1;
+    // 
+    // node Receiver[23]: x = 105, y = 204, inputs = 1, label = original_data
+    // page group: volume_viz
+    //
+main_Receiver_23_out_1[cache: 0] = original_data;
+    // 
+    // node AutoColor[1]: x = 122, y = 306, inputs = 10, label = AutoColor
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 2.00000
+    // page group: volume_viz
+    //
+main_AutoColor_1_out_1,
+main_AutoColor_1_out_2 = 
+    AutoColor(
+    main_Receiver_23_out_1,
+    main_AutoColor_1_in_2,
+    main_AutoColor_1_in_3,
+    main_AutoColor_1_in_4,
+    main_AutoColor_1_in_5,
+    main_AutoColor_1_in_6,
+    main_AutoColor_1_in_7,
+    main_AutoColor_1_in_8,
+    main_AutoColor_1_in_9,
+    main_AutoColor_1_in_10
+    ) [instance: 1, cache: 1];
+    // 
+    // node Receiver[11]: x = 38, y = 20, inputs = 1, label = original_data
+    // page group: div_curl
+    //
+main_Receiver_11_out_1[cache: 0] = original_data;
+    // 
+    // node DivCurl[1]: x = 57, y = 154, inputs = 2, label = DivCurl
+    // page group: div_curl
+    //
+main_DivCurl_1_out_1,
+main_DivCurl_1_out_2 = 
+    DivCurl(
+    main_Receiver_11_out_1,
+    main_DivCurl_1_in_2
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoColor[2]: x = 20, y = 362, inputs = 10, label = AutoColor
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 2.00000
+    // page group: div_curl
+    //
+main_AutoColor_2_out_1,
+main_AutoColor_2_out_2 = 
+    AutoColor(
+    main_DivCurl_1_out_2,
+    main_AutoColor_2_in_2,
+    main_AutoColor_2_in_3,
+    main_AutoColor_2_in_4,
+    main_AutoColor_2_in_5,
+    main_AutoColor_2_in_6,
+    main_AutoColor_2_in_7,
+    main_AutoColor_2_in_8,
+    main_AutoColor_2_in_9,
+    main_AutoColor_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Receiver[9]: x = 0, y = 21, inputs = 1, label = original_data
+    // page group: make_slab
+    //
+main_Receiver_9_out_1[cache: 0] = original_data;
+    // 
+    // node Integer[2]: x = 82, y = 222, inputs = 11, label = Integer
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Integer_2"
+    // input[3]: defaulting = 0, visible = 0, type = 1, value = 2 
+    // input[4]: defaulting = 1, visible = 0, type = 1, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 1, value = 0
+    // input[6]: defaulting = 1, visible = 0, type = 1, value = 2
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 0
+    // output[1]: visible = 1, type = 1, value = 2 
+    // page group: import
+    //
+    // 
+    // node Transmitter[14]: x = 166, y = 506, inputs = 1, label = slab_dimension
+    // page group: import
+    //
+slab_dimension = main_Integer_2_out_1;
+    // 
+    // node Receiver[19]: x = 101, y = 20, inputs = 1, label = slab_dimension
+    // page group: make_slab
+    //
+main_Receiver_19_out_1[cache: 0] = slab_dimension;
+    // 
+    // node Inquire[1]: x = 32, y = 92, inputs = 3, label = Inquire
+    // input[2]: defaulting = 0, visible = 1, type = 32, value = "connection gridcounts"
+    // page group: import
+    //
+main_Inquire_1_out_1 = 
+    Inquire(
+    main_Import_2_out_1,
+    main_Inquire_1_in_2,
+    main_Inquire_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node Compute[6]: x = 41, y = 300, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "select($0, $1)-1"
+    // page group: import
+    // expression: value = select(a, b)-1
+    // name[2]: value = a
+    // name[3]: value = b
+    //
+main_Compute_6_out_1 = 
+    Compute(
+    main_Compute_6_in_1,
+    main_Inquire_1_out_1,
+    main_Integer_2_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Integer[1]: x = 41, y = 385, inputs = 11, label = Integer
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Integer_1"
+    // input[2]: defaulting = 1, visible = 1, type = 67108863, value = NULL
+    // input[3]: defaulting = 0, visible = 0, type = 1, value = 2 
+    // input[4]: defaulting = 1, visible = 0, type = 1, value = 0
+    // input[5]: defaulting = 0, visible = 1, type = 1, value = 0
+    // input[6]: defaulting = 1, visible = 1, type = 1, value = 7
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.00000
+    // input[8]: defaulting = 1, visible = 0, type = 32, value = "0"
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 0
+    // output[1]: visible = 1, type = 1, value = 2 
+    // page group: import
+    //
+main_Integer_1_out_1[cache: 2] = 
+    Integer(
+    main_Integer_1_in_1,
+    main_Integer_1_in_2,
+    main_Integer_1_in_3,
+    main_Integer_1_in_4,
+    main_Integer_1_in_5,
+    main_Compute_6_out_1,
+    main_Integer_1_in_7,
+    main_Integer_1_in_8,
+    main_Integer_1_in_9,
+    main_Integer_1_in_10,
+    main_Integer_1_in_11
+    ) [instance: 1, cache: 1];
+    // 
+    // node Transmitter[5]: x = 53, y = 510, inputs = 1, label = slab_position
+    // page group: import
+    //
+slab_position = main_Integer_1_out_1;
+    // 
+    // node Receiver[7]: x = 224, y = 22, inputs = 1, label = slab_position
+    // page group: make_slab
+    //
+main_Receiver_7_out_1[cache: 0] = slab_position;
+    // 
+    // node Slab[1]: x = 44, y = 164, inputs = 4, label = Slab
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: make_slab
+    //
+main_Slab_1_out_1 = 
+    Slab(
+    main_Receiver_9_out_1,
+    main_Receiver_19_out_1,
+    main_Receiver_7_out_1,
+    main_Slab_1_in_4
+    ) [instance: 1, cache: 1];
+    // 
+    // node Selector[3]: x = 335, y = 121, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_3"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "entire data set" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 1 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "entire data set" "single slab" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 0 }
+    // input[6]: defaulting = 1, visible = 0, type = 3, value = 0
+    // output[1]: visible = 1, type = 29, value = 1 
+    // output[2]: visible = 1, type = 32, value = "entire data set" 
+    // page group: make_slab
+    //
+    // 
+    // node Switch[7]: x = 161, y = 222, inputs = 2, label = Switch
+    // page group: make_slab
+    //
+main_Switch_7_out_1 = 
+    Switch(
+    main_Selector_3_out_1,
+    main_Receiver_9_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node AutoColor[3]: x = 85, y = 307, inputs = 10, label = AutoColor
+    // page group: make_slab
+    //
+main_AutoColor_3_out_1,
+main_AutoColor_3_out_2 = 
+    AutoColor(
+    main_Slab_1_out_1,
+    main_AutoColor_3_in_2,
+    main_AutoColor_3_in_3,
+    main_AutoColor_3_in_4,
+    main_AutoColor_3_in_5,
+    main_AutoColor_3_in_6,
+    main_Switch_7_out_1,
+    main_AutoColor_3_in_8,
+    main_AutoColor_3_in_9,
+    main_AutoColor_3_in_10
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[7]: x = 140, y = 449, inputs = 1, label = curl_field
+    // page group: div_curl
+    //
+curl_field = main_DivCurl_1_out_2;
+    // 
+    // node Receiver[12]: x = 15, y = 29, inputs = 1, label = curl_field
+    // page group: slab_curl
+    //
+main_Receiver_12_out_1[cache: 0] = curl_field;
+    // 
+    // node Receiver[20]: x = 96, y = 28, inputs = 1, label = slab_dimension
+    // page group: slab_curl
+    //
+main_Receiver_20_out_1[cache: 0] = slab_dimension;
+    // 
+    // node Receiver[8]: x = 215, y = 31, inputs = 1, label = slab_position
+    // page group: slab_curl
+    //
+main_Receiver_8_out_1[cache: 0] = slab_position;
+    // 
+    // node Slab[2]: x = 110, y = 224, inputs = 4, label = Slab
+    // input[4]: defaulting = 0, visible = 1, type = 1, value = 0
+    // page group: slab_curl
+    //
+main_Slab_2_out_1 = 
+    Slab(
+    main_Receiver_12_out_1,
+    main_Receiver_20_out_1,
+    main_Receiver_8_out_1,
+    main_Slab_2_in_4
+    ) [instance: 2, cache: 1];
+    // 
+    // node Transmitter[4]: x = 284, y = 524, inputs = 1, label = autocolor_option
+    // page group: make_slab
+    //
+autocolor_option = main_Selector_3_out_1;
+    // 
+    // node Receiver[6]: x = 341, y = 32, inputs = 1, label = autocolor_option
+    // page group: slab_curl
+    //
+main_Receiver_6_out_1[cache: 0] = autocolor_option;
+    // 
+    // node Switch[8]: x = 297, y = 190, inputs = 2, label = Switch
+    // page group: slab_curl
+    //
+main_Switch_8_out_1 = 
+    Switch(
+    main_Receiver_6_out_1,
+    main_Receiver_12_out_1
+    ) [instance: 8, cache: 1];
+    // 
+    // node AutoColor[4]: x = 141, y = 313, inputs = 10, label = AutoColor
+    // page group: slab_curl
+    //
+main_AutoColor_4_out_1,
+main_AutoColor_4_out_2 = 
+    AutoColor(
+    main_Slab_2_out_1,
+    main_AutoColor_4_in_2,
+    main_AutoColor_4_in_3,
+    main_AutoColor_4_in_4,
+    main_AutoColor_4_in_5,
+    main_AutoColor_4_in_6,
+    main_Switch_8_out_1,
+    main_AutoColor_4_in_8,
+    main_AutoColor_4_in_9,
+    main_AutoColor_4_in_10
+    ) [instance: 4, cache: 1];
+    // 
+    // node Caption[2]: x = 331, y = 187, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "use this window for direct interaction"
+    // page group: visualize
+    //
+main_Caption_2_out_1 = 
+    Caption(
+    main_Caption_2_in_1,
+    main_Caption_2_in_2,
+    main_Caption_2_in_3,
+    main_Caption_2_in_4,
+    main_Caption_2_in_5,
+    main_Caption_2_in_6,
+    main_Caption_2_in_7,
+    main_Caption_2_in_8,
+    main_Caption_2_in_9
+    ) [instance: 2, cache: 1];
+    // 
+    // node Caption[3]: x = 227, y = 120, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 16777248, value = {"this window uses the same camera" "as the other window"}
+    // page group: image
+    //
+main_Caption_3_out_1 = 
+    Caption(
+    main_Caption_3_in_1,
+    main_Caption_3_in_2,
+    main_Caption_3_in_3,
+    main_Caption_3_in_4,
+    main_Caption_3_in_5,
+    main_Caption_3_in_6,
+    main_Caption_3_in_7,
+    main_Caption_3_in_8,
+    main_Caption_3_in_9
+    ) [instance: 3, cache: 1];
+    // 
+    // node Caption[4]: x = 414, y = 192, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Wind Field"
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [.05 .95]
+    // input[6]: defaulting = 0, visible = 0, type = 1, value = 20
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "roman_tser"
+    // page group: visualize
+    //
+main_Caption_4_out_1 = 
+    Caption(
+    main_Caption_4_in_1,
+    main_Caption_4_in_2,
+    main_Caption_4_in_3,
+    main_Caption_4_in_4,
+    main_Caption_4_in_5,
+    main_Caption_4_in_6,
+    main_Caption_4_in_7,
+    main_Caption_4_in_8,
+    main_Caption_4_in_9
+    ) [instance: 4, cache: 1];
+    // 
+    // node Caption[5]: x = 191, y = 223, inputs = 9, label = Caption
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "Curl (Vorticity) of Wind Field"
+    // input[2]: defaulting = 0, visible = 1, type = 8, value = [.05 .95]
+    // input[6]: defaulting = 0, visible = 0, type = 1, value = 20
+    // input[7]: defaulting = 0, visible = 1, type = 32, value = "roman_tser"
+    // page group: image
+    //
+main_Caption_5_out_1 = 
+    Caption(
+    main_Caption_5_in_1,
+    main_Caption_5_in_2,
+    main_Caption_5_in_3,
+    main_Caption_5_in_4,
+    main_Caption_5_in_5,
+    main_Caption_5_in_6,
+    main_Caption_5_in_7,
+    main_Caption_5_in_8,
+    main_Caption_5_in_9
+    ) [instance: 5, cache: 1];
+    // 
+    // node Selector[2]: x = 63, y = 123, inputs = 7, label = Selector
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Selector_2"
+    // input[2]: defaulting = 0, visible = 0, type = 32, value = "Slab" 
+    // input[3]: defaulting = 0, visible = 0, type = 29, value = 1 
+    // input[4]: defaulting = 1, visible = 1, type = 16777248, value = { "Slab" "Volume Rendering" }
+    // input[5]: defaulting = 1, visible = 0, type = 16777245, value = { 1 2 }
+    // input[6]: defaulting = 1, visible = 0, type = 3, value = 0
+    // output[1]: visible = 1, type = 29, value = 1 
+    // output[2]: visible = 1, type = 32, value = "Slab" 
+    // page group: visualize
+    //
+    // 
+    // node ShowBox[3]: x = 234, y = 121, inputs = 1, label = ShowBox
+    // page group: import
+    //
+main_ShowBox_3_out_1,
+main_ShowBox_3_out_2 = 
+    ShowBox(
+    main_Import_2_out_1
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[3]: x = 286, y = 508, inputs = 1, label = bounding_box
+    // page group: import
+    //
+bounding_box = main_ShowBox_3_out_1;
+    // 
+    // node Receiver[5]: x = 438, y = 24, inputs = 1, label = bounding_box
+    // page group: make_slab
+    //
+main_Receiver_5_out_1[cache: 0] = bounding_box;
+    // 
+    // node Collect[7]: x = 175, y = 428, inputs = 2, label = Collect
+    // page group: make_slab
+    //
+main_Collect_7_out_1 = 
+    Collect(
+    main_AutoColor_3_out_1,
+    main_Receiver_5_out_1
+    ) [instance: 7, cache: 1];
+    // 
+    // node Transmitter[15]: x = 186, y = 522, inputs = 1, label = slab_viz
+    // page group: make_slab
+    //
+slab_viz = main_Collect_7_out_1;
+    // 
+    // node Receiver[21]: x = 158, y = 26, inputs = 1, label = slab_viz
+    // page group: visualize
+    //
+main_Receiver_21_out_1[cache: 0] = slab_viz;
+    // 
+    // node Transmitter[16]: x = 143, y = 377, inputs = 1, label = vol_viz
+    // page group: volume_viz
+    //
+vol_viz = main_AutoColor_1_out_1;
+    // 
+    // node Receiver[22]: x = 237, y = 28, inputs = 1, label = vol_viz
+    // page group: visualize
+    //
+main_Receiver_22_out_1[cache: 0] = vol_viz;
+    // 
+    // node Switch[5]: x = 176, y = 167, inputs = 3, label = Switch
+    // page group: visualize
+    //
+main_Switch_5_out_1 = 
+    Switch(
+    main_Selector_2_out_1,
+    main_Receiver_21_out_1,
+    main_Receiver_22_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Collect[4]: x = 266, y = 259, inputs = 3, label = Collect
+    // page group: visualize
+    //
+main_Collect_4_out_1 = 
+    Collect(
+    main_Switch_5_out_1,
+    main_Caption_2_out_1,
+    main_Caption_4_out_1
+    ) [instance: 4, cache: 1];
+    // 
+    // node Transmitter[1]: x = 91, y = 428, inputs = 1, label = which
+    // page group: visualize
+    //
+which = main_Selector_2_out_1;
+    // 
+    // node Receiver[1]: x = 0, y = 28, inputs = 1, label = which
+    // page group: image
+    //
+main_Receiver_1_out_1[cache: 0] = which;
+    // 
+    // node Receiver[4]: x = 489, y = 48, inputs = 1, label = bounding_box
+    // page group: slab_curl
+    //
+main_Receiver_4_out_1[cache: 0] = bounding_box;
+    // 
+    // node Collect[6]: x = 165, y = 404, inputs = 2, label = Collect
+    // page group: slab_curl
+    //
+main_Collect_6_out_1 = 
+    Collect(
+    main_AutoColor_4_out_1,
+    main_Receiver_4_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Transmitter[9]: x = 160, y = 505, inputs = 1, label = slab_and_box
+    // page group: slab_curl
+    //
+slab_and_box = main_Collect_6_out_1;
+    // 
+    // node Receiver[15]: x = 84, y = 22, inputs = 1, label = slab_and_box
+    // page group: image
+    //
+main_Receiver_15_out_1[cache: 0] = slab_and_box;
+    // 
+    // node Transmitter[8]: x = 27, y = 459, inputs = 1, label = curl_volume
+    // page group: div_curl
+    //
+curl_volume = main_AutoColor_2_out_1;
+    // 
+    // node Receiver[14]: x = 199, y = 28, inputs = 1, label = curl_volume
+    // page group: image
+    //
+main_Receiver_14_out_1[cache: 0] = curl_volume;
+    // 
+    // node Switch[6]: x = 94, y = 123, inputs = 3, label = Switch
+    // page group: image
+    //
+main_Switch_6_out_1 = 
+    Switch(
+    main_Receiver_1_out_1,
+    main_Receiver_15_out_1,
+    main_Receiver_14_out_1
+    ) [instance: 6, cache: 1];
+    // 
+    // node Collect[5]: x = 92, y = 274, inputs = 3, label = Collect
+    // page group: image
+    //
+main_Collect_5_out_1 = 
+    Collect(
+    main_Switch_6_out_1,
+    main_Caption_3_out_1,
+    main_Caption_5_out_1
+    ) [instance: 5, cache: 1];
+    // 
+    // node Image[3]: x = 264, y = 329, inputs = 48, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 67108863, value = "Image_3"
+    // input[4]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [50000 7750 27000]
+    // input[6]: defaulting = 0, visible = 0, type = 8, value = [-19853.7 107186 288363]
+    // input[7]: defaulting = 0, visible = 0, type = 5, value = 154464.0
+    // input[8]: defaulting = 0, visible = 0, type = 1, value = 391
+    // input[9]: defaulting = 0, visible = 0, type = 5, value = 0.82
+    // input[10]: defaulting = 0, visible = 0, type = 8, value = [0.0427634 0.937533 -0.345257]
+    // input[11]: defaulting = 1, visible = 0, type = 5, value = 30.0002
+    // input[12]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[14]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[15]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[16]: defaulting = 1, visible = 0, type = 32, value = "none"
+    // input[17]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[18]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[19]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[29]: defaulting = 1, visible = 0, type = 3, value = 0
+    // page group: visualize
+    // depth: value = 24
+    // window: position = (0.3359,0.3076), size = 0.3164x0.3809
+    // internal caching: 1
+    //
+main_Image_3_out_1,
+main_Image_3_out_2,
+main_Image_3_out_3 = 
+    Image(
+    main_Image_3_in_1,
+    main_Collect_4_out_1,
+    main_Image_3_in_3,
+    main_Image_3_in_4,
+    main_Image_3_in_5,
+    main_Image_3_in_6,
+    main_Image_3_in_7,
+    main_Image_3_in_8,
+    main_Image_3_in_9,
+    main_Image_3_in_10,
+    main_Image_3_in_11,
+    main_Image_3_in_12,
+    main_Image_3_in_13,
+    main_Image_3_in_14,
+    main_Image_3_in_15,
+    main_Image_3_in_16,
+    main_Image_3_in_17,
+    main_Image_3_in_18,
+    main_Image_3_in_19,
+    main_Image_3_in_20,
+    main_Image_3_in_21,
+    main_Image_3_in_22,
+    main_Image_3_in_23,
+    main_Image_3_in_24,
+    main_Image_3_in_25,
+    main_Image_3_in_26,
+    main_Image_3_in_27,
+    main_Image_3_in_28,
+    main_Image_3_in_29,
+    main_Image_3_in_30,
+    main_Image_3_in_31,
+    main_Image_3_in_32,
+    main_Image_3_in_33,
+    main_Image_3_in_34,
+    main_Image_3_in_35,
+    main_Image_3_in_36,
+    main_Image_3_in_37,
+    main_Image_3_in_38,
+    main_Image_3_in_39,
+    main_Image_3_in_40,
+    main_Image_3_in_41,
+    main_Image_3_in_42,
+    main_Image_3_in_43,
+    main_Image_3_in_44,
+    main_Image_3_in_45,
+    main_Image_3_in_46,
+    main_Image_3_in_47,
+    main_Image_3_in_48
+    ) [instance: 3, cache: 1];
+    // 
+    // node Transmitter[10]: x = 254, y = 434, inputs = 1, label = camera
+    // page group: visualize
+    //
+camera = main_Image_3_out_2;
+    // 
+    // node Receiver[16]: x = 357, y = 31, inputs = 1, label = camera
+    // page group: image
+    //
+main_Receiver_16_out_1[cache: 0] = camera;
+    // 
+    // node Display[1]: x = 155, y = 391, inputs = 4, label = Display
+    // page group: image
+    // depth: value = 24
+    // window: position = (0.6680,0.3076), size = 0.3164x0.3809
+    //
+main_Display_1_out_1[cache: 2] = 
+    Display(
+    main_Collect_5_out_1,
+    main_Receiver_16_out_1,
+    main_Display_1_in_3,
+    main_Display_1_in_4
+    ) [instance: 1, cache: 1];
+    //
+    // decorator Annotate	pos=(140,21) size=474x44 style(Label), value = <NULL>
+    // annotation user_begin: 132
+    // annotation user: This page imports the data and sets up a data-driven interactor
+    // annotation user: to allow the user to choose which slab to take from the 3D data set.
+    // annotation user_end: <NULL>
+    // page group: import
+    //
+    // decorator Annotate	pos=(42,99) size=431x44 style(Label), value = <NULL>
+    // annotation user_begin: 94
+    // annotation user: This page simply autocolors the 3D field using AutoColor for
+    // annotation user: a volume rendering visualization.
+    // annotation user_end: <NULL>
+    // page group: volume_viz
+    //
+    // decorator Annotate	pos=(244,298) size=360x92 style(Label), value = <NULL>
+    // annotation user_begin: 251
+    // annotation user: This page extracts the user-selected slab from the
+    // annotation user: three  dimensional data  set. It autocolors it based
+    // annotation user: on  just   the  data  values  on  the slab, or  on  the
+    // annotation user: data values  of  the entire  3D  field,  depending on
+    // annotation user: the setting of a selector interactor.
+    // annotation user_end: <NULL>
+    // page group: make_slab
+    //
+    // decorator Annotate	pos=(313,27) size=307x124 style(Label), value = <NULL>
+    // annotation user_begin: 297
+    // annotation user: This   page   allows   the  user   to   choose
+    // annotation user: whether   to   see the volume  rendering or
+    // annotation user: the     slab    visualization.   The  choice   is
+    // annotation user: collected   with   appropriate captions, and
+    // annotation user: passed to the image tool. The camera used
+    // annotation user: in the Image is  passed  out,  to be used by
+    // annotation user: a second display window.
+    // annotation user_end: <NULL>
+    // page group: visualize
+    //
+    // decorator Annotate	pos=(199,81) size=433x28 style(Label), value = <NULL>
+    // annotation user_begin: 61
+    // annotation user: This page computes the divergence and curl of the data field.
+    // annotation user_end: <NULL>
+    // page group: div_curl
+    //
+    // decorator Annotate	pos=(265,408) size=332x60 style(Label), value = <NULL>
+    // annotation user_begin: 118
+    // annotation user: This page  extracts  a slab of the curl field, and
+    // annotation user: colors it in the same way that the original wind
+    // annotation user: field was colored.
+    // annotation user_end: <NULL>
+    // page group: slab_curl
+    //
+    // decorator Annotate	pos=(219,317) size=368x76 style(Label), value = <NULL>
+    // annotation user_begin: 172
+    // annotation user: This page  displays  either  the volume rendering or
+    // annotation user: the   slab  of  the curl  field,  depending on  the user
+    // annotation user: choice. The camera is the same camera used for the
+    // annotation user: Image tool.
+    // annotation user_end: <NULL>
+    // page group: image
+// network: end of macro body
+CacheScene("Image_3", main_Image_3_out_1, main_Image_3_out_2);
+}
+main_Import_2_in_1 = "wind";
+main_Import_2_in_2 = NULL;
+main_Import_2_in_3 = NULL;
+main_Import_2_in_4 = NULL;
+main_Import_2_in_5 = NULL;
+main_Import_2_in_6 = NULL;
+main_Import_2_out_1 = NULL;
+main_Transmitter_6_out_1 = NULL;
+main_Receiver_23_out_1 = NULL;
+main_AutoColor_1_in_2 = NULL;
+main_AutoColor_1_in_3 = 2.00000;
+main_AutoColor_1_in_4 = NULL;
+main_AutoColor_1_in_5 = NULL;
+main_AutoColor_1_in_6 = NULL;
+main_AutoColor_1_in_7 = NULL;
+main_AutoColor_1_in_8 = NULL;
+main_AutoColor_1_in_9 = NULL;
+main_AutoColor_1_in_10 = NULL;
+main_AutoColor_1_out_1 = NULL;
+main_Receiver_11_out_1 = NULL;
+main_DivCurl_1_in_2 = NULL;
+main_DivCurl_1_out_2 = NULL;
+main_AutoColor_2_in_2 = NULL;
+main_AutoColor_2_in_3 = 2.00000;
+main_AutoColor_2_in_4 = NULL;
+main_AutoColor_2_in_5 = NULL;
+main_AutoColor_2_in_6 = NULL;
+main_AutoColor_2_in_7 = NULL;
+main_AutoColor_2_in_8 = NULL;
+main_AutoColor_2_in_9 = NULL;
+main_AutoColor_2_in_10 = NULL;
+main_AutoColor_2_out_1 = NULL;
+main_Receiver_9_out_1 = NULL;
+main_Integer_2_in_1 = "Integer_2";
+main_Integer_2_in_2 = NULL;
+main_Integer_2_in_3 = 2 ;
+main_Integer_2_in_4 = NULL;
+main_Integer_2_in_5 = NULL;
+main_Integer_2_in_6 = NULL;
+main_Integer_2_in_7 = NULL;
+main_Integer_2_in_8 = NULL;
+main_Integer_2_in_9 = NULL;
+main_Integer_2_in_10 = NULL;
+main_Integer_2_in_11 = NULL;
+main_Integer_2_out_1 = 2 ;
+main_Transmitter_14_out_1 = NULL;
+main_Receiver_19_out_1 = NULL;
+main_Inquire_1_in_2 = "connection gridcounts";
+main_Inquire_1_in_3 = NULL;
+main_Inquire_1_out_1 = NULL;
+main_Compute_6_in_1 = "select($0, $1)-1";
+main_Compute_6_out_1 = NULL;
+main_Integer_1_in_1 = "Integer_1";
+main_Integer_1_in_2 = NULL;
+main_Integer_1_in_3 = 2 ;
+main_Integer_1_in_4 = NULL;
+main_Integer_1_in_5 = 0;
+main_Integer_1_in_7 = NULL;
+main_Integer_1_in_8 = NULL;
+main_Integer_1_in_9 = NULL;
+main_Integer_1_in_10 = NULL;
+main_Integer_1_in_11 = NULL;
+main_Integer_1_out_1 = 2 ;
+main_Transmitter_5_out_1 = NULL;
+main_Receiver_7_out_1 = NULL;
+main_Slab_1_in_4 = 0;
+main_Slab_1_out_1 = NULL;
+main_Selector_3_in_1 = "Selector_3";
+main_Selector_3_in_2 = "entire data set" ;
+main_Selector_3_in_3 = 1 ;
+main_Selector_3_in_4 = NULL;
+main_Selector_3_in_5 = NULL;
+main_Selector_3_in_6 = NULL;
+main_Selector_3_in_7 = NULL;
+main_Selector_3_out_1 = 1 ;
+main_Switch_7_out_1 = NULL;
+main_AutoColor_3_in_2 = NULL;
+main_AutoColor_3_in_3 = NULL;
+main_AutoColor_3_in_4 = NULL;
+main_AutoColor_3_in_5 = NULL;
+main_AutoColor_3_in_6 = NULL;
+main_AutoColor_3_in_8 = NULL;
+main_AutoColor_3_in_9 = NULL;
+main_AutoColor_3_in_10 = NULL;
+main_AutoColor_3_out_1 = NULL;
+main_Transmitter_7_out_1 = NULL;
+main_Receiver_12_out_1 = NULL;
+main_Receiver_20_out_1 = NULL;
+main_Receiver_8_out_1 = NULL;
+main_Slab_2_in_4 = 0;
+main_Slab_2_out_1 = NULL;
+main_Transmitter_4_out_1 = NULL;
+main_Receiver_6_out_1 = NULL;
+main_Switch_8_out_1 = NULL;
+main_AutoColor_4_in_2 = NULL;
+main_AutoColor_4_in_3 = NULL;
+main_AutoColor_4_in_4 = NULL;
+main_AutoColor_4_in_5 = NULL;
+main_AutoColor_4_in_6 = NULL;
+main_AutoColor_4_in_8 = NULL;
+main_AutoColor_4_in_9 = NULL;
+main_AutoColor_4_in_10 = NULL;
+main_AutoColor_4_out_1 = NULL;
+main_Caption_2_in_1 = "use this window for direct interaction";
+main_Caption_2_in_2 = NULL;
+main_Caption_2_in_3 = NULL;
+main_Caption_2_in_4 = NULL;
+main_Caption_2_in_5 = NULL;
+main_Caption_2_in_6 = NULL;
+main_Caption_2_in_7 = NULL;
+main_Caption_2_in_8 = NULL;
+main_Caption_2_in_9 = NULL;
+main_Caption_2_out_1 = NULL;
+main_Caption_3_in_1 = {"this window uses the same camera" "as the other window"};
+main_Caption_3_in_2 = NULL;
+main_Caption_3_in_3 = NULL;
+main_Caption_3_in_4 = NULL;
+main_Caption_3_in_5 = NULL;
+main_Caption_3_in_6 = NULL;
+main_Caption_3_in_7 = NULL;
+main_Caption_3_in_8 = NULL;
+main_Caption_3_in_9 = NULL;
+main_Caption_3_out_1 = NULL;
+main_Caption_4_in_1 = "Wind Field";
+main_Caption_4_in_2 = [.05 .95];
+main_Caption_4_in_3 = NULL;
+main_Caption_4_in_4 = NULL;
+main_Caption_4_in_5 = NULL;
+main_Caption_4_in_6 = 20;
+main_Caption_4_in_7 = "roman_tser";
+main_Caption_4_in_8 = NULL;
+main_Caption_4_in_9 = NULL;
+main_Caption_4_out_1 = NULL;
+main_Caption_5_in_1 = "Curl (Vorticity) of Wind Field";
+main_Caption_5_in_2 = [.05 .95];
+main_Caption_5_in_3 = NULL;
+main_Caption_5_in_4 = NULL;
+main_Caption_5_in_5 = NULL;
+main_Caption_5_in_6 = 20;
+main_Caption_5_in_7 = "roman_tser";
+main_Caption_5_in_8 = NULL;
+main_Caption_5_in_9 = NULL;
+main_Caption_5_out_1 = NULL;
+main_Selector_2_in_1 = "Selector_2";
+main_Selector_2_in_2 = "Slab" ;
+main_Selector_2_in_3 = 1 ;
+main_Selector_2_in_4 = NULL;
+main_Selector_2_in_5 = NULL;
+main_Selector_2_in_6 = NULL;
+main_Selector_2_in_7 = NULL;
+main_Selector_2_out_1 = 1 ;
+main_ShowBox_3_out_1 = NULL;
+main_Transmitter_3_out_1 = NULL;
+main_Receiver_5_out_1 = NULL;
+main_Collect_7_out_1 = NULL;
+main_Transmitter_15_out_1 = NULL;
+main_Receiver_21_out_1 = NULL;
+main_Transmitter_16_out_1 = NULL;
+main_Receiver_22_out_1 = NULL;
+main_Switch_5_out_1 = NULL;
+main_Collect_4_out_1 = NULL;
+main_Transmitter_1_out_1 = NULL;
+main_Receiver_1_out_1 = NULL;
+main_Receiver_4_out_1 = NULL;
+main_Collect_6_out_1 = NULL;
+main_Transmitter_9_out_1 = NULL;
+main_Receiver_15_out_1 = NULL;
+main_Transmitter_8_out_1 = NULL;
+main_Receiver_14_out_1 = NULL;
+main_Switch_6_out_1 = NULL;
+main_Collect_5_out_1 = NULL;
+macro Image(
+        id,
+        object,
+        where,
+        useVector,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        viewAngle,
+        perspective,
+        options,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 0,
+        defaultCamera,
+        reset,
+        backgroundColor,
+        throttle,
+        RECenable = 0,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable = 0,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        interactionMode,
+        title,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels) -> (
+        object,
+        camera,
+        where)
+{
+    ImageMessage(
+        id,
+        backgroundColor,
+        throttle,
+        RECenable,
+        RECfile,
+        RECformat,
+        RECresolution,
+        RECaspect,
+        AAenable,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont,
+        AAxTickLocs,
+        AAyTickLocs,
+        AAzTickLocs,
+        AAxTickLabels,
+        AAyTickLabels,
+        AAzTickLabels,
+        interactionMode,
+        title,
+        renderMode,
+        buttonUpApprox,
+        buttonDownApprox,
+        buttonUpDensity,
+        buttonDownDensity) [instance: 1, cache: 1];
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1, cache: 1];
+    coloredDefaultCamera = 
+	 UpdateCamera(defaultCamera,
+            background=backgroundColor) [instance: 1, cache: 1];
+    nullDefaultCamera =
+        Inquire(defaultCamera,
+            "is null + 1") [instance: 1, cache: 1];
+    resetCamera =
+        Switch(
+            nullDefaultCamera,
+            coloredDefaultCamera,
+            autoCamera) [instance: 1, cache: 1];
+    resetNull = 
+        Inquire(
+            reset,
+            "is null + 1") [instance: 2, cache: 1];
+    reset =
+        Switch(
+            resetNull,
+            reset,
+            0) [instance: 2, cache: 1];
+    whichCamera =
+        Compute(
+            "($0 != 0 || $1 == 0) ? 1 : 2",
+            reset,
+            useVector) [instance: 1, cache: 1];
+    camera = Switch(
+            whichCamera,
+            resetCamera,
+            realCamera) [instance: 3, cache: 1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont,
+            AAxTickLocs,
+            AAyTickLocs,
+            AAzTickLocs,
+            AAxTickLabels,
+            AAyTickLabels,
+            AAzTickLabels) [instance: 1, cache: 1];
+    switchAAenable = Compute("$0+1",
+	     AAenable) [instance: 2, cache: 1];
+    object = Switch(
+	     switchAAenable,
+	     object,
+	     AAobject) [instance:4, cache: 1];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 5, cache: 1];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 6, cache: 1];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1, cache: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 2, cache: 1];
+    switchRenderMode = Compute(
+	     "$0+1",
+	     renderMode) [instance: 3, cache: 1];
+    approximation_options = Switch(
+	     switchRenderMode,
+            SWapproximation_options,
+	     HWapproximation_options) [instance: 7, cache: 1];
+    density_options = Switch(
+	     switchRenderMode,
+            SWdensity_options,
+            HWdensity_options) [instance: 8, cache: 1];
+    renderModeString = Switch(
+            switchRenderMode,
+            "software",
+            "hardware")[instance: 9, cache: 1];
+    object_tag = Inquire(
+            object,
+            "object tag")[instance: 3, cache: 1];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "cache",
+            1,
+            "object tag",
+            object_tag,
+            "ddcamera",
+            whichCamera,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "button state",
+            buttonState,
+            "rendering mode",
+            renderModeString) [instance: 1, cache: 1];
+    RECresNull =
+        Inquire(
+            RECresolution,
+            "is null + 1") [instance: 4, cache: 1];
+    ImageResolution =
+        Inquire(
+            camera,
+            "camera resolution") [instance: 5, cache: 1];
+    RECresolution =
+        Switch(
+            RECresNull,
+            RECresolution,
+            ImageResolution) [instance: 10, cache: 1];
+    RECaspectNull =
+        Inquire(
+            RECaspect,
+            "is null + 1") [instance: 6, cache: 1];
+    ImageAspect =
+        Inquire(
+            camera,
+            "camera aspect") [instance: 7, cache: 1];
+    RECaspect =
+        Switch(
+            RECaspectNull,
+            RECaspect,
+            ImageAspect) [instance: 11, cache: 1];
+    switchRECenable = Compute(
+          "$0 == 0 ? 1 : (($2 == $3) && ($4 == $5)) ? ($1 == 1 ? 2 : 3) : 4",
+            RECenable,
+            switchRenderMode,
+            RECresolution,
+            ImageResolution,
+            RECaspect,
+	     ImageAspect) [instance: 4, cache: 1];
+    NoRECobject, RECNoRerenderObject, RECNoRerHW, RECRerenderObject = Route(switchRECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECNoRerenderObject,
+            camera) [instance: 1, cache: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    rec_where = Display(
+        RECNoRerHW,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 0];
+    rec_image = ReadImageWindow(
+        rec_where) [instance: 1, cache: 1];
+    WriteImage(
+        rec_image,
+        RECfile,
+        RECformat) [instance: 1, cache: 1];
+    RECupdateCamera =
+	UpdateCamera(
+	    camera,
+	    resolution=RECresolution,
+	    aspect=RECaspect) [instance: 2, cache: 1];
+    Display(
+        RECRerenderObject,
+        camera,
+        where,
+        throttle) [instance: 1, cache: 1];
+    RECRerenderObject =
+	ScaleScreen(
+	    RECRerenderObject,
+	    NULL,
+	    RECresolution,
+	    camera) [instance: 1, cache: 1];
+    image =
+        Render(
+            RECRerenderObject,
+            RECupdateCamera) [instance: 2, cache: 1];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 2, cache: 1];
+}
+main_Image_3_in_1 = "Image_3";
+main_Image_3_in_3 = "X24,,";
+main_Image_3_in_4 = 1;
+main_Image_3_in_5 = [50000 7750 27000];
+main_Image_3_in_6 = [-19853.7 107186 288363];
+main_Image_3_in_7 = 154464.0;
+main_Image_3_in_8 = 391;
+main_Image_3_in_9 = 0.82;
+main_Image_3_in_10 = [0.0427634 0.937533 -0.345257];
+main_Image_3_in_11 = NULL;
+main_Image_3_in_12 = 0;
+main_Image_3_in_13 = NULL;
+main_Image_3_in_14 = 1;
+main_Image_3_in_15 = NULL;
+main_Image_3_in_16 = NULL;
+main_Image_3_in_17 = NULL;
+main_Image_3_in_18 = NULL;
+main_Image_3_in_19 = 0;
+main_Image_3_in_20 = NULL;
+main_Image_3_in_21 = NULL;
+main_Image_3_in_22 = NULL;
+main_Image_3_in_23 = NULL;
+main_Image_3_in_25 = NULL;
+main_Image_3_in_26 = NULL;
+main_Image_3_in_27 = NULL;
+main_Image_3_in_28 = NULL;
+main_Image_3_in_29 = NULL;
+main_Image_3_in_30 = NULL;
+main_Image_3_in_31 = NULL;
+main_Image_3_in_32 = NULL;
+main_Image_3_in_33 = NULL;
+main_Image_3_in_34 = NULL;
+main_Image_3_in_35 = NULL;
+main_Image_3_in_36 = NULL;
+main_Image_3_in_37 = NULL;
+main_Image_3_in_38 = NULL;
+main_Image_3_in_39 = NULL;
+main_Image_3_in_40 = NULL;
+main_Image_3_in_41 = NULL;
+main_Image_3_in_42 = NULL;
+main_Image_3_in_43 = NULL;
+main_Image_3_in_44 = NULL;
+main_Image_3_in_45 = NULL;
+main_Image_3_in_46 = NULL;
+main_Image_3_in_47 = NULL;
+main_Image_3_in_48 = NULL;
+main_Image_3_out_2 = NULL;
+main_Transmitter_10_out_1 = NULL;
+main_Receiver_16_out_1 = NULL;
+main_Display_1_in_3 = "X24,,";
+main_Display_1_in_4 = NULL;
+Executive("product version 3 1 4");
+$sync
+main();

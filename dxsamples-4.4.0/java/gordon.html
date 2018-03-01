@@ -1,0 +1,98 @@
+<html><head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Open Visualization Data Explorer</title>
+</head>
+<body bgcolor="white">
+		<h2><img src="javadx-smhd.gif" alt="Java Explorer" height="60" width="240" border="0"></h2>
+		<hr>
+		<h2>Present Value of a Perpetuity</h2>
+		<h3>...about the visualization</h3>
+The Data Explorer group has decided to endow a chair
+in user interface research at the
+IBM T. J. Watson Research Center.  How much does the
+endowment cost?  The group had prepared an analysis based
+on its estimate of its cost of capital.  Then Martin
+noted that it would be nice to increase the new 
+person's salary each year.  Here is the resulting
+analysis.  It assumes that the chair holder will
+be paid $50,000 in her first year.  You estimate
+the interest rate and specify a growth factor by
+<i>pick</i>ing on the spot on the curve you feel
+most accurately represents the real world.
+<p>
+<table border = 0>
+<tr>
+<td>
+<h3>...about the web page</h3>
+You can enter <i>pick</i> mode by selecting "Pick"
+in the Mode selector.  Then place a pick on
+the image by clicking with the left mouse button.
+The "Execution" indicator
+turns green when Data Explorer is executing.  
+After you've picked, the visualization will show
+the present value of the perpetual stream of cash flows
+representing the salary for the endowed chair.  In other
+words, it shows how much the Data Explorer group will
+have to invest today in order to pay for the chair.
+<h3>...about <i>Pick</i> mode</h3>
+When you place a pick on an image rendered by Data Explorer,
+you're identifying a location on (2d or 3d) object. Data 
+Explorer automatically translates the screen's x,y pick
+location
+into an x,y or x,y,z location in the object's coordinate
+space.  Then the position on the object is used to lookup
+the data value from that point on the object.
+</td>
+<td>
+<APPLET
+	CODE="gordon.class" width = 300 height = 350
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME="name" VALUE="gordon">
+	<PARAM NAME=NETNAME VALUE="gordon.net">
+	<PARAM NAME=DXUIVERS VALUE="4.3.3">
+	<PARAM NAME=BACKGROUND VALUE="[1.0, 1.0, 1.0]">
+	<PARAM NAME=EXECUTE_ON_CHANGE VALUE="true">
+</APPLET>
+</td>
+</tr>
+</table>
+<p>
+<table border = 2>
+<tr bgcolor="black">
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 531 HEIGHT = 501
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_1">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/gordon1.0.0.gif">
+</APPLET>
+</td>
+</tr>
+<tr bgcolor="black">
+<td>
+<APPLET
+	CODE="imageWindow.class" WIDTH = 533 HEIGHT = 40
+	CODEBASE="../"
+	ARCHIVE="htmlpages/dx.jar,htmlpages/samples.jar"
+	MAYSCRIPT
+>
+	<PARAM NAME=IMAGE_NODE VALUE="Image_2">
+	<PARAM NAME=INITIAL_IMAGE VALUE="htmlpages/gordon2.0.0.gif">
+</APPLET>
+</td>
+</tr>
+</table>
+		<p>
+		<div align="center">
+			<hr>
+			<b> &#91 
+<a href="Status.html">Java Explorer</a> |
+<a href="http://www.opendx.org/">OpenDX home page</a> | <a href="http://www.opendx.org/support.html">Help</a> ] </b></div>
+	</body>
+</html>

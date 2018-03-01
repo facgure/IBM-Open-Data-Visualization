@@ -1,0 +1,46 @@
+/*
+ * (C) Visualization and Imagery Solutions, Inc. 2002
+ * 
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, 
+ * provided that the above copyright notice appear in all copies and that
+ * both that copyright notice and this permission notice appear in 
+ * supporting documentation, and that the name of VIS not be
+ * used in advertising or publicity pertaining to distribution of the
+ * software without specific prior written permission. 
+ * 
+ * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,       
+ * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY        
+ * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.       
+ *
+ * VIS DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE. IN NO EVENT SHALL VIS BE LIABLE FOR ANY SPECIAL, INDIRECT
+ * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+ * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE 
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+ * OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
+
+******************************************************************************
+ 
+The files in this directory facilitate the use of Data Explorer 
+with Bio-Rad(TM) .PIC Image data. Included is a filter which reads Bio-Rad
+.PIC Image File data and writes a DX format file. 
+ 
+******************************************************************************
+
+Filter name: PIC2dx.c 
+
+PIC2dx.c is the source file for a filter that reads Bio-Rad .PIC
+file data in ASCII format and produces a Data Explorer Group of Fields,
+one for each image layer.
+
+It should compile easily using:
+ 
+   cc -o pic2dx PIC2dx.c
+  
+The execution syntax is: 
+
+   pic2dx -i inputfile -o outputfile -series

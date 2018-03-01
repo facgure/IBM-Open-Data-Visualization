@@ -1,0 +1,82 @@
+
+// Import some data
+electrondensity = Import("watermolecule");
+
+// Partition the data
+electrondensity = Partition(electrondensity);
+
+// Create a camera
+camera = AutoCamera(electrondensity,width=4);
+
+// Take a slab of thickness 0 from position 9 in the z dimension
+slab = Slab(electrondensity, "z", 9, 0);
+
+// Color the slab
+slab = AutoColor(slab);
+
+//create an image of the colored slab
+image = Render(slab,camera);
+
+
+
+
+//Create a set of contours on the slab at values of 0.2, 0.3,....
+contours = Isosurface(slab,{0.2, 0.3, 0.4, 0.7, 1.0});
+
+// Create an image of the contours
+contours = Render(contours,camera);
+
+// Overlay the two images and display
+together = Overlay(image,contours);
+Display(together);
+
+
+
+
+// Now create two new images to do chroma-keying
+camera1 = Camera([1, 0, -1], [1, 0, 10], width = 8, 
+                 resolution = 400, aspect = 1);
+image1 = Render(slab, camera1);
+Display(image1);
+// the second image has the slab much smaller, near the upper right of 
+// the image
+camera2 = Camera([-4, 0, -1], [1, 0, 10], width = 20,
+                 resolution = 400, aspect = 1);
+image2 = Render(slab, camera2);
+Display(image2);
+
+// we overlay the two images, and see image2 only where image1 is black
+together = Overlay(image2, image1, blend = [0 0 0]);
+Display(together);
+
+
+
+// Another example of the functionality of Overlay
+ 
+// Create a grid
+grid = Construct([0 0],[1 1],[240 320],[0 0 0]);
+
+// Create a black image field
+black = Color(grid,"black"); 
+
+// Create a white image field
+white = Color(grid,"white"); 
+
+// Create a red image field
+red = Color(grid,"red"); 
+
+// Create a grid with data values that vary with the sine in the horizontal 
+// direction
+grid = Mark(grid,"positions");
+sine = Compute("0.5+0.5*sin(3.14/120*$0.x)", grid);
+
+// Blend black into white using the sinusoidal blend field
+d = Overlay (black,white,sine);
+Display(d);
+sineblend = d;
+
+// Overlay red into sineblend everywhere white is found in sineblend.
+d = Overlay(red,sineblend,"white");
+Display(d);
+
+

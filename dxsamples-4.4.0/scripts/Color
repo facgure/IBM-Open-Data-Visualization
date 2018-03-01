@@ -1,0 +1,29 @@
+
+     // Import the data
+electrondensity = Import("watermolecule");
+     // Partition the data
+electrondensity = Partition(electrondensity);
+     // Create a camera appropriate for the data
+camera = AutoCamera(electrondensity,"off-diagonal",width=3); 
+     // Create an isosurface at a value of 0.3 
+iso = Isosurface(electrondensity,0.3);
+     // Color the isosurface red, and give it an opacity of 0.3
+iso = Color(iso,"red",opacity=0.3);
+     // Display the result
+Display(iso,camera);
+
+
+     // Color the isosurface "red", change the opacity back to 1.0, and
+     // apply the colors only to the front faces
+iso = Color(iso,"red",opacity=1,component="front colors");
+     // Color the back faces grey
+iso = Color(iso,"grey",component="back colors");
+     // Create a ClipPlane. By default it will pass through the center of 
+     // the isosurface
+clipped = ClipPlane(iso);
+     // Display the result
+Display(clipped,camera);
+
+
+
+

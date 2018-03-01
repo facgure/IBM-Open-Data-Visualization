@@ -1,0 +1,24 @@
+# This general array importer header describes the data set "CO2.lis".
+# This data consists of scattered data values of carbon dioxide concentration.
+# There are 53 members of the time series, each one of which has 21 data 
+# values.  The field keyword indicates two fields to be read: locations and
+# co2_conc.  The locations keyword is special, and indicates that those 
+# values are to be the positions to associate with each data value.  The
+# positions are 2-vectors (latitude and longitude), while the carbon dioxide
+# concentration measurements are scalar values. The layout keyword describes
+# the formatting of the values in the file, while the interleaving keyword
+# indicates that the fields (locations and data values) are interleaved in 
+# the file.
+#
+#
+file = CO2.lis
+points = 21
+series = 53 
+field = locations, co2_conc 
+structure = 2-vector, scalar
+# 25 bytes for time (to skip), 14 bytes each for latitude, longitude. 
+# skip 7, then 7 bytes for CO2 
+layout = 25, 14, 7, 7
+header = lines 8
+interleaving = field
+

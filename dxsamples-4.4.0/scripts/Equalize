@@ -1,0 +1,19 @@
+// Import the data field
+electrondensity = Import("watermolecule");
+electrondensity = Partition(electrondensity);
+
+// Color and volume-render the original field. Most of the data values
+// lie very close to zero, and the volume is essentially all blue.
+colored = AutoColor(electrondensity);
+camera = AutoCamera(colored,"off-diagonal");
+Display(colored, camera);
+
+// Equalize the data values to be more uniformly distributed between the
+// minimum and maximum data values. Recolor, rerender and display.
+equalized = Equalize(electrondensity,bins=1000);
+colored = AutoColor(equalized);
+camera = AutoCamera(colored,"off-diagonal");
+Display(colored, camera);
+
+
+

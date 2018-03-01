@@ -1,0 +1,29 @@
+// In this example, we use Inquire to determine if an input data field is
+// scalar or vector. If it's vector, we extract the x component for 
+// visualization using Isosurface. Otherwise, we use the original data field.
+
+macro contour(data)
+{
+   scalar = Inquire(data,"is scalar");
+   output = Compute("$0 ? $1 : [$1.x]", scalar, data);
+   contours = Isosurface(output, number = 3);
+   camera = AutoCamera(contours);
+
+   switchnumber = scalar+1;
+
+   caption1 = Caption("vector field");
+   caption2 = Caption("scalar field");
+   caption = Switch(switchnumber, caption1, caption2);
+   
+   collected = Collect(caption, contours);
+   Display(collected,camera);
+}
+
+scalarfield = Import("watermolecule");
+vectorfield = Gradient(scalarfield);
+scalarslice = MapToPlane(scalarfield);
+vectorslice = MapToPlane(vectorfield);
+
+contour(scalarslice);
+contour(vectorslice);
+
